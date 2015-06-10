@@ -3753,6 +3753,47 @@ void MainWindowImpl::BerHopfen()
 }
 
 
+void MainWindowImpl::ErstelleSpickzettelV2()
+{
+  //Überschrift vom Tab setzten
+  tabWidged -> setTabText(5,trUtf8("Spickzettel"));
+  // Seitenkopf
+  QString seite, kopf, ende, style;
+  QString s = "";
+
+  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
+  style = "<style type='text/css'>";
+  //Style für Überschrift H1
+  style += "p.h1{color:black;font-size:20pt;padding:0px;margin:0px;}";
+  //Style für P
+  style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
+  //Style für Variable
+  style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
+  //Style für div Kommentar
+  style += ".koment{}";
+  style += "</style>";
+  kopf += style;
+  kopf += "</head><body align='center' style=' font-family:Ubuntu,Arial; font-size:10pt;font-style:normal;background-color:#fff;'>";
+  seite = kopf;
+
+  //Seiteninhalt
+  //Name
+  s += "<p class='h1'><b>" + lineEdit_Sudname -> text() + "</b></p>";
+
+  seite += s;
+  //Seitenende
+  ende = "</body></html>";
+  seite += ende;
+
+  //textEdit -> setPlainText(seite);
+
+  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
+  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
+  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
+  webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
+}
+
+
 void MainWindowImpl::ErstelleSpickzettel()
 {
   //Überschrift vom Tab setzten
@@ -4848,13 +4889,14 @@ void MainWindowImpl::ErstelleSpickzettel()
 
 }
 
+
 void MainWindowImpl::ErstelleTabSpickzettel()
 {
   if (BierWurdeGebraut){
     ErstelleZusammenfassung();
   }
   else {
-    ErstelleSpickzettel();
+    ErstelleSpickzettelV2();
   }
 }
 

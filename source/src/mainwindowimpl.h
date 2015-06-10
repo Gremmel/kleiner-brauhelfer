@@ -215,6 +215,7 @@ private:
   bool BierWurdeVerbraucht;
   void LeseGeraeteliste();
   void ErstelleSpickzettel();
+  void ErstelleSpickzettelV2();
   void ErstelleTabSpickzettel();
   void BerHopfen();
   void BerWasser();
