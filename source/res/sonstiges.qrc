@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/db">
+        <file>vorlage.sqlite</file>
+        <file>rohstofflisten.sqlite</file>
+    </qresource>
+    <qresource prefix="/sprachen">
+        <file alias="qt_de.qm">../languages/qt_de.qm</file>
+    </qresource>
+</RCC>
