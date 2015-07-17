@@ -4896,7 +4896,7 @@ void MainWindowImpl::ErstelleTabSpickzettel()
     ErstelleZusammenfassung();
   }
   else {
-    ErstelleSpickzettelV2();
+    ErstelleSpickzettel();
   }
 }
 
