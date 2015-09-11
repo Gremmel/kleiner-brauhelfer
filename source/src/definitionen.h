@@ -2,7 +2,7 @@
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-//#define DEBUG true
+#define DEBUG true
 
 //Version
 #define VERSION "1.4.2.0"

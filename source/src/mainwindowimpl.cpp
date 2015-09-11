@@ -204,6 +204,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   connect(radioButton_FilterNichtGebraut, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
   connect(radioButton_FilterGebrautNichtAbgefuellt, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
   connect(radioButton_Abgefuellt, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
+  connect(radioButton_nichtVerbraucht, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
   connect(radioButton_Merkliste, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
 
   //Änderung Geräteliste
@@ -7233,6 +7234,9 @@ void MainWindowImpl::FuelleSudauswahl()
   //Abgefüllt
   else if (radioButton_Abgefuellt -> isChecked())
     sql = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1";
+  //Abgefüllt und noch nicht verbraucht
+  else if (radioButton_nichtVerbraucht -> isChecked())
+    sql = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1 AND BierWurdeVerbraucht=0";
   //Merkliste
   else if (radioButton_Merkliste -> isChecked())
     sql = "SELECT * FROM Sud WHERE MerklistenID=1";
