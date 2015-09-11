@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>358</width>
-    <height>169</height>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,7 +54,7 @@
         <double>99.000000000000000</double>
        </property>
        <property name="singleStep">
-        <double>1.000000000000000</double>
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
         <double>20.000000000000000</double>

@@ -27,7 +27,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>8</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -303,8 +303,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>879</width>
-             <height>775</height>
+             <width>816</width>
+             <height>749</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -894,7 +894,7 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>388</width>
+                      <width>100</width>
                       <height>150</height>
                      </rect>
                     </property>
@@ -1156,8 +1156,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>429</width>
-                       <height>456</height>
+                       <width>96</width>
+                       <height>26</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1249,8 +1249,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>64</width>
-                       <height>16</height>
+                       <width>96</width>
+                       <height>26</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1317,8 +1317,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>64</width>
-                       <height>16</height>
+                       <width>96</width>
+                       <height>26</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_80" stretch="0,1">
@@ -2121,8 +2121,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>350</width>
-               <height>375</height>
+               <width>200</width>
+               <height>141</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -7605,8 +7605,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1237</width>
-             <height>679</height>
+             <width>855</width>
+             <height>261</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7996,8 +7996,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>346</width>
-               <height>727</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -10098,6 +10098,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10169,6 +10172,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10239,6 +10245,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </property>
                   <property name="maximum">
                    <double>9999.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -10318,6 +10327,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10388,6 +10400,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </property>
                   <property name="maximum">
                    <double>9999.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -10484,6 +10499,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10555,6 +10573,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10625,6 +10646,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </property>
                   <property name="maximum">
                    <double>9999.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
                   </property>
                  </widget>
                 </item>
@@ -10704,6 +10728,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <property name="maximum">
                    <double>999.000000000000000</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -10774,6 +10801,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </property>
                   <property name="maximum">
                    <double>9999.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
                   </property>
                  </widget>
                 </item>

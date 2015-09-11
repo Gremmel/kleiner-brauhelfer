@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
-    <height>291</height>
+    <width>917</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,7 +45,11 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_Menge"/>
+           <widget class="QSpinBox" name="spinBox_Menge">
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_15">
@@ -85,7 +89,11 @@
            </spacer>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_SW"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_SW">
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_16">
@@ -162,7 +170,16 @@
         <item>
          <widget class="QWidget" name="widget_H_1" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_9">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -177,6 +194,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -190,6 +210,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_1">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
@@ -227,7 +250,16 @@
         <item>
          <widget class="QWidget" name="widget_H_2" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -242,6 +274,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -255,6 +290,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_2">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
@@ -292,7 +330,16 @@
         <item>
          <widget class="QWidget" name="widget_H_3" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -307,6 +354,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -320,6 +370,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_3">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
@@ -357,7 +410,16 @@
         <item>
          <widget class="QWidget" name="widget_H_4" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_13">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -372,6 +434,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -385,6 +450,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_4">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
@@ -422,7 +490,16 @@
         <item>
          <widget class="QWidget" name="widget_H_5" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_14">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -437,6 +514,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -450,6 +530,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_5">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
@@ -487,7 +570,16 @@
         <item>
          <widget class="QWidget" name="widget_H_6" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_15">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>1</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
             <number>1</number>
            </property>
            <item>
@@ -502,6 +594,9 @@
              <property name="maximum">
               <double>999.000000000000000</double>
              </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
             </widget>
            </item>
            <item>
@@ -515,6 +610,9 @@
             <widget class="QDoubleSpinBox" name="doubleSpinBox_Alpha_H_6">
              <property name="maximum">
               <double>999.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
             </widget>
            </item>
