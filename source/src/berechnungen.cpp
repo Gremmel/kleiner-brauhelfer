@@ -758,37 +758,46 @@ double QBerechnungen::GetPfanneVoll(double verdampfungsziffer, int kochdauer, do
 }
 
 
-double QBerechnungen::GetSpeiseGesammt(double SW, double SWJungbier, double Jungbiermenge, double SpeiseVerfuegbar)
+double QBerechnungen::GetSpeiseGesammt(double SW, double SWJungbier, double Jungbiermenge, double SpeiseVerfuegbar, bool Spunden)
 {
-	//tatsächlicher Restextrakt vor dem Abfüllen %°P
-	RestextraktJungbier = SWJungbier;
-	
-	//erforderlicher vergärbarer Extrakt (Zucker) g/l
-	double DichteRestextrakt = GetDichte(RestextraktSchnellgaerprobe);
-	ErforderlicherZucker = (Gruenschlauchzeitpunkt - RestextraktJungbier) * 8.192 * DichteRestextrakt;
-	
-	//Dichte Stammwürze beim Anstellen
-	double DichteStammwuerze = GetDichte(SW);
-	
-	//vergärbarer Extrakt in der Speise
-	double vergaerbarerExtraktSpeise = ( SW - RestextraktSchnellgaerprobe) * 8.192 * DichteStammwuerze;
-	
-	//Erforderliche Speisemenge Gesammt ml
-	ErforderlicheSpeiseGesammt = Jungbiermenge * ErforderlicherZucker / ( vergaerbarerExtraktSpeise - ErforderlicherZucker ) * 1000;
-	
-	//Weil die Speise ja auch noch aufkarbonisiert werden muss die menge nochmal verrechnen
-	ErforderlicheSpeiseGesammt += (ErforderlicheSpeiseGesammt / 1000) * ErforderlicherZucker / ( vergaerbarerExtraktSpeise - ErforderlicherZucker ) * 1000;
-	
-	//wenn genügend Speise vorhanden ist
-	if ( (SpeiseVerfuegbar * 1000) > ErforderlicheSpeiseGesammt){
-		HaushaltszuckerGesammt = 0;
-	}
-	//wenn noch mit Zucker nachgeholfen werden muss
-	else {
-		HaushaltszuckerGesammt = (ErforderlicherZucker *  Jungbiermenge) / ErforderlicheSpeiseGesammt * (ErforderlicheSpeiseGesammt - (SpeiseVerfuegbar * 1000));
-		ErforderlicheSpeiseGesammt = SpeiseVerfuegbar * 1000;
-	}
-	
+
+  //wenn gespundet wird muss keine Zucker und Speisemenge berechnet werden
+  if (Spunden) {
+    HaushaltszuckerGesammt = 0;
+    ErforderlicheSpeiseGesammt = 0;
+  }
+  else {
+
+    //tatsächlicher Restextrakt vor dem Abfüllen %°P
+    RestextraktJungbier = SWJungbier;
+
+    //erforderlicher vergärbarer Extrakt (Zucker) g/l
+    double DichteRestextrakt = GetDichte(RestextraktSchnellgaerprobe);
+    ErforderlicherZucker = (Gruenschlauchzeitpunkt - RestextraktJungbier) * 8.192 * DichteRestextrakt;
+
+    //Dichte Stammwürze beim Anstellen
+    double DichteStammwuerze = GetDichte(SW);
+
+    //vergärbarer Extrakt in der Speise
+    double vergaerbarerExtraktSpeise = ( SW - RestextraktSchnellgaerprobe) * 8.192 * DichteStammwuerze;
+
+    //Erforderliche Speisemenge Gesammt ml
+    ErforderlicheSpeiseGesammt = Jungbiermenge * ErforderlicherZucker / ( vergaerbarerExtraktSpeise - ErforderlicherZucker ) * 1000;
+
+    //Weil die Speise ja auch noch aufkarbonisiert werden muss die menge nochmal verrechnen
+    ErforderlicheSpeiseGesammt += (ErforderlicheSpeiseGesammt / 1000) * ErforderlicherZucker / ( vergaerbarerExtraktSpeise - ErforderlicherZucker ) * 1000;
+
+    //wenn genügend Speise vorhanden ist
+    if ( (SpeiseVerfuegbar * 1000) > ErforderlicheSpeiseGesammt){
+      HaushaltszuckerGesammt = 0;
+    }
+    //wenn noch mit Zucker nachgeholfen werden muss
+    else {
+      HaushaltszuckerGesammt = (ErforderlicherZucker *  Jungbiermenge) / ErforderlicheSpeiseGesammt * (ErforderlicheSpeiseGesammt - (SpeiseVerfuegbar * 1000));
+      ErforderlicheSpeiseGesammt = SpeiseVerfuegbar * 1000;
+    }
+  }
+
 	return ErforderlicheSpeiseGesammt;
 }
 

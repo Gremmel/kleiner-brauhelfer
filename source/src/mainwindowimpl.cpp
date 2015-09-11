@@ -221,6 +221,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   connect(spinBox_AnzahlHefeEinheiten, SIGNAL( valueChanged(int) ), this, SLOT( slot_spinBoxValueChanged(int) ));
 
   connect(checkBox_SchnellgaerprobeAktiv, SIGNAL( stateChanged(int) ), this, SLOT( slot_spinBoxValueChanged(int) ));
+  connect(checkBox_Spunden, SIGNAL( stateChanged(int) ), this, SLOT( slot_spinBoxValueChanged(int) ));
 
   //Setzt den Maxwert Zeit für die Hopfengaben
   connect(spinBox_Gesammtkochdauer, SIGNAL( valueChanged(int) ), this, SLOT( slot_spinBoxGesammtkochdauerChanged(int) ));
@@ -2724,6 +2725,9 @@ void MainWindowImpl::SchreibeSuddatenDB()
   //Schnellgärprobe aktiv
   sql += "SchnellgaerprobeAktiv='";
   sql += QString::number(checkBox_SchnellgaerprobeAktiv -> isChecked()) + "', ";
+  //Spunden
+  sql += "Spunden='";
+  sql += QString::number(checkBox_Spunden -> isChecked()) + "', ";
   //Jungbiermenge beim Abfüllen
   sql += "JungbiermengeAbfuellen='";
   sql += QString::number(spinBox_JungbiermengeAbfuellen -> value()) + "', ";
@@ -3010,6 +3014,10 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
       //Schnellgärprobe aktiv
       FeldNr = query_sud.record().indexOf("SchnellgaerprobeAktiv");
       checkBox_SchnellgaerprobeAktiv -> setChecked(query_sud.value(FeldNr).toBool());
+
+      //Spunden
+      FeldNr = query_sud.record().indexOf("Spunden");
+      checkBox_Spunden -> setChecked(query_sud.value(FeldNr).toBool());
 
       //Jungbiermenge Abfüllen
       FeldNr = query_sud.record().indexOf("JungbiermengeAbfuellen");
@@ -5053,7 +5061,8 @@ void MainWindowImpl::BerBraudaten()
 
   //Erforderliche Speisemenge
   spinBox_SpeisemengeGesammt -> setValue(Berechnungen.GetSpeiseGesammt(spinBox_SWAnstellen -> value(),
-      spinBox_SWJungbier -> value(), spinBox_JungbiermengeAbfuellen -> value() , spinBox_Speisemenge -> value()));
+      spinBox_SWJungbier -> value(), spinBox_JungbiermengeAbfuellen -> value() , spinBox_Speisemenge -> value(),
+      checkBox_Spunden -> isChecked()));
 
   //Erforderliche Zuckergabe gesammt
   spinBox_HaushaltszuckerGesammt -> setValue(Berechnungen.GetHaushaltszuckerGesammt());
@@ -5591,6 +5600,7 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
   spinBox_Speisemenge -> setButtonSymbols(bs);
 
   checkBox_SchnellgaerprobeAktiv -> setDisabled(status);
+  checkBox_Spunden -> setDisabled(status);
 
   spinBox_JungbiermengeAbfuellen -> setReadOnly(status);
   spinBox_JungbiermengeAbfuellen -> setButtonSymbols(bs);
@@ -11210,7 +11220,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen()
         double AbgefuellteSpeisemenge = query.value(FeldNr).toDouble();
 
         //Erforderliche Speisemenge
-        double SpeisemengeGesammt = Berechnungen.GetSpeiseGesammt(SWAnstellen, SWJungbier, JungbiermengeAbfuellen , AbgefuellteSpeisemenge)/1000;
+        double SpeisemengeGesammt = Berechnungen.GetSpeiseGesammt(SWAnstellen, SWJungbier, JungbiermengeAbfuellen , AbgefuellteSpeisemenge, false)/1000;
 
         //Abgefuellte Menge
         double AbgefuellteMenge = JungbiermengeAbfuellen + SpeisemengeGesammt;

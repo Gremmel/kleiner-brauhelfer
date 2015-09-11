@@ -60,7 +60,7 @@ public:
 	double GetSpundungsdruck();
 	double GetWasserVerschneidung(double SWSoll, double SWIst, double Menge);
 	double GetHaushaltszuckerGesammt();
-	double GetSpeiseGesammt(double SW, double SWJungbier, double Jungbiermenge, double SpeiseVerfuegbar);
+  double GetSpeiseGesammt(double SW, double SWJungbier, double Jungbiermenge, double SpeiseVerfuegbar, bool Spunden);
 	double GetGruenschlauchzeitpunkt(double cSollCO2, double cTemperatur, double cRestextrakt);
   double GetPfanneVoll(double verdampfungsziffer, int kochdauer, double cWunschmenge);
 	double BerAlkohoVol(double SW, double SVP);

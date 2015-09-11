@@ -27,7 +27,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -41,14 +41,14 @@
             <item>
              <widget class="QRadioButton" name="radioButton_FilterAlle">
               <property name="text">
-               <string>alle anzeigen</string>
+               <string>a&amp;lle anzeigen</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QRadioButton" name="radioButton_FilterNichtGebraut">
               <property name="text">
-               <string>nicht gebraut</string>
+               <string>&amp;nicht gebraut</string>
               </property>
              </widget>
             </item>
@@ -69,7 +69,7 @@
             <item>
              <widget class="QRadioButton" name="radioButton_nichtVerbraucht">
               <property name="text">
-               <string>nicht Verbraucht</string>
+               <string>ni&amp;cht Verbraucht</string>
               </property>
              </widget>
             </item>
@@ -2902,7 +2902,7 @@ p, li { white-space: pre-wrap; }
              <x>0</x>
              <y>0</y>
              <width>1217</width>
-             <height>946</height>
+             <height>1002</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -3854,21 +3854,6 @@ p, li { white-space: pre-wrap; }
                  <string>beim Abfüllen</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_24">
-                 <property name="spacing">
-                  <number>2</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>5</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>2</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>5</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>2</number>
-                 </property>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_53">
                    <property name="spacing">
@@ -4009,6 +3994,59 @@ p, li { white-space: pre-wrap; }
                       <number>2</number>
                      </property>
                     </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_169">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_171">
+                     <property name="text">
+                      <string>Keine Zucker oder Speisegabe (Spunden)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_122">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="checkBox_Spunden">
+                     <property name="layoutDirection">
+                      <enum>Qt::RightToLeft</enum>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_14">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>100</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>

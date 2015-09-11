@@ -2425,6 +2425,10 @@ static bool ErstelleVerbindung() {
       if (query.value(0).toInt() == 17){
         updateNr = 17;
       }
+      //Wenn Version der Datenbank 18 ist dann auf versionstand 19 Updaten
+      if (query.value(0).toInt() == 18){
+        updateNr = 18;
+      }
 
 			//wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
       else if (query.value(0).toInt() > DB_VERSION) {
@@ -2439,7 +2443,7 @@ static bool ErstelleVerbindung() {
 
   //----------------------------------------Update Begin------------------------------------
   //Hier werden die Uptdates ab version 16 aufgerufen da die sql Tabelle an dieser stelle
-  //nicht mehr gekockt ist
+  //nicht mehr gelockt ist
   if (updateNr == 16) {
     bool io = true;
     int brauanlagenID = 0;
@@ -2644,6 +2648,38 @@ static bool ErstelleVerbindung() {
     }
     QSqlDatabase::database().commit();
     updateNr = 18;
+  }
+  //Update von 18 auf 19
+  if (updateNr == 18) {
+    bool io = true;
+    QSqlDatabase::database().transaction();
+    //Spalte AuswahlBrauanlage Name einfügen
+    QString sql = "ALTER TABLE 'Sud' ADD COLUMN 'Spunden' BOOL DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Versionsstand auf 19 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=19";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    if (!io){
+      // Fehlermeldung Konnte Datenbank nicht updaten
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V18_V19, TYPE_KRITISCH,
+        CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
+      return false;
+    }
+    QSqlDatabase::database().commit();
+    updateNr = 19;
   }
   return true;
 }

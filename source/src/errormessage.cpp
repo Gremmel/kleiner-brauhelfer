@@ -136,6 +136,9 @@ QString ErrorMessage::getErrorText(int number) {
     case ERR_SQL_DB_UPDATE_V17_V18:
       errorText = trUtf8("Konnte Datenbank nicht von Version 17 auf Version 18 updaten");
       break;
+    case ERR_SQL_DB_UPDATE_V18_V19:
+      errorText = trUtf8("Konnte Datenbank nicht von Version 18 auf Version 19 updaten");
+      break;
     case ERR_VERSION_UNBEKANNT:
 			errorText = trUtf8("Die Datei ist keine gültige Sud Datei");
 			break;
