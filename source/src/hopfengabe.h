@@ -26,6 +26,7 @@ public:
 	doubleEditLineImpl* ergWidget;
 	void setHopfenListe(QStringList value);
 	void setFehlProzent(double value);
+  double getFehlProzent();
 	double getMengeProzent();
 	void setMengeProzent(double value);
 	void setName(QString Name);
@@ -94,6 +95,7 @@ private:
 	double Menge100Prozent;
 	bool berIBUProzent;
 	double MengeGrammWertAlt;
+  double fehlProzent;
 
 protected:
 	void closeEvent(QCloseEvent *event);

@@ -75,6 +75,7 @@ void hopfengabe::setMinKochzeit(int value)
 
 void hopfengabe::setFehlProzent(double value)
 {
+  fehlProzent = value;
 	ui->pushButton_KorrekturMenge->setText(QString::number(value));
 	if (value == 0){
 		ui->pushButton_KorrekturMenge->setVisible(false);
@@ -83,7 +84,12 @@ void hopfengabe::setFehlProzent(double value)
 	else{
 		ui->pushButton_KorrekturMenge->setVisible(true);
 		ergWidget->setVisible(false);
-	}
+  }
+}
+
+double hopfengabe::getFehlProzent()
+{
+  return fehlProzent;
 }
 
 double hopfengabe::getMengeProzent()

@@ -25,6 +25,7 @@ public:
 	doubleEditLineImpl* ergWidget;
 	void setMalzListe(QStringList value);
 	void setFehlProzent(double value);
+  double getFehlProzent();
 	double getMengeProzent();
 	void setMengeProzent(double value);
 	void setErgMenge(double value);
@@ -70,6 +71,7 @@ private:
 	bool prozentOK;
 	double Farbe;
 	double GesamtMenge;
+  double fehlProzent;
 
 protected:
 	void closeEvent(QCloseEvent *event);

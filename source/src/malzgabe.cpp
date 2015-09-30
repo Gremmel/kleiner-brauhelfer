@@ -37,6 +37,7 @@ void malzgabe::setMalzListe(QStringList value)
 
 void malzgabe::setFehlProzent(double value)
 {
+  fehlProzent = value;
   ui->pushButton_KorrekturMenge->setText(QString::number(value));
   if (value == 0){
     ui->pushButton_KorrekturMenge->setVisible(false);
@@ -46,6 +47,11 @@ void malzgabe::setFehlProzent(double value)
     ui->pushButton_KorrekturMenge->setVisible(true);
     ergWidget->setVisible(false);
   }
+}
+
+double malzgabe::getFehlProzent()
+{
+  return fehlProzent;
 }
 
 double malzgabe::getMengeProzent()

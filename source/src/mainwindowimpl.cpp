@@ -3829,6 +3829,8 @@ void MainWindowImpl::ErstelleSpickzettel()
   style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
   //Style für Div Box mit Rahmen
   style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;}";
+  //Style für Hinweis
+  style += ".hinweis{color:#d47209;}";
   //Style für Tabelle
   style += "td{padding:2px;margin:0px;}";
   style += "td.r{padding:2px;margin:0px;border-bottom-color:#dddddd;border-bottom-style:solid;border-width:1px;}";
@@ -3966,30 +3968,40 @@ void MainWindowImpl::ErstelleSpickzettel()
 					s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0>";
           s += "<table cellspacing=0 border=0><tbody>";
           //Alle Malzgaben
-          for (int i=0; i < list_Malzgaben.count(); i++){
-            s += "<tr style=''>";
-              s += "<td>";
-                s += "<p>" + list_Malzgaben[i]->getName() + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p>" + trUtf8("Kg") + "</p>";
-              s += "</td>";
-              s += "<td align='right'>";
-                s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p>" + trUtf8("%") + "</p>";
-              s += "</td>";
-              s += "<td align='right'>";
-                s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p>" + trUtf8("EBC") + "</p>";
-              s += "</td>";
-            s += "</tr>";
+          double fehlprozent = 0;
+          if (list_Malzgaben.count()>0) {
+            fehlprozent = list_Malzgaben[0]->getFehlProzent();
+          }
+          if (fehlprozent == 0) {
+            for (int i=0; i < list_Malzgaben.count(); i++){
+              s += "<tr style=''>";
+                s += "<td>";
+                  s += "<p>" + list_Malzgaben[i]->getName() + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p>" + trUtf8("Kg") + "</p>";
+                s += "</td>";
+                s += "<td align='right'>";
+                  s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p>" + trUtf8("%") + "</p>";
+                s += "</td>";
+                s += "<td align='right'>";
+                  s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p>" + trUtf8("EBC") + "</p>";
+                s += "</td>";
+              s += "</tr>";
+            }
+          }
+          //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
+          else {
+            s += "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
           }
           //Gesamt
           s += "<tr style=''>";
@@ -4022,27 +4034,37 @@ void MainWindowImpl::ErstelleSpickzettel()
 					s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0>";
           s += "<table cellspacing=0 border=0><tbody>";
           //Alle Hopfengaben
-          for (int i=0; i < list_Hopfengaben.count(); i++){
-            s += "<tr style=''>";
-              s += "<td>";
-                if (list_Hopfengaben[i]->getVWH())
-                  s += "<p>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-                else
-                  s += "<p>" + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-              s += "</td>";
-              s += "<td align='right'>";
-                s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p>" + trUtf8("g") + "</p>";
-              s += "</td>";
-              s += "<td align='right'>";
-                s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</p>";
-              s += "</td>";
-              s += "<td>";
-                s += "<p>" + trUtf8("min") + "</p>";
-              s += "</td>";
-            s += "</tr>";
+          fehlprozent = 0;
+          if (list_Hopfengaben.count()>0) {
+            fehlprozent = list_Hopfengaben[0]->getFehlProzent();
+          }
+          if (fehlprozent == 0) {
+            for (int i=0; i < list_Hopfengaben.count(); i++){
+              s += "<tr style=''>";
+                s += "<td>";
+                  if (list_Hopfengaben[i]->getVWH())
+                    s += "<p>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</p>";
+                  else
+                    s += "<p>" + list_Hopfengaben[i]->getErgebnistext() + "</p>";
+                s += "</td>";
+                s += "<td align='right'>";
+                  s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p>" + trUtf8("g") + "</p>";
+                s += "</td>";
+                s += "<td align='right'>";
+                  s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</p>";
+                s += "</td>";
+                s += "<td>";
+                  s += "<p>" + trUtf8("min") + "</p>";
+                s += "</td>";
+              s += "</tr>";
+            }
+          }
+          //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
+          else {
+            s += "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfenhaben konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
           }
           //Hopfengaben in den Weiteren Zutaten
           for (int i=0; i < list_EwZutat.count(); i++){
