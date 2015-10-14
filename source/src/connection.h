@@ -2653,8 +2653,17 @@ static bool ErstelleVerbindung() {
   if (updateNr == 18) {
     bool io = true;
     QSqlDatabase::database().transaction();
-    //Spalte AuswahlBrauanlage Name einfügen
+    //Spalte Spunden einfügen
     QString sql = "ALTER TABLE 'Sud' ADD COLUMN 'Spunden' BOOL DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Brauanlagen ID in Geräteliste einfügen und mit ID der ersten Brauanlage füllen
+    QString sql = "ALTER TABLE 'Geraete' ADD COLUMN 'AusruestungAnlagenID' NUMERIC DEFAULT 0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
