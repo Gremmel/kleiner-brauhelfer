@@ -7266,9 +7266,9 @@ void MainWindowImpl::FuelleSudauswahl()
   //Abgefüllt
   else if (radioButton_Abgefuellt -> isChecked())
     sql = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1";
-  //Abgefüllt und noch nicht verbraucht
+  //nicht verbraucht
   else if (radioButton_nichtVerbraucht -> isChecked())
-    sql = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1 AND BierWurdeVerbraucht=0";
+    sql = "SELECT * FROM Sud WHERE BierWurdeVerbraucht=0";
   //Merkliste
   else if (radioButton_Merkliste -> isChecked())
     sql = "SELECT * FROM Sud WHERE MerklistenID=1";
