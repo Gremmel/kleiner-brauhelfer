@@ -2663,13 +2663,33 @@ static bool ErstelleVerbindung() {
       io = false;
     }
     //Spalte Brauanlagen ID in Geräteliste einfügen und mit ID der ersten Brauanlage füllen
-    QString sql = "ALTER TABLE 'Geraete' ADD COLUMN 'AusruestungAnlagenID' NUMERIC DEFAULT 0";
+    sql = "ALTER TABLE 'Geraete' ADD COLUMN 'AusruestungAnlagenID' NUMERIC DEFAULT 0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
         + QObject::trUtf8("\nSQL Befehl:\n") + sql);
       io = false;
+    }
+    //Geräte mit einer ID von den Ausrüstungen füllen
+    sql = "SELECT * FROM 'Ausruestung'";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    if (query.first()) {
+      QString id = query.value("AnlagenID").toString();
+      sql = "UPDATE 'Geraete' SET 'AusruestungAnlagenID'=" + id;
+      if (!query.exec(sql)) {
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+          + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        io = false;
+      }
     }
     //Versionsstand auf 19 setzen
     sql = "UPDATE 'Global' SET 'db_Version'=19";
