@@ -207,9 +207,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   connect(radioButton_nichtVerbraucht, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
   connect(radioButton_Merkliste, SIGNAL( clicked(bool) ), this, SLOT( slot_FilterClicked(bool) ));
 
-  //Änderung Geräteliste
-  connect(tableWidget_Geraete, SIGNAL( cellChanged(int, int) ), this, SLOT( slot_AenderungGeraeteliste(int, int) ));
-
   //verbinde changed signale mit gemeinsammer funktion zur Neuberechnung der Daten
   connect(spinBox_AngenommeneAusbeute, SIGNAL( valueChanged(int) ), this, SLOT( slot_spinBoxValueChanged(int) ));
   connect(spinBox_SW, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
@@ -905,7 +902,6 @@ void MainWindowImpl::SchreibeAusruestungDB()
 void MainWindowImpl::DatenEinlesenDB()
 {
   LeseAusruestungDB();
-  LeseGeraetelisteDB();
   LeseRohstoffeDB();
 }
 
@@ -913,7 +909,6 @@ void MainWindowImpl::DatenEinlesenDB()
 void MainWindowImpl::DatenSchreibenDB()
 {
   SchreibeAusruestungDB();
-  SchreibeGeraetelisteDB();
   SchreibeRohstoffeDB();
 }
 
@@ -3557,14 +3552,6 @@ void MainWindowImpl::slot_dateChanged(QDate)
   }
 }
 
-
-void MainWindowImpl::slot_AenderungGeraeteliste(int , int )
-{
-  if (Gestartet){
-    AenderungGeraeteliste = true;
-  }
-}
-
 void MainWindowImpl::slot_AenderungAusruestung(double )
 {
   AenderungAusruestung = true;
@@ -4955,11 +4942,12 @@ void MainWindowImpl::LeseGeraeteliste()
 }
 
 
-void MainWindowImpl::LeseGeraetelisteDB()
+void MainWindowImpl::LeseGeraetelisteDB(int id)
 {
   QSqlQuery query;
+  fuelleGeraeteliste = true;
 
-  QString sql = "SELECT Bezeichnung FROM Geraete";
+  QString sql = "SELECT Bezeichnung FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
   if (!query.exec(sql)) {
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
@@ -4982,16 +4970,17 @@ void MainWindowImpl::LeseGeraetelisteDB()
     }
     tableWidget_Geraete -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
+  fuelleGeraeteliste = false;
 }
 
 
-void MainWindowImpl::SchreibeGeraetelisteDB()
+void MainWindowImpl::SchreibeGeraetelisteDB(int id)
 {
   if (AenderungGeraeteliste) {
     QSqlQuery query;
 
     //Zuerst alle Einträge in der Tabelle löschen
-    QString sql = "DELETE FROM Geraete WHERE ID > 0;";
+    QString sql = "DELETE FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -5002,7 +4991,9 @@ void MainWindowImpl::SchreibeGeraetelisteDB()
 
     //Dann wieder mit den Tabellendaten füllen
     for (int i=0; i < tableWidget_Geraete -> rowCount(); i++){
-      sql = "INSERT into Geraete(Bezeichnung) VALUES(\"" + tableWidget_Geraete -> item(i,0) -> text() + "\")";
+      sql = "INSERT into Geraete(Bezeichnung, AusruestungAnlagenID) VALUES(\""
+          + tableWidget_Geraete -> item(i,0) -> text() + "\", "
+          + QString::number(id) + ")";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
@@ -5019,7 +5010,6 @@ void MainWindowImpl::SchreibeGeraetelisteDB()
 void MainWindowImpl::slot_pushButton_GeraeteDel()
 {
   tableWidget_Geraete -> removeRow(tableWidget_Geraete -> currentRow());
-  setAenderung(true);
   AenderungGeraeteliste = true;
 }
 
@@ -5034,7 +5024,6 @@ void MainWindowImpl::slot_pushButton_GeraeteNeu()
   //Beschreibung
   newItem1 -> setText(s);
   tableWidget_Geraete -> setItem(i, 0, newItem1);
-  setAenderung(true);
   AenderungGeraeteliste = true;
 }
 
@@ -15226,6 +15215,7 @@ void MainWindowImpl::on_listWidget_Brauanlagen_itemSelectionChanged()
     BerEffektiveAusbeuteMittel();
     Gestartet = merker;
     BerAusruestung();
+    LeseGeraetelisteDB(item->getID());
   }
 }
 
@@ -15497,4 +15487,27 @@ void MainWindowImpl::on_pushButton_HefeNeu_clicked()
   tableWidget_Hefe->setSortingEnabled(false);
   HefeNeueZeile();
   tableWidget_Hefe->setSortingEnabled(true);
+}
+
+
+void MainWindowImpl::on_listWidget_Brauanlagen_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+  if (Gestartet) {
+    Brauanlage* item = dynamic_cast<Brauanlage*>(previous);
+    //Wenn Einträge geändert wurden speichern
+    if (AenderungGeraeteliste) {
+      qDebug() << "Aenderung Geräteliste Brauanlagen ID: " << item->getID();
+      SchreibeGeraetelisteDB(item->getID());
+      AenderungGeraeteliste = false;
+    }
+  }
+}
+
+void MainWindowImpl::on_tableWidget_Geraete_itemChanged(QTableWidgetItem *item)
+{
+  if (Gestartet) {
+    if (!fuelleGeraeteliste) {
+      AenderungGeraeteliste = true;
+    }
+  }
 }

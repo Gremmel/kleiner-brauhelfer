@@ -184,8 +184,8 @@ private:
   void LadeSudDB(bool aktivateTab);
   void LeseRohstoffeDB_test();
   void SchreibeRohstoffeDB();
-  void LeseGeraetelisteDB();
-  void SchreibeGeraetelisteDB();
+  void LeseGeraetelisteDB(int id);
+  void SchreibeGeraetelisteDB(int id);
   void DatenEinlesenDB();
   void LeseAusruestungDB();
   void BerFarbe(double cEBC = 0);
@@ -253,6 +253,7 @@ private:
   bool Gestartet;
   bool AmLaden;
   bool NichtBerechnen;
+  bool fuelleGeraeteliste;
   //Beschreibung für Malzeintrag merken in Rohstoffliste
   QString Malz_Bezeichnung_Merker;
   QString Hopfen_Bezeichnung_Merker;
@@ -326,7 +327,6 @@ private slots:
   void on_tableWidget_Sudauswahl_cellDoubleClicked(int row, int column);
   void slot_AenderungAusruestung(double d);
   void slot_AenderungAusruestung(int d);
-  void slot_AenderungGeraeteliste(int row, int column);
   void slot_dateChanged(QDate);
   void on_spinBox_SWVorHopfenseihen_valueChanged(double );
   void on_SpinBox_wwSaeurekapazitaet_mmol_valueChanged(double );
@@ -566,6 +566,8 @@ private slots:
   void on_pushButton_MalzNeu_clicked();
   void on_pushButton_HopfenNeu_clicked();
   void on_pushButton_HefeNeu_clicked();
+  void on_listWidget_Brauanlagen_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+  void on_tableWidget_Geraete_itemChanged(QTableWidgetItem *item);
 };
 #endif
 
