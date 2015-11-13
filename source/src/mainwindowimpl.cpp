@@ -799,6 +799,7 @@ void MainWindowImpl::setAenderung(bool value)
 {
   if (Gestartet) {
     Aenderung = value;
+    setFensterTitel();
   }
 }
 
@@ -6286,6 +6287,8 @@ void MainWindowImpl::setFensterTitel()
 		s += " - ";
 	}
 	s += lineEdit_Sudname -> text();
+   if (Aenderung)
+     s += "*";
 	this -> setWindowTitle(s);
 }
 
