@@ -894,7 +894,7 @@ void MainWindowImpl::SchreibeAusruestungDB()
       Brauanlage* item = dynamic_cast<Brauanlage*>(listWidget_Brauanlagen->item(i));
       sql = "INSERT INTO 'Ausruestung' ('Name', 'AnlagenID', 'Maischebottich_Hoehe','Maischebottich_Durchmesser','Maischebottich_MaxFuellhoehe','Sudpfanne_Hoehe','Sudpfanne_Durchmesser','Sudpfanne_MaxFuellhoehe','KorrekturWasser','KorrekturFarbe','Verdampfungsziffer', 'Kosten', 'Sudhausausbeute') ";
       sql += "VALUES (";
-      sql += "'"+item->text()+"',";
+      sql += "'"+item->text().replace("'","''")+"',";
       sql += QString::number(item->getID())+",";
       sql += QString::number(item->getMaischebottich_Hoehe())+",";
       sql += QString::number(item->getMaischebottich_Durchmesser())+",";
@@ -2620,7 +2620,7 @@ void MainWindowImpl::SchreibeSuddatenDB()
   }
   //Bauanlagen Name
   sql += "AuswahlBrauanlageName='";
-  sql += comboBox_AuswahlBrauanlage->currentText() + "', ";
+  sql += comboBox_AuswahlBrauanlage->currentText().replace("'","''") + "', ";
   //Kommentar
   sql += "Kommentar='";
   sql += textEdit_Kommentar -> document() -> toPlainText().replace("'","''") + "', ";
