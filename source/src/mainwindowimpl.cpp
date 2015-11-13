@@ -3176,7 +3176,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           AddHopfengabe(query_Hopfen.value(FeldNr_Vorderwuerze).toBool(),
                       query_Hopfen.value(FeldNr_Name).toString(),
                       query_Hopfen.value(FeldNr_Zeit).toInt(),
-                      query_Hopfen.value(FeldNr_Prozent).toInt(),
+                      query_Hopfen.value(FeldNr_Prozent).toDouble(),
                       query_Hopfen.value(FeldNr_erg_Menge).toDouble(),
                       query_Hopfen.value(FeldNr_Alpha).toDouble(),
                       query_Hopfen.value(FeldNr_Pellets).toInt());
@@ -6699,7 +6699,7 @@ bool MainWindowImpl::AbfrageSpeichern()
 }
 
 
-void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, int Menge, double erg_Menge, double Alpha, int Pellets)
+void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Menge, double erg_Menge, double Alpha, int Pellets)
 {
   //Hopfen hinzufügen
   //Zutatenobjekt hinzufügen

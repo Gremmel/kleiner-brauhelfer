@@ -198,7 +198,7 @@ private:
   bool AenderungRohstofftabelle;
   QString GetWertString(double value);
   void CheckHopfenProzent();
-  void AddHopfengabe(bool vwh, QString Name, int Zeit, int Menge, double erg_Menge, double Alpha, int Pellets);
+  void AddHopfengabe(bool vwh, QString Name, int Zeit, double Menge, double erg_Menge, double Alpha, int Pellets);
   void SetStatusHopfengaben();
   bool AbfrageSpeichern();
   bool Aenderung;
