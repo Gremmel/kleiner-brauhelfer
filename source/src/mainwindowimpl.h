@@ -30,6 +30,10 @@ protected:
   void resizeEvent(QResizeEvent * event);
   void showEvent ( QShowEvent * event );
 private:
+  //gibt die ID der im Rezept ausgewählten Brauanlage zurück
+  int getBrauanlagenIDRezept();
+  //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
+  int getBrauanlagenIDAusruestung();
   //gibt die Angenommene sudhausausbeute der Ausgewählten Brauanlage zurück
   double getAngenommeneSudhausausbeute();
   //setzt die Angenommene sudhausausbeute der Ausgewählten Brauanlage
@@ -185,7 +189,7 @@ private:
   void LeseRohstoffeDB_test();
   void SchreibeRohstoffeDB();
   void LeseGeraetelisteDB(int id);
-  void SchreibeGeraetelisteDB(int id);
+  void SchreibeGeraetelisteDB(int id = 0);
   void DatenEinlesenDB();
   void LeseAusruestungDB();
   void BerFarbe(double cEBC = 0);

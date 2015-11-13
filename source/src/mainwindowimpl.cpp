@@ -401,6 +401,26 @@ void MainWindowImpl::showEvent ( QShowEvent *)
 {
 }
 
+int MainWindowImpl::getBrauanlagenIDRezept()
+{
+  int id = 0;
+  for (int i=0; i < listWidget_Brauanlagen->count(); i++) {
+    Brauanlage* item = dynamic_cast<Brauanlage*>(listWidget_Brauanlagen->item(i));
+    if (item->text() == comboBox_AuswahlBrauanlage->currentText()) {
+      id = item->getID();
+    }
+  }
+  return id;
+}
+
+int MainWindowImpl::getBrauanlagenIDAusruestung()
+{
+  int id = 0;
+  Brauanlage* item = dynamic_cast<Brauanlage*>(listWidget_Brauanlagen->currentItem());
+  id = item->getID();
+  return id;
+}
+
 double MainWindowImpl::getAngenommeneSudhausausbeute()
 {
   double r=0;
@@ -909,6 +929,7 @@ void MainWindowImpl::DatenEinlesenDB()
 void MainWindowImpl::DatenSchreibenDB()
 {
   SchreibeAusruestungDB();
+  SchreibeGeraetelisteDB();
   SchreibeRohstoffeDB();
 }
 
@@ -2592,13 +2613,7 @@ void MainWindowImpl::SchreibeSuddatenDB()
   sql += "Reifezeit='";
   sql += QString::number(spinBox_Reifezeit -> value()) + "', ";
   //BrauanlagenAuswahl
-  int AuswahlBrauanlage = 0;
-  for (int i=0; i < listWidget_Brauanlagen->count(); i++) {
-    Brauanlage* item = dynamic_cast<Brauanlage*>(listWidget_Brauanlagen->item(i));
-    if (item->text() == comboBox_AuswahlBrauanlage->currentText()) {
-      AuswahlBrauanlage = item->getID();
-    }
-  }
+  int AuswahlBrauanlage = getBrauanlagenIDRezept();
   if (AuswahlBrauanlage != 0) {
     sql += "AuswahlBrauanlage='";
     sql += QString::number(AuswahlBrauanlage) + "', ";
@@ -4430,30 +4445,54 @@ void MainWindowImpl::ErstelleSpickzettel()
 
   //Geräte und Zubehör
   //-------------------------------------------------------------
-  int zaehler = 0;
-  if (tableWidget_Geraete -> rowCount() > 0) {
-    s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-    s += "<p><b>";
-    s += trUtf8("benötigte Gerätschaften");
-    s += "</b></p>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i = 0; i < tableWidget_Geraete -> rowCount(); i++){
+  QSqlQuery query;
+
+  int id = getBrauanlagenIDRezept();
+  QString sql = "SELECT Bezeichnung FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+      CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+      + trUtf8("\nSQL Befehl:\n") + sql);
+  }
+  else {
+    int zaehler = 0;
+    if (query.first()) {
+      s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
+      s += "<p><b>";
+      s += trUtf8("benötigte Gerätschaften");
+      s += "</b></p>";
+      s += "<table cellspacing=0 border=0><tbody>";
       if (zaehler == 0)
         s += "<tr>";
       s += "<td align=center><p>";
-      s += tableWidget_Geraete -> item(i,0) -> text();
+      s += query.value(0).toString();
       s += "</p></td>";
       if (zaehler == 2)
         s += "</tr>";
       zaehler ++;
       if (zaehler == 3)
         zaehler = 0;
+      while (query.next()){
+        if (zaehler == 0)
+          s += "<tr>";
+        s += "<td align=center><p>";
+        s += query.value(0).toString();
+        s += "</p></td>";
+        if (zaehler == 2)
+          s += "</tr>";
+        zaehler ++;
+        if (zaehler == 3)
+          zaehler = 0;
+      }
+      if (zaehler != 0)
+        s += "</tr>";
+      s += "</tbody></table>";
+      s += "</div>";
     }
-    if (zaehler != 0)
-      s += "</tr>";
-    s += "</tbody></table>";
-    s += "</div>";
   }
+
   //Brauablauf
   //-------------------------------------------------------------
   s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
@@ -4978,6 +5017,10 @@ void MainWindowImpl::SchreibeGeraetelisteDB(int id)
 {
   if (AenderungGeraeteliste) {
     QSqlQuery query;
+    //wenn ID = 0 ist ID ermitteln
+    if (id == 0) {
+      id = getBrauanlagenIDAusruestung();
+    }
 
     //Zuerst alle Einträge in der Tabelle löschen
     QString sql = "DELETE FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
@@ -15490,20 +15533,19 @@ void MainWindowImpl::on_pushButton_HefeNeu_clicked()
 }
 
 
-void MainWindowImpl::on_listWidget_Brauanlagen_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void MainWindowImpl::on_listWidget_Brauanlagen_currentItemChanged(QListWidgetItem *, QListWidgetItem *previous)
 {
   if (Gestartet) {
     Brauanlage* item = dynamic_cast<Brauanlage*>(previous);
     //Wenn Einträge geändert wurden speichern
     if (AenderungGeraeteliste) {
-      qDebug() << "Aenderung Geräteliste Brauanlagen ID: " << item->getID();
       SchreibeGeraetelisteDB(item->getID());
       AenderungGeraeteliste = false;
     }
   }
 }
 
-void MainWindowImpl::on_tableWidget_Geraete_itemChanged(QTableWidgetItem *item)
+void MainWindowImpl::on_tableWidget_Geraete_itemChanged(QTableWidgetItem *)
 {
   if (Gestartet) {
     if (!fuelleGeraeteliste) {
