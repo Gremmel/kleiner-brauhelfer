@@ -27,7 +27,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>8</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -37,7 +37,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_247">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_83">
+           <layout class="QHBoxLayout" name="layFilter">
             <item>
              <widget class="QRadioButton" name="radioButton_FilterAlle">
               <property name="text">
@@ -108,7 +108,7 @@
               <string>Braudatum</string>
              </property>
              <property name="textAlignment">
-              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <set>AlignCenter</set>
              </property>
             </column>
             <column>
@@ -116,7 +116,7 @@
               <string>erstellt</string>
              </property>
              <property name="textAlignment">
-              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <set>AlignCenter</set>
              </property>
             </column>
             <column>
@@ -124,7 +124,7 @@
               <string>zuletzt gespeichert</string>
              </property>
              <property name="textAlignment">
-              <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <set>AlignCenter</set>
              </property>
             </column>
            </widget>
@@ -303,8 +303,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>816</width>
-             <height>749</height>
+             <width>874</width>
+             <height>780</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -894,7 +894,7 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>100</width>
+                      <width>385</width>
                       <height>150</height>
                      </rect>
                     </property>
@@ -1156,8 +1156,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>96</width>
-                       <height>26</height>
+                       <width>425</width>
+                       <height>493</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1249,8 +1249,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>96</width>
-                       <height>26</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1317,8 +1317,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>96</width>
-                       <height>26</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_80" stretch="0,1">
@@ -2121,8 +2121,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>200</width>
-               <height>141</height>
+               <width>347</width>
+               <height>413</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -2901,8 +2901,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1217</width>
-             <height>1002</height>
+             <width>1215</width>
+             <height>832</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -7410,8 +7410,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>855</width>
-             <height>261</height>
+             <width>822</width>
+             <height>308</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7482,7 +7482,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <string>Datum</string>
                    </property>
                    <property name="textAlignment">
-                    <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+                    <set>AlignCenter</set>
                    </property>
                   </column>
                   <column>
@@ -7490,7 +7490,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <string>Stammwürze</string>
                    </property>
                    <property name="textAlignment">
-                    <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+                    <set>AlignCenter</set>
                    </property>
                   </column>
                   <column>
@@ -7498,7 +7498,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <string>Alkoholgehalt</string>
                    </property>
                    <property name="textAlignment">
-                    <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+                    <set>AlignCenter</set>
                    </property>
                   </column>
                   <column>
@@ -7506,7 +7506,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <string>Temperatur</string>
                    </property>
                    <property name="textAlignment">
-                    <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+                    <set>AlignCenter</set>
                    </property>
                   </column>
                  </widget>
@@ -7605,8 +7605,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>855</width>
-             <height>261</height>
+             <width>1229</width>
+             <height>693</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7776,8 +7776,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>733</width>
-             <height>261</height>
+             <width>701</width>
+             <height>308</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7996,8 +7996,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>345</width>
+               <height>745</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -10864,8 +10864,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1237</width>
-             <height>615</height>
+             <width>1229</width>
+             <height>635</height>
             </rect>
            </property>
            <attribute name="label">
@@ -10975,8 +10975,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>488</width>
-             <height>128</height>
+             <width>458</width>
+             <height>119</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11085,8 +11085,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>488</width>
-             <height>128</height>
+             <width>458</width>
+             <height>119</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11215,8 +11215,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>319</width>
-             <height>128</height>
+             <width>300</width>
+             <height>119</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11318,8 +11318,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>586</width>
-             <height>384</height>
+             <width>592</width>
+             <height>348</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11893,28 +11893,28 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Oxygen-Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:12pt; font-weight:600;&quot;&gt;kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;Developer&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt; Gremmel&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;kleiner-brauhelfer@soseies.de&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;www.joerum.de/kleiner-brauhelfer/&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-style:italic;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;source code&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;http://www.joerum.de/kleiner-brauhelfer/download.html&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;svn url (Entwicklung)&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-style:italic;&quot;&gt;http://kleiner-brauhelfer.googlecode.com/svn/trunk/&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;Dieses Programm ist lizenziert unter den Bedingungen der GNU General Public License Version 3&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;Verfügbar Online unter: http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;compiliert mit Qt version: 5.3.0&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:600;&quot;&gt;Besonderer Dank geht an&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt; font-style:italic;&quot;&gt;www.hobbybrauer.de&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;(für die Fülle an Informationen und Hilfe)&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Developer&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt; Gremmel&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;kleiner-brauhelfer@soseies.de&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;www.joerum.de/kleiner-brauhelfer/&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-style:italic;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;source code&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;http://www.joerum.de/kleiner-brauhelfer/download.html&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;svn url (Entwicklung)&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;http://kleiner-brauhelfer.googlecode.com/svn/trunk/&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Dieses Programm ist lizenziert unter den Bedingungen der GNU General Public License Version 3&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Verfügbar Online unter: http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;compiliert mit Qt version: 5.3.0&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Besonderer Dank geht an&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-style:italic;&quot;&gt;www.hobbybrauer.de&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;(für die Fülle an Informationen und Hilfe)&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -11930,7 +11930,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1269</width>
-     <height>30</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
