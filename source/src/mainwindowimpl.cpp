@@ -261,7 +261,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   connect(textEdit_Kommentar, SIGNAL( textChanged() ), this, SLOT( slot_Changed() ));
 
   //änderung im Tablewidged
-  connect(tableWidget_Geraete, SIGNAL( cellChanged(int, int) ), this, SLOT( slot_TableWidget_cellChanged(int, int) ));
   connect(tableWidget_Malz, SIGNAL( cellChanged(int, int) ), this, SLOT( slot_TableWidget_cellChanged(int, int) ));
   connect(tableWidget_Hopfen, SIGNAL( cellChanged(int, int) ), this, SLOT( slot_TableWidget_cellChanged(int, int) ));
   connect(tableWidget_Hopfen, SIGNAL( cellChanged(int, int) ), this, SLOT( slot_EwzAenderungRohstoffe()) );
@@ -15553,6 +15552,7 @@ void MainWindowImpl::on_tableWidget_Geraete_itemChanged(QTableWidgetItem *)
   if (Gestartet) {
     if (!fuelleGeraeteliste) {
       AenderungGeraeteliste = true;
+      setAenderung(true);
     }
   }
 }
