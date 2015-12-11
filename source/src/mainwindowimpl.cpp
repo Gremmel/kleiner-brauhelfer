@@ -5367,7 +5367,7 @@ void MainWindowImpl::SetStatusGebraut(bool status)
 
   //Weitere Zutaten
   for (int i=0; i < list_EwZutat.count(); i++){
-    list_EwZutat[i] -> setDisabled(status);
+    list_EwZutat[i] -> setDisabled(status, false);
   }
   pushButton_EWZ_Hinzufuegen -> setVisible(!status);
 
@@ -5626,6 +5626,11 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
   }
   else {
     bs = QAbstractSpinBox::NoButtons;
+  }
+
+  //Weitere Zutaten
+  for (int i=0; i < list_EwZutat.count(); i++){
+    list_EwZutat[i] -> setDisabled(status, status);
   }
 
   pushButton_SudAbgefuellt -> setDisabled(status);

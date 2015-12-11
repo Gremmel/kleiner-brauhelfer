@@ -73,7 +73,7 @@ public:
   doubleEditLineImpl* ergWidget;
   ErweiterteZutatImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
   void WerteNeuAusRohstoffeHolen();
-  void setDisabled(bool status);
+  void setDisabled(bool status, bool statusZeitraum);
   void setBierWurdeGebraut(bool value);
 
 private slots:
@@ -83,6 +83,10 @@ private slots:
   void on_comboBox_Zutat_currentIndexChanged(QString );
   void on_pushButton_del_clicked();
   void on_fadeout_fertig();
+
+  void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
+
+  void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
 protected:
   void closeEvent(QCloseEvent *event);

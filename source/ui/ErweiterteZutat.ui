@@ -210,6 +210,47 @@
        </widget>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_von">
+          <property name="text">
+           <string>von</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="dateEdit_zugabezeitpunkt_von">
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_bis">
+          <property name="text">
+           <string>bis</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="dateEdit_zugabezeitpunkt_bis">
+          <property name="displayFormat">
+           <string>dd.MM.yyyy</string>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QTextEdit" name="textEdit_Komentar">
         <property name="minimumSize">
          <size>

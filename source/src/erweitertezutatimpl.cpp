@@ -20,7 +20,7 @@ void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
   on_comboBox_Zutat_currentIndexChanged(comboBox_Zutat -> currentText());
 }
 
-void ErweiterteZutatImpl::setDisabled(bool status)
+void ErweiterteZutatImpl::setDisabled(bool status, bool statusZeitraum)
 {
   QAbstractSpinBox::ButtonSymbols bs;
 
@@ -39,6 +39,9 @@ void ErweiterteZutatImpl::setDisabled(bool status)
   dsb_Menge -> setButtonSymbols(bs);
   textEdit_Komentar -> setReadOnly(status);
   pushButton_del -> setDisabled(status);
+
+  dateEdit_zugabezeitpunkt_bis->setDisabled(statusZeitraum);
+  dateEdit_zugabezeitpunkt_von->setDisabled(statusZeitraum);
 }
 
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
@@ -321,8 +324,20 @@ void ErweiterteZutatImpl::setBemerkung(QString Bemerkung)
 }
 
 
-void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int )
+void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int index)
 {
+  if (index == 0) {
+    label_von->setVisible(true);
+    label_bis->setVisible(true);
+    dateEdit_zugabezeitpunkt_bis->setVisible(true);
+    dateEdit_zugabezeitpunkt_von->setVisible(true);
+  }
+  else {
+    label_von->setVisible(false);
+    label_bis->setVisible(false);
+    dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    dateEdit_zugabezeitpunkt_von->setVisible(false);
+  }
   emit sig_Aenderung();
 }
 
@@ -386,3 +401,19 @@ double ErweiterteZutatImpl::getErg_Kosten()
   return erg_Menge * preis/1000;
 }
 
+
+void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date)
+{
+  if (dateEdit_zugabezeitpunkt_bis->date() < date) {
+    dateEdit_zugabezeitpunkt_bis->setDate(date);
+  }
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date)
+{
+  if (date < dateEdit_zugabezeitpunkt_von->date()) {
+    dateEdit_zugabezeitpunkt_bis->setDate(dateEdit_zugabezeitpunkt_von->date());
+  }
+  emit sig_Aenderung();
+}
