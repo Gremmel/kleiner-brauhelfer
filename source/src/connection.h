@@ -2429,6 +2429,10 @@ static bool ErstelleVerbindung() {
       if (query.value(0).toInt() == 18){
         updateNr = 18;
       }
+      //Wenn Version der Datenbank 19 ist dann auf versionstand 20 Updaten
+      if (query.value(0).toInt() == 19){
+        updateNr = 19;
+      }
 
 			//wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
       else if (query.value(0).toInt() > DB_VERSION) {
@@ -2709,6 +2713,47 @@ static bool ErstelleVerbindung() {
     }
     QSqlDatabase::database().commit();
     updateNr = 19;
+  }
+  //Update von 19 auf 20
+  if (updateNr == 19) {
+    bool io = true;
+    QSqlDatabase::database().transaction();
+    //Spalte Datum Zugabezeitpunkt Weitere Zutaten von
+    QString sql = "ALTER TABLE 'WeitereZutatenGaben' ADD COLUMN 'Zeitpunkt_von' DATETIME";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Datum Zugabezeitpunkt Weitere Zutaten bis
+    sql = "ALTER TABLE 'WeitereZutatenGaben' ADD COLUMN 'Zeitpunkt_bis' DATETIME";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Versionsstand auf 20 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=20";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    if (!io){
+      // Fehlermeldung Konnte Datenbank nicht updaten
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V19_V20, TYPE_KRITISCH,
+        CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
+      return false;
+    }
+    QSqlDatabase::database().commit();
+    updateNr = 20;
   }
   return true;
 }
