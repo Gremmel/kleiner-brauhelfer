@@ -13,6 +13,7 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   farbe = 0;
   typ = -1;
   animationPos = new QPropertyAnimation(this, "pos");
+  dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
 }
 
 void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
@@ -47,6 +48,22 @@ void ErweiterteZutatImpl::setDisabled(bool status, bool statusZeitraum)
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 {
   BierWurdeGebraut = value;
+}
+
+void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
+{
+  dateEdit_zugabezeitpunkt_von->setDate(datum_von);
+  dateEdit_zugabezeitpunkt_bis->setDate(datum_bis);
+}
+
+QDate ErweiterteZutatImpl::getZugabezeitpunkt_von()
+{
+  return dateEdit_zugabezeitpunkt_von->date();
+}
+
+QDate ErweiterteZutatImpl::getZugabezeitpunkt_bis()
+{
+  return dateEdit_zugabezeitpunkt_bis->date();
 }
 
 int ErweiterteZutatImpl::getID()

@@ -75,6 +75,9 @@ public:
   void WerteNeuAusRohstoffeHolen();
   void setDisabled(bool status, bool statusZeitraum);
   void setBierWurdeGebraut(bool value);
+  void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);
+  QDate getZugabezeitpunkt_von();
+  QDate getZugabezeitpunkt_bis();
 
 private slots:
   void on_textEdit_Komentar_textChanged();
@@ -83,9 +86,7 @@ private slots:
   void on_comboBox_Zutat_currentIndexChanged(QString );
   void on_pushButton_del_clicked();
   void on_fadeout_fertig();
-
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
-
   void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
 protected:
