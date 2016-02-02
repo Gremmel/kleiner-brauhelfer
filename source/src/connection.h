@@ -2736,6 +2736,24 @@ static bool ErstelleVerbindung() {
         + QObject::trUtf8("\nSQL Befehl:\n") + sql);
       io = false;
     }
+    //Spalte Zugabestatus
+    sql = "ALTER TABLE 'WeitereZutatenGaben' ADD COLUMN 'Zugabestatus' INTEGER DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Keine Entnahme
+    sql = "ALTER TABLE 'WeitereZutatenGaben' ADD COLUMN 'Entnahmeindex' INTEGER DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
     //Versionsstand auf 20 setzen
     sql = "UPDATE 'Global' SET 'db_Version'=20";
     if (!query.exec(sql)) {

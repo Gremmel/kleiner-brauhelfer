@@ -345,13 +345,13 @@ void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int in
 {
   if (index == 0) {
     label_von->setVisible(true);
-    label_bis->setVisible(true);
+    comboBox_entnahme->setVisible(true);
     dateEdit_zugabezeitpunkt_bis->setVisible(true);
     dateEdit_zugabezeitpunkt_von->setVisible(true);
   }
   else {
     label_von->setVisible(false);
-    label_bis->setVisible(false);
+    comboBox_entnahme->setVisible(false);
     dateEdit_zugabezeitpunkt_bis->setVisible(false);
     dateEdit_zugabezeitpunkt_von->setVisible(false);
   }
@@ -431,6 +431,17 @@ void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDat
 {
   if (date < dateEdit_zugabezeitpunkt_von->date()) {
     dateEdit_zugabezeitpunkt_bis->setDate(dateEdit_zugabezeitpunkt_von->date());
+  }
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int index)
+{
+  if (index == 0) {
+    dateEdit_zugabezeitpunkt_bis->setVisible(true);
+  }
+  else {
+    dateEdit_zugabezeitpunkt_bis->setVisible(false);
   }
   emit sig_Aenderung();
 }

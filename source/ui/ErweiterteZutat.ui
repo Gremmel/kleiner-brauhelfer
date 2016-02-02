@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>156</height>
+    <width>381</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -217,7 +217,7 @@
         <item>
          <widget class="QLabel" name="label_von">
           <property name="text">
-           <string>von</string>
+           <string>Zugabe</string>
           </property>
          </widget>
         </item>
@@ -232,10 +232,30 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_bis">
-          <property name="text">
-           <string>bis</string>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_entnahme">
+          <item>
+           <property name="text">
+            <string>Entnahme</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>keine Entnahme</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>

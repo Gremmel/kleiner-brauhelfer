@@ -89,6 +89,8 @@ private slots:
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
   void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
+  void on_comboBox_entnahme_currentIndexChanged(int index);
+
 protected:
   void closeEvent(QCloseEvent *event);
 
