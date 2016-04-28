@@ -78,6 +78,8 @@ public:
   void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);
   QDate getZugabezeitpunkt_von();
   QDate getZugabezeitpunkt_bis();
+  void setEntnahmeindex(int index);
+  int getEntnahmeindex();
 
 private slots:
   void on_textEdit_Komentar_textChanged();

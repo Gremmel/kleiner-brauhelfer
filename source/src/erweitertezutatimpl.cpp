@@ -66,6 +66,16 @@ QDate ErweiterteZutatImpl::getZugabezeitpunkt_bis()
   return dateEdit_zugabezeitpunkt_bis->date();
 }
 
+void ErweiterteZutatImpl::setEntnahmeindex(int index)
+{
+  comboBox_entnahme->setCurrentIndex(index);
+}
+
+int ErweiterteZutatImpl::getEntnahmeindex()
+{
+  return comboBox_entnahme->currentIndex();
+}
+
 int ErweiterteZutatImpl::getID()
 {
   return ID;
@@ -346,8 +356,13 @@ void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int in
   if (index == 0) {
     label_von->setVisible(true);
     comboBox_entnahme->setVisible(true);
-    dateEdit_zugabezeitpunkt_bis->setVisible(true);
     dateEdit_zugabezeitpunkt_von->setVisible(true);
+    if (comboBox_entnahme->currentIndex() == 0) {
+      dateEdit_zugabezeitpunkt_bis->setVisible(true);
+    }
+    else {
+      dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    }
   }
   else {
     label_von->setVisible(false);
