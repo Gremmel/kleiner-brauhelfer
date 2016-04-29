@@ -21,28 +21,90 @@ void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
   on_comboBox_Zutat_currentIndexChanged(comboBox_Zutat -> currentText());
 }
 
-void ErweiterteZutatImpl::setDisabled(bool status, bool statusZeitraum)
+void ErweiterteZutatImpl::setUIStatus()
 {
   QAbstractSpinBox::ButtonSymbols bs;
 
-  if (!status) {
+  if (!statusDisabled) {
     bs = QAbstractSpinBox::UpDownArrows;
   }
   else {
     bs = QAbstractSpinBox::NoButtons;
   }
 
-  comboBox_Zutat -> setDisabled(status);
-  comboBox_Zutat -> setEditable(status);
-  comboBox_Zugabezeitpunkt -> setDisabled(status);
-  comboBox_Zugabezeitpunkt -> setEditable(status);
-  dsb_Menge -> setReadOnly(status);
+  //Editfelder Disablen
+  comboBox_Zutat -> setDisabled(statusDisabled);
+  comboBox_Zutat -> setEditable(statusDisabled);
+  comboBox_Zugabezeitpunkt -> setDisabled(statusDisabled);
+  comboBox_Zugabezeitpunkt -> setEditable(statusDisabled);
+  dsb_Menge -> setReadOnly(statusDisabled);
   dsb_Menge -> setButtonSymbols(bs);
-  textEdit_Komentar -> setReadOnly(status);
-  pushButton_del -> setDisabled(status);
+  textEdit_Komentar -> setReadOnly(statusDisabled);
+  pushButton_del -> setDisabled(statusDisabled);
 
-  dateEdit_zugabezeitpunkt_bis->setDisabled(statusZeitraum);
-  dateEdit_zugabezeitpunkt_von->setDisabled(statusZeitraum);
+  if (zugabestatus == 0)
+    dateEdit_zugabezeitpunkt_von->setDisabled(statusDisabledZeitraum);
+  else
+    dateEdit_zugabezeitpunkt_von->setDisabled(true);
+
+  if (zugabestatus < 2)
+    dateEdit_zugabezeitpunkt_bis->setDisabled(statusDisabledZeitraum);
+  else
+    dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+
+  comboBox_entnahme->setDisabled(statusDisabledZeitraum);
+  //je nach zugabestatus Buttons ein oder ausblenden
+  if (comboBox_Zugabezeitpunkt->currentIndex() == 0) {
+    label_von->setVisible(true);
+    comboBox_entnahme->setVisible(true);
+    dateEdit_zugabezeitpunkt_von->setVisible(true);
+    if (comboBox_entnahme->currentIndex() == 0) {
+      dateEdit_zugabezeitpunkt_bis->setVisible(true);
+    }
+    else {
+      dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    }
+
+    if (zugabestatus == 0) {
+      if (!statusDisabledZeitraum && BierWurdeGebraut)
+        buttonZugeben->setVisible(true);
+      else
+        buttonZugeben->setVisible(false);
+      buttonEntnehmen->setVisible(false);
+    }
+    if (zugabestatus == 1) {
+      buttonZugeben->setVisible(false);
+      if (comboBox_entnahme->currentIndex() == 0) {
+        if (!statusDisabledZeitraum && BierWurdeGebraut)
+          buttonEntnehmen->setVisible(true);
+        else
+          buttonEntnehmen->setVisible(false);
+      }
+      else {
+        buttonEntnehmen->setVisible(false);
+      }
+    }
+    if (zugabestatus == 2) {
+      buttonZugeben->setVisible(false);
+      buttonEntnehmen->setVisible(false);
+    }
+  }
+  else {
+    label_von->setVisible(false);
+    comboBox_entnahme->setVisible(false);
+    dateEdit_zugabezeitpunkt_von->setVisible(false);
+    dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    buttonZugeben->setVisible(false);
+    buttonEntnehmen->setVisible(false);
+  }
+
+}
+
+void ErweiterteZutatImpl::setDisabled(bool status, bool statusZeitraum)
+{
+  statusDisabled = status;
+  statusDisabledZeitraum = statusZeitraum;
+  setUIStatus();
 }
 
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
@@ -119,6 +181,17 @@ void ErweiterteZutatImpl::ErstelleAuswahlliste()
     }
   }
 
+}
+
+int ErweiterteZutatImpl::getZugabestatus() const
+{
+  return zugabestatus;
+}
+
+void ErweiterteZutatImpl::setZugabestatus(int value)
+{
+  zugabestatus = value;
+  setUIStatus();
 }
 
 
@@ -351,25 +424,9 @@ void ErweiterteZutatImpl::setBemerkung(QString Bemerkung)
 }
 
 
-void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int index)
+void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int )
 {
-  if (index == 0) {
-    label_von->setVisible(true);
-    comboBox_entnahme->setVisible(true);
-    dateEdit_zugabezeitpunkt_von->setVisible(true);
-    if (comboBox_entnahme->currentIndex() == 0) {
-      dateEdit_zugabezeitpunkt_bis->setVisible(true);
-    }
-    else {
-      dateEdit_zugabezeitpunkt_bis->setVisible(false);
-    }
-  }
-  else {
-    label_von->setVisible(false);
-    comboBox_entnahme->setVisible(false);
-    dateEdit_zugabezeitpunkt_bis->setVisible(false);
-    dateEdit_zugabezeitpunkt_von->setVisible(false);
-  }
+  setUIStatus();
   emit sig_Aenderung();
 }
 
@@ -452,11 +509,13 @@ void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDat
 
 void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int index)
 {
-  if (index == 0) {
-    dateEdit_zugabezeitpunkt_bis->setVisible(true);
-  }
-  else {
-    dateEdit_zugabezeitpunkt_bis->setVisible(false);
-  }
+  setUIStatus();
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_buttonZugeben_clicked()
+{
+  zugabestatus = 1;
+  setUIStatus();
   emit sig_Aenderung();
 }

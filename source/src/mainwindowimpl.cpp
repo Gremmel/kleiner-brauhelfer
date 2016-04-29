@@ -3260,6 +3260,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ewz -> setZugabezeitpunkt(date_von,date_bis);
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
+          FeldNr_Name = query_ewz.record().indexOf("Zugabestatus");
+          ewz -> setZugabestatus(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 

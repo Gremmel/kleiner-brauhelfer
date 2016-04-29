@@ -44,6 +44,9 @@ private:
   QPoint pVon, pNach;
   int z;
   bool NativStyle;
+  int zugabestatus;
+  bool statusDisabled;
+  bool statusDisabledZeitraum;
 
 public:
   double getErg_Kosten();
@@ -73,6 +76,7 @@ public:
   doubleEditLineImpl* ergWidget;
   ErweiterteZutatImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
   void WerteNeuAusRohstoffeHolen();
+  void setUIStatus();
   void setDisabled(bool status, bool statusZeitraum);
   void setBierWurdeGebraut(bool value);
   void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);
@@ -80,6 +84,8 @@ public:
   QDate getZugabezeitpunkt_bis();
   void setEntnahmeindex(int index);
   int getEntnahmeindex();
+  int getZugabestatus() const;
+  void setZugabestatus(int value);
 
 private slots:
   void on_textEdit_Komentar_textChanged();
@@ -92,6 +98,8 @@ private slots:
   void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
   void on_comboBox_entnahme_currentIndexChanged(int index);
+
+  void on_buttonZugeben_clicked();
 
 protected:
   void closeEvent(QCloseEvent *event);

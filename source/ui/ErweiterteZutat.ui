@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>381</width>
-    <height>172</height>
+    <width>570</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,18 +35,6 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
-      <property name="leftMargin">
-       <number>1</number>
-      </property>
-      <property name="topMargin">
-       <number>1</number>
-      </property>
-      <property name="rightMargin">
-       <number>1</number>
-      </property>
-      <property name="bottomMargin">
-       <number>1</number>
-      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
@@ -216,6 +204,12 @@
         </property>
         <item>
          <widget class="QLabel" name="label_von">
+          <property name="minimumSize">
+           <size>
+            <width>125</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string>Zugabe</string>
           </property>
@@ -223,6 +217,12 @@
         </item>
         <item>
          <widget class="QDateEdit" name="dateEdit_zugabezeitpunkt_von">
+          <property name="toolTip">
+           <string>Datum Zugabezeitpunkt</string>
+          </property>
+          <property name="statusTip">
+           <string/>
+          </property>
           <property name="displayFormat">
            <string>dd.MM.yyyy</string>
           </property>
@@ -239,13 +239,42 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>40</width>
-            <height>20</height>
+            <height>0</height>
            </size>
           </property>
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="buttonZugeben">
+          <property name="toolTip">
+           <string>Zutat als hinzugegeben Markieren</string>
+          </property>
+          <property name="statusTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>zugeben</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
          <widget class="QComboBox" name="comboBox_entnahme">
+          <property name="minimumSize">
+           <size>
+            <width>125</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Festlegen ob Zutat wieder entnommen werden soll</string>
+          </property>
+          <property name="statusTip">
+           <string/>
+          </property>
           <item>
            <property name="text">
             <string>Entnahme</string>
@@ -260,11 +289,43 @@
         </item>
         <item>
          <widget class="QDateEdit" name="dateEdit_zugabezeitpunkt_bis">
+          <property name="toolTip">
+           <string>Datum Entnahmezeitpunkt</string>
+          </property>
+          <property name="statusTip">
+           <string/>
+          </property>
           <property name="displayFormat">
            <string>dd.MM.yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="buttonEntnehmen">
+          <property name="toolTip">
+           <string>Zutat als Entnommen Markieren</string>
+          </property>
+          <property name="statusTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>entnehmen</string>
           </property>
          </widget>
         </item>
