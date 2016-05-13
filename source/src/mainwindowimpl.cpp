@@ -8586,7 +8586,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       //Menge
       FeldNr = query.record().indexOf("erg_AbgefuellteBiermenge");
       double d = query.value(FeldNr).toDouble();
-      d = qRound(d*100);
+      d = qRound(d * 100);
       d = d / 100;
       newItem5 -> setText(QString::number(d));
       tableWidget_Brauuebersicht -> setItem(i, 5, newItem5);
@@ -8600,8 +8600,10 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       //Stammwürze
       FeldNr = query.record().indexOf("SWAnstellen");
-      newItem6 -> setText(query.value(FeldNr).toString());
       double sw = query.value(FeldNr).toDouble();
+      sw = qRound(sw * 100);
+      sw = sw / 100;
+      newItem6 -> setText(QString::number(sw));
       tableWidget_Brauuebersicht -> setItem(i, 6, newItem6);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Stammwürze")){
         newItem6 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8613,7 +8615,10 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       //Sudhausausbeute
       FeldNr = query.record().indexOf("erg_Sudhausausbeute");
-      newItem7 -> setText(query.value(FeldNr).toString());
+      double sha = query.value(FeldNr).toDouble();
+      sha = qRound(sha * 100);
+      sha = sha / 100;
+      newItem7 -> setText(QString::number(sha));
       tableWidget_Brauuebersicht -> setItem(i, 7, newItem7);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Sudhausausbeute")){
         newItem7 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8625,7 +8630,10 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       //Menge Schüttung
       FeldNr = query.record().indexOf("erg_S_Gesammt");
-      newItem8 -> setText(query.value(FeldNr).toString());
+      double msch = query.value(FeldNr).toDouble();
+      msch = qRound(msch * 100);
+      msch = msch / 100;
+      newItem8 -> setText(QString::number(msch));
       tableWidget_Brauuebersicht -> setItem(i, 8, newItem8);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Menge Schüttung")){
         newItem8 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8637,7 +8645,10 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       //Kosten Pro Liter
       FeldNr = query.record().indexOf("erg_Preis");
-      newItem9 -> setText(query.value(FeldNr).toString());
+      double kost = query.value(FeldNr).toDouble();
+      kost = qRound(kost * 100);
+      kost = kost / 100;
+      newItem9 -> setText(QString::number(kost));
       tableWidget_Brauuebersicht -> setItem(i, 9, newItem9);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Kosten/Liter")){
         newItem9 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8649,7 +8660,10 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       //Alc Vol
       FeldNr = query.record().indexOf("erg_Alkohol");
-      newItem10 -> setText(query.value(FeldNr).toString());
+      double abv = query.value(FeldNr).toDouble();
+      abv = qRound(abv * 100);
+      abv = abv / 100;
+      newItem10 -> setText(QString::number(abv));
       tableWidget_Brauuebersicht -> setItem(i, 10, newItem10);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Alkohol")){
         newItem10 -> setTextColor(QColor::fromRgb(0,0,0));
