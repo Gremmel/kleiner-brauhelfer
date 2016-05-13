@@ -2479,6 +2479,11 @@ void MainWindowImpl::createActions()
   ResetVerbraucht = new QAction(trUtf8("Bier &Verbraucht zurücksetzten"), this);
   ResetVerbraucht -> setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetVerbraucht, SIGNAL(triggered()), this, SLOT(slot_ResetBierVerbraucht()));
+
+  //Setzt den Zugabestatus der Weiteren Zutaten zurück
+  ResetZugabestatus = new QAction(trUtf8("&Reset Zugabestatus WZutaten"), this);
+  ResetZugabestatus -> setStatusTip(trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+  connect(ResetZugabestatus, SIGNAL(triggered()), this, SLOT(slot_ResetWZZugabestatus()));
 }
 
 void MainWindowImpl::ErstelleSprachMenu()
@@ -2541,6 +2546,7 @@ void MainWindowImpl::createMenus()
   geladenerSudMenu->addAction(ResetBierGebraut);
   geladenerSudMenu->addAction(ResetAbgefuellt);
   geladenerSudMenu->addAction(ResetVerbraucht);
+  geladenerSudMenu->addAction(ResetZugabestatus);
   separatorAct = geladenerSudMenu->addSeparator();
   for (int i = 0; i < MaxRecentFiles; ++i)
     geladenerSudMenu->addAction(recentFileActs[i]);
@@ -3235,6 +3241,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
             ewz -> setEwListe(ewzListe);
             ewz -> setHopfenListe(HopfenListe);
           }
+          ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
           //Ergebnisswidget dem Layout zuordnen
@@ -3250,6 +3257,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ewz -> setZeitpunkt(query_ewz.value(FeldNr_Name).toInt());
           FeldNr_Name = query_ewz.record().indexOf("Bemerkung");
           ewz -> setBemerkung(query_ewz.value(FeldNr_Name).toString());
+          FeldNr_Name = query_ewz.record().indexOf("Zugabestatus");
+          ewz -> setZugabestatus(query_ewz.value(FeldNr_Name).toInt());
           //zugabezeitpunkt
           QDate date_von;
           FeldNr = query_ewz.record().indexOf("Zeitpunkt_von");
@@ -3260,8 +3269,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ewz -> setZugabezeitpunkt(date_von,date_bis);
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
-          FeldNr_Name = query_ewz.record().indexOf("Zugabestatus");
-          ewz -> setZugabestatus(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 
@@ -5615,6 +5622,11 @@ void MainWindowImpl::slot_pushButton_SudAbgefuellt()
 
     // Das Rezept als gebraut Markieren
     BierWurdeAbgefuellt = true;
+
+    //den Weiteren Zutaten mitteilen das das Bier Abgefüllt wurde
+    for (int i=0; i < list_EwZutat.count(); i++){
+      list_EwZutat[i] -> setBierWurdeAbgefuellt(true);
+    }
 
     // Eingabefelder Disablen
     SetDisabledAbgefuellt(true);
@@ -11479,6 +11491,15 @@ void MainWindowImpl::slot_ResetAbgefuellt()
   LadeSudDB(true);
 }
 
+void MainWindowImpl::slot_ResetWZZugabestatus()
+{
+  //Zugabestatus der Weiteren Zutaten zurücksetzten
+  for (int i=0; i < list_EwZutat.count(); i++){
+    list_EwZutat[i] -> setZugabestatus(0);
+  }
+
+}
+
 void MainWindowImpl::slot_ResetBierVerbraucht()
 {
   QSqlQuery query;
@@ -13189,6 +13210,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
 
   ewz -> ergWidget = berEwz;
   ewz -> setBierWurdeGebraut(false);
+  ewz -> setBierWurdeAbgefuellt(false);
   connect(ewz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_ewzClose(int) ));
   connect(ewz, SIGNAL( sig_getEwzTyp(QString) ), this, SLOT( slot_getEwzTyp(QString) ));
   connect(ewz, SIGNAL( sig_getEwzEinheit(QString) ), this, SLOT( slot_getEwzEinheit(QString) ));
@@ -13426,7 +13448,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
 
   for (int i=0; i < list_EwZutat.count(); i++){
     sql = "INSERT INTO WeitereZutatenGaben(SudID, Name, Menge, Einheit, Typ, Zeitpunkt,";
-    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Farbe) VALUES(" +
+    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Zugabestatus, Farbe) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
         "\"" + list_EwZutat[i] -> getName() +	"\"," +
         QString::number(list_EwZutat[i] -> getMenge()) +	"," +
@@ -13439,6 +13461,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_von().toString(Qt::ISODate) +	"\"," +
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
+        QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {

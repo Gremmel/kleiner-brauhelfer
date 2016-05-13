@@ -38,6 +38,7 @@ private:
   int ID;
   QPixmap pixmapTyp;
   bool BierWurdeGebraut;
+  bool BierWurdeAbgefuellt;
   QPointer<FaderWidget> faderWidget;
   bool animationAktiv;
   QPropertyAnimation *animationPos;
@@ -87,6 +88,9 @@ public:
   int getZugabestatus() const;
   void setZugabestatus(int value);
 
+  bool getBierWurdeAbgefuellt() const;
+  void setBierWurdeAbgefuellt(bool value);
+
 private slots:
   void on_textEdit_Komentar_textChanged();
   void on_dsb_Menge_valueChanged(double );
@@ -100,6 +104,8 @@ private slots:
   void on_comboBox_entnahme_currentIndexChanged(int index);
 
   void on_buttonZugeben_clicked();
+
+  void on_buttonEntnehmen_clicked();
 
 protected:
   void closeEvent(QCloseEvent *event);

@@ -87,6 +87,7 @@ void ErweiterteZutatImpl::setUIStatus()
     if (zugabestatus == 2) {
       buttonZugeben->setVisible(false);
       buttonEntnehmen->setVisible(false);
+      comboBox_entnahme->setDisabled(true);
     }
   }
   else {
@@ -114,6 +115,12 @@ void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 
 void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
 {
+  if (datum_von < QDate::currentDate() && !BierWurdeAbgefuellt && zugabestatus == 0) {
+    datum_von = QDate::currentDate();
+  }
+  if (datum_bis < QDate::currentDate() && !BierWurdeAbgefuellt && zugabestatus < 2) {
+    datum_bis = QDate::currentDate();
+  }
   dateEdit_zugabezeitpunkt_von->setDate(datum_von);
   dateEdit_zugabezeitpunkt_bis->setDate(datum_bis);
 }
@@ -183,6 +190,16 @@ void ErweiterteZutatImpl::ErstelleAuswahlliste()
 
 }
 
+bool ErweiterteZutatImpl::getBierWurdeAbgefuellt() const
+{
+  return BierWurdeAbgefuellt;
+}
+
+void ErweiterteZutatImpl::setBierWurdeAbgefuellt(bool value)
+{
+  BierWurdeAbgefuellt = value;
+}
+
 int ErweiterteZutatImpl::getZugabestatus() const
 {
   return zugabestatus;
@@ -190,6 +207,8 @@ int ErweiterteZutatImpl::getZugabestatus() const
 
 void ErweiterteZutatImpl::setZugabestatus(int value)
 {
+  if (zugabestatus != value)
+    emit sig_Aenderung();
   zugabestatus = value;
   setUIStatus();
 }
@@ -516,6 +535,13 @@ void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int index)
 void ErweiterteZutatImpl::on_buttonZugeben_clicked()
 {
   zugabestatus = 1;
+  setUIStatus();
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_buttonEntnehmen_clicked()
+{
+  zugabestatus = 2;
   setUIStatus();
   emit sig_Aenderung();
 }

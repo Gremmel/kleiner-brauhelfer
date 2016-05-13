@@ -248,6 +248,7 @@ private:
   QAction *ResetBierGebraut;
   QAction *ResetAbgefuellt;
   QAction *ResetVerbraucht;
+  QAction *ResetZugabestatus;
   enum { MaxRecentFiles = 5 };
   QAction *recentFileActs[MaxRecentFiles];
   //QString AktuelleSuddatei;
@@ -346,6 +347,8 @@ private slots:
   void slot_ResetBierWurdeGebraut();
   void slot_ResetBierVerbraucht();
   void slot_ResetAbgefuellt();
+  //Zugabestatus der Weiteren Zutaten wird zurückgesetzt
+  void slot_ResetWZZugabestatus();
   void on_pushButton_EingabeHMengeNHopfenseihen_clicked();
   void on_pushButton_EingabeHMengeVHopfenseihen_clicked();
   void on_pushButton_EingabeHSWVorHopfenseihen_clicked();
