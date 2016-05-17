@@ -46,8 +46,6 @@ private:
   int z;
   bool NativStyle;
   int zugabestatus;
-  bool statusDisabled;
-  bool statusDisabledZeitraum;
 
 public:
   double getErg_Kosten();
@@ -78,7 +76,6 @@ public:
   ErweiterteZutatImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
   void WerteNeuAusRohstoffeHolen();
   void setUIStatus();
-  void setDisabled(bool status, bool statusZeitraum);
   void setBierWurdeGebraut(bool value);
   void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);
   QDate getZugabezeitpunkt_von();

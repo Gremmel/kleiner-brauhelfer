@@ -24,35 +24,68 @@ void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
 void ErweiterteZutatImpl::setUIStatus()
 {
   QAbstractSpinBox::ButtonSymbols bs;
+  bool statusDisabled;
 
-  if (!statusDisabled) {
-    bs = QAbstractSpinBox::UpDownArrows;
-  }
-  else {
+  //Status wenn Abgefüllt wurde
+  if (BierWurdeAbgefuellt) {
     bs = QAbstractSpinBox::NoButtons;
+    statusDisabled = true;
   }
+  //Bier wurde gebraut aber nicht abgefüllt
+  else if (BierWurdeGebraut) {
+    //Gärung
+    if (comboBox_Zugabezeitpunkt->currentIndex() == 0) {
+      //Noch nicht hinzugegeben
+      if (zugabestatus == 0) {
+        bs = QAbstractSpinBox::UpDownArrows;
+        statusDisabled = false;
+        dateEdit_zugabezeitpunkt_von->setDisabled(false);
+      }
+      //schon hinzugegeben
+      else {
+        bs = QAbstractSpinBox::NoButtons;
+        statusDisabled = true;
+        dateEdit_zugabezeitpunkt_von->setDisabled(true);
+      }
+      // entnommen
+      if (zugabestatus == 2) {
+        dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+      }
+      // noch nicht entnommen
+      else {
+        dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+      }
+    }
+    //Zugabezeitpunkt Maischen oder Kochen
+    else {
+      bs = QAbstractSpinBox::NoButtons;
+      statusDisabled = true;
+      dateEdit_zugabezeitpunkt_von->setDisabled(true);
+      dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+      comboBox_entnahme->setDisabled(true);
+    }
+  }
+  //noch nicht gebraut
+  else {
+    bs = QAbstractSpinBox::UpDownArrows;
+    statusDisabled = false;
+    dateEdit_zugabezeitpunkt_von->setDisabled(false);
+    dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+    comboBox_entnahme->setDisabled(false);
+  }
+
+  dsb_Menge -> setButtonSymbols(bs);
 
   //Editfelder Disablen
+  dsb_Menge -> setReadOnly(statusDisabled);
   comboBox_Zutat -> setDisabled(statusDisabled);
   comboBox_Zutat -> setEditable(statusDisabled);
   comboBox_Zugabezeitpunkt -> setDisabled(statusDisabled);
   comboBox_Zugabezeitpunkt -> setEditable(statusDisabled);
-  dsb_Menge -> setReadOnly(statusDisabled);
-  dsb_Menge -> setButtonSymbols(bs);
   textEdit_Komentar -> setReadOnly(statusDisabled);
   pushButton_del -> setDisabled(statusDisabled);
 
-  if (zugabestatus == 0)
-    dateEdit_zugabezeitpunkt_von->setDisabled(statusDisabledZeitraum);
-  else
-    dateEdit_zugabezeitpunkt_von->setDisabled(true);
 
-  if (zugabestatus < 2)
-    dateEdit_zugabezeitpunkt_bis->setDisabled(statusDisabledZeitraum);
-  else
-    dateEdit_zugabezeitpunkt_bis->setDisabled(true);
-
-  comboBox_entnahme->setDisabled(statusDisabledZeitraum);
   //je nach zugabestatus Buttons ein oder ausblenden
   if (comboBox_Zugabezeitpunkt->currentIndex() == 0) {
     label_von->setVisible(true);
@@ -66,7 +99,7 @@ void ErweiterteZutatImpl::setUIStatus()
     }
 
     if (zugabestatus == 0) {
-      if (!statusDisabledZeitraum && BierWurdeGebraut)
+      if (BierWurdeGebraut && !BierWurdeAbgefuellt)
         buttonZugeben->setVisible(true);
       else
         buttonZugeben->setVisible(false);
@@ -75,7 +108,7 @@ void ErweiterteZutatImpl::setUIStatus()
     if (zugabestatus == 1) {
       buttonZugeben->setVisible(false);
       if (comboBox_entnahme->currentIndex() == 0) {
-        if (!statusDisabledZeitraum && BierWurdeGebraut)
+        if (BierWurdeGebraut && !BierWurdeAbgefuellt)
           buttonEntnehmen->setVisible(true);
         else
           buttonEntnehmen->setVisible(false);
@@ -101,16 +134,10 @@ void ErweiterteZutatImpl::setUIStatus()
 
 }
 
-void ErweiterteZutatImpl::setDisabled(bool status, bool statusZeitraum)
-{
-  statusDisabled = status;
-  statusDisabledZeitraum = statusZeitraum;
-  setUIStatus();
-}
-
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 {
   BierWurdeGebraut = value;
+  setUIStatus();
 }
 
 void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
@@ -198,6 +225,7 @@ bool ErweiterteZutatImpl::getBierWurdeAbgefuellt() const
 void ErweiterteZutatImpl::setBierWurdeAbgefuellt(bool value)
 {
   BierWurdeAbgefuellt = value;
+  setUIStatus();
 }
 
 int ErweiterteZutatImpl::getZugabestatus() const
@@ -526,7 +554,7 @@ void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDat
   emit sig_Aenderung();
 }
 
-void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int index)
+void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int)
 {
   setUIStatus();
   emit sig_Aenderung();

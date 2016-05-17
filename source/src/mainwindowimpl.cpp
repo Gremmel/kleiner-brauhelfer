@@ -3223,7 +3223,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_getEwzPreis(QString) ), this, SLOT( slot_getEwzPreis(QString) ));
           connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
           if (BierWurdeGebraut) {
-            ewz -> setBierWurdeGebraut(true);
             //Da Bier schon gebraut wurde die daten aus der Datenbank benutzten und nicht aus den Rohstoffdaten
             //da der Rohstoff unter umständen nicht mehr existiert oder verändert wurde
             int FeldNr = query_ewz.record().indexOf("Typ");
@@ -3236,11 +3235,11 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
             ewz -> setEinheit(query_ewz.value(FeldNr).toInt());
           }
           else {
-            ewz -> setBierWurdeGebraut(false);
             //Zutatenliste füllen
             ewz -> setEwListe(ewzListe);
             ewz -> setHopfenListe(HopfenListe);
           }
+          ewz -> setBierWurdeGebraut(BierWurdeGebraut);
           ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
@@ -5384,10 +5383,6 @@ void MainWindowImpl::SetStatusGebraut(bool status)
   comboBox_BerechnungsArtHopfen->setDisabled(status);
   comboBox_BerechnungsArtHopfen->setEditable(status);
 
-  //Weitere Zutaten
-  for (int i=0; i < list_EwZutat.count(); i++){
-    list_EwZutat[i] -> setDisabled(status, false);
-  }
   pushButton_EWZ_Hinzufuegen -> setVisible(!status);
 
   //Tab Wasser
@@ -5650,11 +5645,6 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
   }
   else {
     bs = QAbstractSpinBox::NoButtons;
-  }
-
-  //Weitere Zutaten
-  for (int i=0; i < list_EwZutat.count(); i++){
-    list_EwZutat[i] -> setDisabled(status, status);
   }
 
   pushButton_SudAbgefuellt -> setDisabled(status);
