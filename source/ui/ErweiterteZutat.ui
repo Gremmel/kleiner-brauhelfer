@@ -206,8 +206,14 @@
          <widget class="QLabel" name="label_von">
           <property name="minimumSize">
            <size>
-            <width>125</width>
+            <width>130</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>130</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -265,8 +271,14 @@
          <widget class="QComboBox" name="comboBox_entnahme">
           <property name="minimumSize">
            <size>
-            <width>125</width>
+            <width>130</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>130</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="toolTip">
