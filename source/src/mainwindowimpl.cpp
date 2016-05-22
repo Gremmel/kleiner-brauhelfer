@@ -20,10 +20,12 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QProcess>
+#include <QDesktopServices>
 
 #include <qmath.h>
 #include "errormessage.h"
 #include "definitionen.h"
+#include "infotexts.h"
 #include "einstellungsdialogimpl.h"
 #include "getrohstoffvorlage.h"
 #include "rohstoffaustauschen.h"
@@ -31,6 +33,7 @@
 #include "dialog_berechne_ibuimpl.h"
 #include "dialogberverdampfung.h"
 #include "brauanlage.h"
+#include "dialoginfo.h"
 //
 MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   : QMainWindow(parent, f)
@@ -273,6 +276,12 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //SpinBox Stammwürze nach Kochende mit SpinBox Stammwüzre vor dem Hopfenseihen verbinden
   connect(spinBox_SWKochende, SIGNAL( valueChanged(double) ), spinBox_SWVorHopfenseihen, SLOT( setValue(double) ));
 
+  // links extern weiterleiten
+  webView_Info->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+  connect(webView_Info, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
+  webView_Zusammenfassung->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+  connect(webView_Zusammenfassung, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
+
   //SpinBox Stammwürze vor dem Hopfenseigen ausblenden da nicht mehr benötigt
   label_116 -> hide();
   spinBox_SWVorHopfenseihen -> hide();
@@ -327,6 +336,15 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //Seite Spickzettel erstellen
   ErstelleTabSpickzettel();
 
+  // Spaltenbreite von "Link"
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Fixed);
+  tableWidget_Malz->horizontalHeader()->resizeSection(9, 120);
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
+  tableWidget_Hopfen->horizontalHeader()->resizeSection(10, 120);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(14, QHeaderView::Fixed);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(14, 120);
+  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
+  tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(10, 120);
 }
 
 void MainWindowImpl::on_MsgCheckFertig(int count)
@@ -1001,6 +1019,11 @@ void MainWindowImpl::MalzNeueZeile()
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Malz -> setCellWidget(i, 8, deMhd);
 
+  //Link
+  QTableWidgetItem *newItem4 = new QTableWidgetItem("");
+  newItem4->setTextColor(Qt::blue);
+  tableWidget_Malz -> setItem(i, 9, newItem4);
+
   setAenderung(true);
   AenderungRohstofftabelle = true;
 
@@ -1106,6 +1129,10 @@ void MainWindowImpl::HopfenNeueZeile()
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
 
+  //Link
+  QTableWidgetItem *newItemLink = new QTableWidgetItem("");
+  newItemLink->setTextColor(Qt::blue);
+  tableWidget_Hopfen -> setItem(i, 10, newItemLink);
 
   setAenderung(true);
   AenderungRohstofftabelle = true;
@@ -1290,6 +1317,11 @@ void MainWindowImpl::HefeNeueZeile()
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
 
+  //Link
+  QTableWidgetItem *newItemLink = new QTableWidgetItem("");
+  newItemLink->setTextColor(Qt::blue);
+  tableWidget_Hefe -> setItem(i, 14, newItemLink);
+
   setAenderung(true);
   AenderungRohstofftabelle = true;
 
@@ -1323,7 +1355,7 @@ void MainWindowImpl::SchreibeRohstoffeDB()
     QDoubleSpinBox* spinBoxPreis=(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,4);
     QDateEdit* deEinlagerung=(QDateEdit*)tableWidget_Malz -> cellWidget(i,7);
     QDateEdit* deMhd=(QDateEdit*)tableWidget_Malz -> cellWidget(i,8);
-    sql = "INSERT INTO Malz(Beschreibung, Farbe, MaxProzent, Menge, Preis, Bemerkung, Anwendung, Eingelagert, Mindesthaltbar) VALUES(\'" +
+    sql = "INSERT INTO Malz(Beschreibung, Farbe, MaxProzent, Menge, Preis, Bemerkung, Anwendung, Eingelagert, Mindesthaltbar, Link) VALUES(\'" +
         tableWidget_Malz -> item(i,0) -> text().replace("'","''") +	"\'," +
         QString::number(spinBoxFarbe -> value()) + "," +
         QString::number(spinBoxMaxSchuettung -> value()) + "," +
@@ -1332,7 +1364,8 @@ void MainWindowImpl::SchreibeRohstoffeDB()
         tableWidget_Malz -> item(i,5) -> text().replace("'","''") +	"\',\'" +
         tableWidget_Malz -> item(i,6) -> text().replace("'","''") + "\','"+
         deEinlagerung -> date().toString(Qt::ISODate) + "','" +
-        deMhd -> date().toString(Qt::ISODate) + "')";
+        deMhd -> date().toString(Qt::ISODate) + "','" +
+        tableWidget_Malz -> item(i,9) -> text().replace("'","''") + "')";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -1362,7 +1395,7 @@ void MainWindowImpl::SchreibeRohstoffeDB()
     QComboBox* comboTyp=(QComboBox*)tableWidget_Hopfen -> cellWidget(i,6);
     QDateEdit* deEinlagerung=(QDateEdit*)tableWidget_Hopfen -> cellWidget(i,8);
     QDateEdit* deMhd=(QDateEdit*)tableWidget_Hopfen -> cellWidget(i,9);
-    sql = "INSERT INTO Hopfen(Beschreibung, Alpha, Menge, Preis, Pellets, Bemerkung, Eigenschaften, Typ, Eingelagert, Mindesthaltbar) VALUES(\'" +
+    sql = "INSERT INTO Hopfen(Beschreibung, Alpha, Menge, Preis, Pellets, Bemerkung, Eigenschaften, Typ, Eingelagert, Mindesthaltbar, Link) VALUES(\'" +
         tableWidget_Hopfen -> item(i,0) -> text().replace("'","''") +	"\'," +
         QString::number(spinBoxAlpha -> value()) + "," +
         QString::number(spinBoxMenge -> value()) + "," +
@@ -1372,7 +1405,8 @@ void MainWindowImpl::SchreibeRohstoffeDB()
         tableWidget_Hopfen -> item(i,7) -> text().replace("'","''") + "\'," +
         QString::number(comboTyp -> currentIndex()) + ",'" +
         deEinlagerung -> date().toString(Qt::ISODate) + "','" +
-        deMhd -> date().toString(Qt::ISODate) + "')";
+        deMhd -> date().toString(Qt::ISODate) + "','" +
+        tableWidget_Hopfen -> item(i,10) -> text().replace("'","''") + "')";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -1403,7 +1437,7 @@ void MainWindowImpl::SchreibeRohstoffeDB()
     QComboBox* comboSED=(QComboBox*)tableWidget_Hefe -> cellWidget(i,10);
     QDateEdit* deEinlagerung=(QDateEdit*)tableWidget_Hefe -> cellWidget(i,12);
     QDateEdit* deMhd=(QDateEdit*)tableWidget_Hefe -> cellWidget(i,13);
-    sql = "INSERT INTO Hefe(Beschreibung, Menge, Wuerzemenge, Preis, Bemerkung, Verpackungsmenge, TypOGUG, TypTrFl, Temperatur, Eigenschaften, SED, EVG, Eingelagert, Mindesthaltbar) VALUES(\'" +
+    sql = "INSERT INTO Hefe(Beschreibung, Menge, Wuerzemenge, Preis, Bemerkung, Verpackungsmenge, TypOGUG, TypTrFl, Temperatur, Eigenschaften, SED, EVG, Eingelagert, Mindesthaltbar, Link) VALUES(\'" +
         tableWidget_Hefe -> item(i,0) -> text().replace("'","''") +	"\'," +
         QString::number(spinBoxMenge -> value()) + "," +
         QString::number(spinBoxWuerzemenge -> value()) + "," +
@@ -1417,8 +1451,8 @@ void MainWindowImpl::SchreibeRohstoffeDB()
         QString::number(comboSED -> currentIndex()) + ",\'" +
         tableWidget_Hefe -> item(i,11) -> text().replace("'","''") + "\','" +
         deEinlagerung -> date().toString(Qt::ISODate) + "','" +
-        deMhd -> date().toString(Qt::ISODate) + "'" +
-        ")";
+        deMhd -> date().toString(Qt::ISODate) + "','" +
+        tableWidget_Hefe -> item(i,14) -> text().replace("'","''") + "')";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -1451,7 +1485,7 @@ void MainWindowImpl::SchreibeRohstoffeDB()
     QDoubleSpinBox* dsbPreis=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,6);
     QDateEdit* deEinlagerung=(QDateEdit*)tableWidget_WeitereZutaten -> cellWidget(i,8);
     QDateEdit* deMhd=(QDateEdit*)tableWidget_WeitereZutaten -> cellWidget(i,9);
-    sql = "INSERT INTO WeitereZutaten(Beschreibung, Menge, Einheiten, Typ, Ausbeute, EBC, Preis, Bemerkung, Eingelagert, Mindesthaltbar) VALUES(\'" +
+    sql = "INSERT INTO WeitereZutaten(Beschreibung, Menge, Einheiten, Typ, Ausbeute, EBC, Preis, Bemerkung, Eingelagert, Mindesthaltbar, Link) VALUES(\'" +
         tableWidget_WeitereZutaten -> item(i,0) -> text().replace("'","''") +	"\'," +
         QString::number(dsbMenge -> value()) + "," +
         QString::number(comboEinheit -> currentIndex()) + "," +
@@ -1461,7 +1495,8 @@ void MainWindowImpl::SchreibeRohstoffeDB()
         QString::number(dsbPreis -> value()) + "," +
         "\'" + tableWidget_WeitereZutaten -> item(i,7) -> text().replace("'","''") + "\','" +
         deEinlagerung -> date().toString(Qt::ISODate) + "','" +
-        deMhd -> date().toString(Qt::ISODate) + "')";
+        deMhd -> date().toString(Qt::ISODate) + "','" +
+        tableWidget_WeitereZutaten -> item(i,10) -> text().replace("'","''") + "')";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -1606,6 +1641,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Malz -> setCellWidget(i, 8, deMhd);
 
+      //Link
+      FeldNr = query.record().indexOf("Link");
+      QTableWidgetItem *newItemLink = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItemLink->setTextColor(Qt::blue);
+      tableWidget_Malz -> setItem(i, 9, newItemLink);
+
       i++;
     }
     tableWidget_Malz -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -1717,6 +1758,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
+
+      //Link
+      FeldNr = query.record().indexOf("Link");
+      QTableWidgetItem *newItemLink = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItemLink->setTextColor(Qt::blue);
+      tableWidget_Hopfen -> setItem(i, 10, newItemLink);
 
       i++;
     }
@@ -1855,6 +1902,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
 
+      //Link
+      FeldNr = query.record().indexOf("Link");
+      QTableWidgetItem *newItemLink = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItemLink->setTextColor(Qt::blue);
+      tableWidget_Hefe -> setItem(i, 14, newItemLink);
+
       //Nächste Beschreibung aus Datei lesen
       i++;
     }
@@ -1968,6 +2021,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+
+      //Link
+      FeldNr = query.record().indexOf("Link");
+      QTableWidgetItem *newItemLink = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItemLink->setTextColor(Qt::blue);
+      tableWidget_WeitereZutaten -> setItem(i, 10, newItemLink);
 
       i++;
     }
@@ -2806,6 +2865,7 @@ void MainWindowImpl::SchreibeSuddatenDB()
     SchreibeNachgaerverlaufDB();
 
     SchreibeBewertungenDB();
+    SchreibeAnhangDB();
 
     FuelleSudauswahl();
   }
@@ -2834,23 +2894,23 @@ void MainWindowImpl::SchreibeBewertungenDB()
         QString::number(list_Bewertung[i] -> getWoche()) +	",'" +
         list_Bewertung[i] -> getBewertungdatum().toString(Qt::ISODate) + "', " +
         QString::number(list_Bewertung[i] -> getSterne()) +	"," +
-        "\"" + list_Bewertung[i] -> getBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getFarbe()) +	"," +
-        "\"" + list_Bewertung[i] -> getFarbeBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getFarbeBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getSchaum()) +	"," +
-        "\"" + list_Bewertung[i] -> getSchaumBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getSchaumBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getGeruch()) +	"," +
-        "\"" + list_Bewertung[i] -> getGeruchBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getGeruchBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getGeschmack()) +	"," +
-        "\"" + list_Bewertung[i] -> getGeschmackBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getGeschmackBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getAntrunk()) +	"," +
-        "\"" + list_Bewertung[i] -> getAntrunkBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getAntrunkBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getHaupttrunk()) +	"," +
-        "\"" + list_Bewertung[i] -> getHaupttrunkBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getHaupttrunkBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getNachtrunk()) +	"," +
-        "\"" + list_Bewertung[i] -> getNachtrunkBemerkung() +	"\"," +
+        "'" + list_Bewertung[i] -> getNachtrunkBemerkung().replace("'","''") +	"'," +
         QString::number(list_Bewertung[i] -> getGesamteindruck()) +	"," +
-        "\"" + list_Bewertung[i] -> getGesamteindruckBemerkung() +	"\"" +
+        "'" + list_Bewertung[i] -> getGesamteindruckBemerkung().replace("'","''") +	"'" +
         +")";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
@@ -3374,6 +3434,9 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           slot_BewertungWoche_clicked(bew->getID());
         }
       }
+
+      // Anhang Abfragen
+      LeseAnhangDB();
 
       //Tabs enablen
       tab_Rezept -> setDisabled(false);
@@ -5034,8 +5097,8 @@ void MainWindowImpl::SchreibeGeraetelisteDB(int id)
 
     //Dann wieder mit den Tabellendaten füllen
     for (int i=0; i < tableWidget_Geraete -> rowCount(); i++){
-      sql = "INSERT into Geraete(Bezeichnung, AusruestungAnlagenID) VALUES(\""
-          + tableWidget_Geraete -> item(i,0) -> text() + "\", "
+      sql = "INSERT into Geraete(Bezeichnung, AusruestungAnlagenID) VALUES('"
+          + tableWidget_Geraete -> item(i,0) -> text().replace("'","''") + "', "
           + QString::number(id) + ")";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
@@ -8026,6 +8089,17 @@ void MainWindowImpl::slot_pushButton_SudDel()
         + trUtf8("\nSQL Befehl:\n") + sql);
     }
 
+    //Alle zugehörigen Anhänge löschen
+    sql = "DELETE FROM Anhang WHERE SudID="+ SudID +";";
+
+    if (!query.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + trUtf8("\nSQL Befehl:\n") + sql);
+    }
+
     //Sudauswahl aktuallisieren
     FuelleSudauswahl();
   }
@@ -8121,7 +8195,7 @@ void MainWindowImpl::SchreibeRastenDB()
         QString::number(1) +	"," +
         QString::number(list_Rasten[i] -> getRastTemp()) +	"," +
         QString::number(list_Rasten[i] -> getRastDauer()) +	"," +
-        "\"" + list_Rasten[i] -> getRastName() +	"\"" +
+        "'" + list_Rasten[i] -> getRastName().replace("'","''") +	"'" +
         +")";
     if (!query.exec(sql)) {
       // Fehlermeldung Datenbankabfrage
@@ -9046,7 +9120,7 @@ void MainWindowImpl::SchreibeSchnellgaerverlaufDB()
     dt = tableWidget_Schnellgaerverlauf -> item(i,0) -> data(Qt::DisplayRole).toDateTime();
     sql = "INSERT INTO Schnellgaerverlauf(SudID, Zeitstempel, SW, Alc, Temp) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
-        "\"" + dt.toString(Qt::ISODate) + "\"," +
+        "'" + dt.toString(Qt::ISODate) + "'," +
         tableWidget_Schnellgaerverlauf -> item(i,1) -> text() + "," +
         tableWidget_Schnellgaerverlauf -> item(i,2) -> text() + "," +
         tableWidget_Schnellgaerverlauf -> item(i,3) -> text() + ")";
@@ -9245,7 +9319,7 @@ void MainWindowImpl::SchreibeHauptgaerverlaufDB()
       dt = tableWidget_Hauptgaerverlauf -> item(i,0) -> data(Qt::DisplayRole).toDateTime();
       sql = "INSERT INTO Hauptgaerverlauf(SudID, Zeitstempel, SW, Alc, Temp) VALUES(" +
           QString::number(AktuelleSudID) +	"," +
-          "\"" + dt.toString(Qt::ISODate) + "\"," +
+          "'" + dt.toString(Qt::ISODate) + "'," +
           tableWidget_Hauptgaerverlauf -> item(i,1) -> text() + "," +
           tableWidget_Hauptgaerverlauf -> item(i,2) -> text() + "," +
           tableWidget_Hauptgaerverlauf -> item(i,3) -> text() + ")";
@@ -9438,7 +9512,7 @@ void MainWindowImpl::SchreibeNachgaerverlaufDB()
     dt = tableWidget_Nachgaerverlauf -> item(i,0) -> data(Qt::DisplayRole).toDateTime();
     sql = "INSERT INTO Nachgaerverlauf(SudID, Zeitstempel, Druck, Temp, CO2) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
-        "\"" + dt.toString(Qt::ISODate) + "\"," +
+        "'" + dt.toString(Qt::ISODate) + "'," +
         tableWidget_Nachgaerverlauf -> item(i,1) -> text() + "," +
         tableWidget_Nachgaerverlauf -> item(i,2) -> text() + "," +
         tableWidget_Nachgaerverlauf -> item(i,3) -> text() + ")";
@@ -11067,6 +11141,20 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "";
   s += "";
   //s += QUrl::fromLocalFile(QCoreApplication::applicationDirPath()).toString();
+
+  //Anhänge
+  if (list_Anhang.count() > 0) {
+    s += "</br>";
+    s += "<div div class='rm' style='width:80%;'>";
+      s += "<p class='h2'>" + trUtf8("Anhänge:") + "</p>";
+      for (int i=0; i<list_Anhang.count();i++){
+          if (AnhangWidget::isImage(list_Anhang[i]->getPfad()))
+            s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br>";
+          else
+            s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br>";
+      }
+    s += "</div>";
+  }
 
   s += "<div><p class='version'>"APP_NAME" v";
   s += VERSION;
@@ -12839,6 +12927,39 @@ void MainWindowImpl::ErstelleSudInfo()
     }
   }
 
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  settings.beginGroup("DB");
+  QDir dbpfad = QDir(settings.value("DB_Pfad").toString());
+  settings.endGroup();
+  bool kopzeile = false;
+  for (int sid = 0; sid < ListSudID.size(); ++sid){
+    QString sql = "SELECT * FROM Anhang WHERE SudID=" + QString::number(ListSudID.at(sid));
+    QSqlQuery query_anhang;
+    if (!query_anhang.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+      CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
+      + trUtf8("\nSQL Befehl:\n") + sql);
+    }
+    else {
+      while (query_anhang.next()){
+        if (!kopzeile) {
+          s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Anhänge") + "</b></p></div>";
+          kopzeile = true;
+        }
+        int FeldNr = query_anhang.record().indexOf("Pfad");
+        QString pfad = query_anhang.value(FeldNr).toString();
+        if (QDir::isRelativePath(pfad))
+          pfad = dbpfad.filePath(pfad);
+        if (AnhangWidget::isImage(pfad))
+          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br>";
+        else
+          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br>";
+      }
+    }
+  }
+
   seite += s;
   //Seitenende
   ende = "</body></html>";
@@ -12850,6 +12971,10 @@ void MainWindowImpl::ErstelleSudInfo()
     webView_Info -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
 }
 
+void MainWindowImpl::slot_urlClicked(const QUrl &url)
+{
+  QDesktopServices::openUrl(url);
+}
 
 void MainWindowImpl::on_TabWidget_Zutaten_currentChanged(int index)
 {
@@ -12937,6 +13062,11 @@ void MainWindowImpl::on_pushButton_WeitereZutatenNeu_clicked()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+
+  //Link
+  QTableWidgetItem *newItemLink = new QTableWidgetItem("");
+  newItemLink->setTextColor(Qt::blue);
+  tableWidget_WeitereZutaten -> setItem(i, 10, newItemLink);
 
   tableWidget_WeitereZutaten->setSortingEnabled(true);
   WZutaten_Bezeichnung_Merker = s;
@@ -13397,12 +13527,12 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
     sql = "INSERT INTO WeitereZutatenGaben(SudID, Name, Menge, Einheit, Typ, Zeitpunkt,";
     sql += "Bemerkung, erg_Menge, Ausbeute, Farbe) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
-        "\"" + list_EwZutat[i] -> getName() +	"\"," +
+        "'" + list_EwZutat[i] -> getName().replace("'","''") +	"'," +
         QString::number(list_EwZutat[i] -> getMenge()) +	"," +
         QString::number(list_EwZutat[i] -> getEinheit()) +	"," +
         QString::number(list_EwZutat[i] -> getTyp()) +	"," +
         QString::number(list_EwZutat[i] -> getZeitpunkt()) +	"," +
-        "\"" + list_EwZutat[i] -> getBemerkung() +	"\"," +
+        "'" + list_EwZutat[i] -> getBemerkung().replace("'","''") +	"'," +
         QString::number(list_EwZutat[i] -> getErg_Menge()) +	"," +
         QString::number(list_EwZutat[i] -> getAusbeute()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
@@ -15553,6 +15683,153 @@ void MainWindowImpl::on_tableWidget_Geraete_itemChanged(QTableWidgetItem *)
     if (!fuelleGeraeteliste) {
       AenderungGeraeteliste = true;
       setAenderung(true);
+    }
+  }
+}
+
+void MainWindowImpl::on_tableWidget_Malz_cellClicked(int row, int column)
+{
+  if (column == 9) {
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier)
+      QDesktopServices::openUrl(QUrl(tableWidget_Malz->item(row, column)->text()));
+  }
+}
+
+void MainWindowImpl::on_tableWidget_Hopfen_cellClicked(int row, int column)
+{
+  if (column == 10) {
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier)
+      QDesktopServices::openUrl(QUrl(tableWidget_Hopfen->item(row, column)->text()));
+  }
+}
+
+void MainWindowImpl::on_tableWidget_Hefe_cellClicked(int row, int column)
+{
+  if (column == 14) {
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier)
+      QDesktopServices::openUrl(QUrl(tableWidget_Hefe->item(row, column)->text()));
+  }
+}
+
+void MainWindowImpl::on_tableWidget_WeitereZutaten_cellClicked(int row, int column)
+{
+  if (column == 10) {
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier)
+      QDesktopServices::openUrl(QUrl(tableWidget_WeitereZutaten->item(row, column)->text()));
+  }
+}
+
+void MainWindowImpl::on_pushButton_CO2_Info_clicked()
+{
+  DialogInfo::Info(this, INFO_CO2_TITLE, INFO_CO2_TEXT);
+}
+
+void MainWindowImpl::on_pushButton_IBU_Info_clicked()
+{
+    DialogInfo::Info(this, INFO_IBU_TITLE, INFO_IBU_TEXT);
+}
+
+void MainWindowImpl::on_pushButton_SW_Info_clicked()
+{
+    DialogInfo::Info(this, INFO_SW_TITLE, INFO_SW_TEXT);
+}
+
+void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked()
+{
+    DialogInfo::Info(this, INFO_HIGHGRAVITY_TITLE, INFO_HIGHGRAVITY_TEXT);
+}
+
+void MainWindowImpl::on_pushButton_NeuerAnhang_clicked()
+{
+  AddAnhang("");
+  setAenderung(true);
+}
+
+void MainWindowImpl::AddAnhang(QString pfad)
+{
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  settings.beginGroup("DB");
+  QString dbpfad = settings.value("DB_Pfad").toString();
+  settings.endGroup();
+
+  //Bildobjekt erstellen
+  AnhangWidget* anhang = new AnhangWidget(scrollArea_7);
+  anhang -> setAttribute(Qt::WA_DeleteOnClose);
+  anhang->setBasisPfad(dbpfad);
+  anhang->setPfad(pfad);
+  anhang->setID((int)time(NULL)+rand());
+
+  verticalLayout_Anhang -> addWidget(anhang);
+  list_Anhang.append(anhang);
+
+  connect(anhang, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_anhangClose(int) ));
+  connect(anhang, SIGNAL( sig_Aenderung() ), this, SLOT( slot_anhangAenderung() ));
+}
+
+void MainWindowImpl::slot_anhangClose(int id)
+{
+  for (int i=0; i < list_Anhang.count(); i++){
+    if (list_Anhang[i] -> getID() == id){
+      list_Anhang.removeAt(i);
+      i = list_Anhang.count();
+      setAenderung(true);
+    }
+  }
+}
+
+void MainWindowImpl::slot_anhangAenderung()
+{
+  setAenderung(true);
+}
+
+void MainWindowImpl::LeseAnhangDB()
+{
+  // Anhang Abfragen
+  QSqlQuery query_anhang;
+  QString sql = "SELECT * FROM Anhang WHERE SudID=" + QString::number(AktuelleSudID) + ";";
+  if (!query_anhang.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+      CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
+      + trUtf8("\nSQL Befehl:\n") + sql);
+  }
+  else {
+    //Erstmal Anhangliste leeren
+    while (list_Anhang.count() > 0){
+      list_Anhang[0] -> close();
+    }
+    list_Anhang.clear();
+    //Alle Rasten einlesen
+    while (query_anhang.next()){
+        int FeldNr = query_anhang.record().indexOf("Pfad");
+        AddAnhang(query_anhang.value(FeldNr).toString());
+    }
+  }
+}
+
+void MainWindowImpl::SchreibeAnhangDB()
+{
+  QSqlQuery query;
+  QString sql = "DELETE FROM Anhang WHERE SudID =" + QString::number(AktuelleSudID);
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+      CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+      + trUtf8("\nSQL Befehl:\n") + sql);
+  }
+
+  for (int i=0; i < list_Anhang.count(); i++){
+    sql = "INSERT INTO Anhang('SudID', 'Pfad') VALUES(" +
+        QString::number(AktuelleSudID) + ","
+        + "'" + list_Anhang[i] -> getPfad().replace("'","''") + "')";
+    if (!query.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + trUtf8("\nSQL Befehl:\n") + sql);
     }
   }
 }
