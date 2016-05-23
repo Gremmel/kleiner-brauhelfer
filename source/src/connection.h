@@ -2714,8 +2714,8 @@ static bool ErstelleVerbindung() {
     QSqlDatabase::database().commit();
     updateNr = 19;
   }
-  //Update von 19 auf 20
-  if (updateNr == 19) {
+  //Update von 20 auf 21
+  if (updateNr == 20) {
     bool io = true;
     QSqlDatabase::database().transaction();
     //Spalte Datum Zugabezeitpunkt Weitere Zutaten von
@@ -2754,8 +2754,8 @@ static bool ErstelleVerbindung() {
         + QObject::trUtf8("\nSQL Befehl:\n") + sql);
       io = false;
     }
-    //Versionsstand auf 20 setzen
-    sql = "UPDATE 'Global' SET 'db_Version'=20";
+    //Versionsstand auf 21 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=21";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
@@ -2766,12 +2766,12 @@ static bool ErstelleVerbindung() {
     if (!io){
       // Fehlermeldung Konnte Datenbank nicht updaten
       ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V19_V20, TYPE_KRITISCH,
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V20_V21, TYPE_KRITISCH,
         CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
       return false;
     }
     QSqlDatabase::database().commit();
-    updateNr = 20;
+    updateNr = 21;
   }
   return true;
 }

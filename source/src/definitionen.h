@@ -12,7 +12,7 @@
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
 //V18 Tabelle Ausruestung um Kosten erweitert
 //V19 Sudaten um Eintrag Spunden erweitert
-#define DB_VERSION 20
+#define DB_VERSION 21
 //Version der XML Datei
 //Version 2 mit Weiteren Zutaten
 //Version 3 mit Temperaturen im Schnellgärverlauf/Hauptgärverlauf
@@ -188,7 +188,7 @@
 #define ERR_DB_PFAD_NIO 129
 #define ERR_SQL_DB_UPDATE_V17_V18 130
 #define ERR_SQL_DB_UPDATE_V18_V19 131
-#define ERR_SQL_DB_UPDATE_V19_V20 132
+#define ERR_SQL_DB_UPDATE_V20_V21 133
 
 
 
