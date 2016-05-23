@@ -142,7 +142,7 @@
 #define R_Hefe 3
 
 //Animationsstop für die Rasten (Anzahl Rasten)
-#define RAST_ANIMATION_STOP 6
+#define RAST_ANIMATION_STOP 5
 
 //Anzahl Sterne im Bewertungsystem
 #define BEW_ANZAHL_STERNE 5
