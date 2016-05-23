@@ -2714,6 +2714,74 @@ static bool ErstelleVerbindung() {
     QSqlDatabase::database().commit();
     updateNr = 19;
   }
+  //Update von 19 auf 20
+  if (updateNr == 19) {
+    bool io = true;
+    QSqlDatabase::database().transaction();
+    //Spalte Link in Tabelle Malz
+    QString sql = "ALTER TABLE 'Malz' ADD COLUMN 'Link' TEXT ";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Link in Tabelle Hopfen
+    sql = "ALTER TABLE 'Hopfen' ADD COLUMN 'Link' TEXT ";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Link in Tabelle Hefe
+    sql = "ALTER TABLE 'Hefe' ADD COLUMN 'Link' TEXT ";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Spalte Link in Tabelle WeitereZutaten
+    sql = "ALTER TABLE 'WeitereZutaten' ADD COLUMN 'Link' TEXT ";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Tabelle für Anhänge hinzufügen
+    sql = "CREATE TABLE IF NOT EXISTS 'Anhang' ('ID' INTEGER PRIMARY KEY  NOT NULL ,'SudID' INTEGER,'Pfad' TEXT)";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      return false;
+    }
+    //Versionsstand auf 20 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=20";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    if (!io){
+      // Fehlermeldung Konnte Datenbank nicht updaten
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V19_V20, TYPE_KRITISCH,
+        CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
+      return false;
+    }
+    QSqlDatabase::database().commit();
+    updateNr = 20;
+  }
   //Update von 20 auf 21
   if (updateNr == 20) {
     bool io = true;

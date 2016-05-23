@@ -14,6 +14,7 @@
 #include "eingabehvolumenimpl.h"
 #include "erweitertezutatimpl.h"
 #include "rastwidget.h"
+#include "anhangwidget.h"
 #include "doubleeditlineimpl.h"
 #include "bewertung.h"
 #include "hopfengabe.h"
@@ -132,6 +133,7 @@ private:
   QStringList HefeTypTrFlListe;
   QStringList HefeSedListe;
   QList<Rastwidget *> list_Rasten;
+  QList<AnhangWidget *> list_Anhang;
   //Liste Auswählbare Erweiterte Zutaten
   QStringList ewzListe;
   QStringList HopfenListe;
@@ -211,7 +213,7 @@ private:
   void CheckFehler();
   void SetDisabledAbgefuellt(bool status);
   void RohstoffeAbziehen();
-  QString Pfad;
+  void AddAnhang(QString pfad);
   void SetStatusGebraut(bool status);
   void BerBraudaten();
   bool BierWurdeGebraut;
@@ -235,6 +237,8 @@ private:
   void SchreibeAusruestungDB();
   void setRecentFile(int ID);
 	void setFensterTitel();
+  void SchreibeAnhangDB();
+  void LeseAnhangDB();
   QMenu *geladenerSudMenu;
   QMenu *extrasMenu;
 	QMenu *sprachMenu;
@@ -319,8 +323,10 @@ private slots:
   void slot_malzClose(int id);
   void slot_hopfenClose(int id);
   void slot_rastClose(int id);
+  void slot_anhangClose(int id);
   void slot_bewClose(int id);
   void slot_rastAenderung(int id);
+  void slot_anhangAenderung();
   void on_pushButton_EWZ_Hinzufuegen_clicked();
   void on_tableWidget_WeitereZutaten_itemSelectionChanged();
   void on_pushButton_WeitereZutatenDel_clicked();
@@ -575,6 +581,16 @@ private slots:
   void on_pushButton_HefeNeu_clicked();
   void on_listWidget_Brauanlagen_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
   void on_tableWidget_Geraete_itemChanged(QTableWidgetItem *item);
+  void on_tableWidget_Malz_cellClicked(int row, int column);
+  void on_tableWidget_Hopfen_cellClicked(int row, int column);
+  void on_tableWidget_Hefe_cellClicked(int row, int column);
+  void on_tableWidget_WeitereZutaten_cellClicked(int row, int column);
+  void on_pushButton_CO2_Info_clicked();
+  void on_pushButton_IBU_Info_clicked();
+  void on_pushButton_SW_Info_clicked();
+  void on_pushButton_High_Gravity_Info_clicked();
+  void on_pushButton_NeuerAnhang_clicked();
+  void slot_urlClicked(const QUrl &url);
 };
 #endif
 
