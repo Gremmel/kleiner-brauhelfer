@@ -439,6 +439,35 @@
                     </widget>
                    </item>
                    <item>
+                    <widget class="QPushButton" name="pushButton_SW_Info">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../res/grafiken.qrc">
+                       <normaloff>:/global/info.svg</normaloff>:/global/info.svg</iconset>
+                     </property>
+                     <property name="flat">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer_30">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -513,6 +542,35 @@
                     </widget>
                    </item>
                    <item>
+                    <widget class="QPushButton" name="pushButton_High_Gravity_Info">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../res/grafiken.qrc">
+                       <normaloff>:/global/info.svg</normaloff>:/global/info.svg</iconset>
+                     </property>
+                     <property name="flat">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer_33">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -577,6 +635,35 @@
                     <widget class="QLabel" name="label_9">
                      <property name="text">
                       <string>CO2 Gehalt</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_CO2_Info">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../res/grafiken.qrc">
+                       <normaloff>:/global/info.svg</normaloff>:/global/info.svg</iconset>
+                     </property>
+                     <property name="flat">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -651,6 +738,35 @@
                     <widget class="QLabel" name="label_11">
                      <property name="text">
                       <string>Bittere</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_IBU_Info">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../res/grafiken.qrc">
+                       <normaloff>:/global/info.svg</normaloff>:/global/info.svg</iconset>
+                     </property>
+                     <property name="flat">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -948,6 +1064,21 @@
               <item>
                <widget class="QGroupBox" name="groupBox_2">
                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <property name="spacing">
+                  <number>3</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>3</number>
+                 </property>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_35">
                    <item>
@@ -1110,6 +1241,97 @@ p, li { white-space: pre-wrap; }
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item>
                   <widget class="QTextEdit" name="textEdit_Kommentar"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_30">
+                <layout class="QVBoxLayout" name="verticalLayout_128">
+                 <property name="spacing">
+                  <number>3</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>3</number>
+                 </property>
+                 <item>
+                  <widget class="QScrollArea" name="scrollArea_9">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>100</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Plain</enum>
+                   </property>
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_10">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>408</width>
+                      <height>100</height>
+                     </rect>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_129">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_Anhang">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                      </layout>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_4">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_NeuerAnhang">
+                   <property name="text">
+                    <string>neuer Anhang einfügen</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -10883,12 +11105,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <property name="sortingEnabled">
                <bool>true</bool>
               </property>
-              <property name="rowCount">
-               <number>0</number>
-              </property>
-              <property name="columnCount">
-               <number>9</number>
-              </property>
               <column>
                <property name="text">
                 <string>Beschreibung</string>
@@ -10932,6 +11148,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <column>
                <property name="text">
                 <string>Mindesthaltbar</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Link</string>
                </property>
               </column>
              </widget>
@@ -11042,6 +11263,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <column>
                <property name="text">
                 <string>Mindesthaltbar</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Link</string>
                </property>
               </column>
              </widget>
@@ -11174,6 +11400,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <string>Mindesthaltbar</string>
                </property>
               </column>
+              <column>
+               <property name="text">
+                <string>Link</string>
+               </property>
+              </column>
              </widget>
             </item>
             <item>
@@ -11282,6 +11513,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <column>
                <property name="text">
                 <string>Mindesthaltbar</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Link</string>
                </property>
               </column>
              </widget>
