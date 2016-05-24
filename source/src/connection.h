@@ -2433,6 +2433,10 @@ static bool ErstelleVerbindung() {
       if (query.value(0).toInt() == 19){
         updateNr = 19;
       }
+      //Wenn Version der Datenbank 20 ist dann auf versionstand 21 Updaten
+      if (query.value(0).toInt() == 20){
+        updateNr = 20;
+      }
 
 			//wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
       else if (query.value(0).toInt() > DB_VERSION) {

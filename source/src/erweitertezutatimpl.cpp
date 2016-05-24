@@ -11,6 +11,7 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   erg_Menge = 0;
   ausbeute = 0;
   farbe = 0;
+  zugabestatus = 0;
   typ = -1;
   animationPos = new QPropertyAnimation(this, "pos");
   dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
@@ -30,6 +31,7 @@ void ErweiterteZutatImpl::setUIStatus()
   if (BierWurdeAbgefuellt) {
     bs = QAbstractSpinBox::NoButtons;
     statusDisabled = true;
+    comboBox_entnahme->setDisabled(true);
   }
   //Bier wurde gebraut aber nicht abgefüllt
   else if (BierWurdeGebraut) {
@@ -50,10 +52,12 @@ void ErweiterteZutatImpl::setUIStatus()
       // entnommen
       if (zugabestatus == 2) {
         dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+        comboBox_entnahme->setDisabled(true);
       }
       // noch nicht entnommen
       else {
         dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+        comboBox_entnahme->setDisabled(false);
       }
     }
     //Zugabezeitpunkt Maischen oder Kochen
@@ -564,6 +568,7 @@ void ErweiterteZutatImpl::on_buttonZugeben_clicked()
 {
   zugabestatus = 1;
   setUIStatus();
+  //todo Rohstoffe für diese Zutat abziehen fragen
   emit sig_Aenderung();
 }
 
