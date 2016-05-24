@@ -2,10 +2,10 @@
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-//#define DEBUG true
+#define DEBUG true
 
 //Version
-#define VERSION "1.4.2.2"
+#define VERSION "1.4.2.3"
 #define VERSION_INT 1040202
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
