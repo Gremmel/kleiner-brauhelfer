@@ -24,6 +24,7 @@ signals:
   double sig_getEwzPreis(QString zutat);
   double sig_getEwzPreisHopfen(QString zutat);
   void sig_Aenderung();
+  void sig_zugeben(QString zutat);
 
 private:
   double farbe;
