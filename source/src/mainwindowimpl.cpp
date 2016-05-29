@@ -3282,6 +3282,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_getEwzFarbe(QString) ), this, SLOT( slot_getEwzFarbe(QString) ));
           connect(ewz, SIGNAL( sig_getEwzPreis(QString) ), this, SLOT( slot_getEwzPreis(QString) ));
           connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
+          connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
           if (BierWurdeGebraut) {
             //Da Bier schon gebraut wurde die daten aus der Datenbank benutzten und nicht aus den Rohstoffdaten
             //da der Rohstoff unter umständen nicht mehr existiert oder verändert wurde
@@ -5638,33 +5639,36 @@ void MainWindowImpl::RohstoffeAbziehen()
 
   //Weitere Zutaten vom Bestand abziehen
   for (int i=0; i < list_EwZutat.count(); i++){
-    //wenn Weiter Zutat kein Hopfen ist
-    if (list_EwZutat[i]->getTyp() != EWZ_Typ_Hopfen){
-      s = list_EwZutat[i]->getName();
-      for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-        //wenn eintrag übereinstimmt
-        if (tableWidget_WeitereZutaten -> item(o,0) -> text() == s){
-          QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-          if (list_EwZutat[i]->getEinheit() == EWZ_Einheit_Kg)
-            dsbMenge->setValue(dsbMenge->value()-(list_EwZutat[i]->getErg_Menge()/1000));
-          else
-            dsbMenge->setValue(dsbMenge->value()-list_EwZutat[i]->getErg_Menge());
+    //nur vom bestand abziehen wenn zugabezeitpunkt nicht bei der gärung ist
+    if (!list_EwZutat[i]->getZeitpunkt() == EWZ_Zeitpunkt_Gaerung) {
+      //wenn Weiter Zutat kein Hopfen ist
+      if (list_EwZutat[i]->getTyp() != EWZ_Typ_Hopfen){
+        s = list_EwZutat[i]->getName();
+        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+          //wenn eintrag übereinstimmt
+          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == s){
+            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
+            if (list_EwZutat[i]->getEinheit() == EWZ_Einheit_Kg)
+              dsbMenge->setValue(dsbMenge->value()-(list_EwZutat[i]->getErg_Menge()/1000));
+            else
+              dsbMenge->setValue(dsbMenge->value()-list_EwZutat[i]->getErg_Menge());
+          }
         }
       }
-    }
-    //Wenn Hopfen
-    else {
-      s = list_EwZutat[i]->getName();
-      int AnzahlHopfenEintraege = tableWidget_Hopfen -> rowCount();
-      for (int o=0; o < AnzahlHopfenEintraege; o++){
-        //wenn Eintrag übereinstimmt
-        if (tableWidget_Hopfen -> item(o,0) -> text() == s){
-          QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,2);
-          d = spinBox->value();
-          d -= list_EwZutat[i]->getErg_Menge();
-          if (d < 0)
-            d = 0;
-          spinBox->setValue(d);
+      //Wenn Hopfen
+      else {
+        s = list_EwZutat[i]->getName();
+        int AnzahlHopfenEintraege = tableWidget_Hopfen -> rowCount();
+        for (int o=0; o < AnzahlHopfenEintraege; o++){
+          //wenn Eintrag übereinstimmt
+          if (tableWidget_Hopfen -> item(o,0) -> text() == s){
+            QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,2);
+            d = spinBox->value();
+            d -= list_EwZutat[i]->getErg_Menge();
+            if (d < 0)
+              d = 0;
+            spinBox->setValue(d);
+          }
         }
       }
     }
@@ -13339,6 +13343,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   connect(ewz, SIGNAL( sig_getEwzPreis(QString) ), this, SLOT( slot_getEwzPreis(QString) ));
   connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
   connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
+  connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
   //Zutatenliste füllen
   ewz -> setEwListe(ewzListe);
   ewz -> setHopfenListe(HopfenListe);
@@ -13549,6 +13554,54 @@ double MainWindowImpl::slot_getEwzPreisHopfen(QString zutat)
     }
   }
   return -1;
+}
+
+void MainWindowImpl::slot_EwzZugegeben(QString zutat, int typ, double menge)
+{
+
+  //Abfrage ob Rohstoffe vom Bestand abgezogen werden sollen
+  QMessageBox msgBox;
+  msgBox.setWindowTitle("kleine-frage");
+  msgBox.setInformativeText("");
+  msgBox.setText(trUtf8("Soll die Zutat") + " " + zutat + " " + trUtf8("vom bestand abgezogen werden?"));
+  msgBox.setIcon(QMessageBox::Question);
+  //msgBox.setDefaultButton(QMessageBox::Save);
+  QPushButton *JaButton = msgBox.addButton(trUtf8("Ja"), QMessageBox::ActionRole);
+  msgBox.addButton(trUtf8("Nein"), QMessageBox::ActionRole);
+
+  msgBox.exec();
+
+  if (msgBox.clickedButton() == JaButton){
+    double d;
+    //wenn hopfen
+    if (typ == EWZ_Typ_Hopfen) {
+      //verwendeten Rohstoff vom Bestand abziehen
+      for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
+        if (tableWidget_Hopfen -> item(i,0) -> text() == zutat){
+          QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,2);
+          d = dsbMenge ->value();
+          d -= menge;
+          if (d < 0)
+            d = 0;
+          dsbMenge ->setValue(d);
+        }
+      }
+    }
+    //alles andere
+    else {
+      for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
+        if (tableWidget_WeitereZutaten -> item(i,0) -> text() == zutat){
+          QDoubleSpinBox *dsbMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
+          d = dsbMenge ->value();
+          d -= menge;
+          if (d < 0)
+            d = 0;
+          dsbMenge ->setValue(d);
+        }
+      }
+    }
+  }
+
 }
 
 

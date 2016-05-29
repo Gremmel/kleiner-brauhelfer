@@ -313,6 +313,7 @@ private slots:
   double slot_getEwzFarbe(QString zutat);
   double slot_getEwzPreis(QString zutat);
   double slot_getEwzPreisHopfen(QString zutat);
+  void slot_EwzZugegeben(QString zutat, int typ, double menge);
   int slot_getEwzAusbeute(QString zutat);
   void slot_EwzAenderung();
   void slot_MalzAenderung();

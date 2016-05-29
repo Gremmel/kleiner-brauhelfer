@@ -569,7 +569,7 @@ void ErweiterteZutatImpl::on_buttonZugeben_clicked()
   zugabestatus = 1;
   setUIStatus();
   //todo Rohstoffe für diese Zutat abziehen fragen
-  emit sig_zugeben(comboBox_Zutat->currentText());
+  emit sig_zugeben(comboBox_Zutat->currentText(), typ, erg_Menge);
   emit sig_Aenderung();
 }
 
