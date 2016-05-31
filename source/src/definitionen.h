@@ -132,6 +132,15 @@
 #define EWZ_Zeitpunkt_Kochbeginn 1
 #define EWZ_Zeitpunkt_Maischen 2
 
+//Weitere Zutaten zugabestatus
+#define EWZ_Zugabestatus_nichtZugegeben 0
+#define EWZ_Zugabestatus_Zugegeben 1
+#define EWZ_Zugabestatus_Entnommen 2
+
+//Entnahmeindex
+#define EWZ_Entnahmeindex_MitEntnahme 0
+#define EWZ_Entnahmeindex_KeineEntnahme 1
+
 //Weitere Zutaten Einheit
 #define EWZ_Einheit_Kg 0
 #define EWZ_Einheit_g 1
@@ -204,5 +213,8 @@
 #define TAB_GAERVERLAUF 4
 #define TAB_ZUSAMMENFASSUNG 5
 
+#define TAB_Malz 0
+#define TAB_Hopfen 1
+#define TAB_WeitereZutaten 2
 
 #endif

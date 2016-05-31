@@ -116,6 +116,9 @@ private:
   double sw_gesammt;
   void setAenderung(bool value);
   void BerWeitereZutaten();
+  //füllt die comboauswahl für Weitere Zutaten zugeben
+  void fuelleComboEwzZugeben();
+  void fuelleComboEwzEntnehmen();
   void SchreibeErweiterteZutatenDB();
   QIcon appIcon;
   void ErstelleZutatenlisten();
@@ -592,6 +595,9 @@ private slots:
   void on_pushButton_High_Gravity_Info_clicked();
   void on_pushButton_NeuerAnhang_clicked();
   void slot_urlClicked(const QUrl &url);
+  void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
+  void on_pushButton_GaerungEwzZugeben_clicked();
+  void on_pushButton_GaerungEwzEntnehmen_clicked();
 };
 #endif
 

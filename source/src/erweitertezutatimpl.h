@@ -85,6 +85,10 @@ public:
   int getEntnahmeindex();
   int getZugabestatus() const;
   void setZugabestatus(int value);
+  //Markiert die Zutat als zugegeben
+  void zutatZugeben();
+  //Markiert die Zutat als entnommen
+  void zutatEntnehmen();
 
   bool getBierWurdeAbgefuellt() const;
   void setBierWurdeAbgefuellt(bool value);
