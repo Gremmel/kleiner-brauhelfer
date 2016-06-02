@@ -116,6 +116,9 @@ private:
   double sw_gesammt;
   void setAenderung(bool value);
   void BerWeitereZutaten();
+  //füllt die comboauswahl für Weitere Zutaten zugeben
+  void fuelleComboEwzZugeben();
+  void fuelleComboEwzEntnehmen();
   void SchreibeErweiterteZutatenDB();
   QIcon appIcon;
   void ErstelleZutatenlisten();
@@ -252,6 +255,7 @@ private:
   QAction *ResetBierGebraut;
   QAction *ResetAbgefuellt;
   QAction *ResetVerbraucht;
+  QAction *ResetZugabestatus;
   enum { MaxRecentFiles = 5 };
   QAction *recentFileActs[MaxRecentFiles];
   //QString AktuelleSuddatei;
@@ -312,6 +316,7 @@ private slots:
   double slot_getEwzFarbe(QString zutat);
   double slot_getEwzPreis(QString zutat);
   double slot_getEwzPreisHopfen(QString zutat);
+  void slot_EwzZugegeben(QString zutat, int typ, double menge);
   int slot_getEwzAusbeute(QString zutat);
   void slot_EwzAenderung();
   void slot_MalzAenderung();
@@ -352,6 +357,8 @@ private slots:
   void slot_ResetBierWurdeGebraut();
   void slot_ResetBierVerbraucht();
   void slot_ResetAbgefuellt();
+  //Zugabestatus der Weiteren Zutaten wird zurückgesetzt
+  void slot_ResetWZZugabestatus();
   void on_pushButton_EingabeHMengeNHopfenseihen_clicked();
   void on_pushButton_EingabeHMengeVHopfenseihen_clicked();
   void on_pushButton_EingabeHSWVorHopfenseihen_clicked();
@@ -588,6 +595,9 @@ private slots:
   void on_pushButton_High_Gravity_Info_clicked();
   void on_pushButton_NeuerAnhang_clicked();
   void slot_urlClicked(const QUrl &url);
+  void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
+  void on_pushButton_GaerungEwzZugeben_clicked();
+  void on_pushButton_GaerungEwzEntnehmen_clicked();
 };
 #endif
 
