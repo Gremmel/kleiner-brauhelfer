@@ -69,7 +69,7 @@
             <item>
              <widget class="QRadioButton" name="radioButton_nichtVerbraucht">
               <property name="text">
-               <string>ni&amp;cht Verbraucht</string>
+               <string>ni&amp;cht verbraucht</string>
               </property>
              </widget>
             </item>
@@ -150,7 +150,7 @@
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Merkliste bei der Rohstoffmengen überprüfung im Rezept mit einbeziehen</string>
+                <string>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</string>
                </property>
               </widget>
              </item>
@@ -303,8 +303,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>874</width>
-             <height>782</height>
+             <width>866</width>
+             <height>763</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -1037,7 +1037,7 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>400</width>
+                      <width>380</width>
                       <height>125</height>
                      </rect>
                     </property>
@@ -1437,7 +1437,7 @@ p, li { white-space: pre-wrap; }
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>88</width>
+                          <width>92</width>
                           <height>100</height>
                          </rect>
                         </property>
@@ -1540,8 +1540,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>410</width>
-                       <height>502</height>
+                       <width>59</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1633,8 +1633,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>410</width>
-                       <height>472</height>
+                       <width>415</width>
+                       <height>435</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1701,7 +1701,7 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>66</width>
+                       <width>55</width>
                        <height>16</height>
                       </rect>
                      </property>
@@ -2505,8 +2505,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>347</width>
-               <height>419</height>
+               <width>344</width>
+               <height>411</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -3285,8 +3285,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1215</width>
-             <height>808</height>
+             <width>1198</width>
+             <height>837</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -5151,7 +5151,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                           <item>
                            <widget class="QLabel" name="label_StammwuerzeKochbegin_2">
                             <property name="text">
-                             <string>Füllhöhe von Oberkannte aus gemessen</string>
+                             <string>Füllhöhe von Oberkante aus gemessen</string>
                             </property>
                            </widget>
                           </item>
@@ -7794,8 +7794,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>881</width>
-             <height>305</height>
+             <width>866</width>
+             <height>300</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7989,8 +7989,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1229</width>
-             <height>698</height>
+             <width>1219</width>
+             <height>670</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8290,8 +8290,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>759</width>
-             <height>305</height>
+             <width>734</width>
+             <height>300</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8510,8 +8510,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>345</width>
-               <height>748</height>
+               <width>342</width>
+               <height>722</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -11273,7 +11273,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_12">
                   <property name="text">
-                   <string>mutzbares Volumen</string>
+                   <string>nutzbares Volumen</string>
                   </property>
                  </widget>
                 </item>
@@ -11378,8 +11378,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1229</width>
-             <height>642</height>
+             <width>1219</width>
+             <height>608</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11409,7 +11409,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>max Schüttungsanzteil</string>
+                <string>max. Schüttungsanteil</string>
                </property>
               </column>
               <column>
@@ -11488,8 +11488,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>507</width>
-             <height>118</height>
+             <width>484</width>
+             <height>146</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11603,8 +11603,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>507</width>
-             <height>118</height>
+             <width>484</width>
+             <height>146</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11738,8 +11738,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>328</width>
-             <height>118</height>
+             <width>319</width>
+             <height>146</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11846,8 +11846,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>635</width>
-             <height>341</height>
+             <width>607</width>
+             <height>363</height>
             </rect>
            </property>
            <attribute name="label">
@@ -12421,7 +12421,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:12pt; font-weight:600;&quot;&gt;kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -12431,12 +12431,12 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-style:italic;&quot;&gt;kleiner-brauhelfer@soseies.de&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-style:italic;&quot;&gt;www.joerum.de/kleiner-brauhelfer/&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:10pt; font-style:italic;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;source code&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt; font-style:italic;&quot;&gt;http://www.joerum.de/kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;GitHub url (Entwicklung)&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;https://github.com/Gremmel/kleiner-brauhelfer&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu';&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;https://github.com/Gremmel/kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;Dieses Programm ist lizenziert unter den Bedingungen der GNU General Public License Version 3&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;Verfügbar Online unter: http://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -12461,7 +12461,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1269</width>
-     <height>19</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

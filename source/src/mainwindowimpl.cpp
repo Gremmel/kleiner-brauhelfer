@@ -5162,7 +5162,7 @@ void MainWindowImpl::slot_pushButton_GeraeteNeu()
 void MainWindowImpl::BerBraudaten()
 {
   if (BierWurdeGebraut){
-    label_Stammwuerze -> setText(trUtf8("Stammwürtze beim Anstellen"));
+    label_Stammwuerze -> setText(trUtf8("Stammwürze beim Anstellen"));
   }
   else {
     label_Stammwuerze -> setText(trUtf8("Stammwürze Soll nach dem Kochen"));
