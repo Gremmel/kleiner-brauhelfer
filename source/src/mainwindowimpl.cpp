@@ -11670,11 +11670,16 @@ void MainWindowImpl::on_pushButton_SudExport_clicked()
   }
   //Sudname anhängen
   p += "/" + Sudname + ".xsud";
-  s = QFileDialog::getSaveFileName(this, trUtf8("Export Sud"), p, trUtf8("Sud Export Dateien (*.xsud)"),0);
+  s = QFileDialog::getSaveFileName(this, trUtf8("Export Sud"), p, trUtf8("KBH Sud Export Dateien (*.xsud)") + ";;" + trUtf8("BeerXML (*.xml)"),0);
   if (!s.isEmpty()) {
     QFileInfo fileinfo(s);
     settings.setValue("recentExportPath",fileinfo.path());
-    Export.ExportSudXML(SudID, s);
+    if (s.right(4) == ".xml") {
+      Export.ExportBeerXML(SudID, s);
+    }
+    else {
+      Export.ExportSudXML(SudID, s);
+    }
   }
 
 }

@@ -17,11 +17,11 @@
 QExport::QExport(  ) 
 	: QObject()
 {
-	// TODO
+	// 
 }
 //
 
-//Exportiert einen Sud in eine XML Datei
+//Exportiert einen Sud in eine xsud XML Datei
 int QExport::ExportSudXML(int SudNr, QString Dateiname)
 {
 	//Sud aus Datenbank abfragen
@@ -42,6 +42,9 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 			QDomComment komentar;
 			//Daten in XML Datei schreiben
 			QDomDocument doc("");
+
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+      doc.appendChild( header );    
 
 			//Wurzelelement
 			QDomElement daten = doc.createElement("xsud");
@@ -2171,6 +2174,50 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 		}
 	}
 	return 0;
+}
+
+int QExport::ExportBeerXML(int SudNr, QString Dateiname)
+{
+  //Sud aus Datenbank abfragen
+	QSqlQuery query_sud;
+	int FeldNr;
+	QString sql = "SELECT * FROM Sud WHERE ID=" + QString::number(SudNr) + ";";
+	if (!query_sud.exec(sql)) {
+		// Fehlermeldung Datenbankabfrage
+		ErrorMessage *errorMessage = new ErrorMessage();
+		errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+			CANCEL_NO, trUtf8("Rueckgabe:\n") + query_sud.lastError().databaseText()
+			+ trUtf8("\nSQL Befehl:\n") + sql);
+	}
+	else {
+		if (query_sud.first()) {
+			QDomText text;
+			QDomElement element;
+			QDomComment komentar;
+			//Daten in XML Datei schreiben
+			QDomDocument doc("");
+
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+      doc.appendChild( header );    
+      
+      
+      
+      
+      
+      
+      
+      //xml Datei Speichern
+			QFile file(Dateiname);
+			if (!file.open(QFile::WriteOnly | QFile::Text)) {
+				//Kann Suddatei nicht erstellen
+				return 1;
+			}
+			
+			QTextStream out(&file);
+			const int IndentSize = 2;
+			doc.save(out, IndentSize);
+    }
+  }
 }
 
 

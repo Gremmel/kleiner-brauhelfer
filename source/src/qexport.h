@@ -28,6 +28,7 @@ public:
 	QString errMsg;
 	int IfXmlOK(QString cDateiname);
 	int ExportSudXML(int SudNr, QString Dateiname);
+	int ExportBeerXML(int SudNr, QString Dateiname);
 	QExport();
 	
 };
