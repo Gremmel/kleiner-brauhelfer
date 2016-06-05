@@ -43,7 +43,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 			//Daten in XML Datei schreiben
 			QDomDocument doc("");
 
-      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\"" );
       doc.appendChild( header );    
 
 			//Wurzelelement
@@ -2191,7 +2191,12 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 	}
 	else {
 		if (query_sud.first()) {
-			QDomText text;
+
+      QFile file(Dateiname);
+      QTextStream out(&file);
+      out.setCodec("ISO-8859-1");
+
+      QDomText text;
 			QDomElement element;
 			QDomComment komentar;
 			//Daten in XML Datei schreiben
@@ -2200,24 +2205,218 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
       QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
       doc.appendChild( header );    
       
+      //Global
+      QDomElement global = doc.createElement("GLOBAL");
+      doc.appendChild(global);
+      //Erstelldatum der Sud export Datei
+      komentar = doc.createComment("Erstellungsdatum der Exportdatei");
+      global.appendChild(komentar);
+      element = doc.createElement("DATUM");
+      text = doc.createTextNode(QDateTime::currentDateTime().toString(Qt::ISODate));
+      element.setAttribute("Einheit","Qt::ISODate");
+      element.appendChild(text);
+      global.appendChild(element);
+
+      komentar = doc.createComment("Programmname");
+      global.appendChild(komentar);
+      element = doc.createElement("PROGRAMMNAME");
+      text = doc.createTextNode(APP_NAME);
+      element.appendChild(text);
+      global.appendChild(element);
+
+      komentar = doc.createComment("Versionsstand kleiner-brauhelfer");
+      global.appendChild(komentar);
+      element = doc.createElement("PROGRAMMVERSION");
+      text = doc.createTextNode(VERSION);
+      element.appendChild(text);
+      global.appendChild(element);
+
+      //Rezepte
+      QDomElement Rezepte = doc.createElement("RECIPES");
+      komentar = doc.createComment("Rezepte");
+      doc.appendChild(komentar);
+      doc.appendChild(Rezepte);
       
-      
-      
-      
-      
-      
+      //Rezept
+      QDomElement Rezept = doc.createElement("RECIPE");
+      komentar = doc.createComment("Rezept");
+      Rezepte.appendChild(komentar);
+      Rezepte.appendChild(Rezept);
+
+      //Version Rezept Tag
+      komentar = doc.createComment("Version Rezept Tag");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudname
+      komentar = doc.createComment("Rezeptname");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("NAME");
+      FeldNr = query_sud.record().indexOf("Sudname");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Type im kbh immer All Grain
+      komentar = doc.createComment("Typ (im KBH immer All Grain)");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("TYPE");
+      text = doc.createTextNode("All Grain");
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Brauer
+      komentar = doc.createComment("Im KBH wird kein Brauer Name angegeben");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("BREWER");
+      text = doc.createTextNode("Unbekannt");
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudmenge
+      komentar = doc.createComment("Sudmenge in Liter");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("BATCH_SIZE");
+      FeldNr = query_sud.record().indexOf("Menge");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Gesamtkochdauer
+      komentar = doc.createComment("Gesamtkochdauer Zeit im Minuten");
+      Rezept.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("KochdauerNachBitterhopfung");
+      element = doc.createElement("BOIL_TIME");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudhausausbeute
+      komentar = doc.createComment("Sudhausausbeute bezogen auf die Ausschlagmenge in Prozent");
+      Rezept.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("erg_Sudhausausbeute");
+      element = doc.createElement("EFFICIENCY");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Hopfenliste
+      QDomElement Hopfengaben = doc.createElement("HPOS");
+      komentar = doc.createComment("Hopfenliste");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(Hopfengaben);
+
+      //Hopfengaben Abfragen
+      QSqlQuery query_Hopfen;
+      sql = "SELECT * FROM Hopfengaben WHERE SudID=" + QString::number(SudNr) + ";";
+      if (!query_Hopfen.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Hopfen.next()){
+          Anteil = doc.createElement("HOP");
+          Hopfengaben.appendChild(Anteil);
+
+          //Version Hopfen Tag
+          komentar = doc.createComment("Version Hopfen Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Berschreibung Hopfen (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Alpha
+          komentar = doc.createComment("Alphaprozent gehalt des Hopfens");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Alpha");
+          element = doc.createElement("ALPHA");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //erg_Menge
+          komentar = doc.createComment("Berechnete Gewichtsmenge in kg");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("erg_Menge");
+          element = doc.createElement("erg_Menge");
+          double v = query_Hopfen.value(FeldNr).toFloat();
+          v = v / 1000;
+          text = doc.createTextNode(QString::number(v));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Vorderwürze oder Normal
+          komentar = doc.createComment("Art der Hopfung  First Wort/Boil/Dry Hop");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Vorderwuerze");
+          element = doc.createElement("USE");
+          if (query_Hopfen.value(FeldNr).toBool()) {
+            text = doc.createTextNode("First Wort");
+          }
+          else {
+            text = doc.createTextNode("Boil");
+          }
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Zeit
+          komentar = doc.createComment("Zeit in Minuten");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Zeit");
+          element = doc.createElement("TIME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Pellets
+          komentar = doc.createComment("Hopfenart Pellet/Leaf");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Pellets");
+          element = doc.createElement("FORM");
+          if (query_Hopfen.value(FeldNr).toBool())
+            text = doc.createTextNode("Pellet");
+          else
+            text = doc.createTextNode("Leaf");
+
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+
+          i++;
+        }
+      }
+
+
       //xml Datei Speichern
-			QFile file(Dateiname);
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
 				//Kann Suddatei nicht erstellen
 				return 1;
 			}
 			
-			QTextStream out(&file);
 			const int IndentSize = 2;
 			doc.save(out, IndentSize);
     }
   }
+  return 0;
 }
 
 

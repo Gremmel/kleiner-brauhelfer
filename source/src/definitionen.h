@@ -217,4 +217,6 @@
 #define TAB_Hopfen 1
 #define TAB_WeitereZutaten 2
 
+#define BeerXMLVersion "1"
+
 #endif
