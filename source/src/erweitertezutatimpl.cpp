@@ -11,8 +11,10 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   erg_Menge = 0;
   ausbeute = 0;
   farbe = 0;
+  zugabestatus = 0;
   typ = -1;
   animationPos = new QPropertyAnimation(this, "pos");
+  dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
 }
 
 void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
@@ -20,30 +22,164 @@ void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
   on_comboBox_Zutat_currentIndexChanged(comboBox_Zutat -> currentText());
 }
 
-void ErweiterteZutatImpl::setDisabled(bool status)
+void ErweiterteZutatImpl::setUIStatus()
 {
   QAbstractSpinBox::ButtonSymbols bs;
+  bool statusDisabled;
 
-  if (!status) {
+  //Status wenn Abgefüllt wurde
+  if (BierWurdeAbgefuellt) {
+    bs = QAbstractSpinBox::NoButtons;
+    statusDisabled = true;
+    comboBox_entnahme->setDisabled(true);
+    comboBox_Zugabezeitpunkt -> setEditable(false);
+    comboBox_Zugabezeitpunkt -> setDisabled(true);
+    dateEdit_zugabezeitpunkt_von->setDisabled(true);
+    dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+  }
+  //Bier wurde gebraut aber nicht abgefüllt
+  else if (BierWurdeGebraut) {
+    comboBox_Zugabezeitpunkt -> setEditable(false);
+    comboBox_Zugabezeitpunkt -> setDisabled(true);
+    //Gärung
+    if (comboBox_Zugabezeitpunkt->currentIndex() == 0) {
+      //Noch nicht hinzugegeben
+      if (zugabestatus == 0) {
+        bs = QAbstractSpinBox::UpDownArrows;
+        statusDisabled = false;
+        dateEdit_zugabezeitpunkt_von->setDisabled(false);
+      }
+      //schon hinzugegeben
+      else {
+        bs = QAbstractSpinBox::NoButtons;
+        statusDisabled = true;
+        dateEdit_zugabezeitpunkt_von->setDisabled(true);
+      }
+      // entnommen
+      if (zugabestatus == 2) {
+        dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+        comboBox_entnahme->setDisabled(true);
+      }
+      // noch nicht entnommen
+      else {
+        dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+        comboBox_entnahme->setDisabled(false);
+      }
+    }
+    //Zugabezeitpunkt Maischen oder Kochen
+    else {
+      bs = QAbstractSpinBox::NoButtons;
+      statusDisabled = true;
+      dateEdit_zugabezeitpunkt_von->setDisabled(true);
+      dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+      comboBox_entnahme->setDisabled(true);
+    }
+  }
+  //noch nicht gebraut
+  else {
     bs = QAbstractSpinBox::UpDownArrows;
+    statusDisabled = false;
+    dateEdit_zugabezeitpunkt_von->setDisabled(false);
+    dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+    comboBox_entnahme->setDisabled(false);
+    comboBox_Zugabezeitpunkt -> setEditable(false);
+    comboBox_Zugabezeitpunkt -> setDisabled(false);
+  }
+
+  dsb_Menge -> setButtonSymbols(bs);
+
+  //Editfelder Disablen
+  dsb_Menge -> setReadOnly(statusDisabled);
+  comboBox_Zutat -> setDisabled(statusDisabled);
+  comboBox_Zutat -> setEditable(statusDisabled);
+  textEdit_Komentar -> setReadOnly(statusDisabled);
+  pushButton_del -> setDisabled(statusDisabled);
+
+
+  //je nach zugabestatus Buttons ein oder ausblenden
+  if (comboBox_Zugabezeitpunkt->currentIndex() == 0) {
+    label_von->setVisible(true);
+    comboBox_entnahme->setVisible(true);
+    dateEdit_zugabezeitpunkt_von->setVisible(true);
+    if (comboBox_entnahme->currentIndex() == 0) {
+      dateEdit_zugabezeitpunkt_bis->setVisible(true);
+    }
+    else {
+      dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    }
+
+    if (zugabestatus == 0) {
+      if (BierWurdeGebraut && !BierWurdeAbgefuellt)
+        buttonZugeben->setVisible(true);
+      else
+        buttonZugeben->setVisible(false);
+      buttonEntnehmen->setVisible(false);
+    }
+    if (zugabestatus == 1) {
+      buttonZugeben->setVisible(false);
+      if (comboBox_entnahme->currentIndex() == 0) {
+        if (BierWurdeGebraut && !BierWurdeAbgefuellt)
+          buttonEntnehmen->setVisible(true);
+        else
+          buttonEntnehmen->setVisible(false);
+      }
+      else {
+        buttonEntnehmen->setVisible(false);
+      }
+    }
+    if (zugabestatus == 2) {
+      buttonZugeben->setVisible(false);
+      buttonEntnehmen->setVisible(false);
+      comboBox_entnahme->setDisabled(true);
+    }
   }
   else {
-    bs = QAbstractSpinBox::NoButtons;
+    label_von->setVisible(false);
+    comboBox_entnahme->setVisible(false);
+    dateEdit_zugabezeitpunkt_von->setVisible(false);
+    dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    buttonZugeben->setVisible(false);
+    buttonEntnehmen->setVisible(false);
   }
 
-  comboBox_Zutat -> setDisabled(status);
-  comboBox_Zutat -> setEditable(status);
-  comboBox_Zugabezeitpunkt -> setDisabled(status);
-  comboBox_Zugabezeitpunkt -> setEditable(status);
-  dsb_Menge -> setReadOnly(status);
-  dsb_Menge -> setButtonSymbols(bs);
-  textEdit_Komentar -> setReadOnly(status);
-  pushButton_del -> setDisabled(status);
 }
 
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 {
   BierWurdeGebraut = value;
+  setUIStatus();
+}
+
+void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
+{
+  if (datum_von < QDate::currentDate() && !BierWurdeAbgefuellt && zugabestatus == 0) {
+    datum_von = QDate::currentDate();
+  }
+  if (datum_bis < QDate::currentDate() && !BierWurdeAbgefuellt && zugabestatus < 2) {
+    datum_bis = QDate::currentDate();
+  }
+  dateEdit_zugabezeitpunkt_von->setDate(datum_von);
+  dateEdit_zugabezeitpunkt_bis->setDate(datum_bis);
+}
+
+QDate ErweiterteZutatImpl::getZugabezeitpunkt_von()
+{
+  return dateEdit_zugabezeitpunkt_von->date();
+}
+
+QDate ErweiterteZutatImpl::getZugabezeitpunkt_bis()
+{
+  return dateEdit_zugabezeitpunkt_bis->date();
+}
+
+void ErweiterteZutatImpl::setEntnahmeindex(int index)
+{
+  comboBox_entnahme->setCurrentIndex(index);
+}
+
+int ErweiterteZutatImpl::getEntnahmeindex()
+{
+  return comboBox_entnahme->currentIndex();
 }
 
 int ErweiterteZutatImpl::getID()
@@ -89,6 +225,44 @@ void ErweiterteZutatImpl::ErstelleAuswahlliste()
     }
   }
 
+}
+
+bool ErweiterteZutatImpl::getBierWurdeAbgefuellt() const
+{
+  return BierWurdeAbgefuellt;
+}
+
+void ErweiterteZutatImpl::setBierWurdeAbgefuellt(bool value)
+{
+  BierWurdeAbgefuellt = value;
+  setUIStatus();
+}
+
+int ErweiterteZutatImpl::getZugabestatus() const
+{
+  return zugabestatus;
+}
+
+void ErweiterteZutatImpl::setZugabestatus(int value)
+{
+  if (zugabestatus != value)
+    emit sig_Aenderung();
+  zugabestatus = value;
+  setUIStatus();
+}
+
+void ErweiterteZutatImpl::zutatZugeben()
+{
+  //zugabedatum setzten
+  dateEdit_zugabezeitpunkt_von->setDateTime(QDateTime::currentDateTime());
+  on_buttonZugeben_clicked();
+}
+
+void ErweiterteZutatImpl::zutatEntnehmen()
+{
+  //Entnahmedatum setzen
+  dateEdit_zugabezeitpunkt_bis->setDateTime(QDateTime::currentDateTime());
+  on_buttonEntnehmen_clicked();
 }
 
 
@@ -323,6 +497,7 @@ void ErweiterteZutatImpl::setBemerkung(QString Bemerkung)
 
 void ErweiterteZutatImpl::on_comboBox_Zugabezeitpunkt_currentIndexChanged(int )
 {
+  setUIStatus();
   emit sig_Aenderung();
 }
 
@@ -386,3 +561,41 @@ double ErweiterteZutatImpl::getErg_Kosten()
   return erg_Menge * preis/1000;
 }
 
+
+void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date)
+{
+  if (dateEdit_zugabezeitpunkt_bis->date() < date) {
+    dateEdit_zugabezeitpunkt_bis->setDate(date);
+  }
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date)
+{
+  if (date < dateEdit_zugabezeitpunkt_von->date()) {
+    dateEdit_zugabezeitpunkt_bis->setDate(dateEdit_zugabezeitpunkt_von->date());
+  }
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int)
+{
+  setUIStatus();
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_buttonZugeben_clicked()
+{
+  zugabestatus = 1;
+  setUIStatus();
+  //todo Rohstoffe für diese Zutat abziehen fragen
+  emit sig_zugeben(comboBox_Zutat->currentText(), typ, erg_Menge);
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_buttonEntnehmen_clicked()
+{
+  zugabestatus = 2;
+  setUIStatus();
+  emit sig_Aenderung();
+}

@@ -24,6 +24,7 @@ signals:
   double sig_getEwzPreis(QString zutat);
   double sig_getEwzPreisHopfen(QString zutat);
   void sig_Aenderung();
+  void sig_zugeben(QString zutat, int typ, double menge);
 
 private:
   double farbe;
@@ -38,12 +39,14 @@ private:
   int ID;
   QPixmap pixmapTyp;
   bool BierWurdeGebraut;
+  bool BierWurdeAbgefuellt;
   QPointer<FaderWidget> faderWidget;
   bool animationAktiv;
   QPropertyAnimation *animationPos;
   QPoint pVon, pNach;
   int z;
   bool NativStyle;
+  int zugabestatus;
 
 public:
   double getErg_Kosten();
@@ -73,8 +76,22 @@ public:
   doubleEditLineImpl* ergWidget;
   ErweiterteZutatImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
   void WerteNeuAusRohstoffeHolen();
-  void setDisabled(bool status);
+  void setUIStatus();
   void setBierWurdeGebraut(bool value);
+  void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);
+  QDate getZugabezeitpunkt_von();
+  QDate getZugabezeitpunkt_bis();
+  void setEntnahmeindex(int index);
+  int getEntnahmeindex();
+  int getZugabestatus() const;
+  void setZugabestatus(int value);
+  //Markiert die Zutat als zugegeben
+  void zutatZugeben();
+  //Markiert die Zutat als entnommen
+  void zutatEntnehmen();
+
+  bool getBierWurdeAbgefuellt() const;
+  void setBierWurdeAbgefuellt(bool value);
 
 private slots:
   void on_textEdit_Komentar_textChanged();
@@ -83,6 +100,14 @@ private slots:
   void on_comboBox_Zutat_currentIndexChanged(QString );
   void on_pushButton_del_clicked();
   void on_fadeout_fertig();
+  void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
+  void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
+
+  void on_comboBox_entnahme_currentIndexChanged(int index);
+
+  void on_buttonZugeben_clicked();
+
+  void on_buttonEntnehmen_clicked();
 
 protected:
   void closeEvent(QCloseEvent *event);

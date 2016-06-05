@@ -2,19 +2,17 @@
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-//#define DEBUG true
+#define DEBUG true
 
 //Version
-#define VERSION "1.4.2.2"
-#define VERSION_INT 1040202
+#define VERSION "1.4.2.4"
+#define VERSION_INT 1040204
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
 //V18 Tabelle Ausruestung um Kosten erweitert
 //V19 Sudaten um Eintrag Spunden erweitert
-//V20 Rohstoffe um Eintrag Link erweitert
-//    Tabelle Anhang
-#define DB_VERSION 20
+#define DB_VERSION 21
 //Version der XML Datei
 //Version 2 mit Weiteren Zutaten
 //Version 3 mit Temperaturen im Schnellgärverlauf/Hauptgärverlauf
@@ -134,6 +132,15 @@
 #define EWZ_Zeitpunkt_Kochbeginn 1
 #define EWZ_Zeitpunkt_Maischen 2
 
+//Weitere Zutaten zugabestatus
+#define EWZ_Zugabestatus_nichtZugegeben 0
+#define EWZ_Zugabestatus_Zugegeben 1
+#define EWZ_Zugabestatus_Entnommen 2
+
+//Entnahmeindex
+#define EWZ_Entnahmeindex_MitEntnahme 0
+#define EWZ_Entnahmeindex_KeineEntnahme 1
+
 //Weitere Zutaten Einheit
 #define EWZ_Einheit_Kg 0
 #define EWZ_Einheit_g 1
@@ -144,7 +151,7 @@
 #define R_Hefe 3
 
 //Animationsstop für die Rasten (Anzahl Rasten)
-#define RAST_ANIMATION_STOP 6
+#define RAST_ANIMATION_STOP 5
 
 //Anzahl Sterne im Bewertungsystem
 #define BEW_ANZAHL_STERNE 5
@@ -191,6 +198,7 @@
 #define ERR_SQL_DB_UPDATE_V17_V18 130
 #define ERR_SQL_DB_UPDATE_V18_V19 131
 #define ERR_SQL_DB_UPDATE_V19_V20 132
+#define ERR_SQL_DB_UPDATE_V20_V21 133
 
 
 
@@ -205,5 +213,8 @@
 #define TAB_GAERVERLAUF 4
 #define TAB_ZUSAMMENFASSUNG 5
 
+#define TAB_Malz 0
+#define TAB_Hopfen 1
+#define TAB_WeitereZutaten 2
 
 #endif
