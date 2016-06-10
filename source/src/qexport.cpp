@@ -895,7 +895,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 					komentar = doc.createComment("Menge");
 					Anteil.appendChild(komentar);
 					FeldNr = query_WeitereZutaten.record().indexOf("Menge");
-					element = doc.createElement("Menge");
+					element = doc.createElement("AMOUNT");
 					element.setAttribute("Einheit","Gramm/Liter");
 					text = doc.createTextNode(query_WeitereZutaten.value(FeldNr).toString());
 					element.appendChild(text);
@@ -1691,7 +1691,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 			
 			//Hopfen In Weiteren Zutaten
 			sl.clear();
-			sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='100' AND SudID=" + QString::number(SudNr) + ";";
+			sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='"+QString::number(EWZ_Typ_Hopfen)+"' AND SudID=" + QString::number(SudNr) + ";";
 			if (!query_Hopfen.exec(sql)) {
 				// Fehlermeldung Datenbankabfrage
 				ErrorMessage *errorMessage = new ErrorMessage();
@@ -2357,7 +2357,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
           komentar = doc.createComment("Berechnete Gewichtsmenge in kg");
           Anteil.appendChild(komentar);
           FeldNr = query_Hopfen.record().indexOf("erg_Menge");
-          element = doc.createElement("erg_Menge");
+          element = doc.createElement("AMOUNT");
           double v = query_Hopfen.value(FeldNr).toFloat();
           v = v / 1000;
           text = doc.createTextNode(QString::number(v));
@@ -2400,11 +2400,113 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
           element.appendChild(text);
           Anteil.appendChild(element);
 
-
           i++;
         }
       }
 
+      //Hopfengaben für das Stopfen der Weiteren Zutaten abfragen Abfragen
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='"+QString::number(EWZ_Typ_Hopfen)+"' AND SudID=" + QString::number(SudNr) + ";";
+      if (!query_Hopfen.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Hopfen.next()){
+          Anteil = doc.createElement("HOP");
+          Hopfengaben.appendChild(Anteil);
+
+          //Version Hopfen Tag
+          komentar = doc.createComment("Version Hopfen Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Berschreibung Hopfen (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          QString Name;
+          Name = query_Hopfen.value(FeldNr).toString();
+          text = doc.createTextNode(Name);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Menge
+          komentar = doc.createComment("Berechnete Gewichtsmenge in kg");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("erg_Menge");
+          element = doc.createElement("AMOUNT");
+          double v = query_Hopfen.value(FeldNr).toFloat();
+          v = v / 1000;
+          text = doc.createTextNode(QString::number(v));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Stopfhopfen setzen
+          komentar = doc.createComment("Art der Hopfung  First Wort/Boil/Dry Hop");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("USE");
+          text = doc.createTextNode("Dry Hop");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Zeit
+//          komentar = doc.createComment("Zeit in Minuten");
+//          Anteil.appendChild(komentar);
+//          FeldNr = query_Hopfen.record().indexOf("Zeit");
+//          element = doc.createElement("TIME");
+//          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+//          element.appendChild(text);
+//          Anteil.appendChild(element);
+
+          //Hopfen aud Rohstoffe abfragen um an alpha und pellets zu kommen
+          sql = "SELECT * FROM Hopfen WHERE Beschreibung='" + Name + "';";
+          QSqlQuery query;
+					if (!query.exec(sql)) {
+						// Fehlermeldung Datenbankabfrage
+						ErrorMessage *errorMessage = new ErrorMessage();
+						errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+							CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+							+ trUtf8("\nSQL Befehl:\n") + sql);
+					}
+					else {
+            if (query.first()){
+              //Alpha
+              komentar = doc.createComment("Alphaprozent gehalt des Hopfens");
+              Anteil.appendChild(komentar);
+              FeldNr = query.record().indexOf("Alpha");
+              element = doc.createElement("ALPHA");
+              text = doc.createTextNode(query.value(FeldNr).toString());
+              element.appendChild(text);
+              Anteil.appendChild(element);
+  
+              //Pellets
+              komentar = doc.createComment("Hopfenart Pellet/Leaf");
+              Anteil.appendChild(komentar);
+              FeldNr = query.record().indexOf("Pellets");
+              element = doc.createElement("FORM");
+              if (query.value(FeldNr).toBool())
+                text = doc.createTextNode("Pellet");
+              else
+                text = doc.createTextNode("Leaf");
+            }
+          }
+
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          i++;
+        }
+      }
 
       //xml Datei Speichern
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
