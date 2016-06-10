@@ -47,6 +47,7 @@ private:
   int z;
   bool NativStyle;
   int zugabestatus;
+  QDateTime Zugabezeitpunkt_bis;
 
 public:
   double getErg_Kosten();
@@ -101,7 +102,6 @@ private slots:
   void on_pushButton_del_clicked();
   void on_fadeout_fertig();
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
-  void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
   void on_comboBox_entnahme_currentIndexChanged(int index);
 

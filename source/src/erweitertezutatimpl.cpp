@@ -35,7 +35,7 @@ void ErweiterteZutatImpl::setUIStatus()
     comboBox_Zugabezeitpunkt -> setEditable(false);
     comboBox_Zugabezeitpunkt -> setDisabled(true);
     dateEdit_zugabezeitpunkt_von->setDisabled(true);
-    dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+    spinBox_EWZ_DauerTage->setDisabled(true);
   }
   //Bier wurde gebraut aber nicht abgefüllt
   else if (BierWurdeGebraut) {
@@ -57,12 +57,12 @@ void ErweiterteZutatImpl::setUIStatus()
       }
       // entnommen
       if (zugabestatus == 2) {
-        dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+        spinBox_EWZ_DauerTage->setDisabled(true);
         comboBox_entnahme->setDisabled(true);
       }
       // noch nicht entnommen
       else {
-        dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+        spinBox_EWZ_DauerTage->setDisabled(false);
         comboBox_entnahme->setDisabled(false);
       }
     }
@@ -71,7 +71,7 @@ void ErweiterteZutatImpl::setUIStatus()
       bs = QAbstractSpinBox::NoButtons;
       statusDisabled = true;
       dateEdit_zugabezeitpunkt_von->setDisabled(true);
-      dateEdit_zugabezeitpunkt_bis->setDisabled(true);
+      spinBox_EWZ_DauerTage->setDisabled(true);
       comboBox_entnahme->setDisabled(true);
     }
   }
@@ -80,7 +80,7 @@ void ErweiterteZutatImpl::setUIStatus()
     bs = QAbstractSpinBox::UpDownArrows;
     statusDisabled = false;
     dateEdit_zugabezeitpunkt_von->setDisabled(false);
-    dateEdit_zugabezeitpunkt_bis->setDisabled(false);
+    spinBox_EWZ_DauerTage->setDisabled(false);
     comboBox_entnahme->setDisabled(false);
     comboBox_Zugabezeitpunkt -> setEditable(false);
     comboBox_Zugabezeitpunkt -> setDisabled(false);
@@ -102,10 +102,10 @@ void ErweiterteZutatImpl::setUIStatus()
     comboBox_entnahme->setVisible(true);
     dateEdit_zugabezeitpunkt_von->setVisible(true);
     if (comboBox_entnahme->currentIndex() == 0) {
-      dateEdit_zugabezeitpunkt_bis->setVisible(true);
+      spinBox_EWZ_DauerTage->setVisible(true);
     }
     else {
-      dateEdit_zugabezeitpunkt_bis->setVisible(false);
+      spinBox_EWZ_DauerTage->setVisible(false);
     }
 
     if (zugabestatus == 0) {
@@ -137,7 +137,7 @@ void ErweiterteZutatImpl::setUIStatus()
     label_von->setVisible(false);
     comboBox_entnahme->setVisible(false);
     dateEdit_zugabezeitpunkt_von->setVisible(false);
-    dateEdit_zugabezeitpunkt_bis->setVisible(false);
+    spinBox_EWZ_DauerTage->setVisible(false);
     buttonZugeben->setVisible(false);
     buttonEntnehmen->setVisible(false);
   }
@@ -159,7 +159,7 @@ void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
     datum_bis = QDate::currentDate();
   }
   dateEdit_zugabezeitpunkt_von->setDate(datum_von);
-  dateEdit_zugabezeitpunkt_bis->setDate(datum_bis);
+  Zugabezeitpunkt_bis.setDate(datum_bis);
 }
 
 QDate ErweiterteZutatImpl::getZugabezeitpunkt_von()
@@ -169,7 +169,7 @@ QDate ErweiterteZutatImpl::getZugabezeitpunkt_von()
 
 QDate ErweiterteZutatImpl::getZugabezeitpunkt_bis()
 {
-  return dateEdit_zugabezeitpunkt_bis->date();
+  return Zugabezeitpunkt_bis.date();
 }
 
 void ErweiterteZutatImpl::setEntnahmeindex(int index)
@@ -261,7 +261,7 @@ void ErweiterteZutatImpl::zutatZugeben()
 void ErweiterteZutatImpl::zutatEntnehmen()
 {
   //Entnahmedatum setzen
-  dateEdit_zugabezeitpunkt_bis->setDateTime(QDateTime::currentDateTime());
+  Zugabezeitpunkt_bis = QDateTime::currentDateTime();
   on_buttonEntnehmen_clicked();
 }
 
@@ -564,19 +564,12 @@ double ErweiterteZutatImpl::getErg_Kosten()
 
 void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date)
 {
-  if (dateEdit_zugabezeitpunkt_bis->date() < date) {
-    dateEdit_zugabezeitpunkt_bis->setDate(date);
+  if (Zugabezeitpunkt_bis.date() < date) {
+    Zugabezeitpunkt_bis.setDate(date);
   }
   emit sig_Aenderung();
 }
 
-void ErweiterteZutatImpl::on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date)
-{
-  if (date < dateEdit_zugabezeitpunkt_von->date()) {
-    dateEdit_zugabezeitpunkt_bis->setDate(dateEdit_zugabezeitpunkt_von->date());
-  }
-  emit sig_Aenderung();
-}
 
 void ErweiterteZutatImpl::on_comboBox_entnahme_currentIndexChanged(int)
 {
