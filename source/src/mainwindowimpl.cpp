@@ -3329,6 +3329,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ewz -> setZugabezeitpunkt(date_von,date_bis);
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
+          FeldNr_Name = query_ewz.record().indexOf("Zugabedauer");
+          ewz -> setDauerTage(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 
@@ -13658,7 +13660,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
 
   for (int i=0; i < list_EwZutat.count(); i++){
     sql = "INSERT INTO WeitereZutatenGaben(SudID, Name, Menge, Einheit, Typ, Zeitpunkt,";
-    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Zugabestatus, Farbe) VALUES(" +
+    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Zugabestatus, Zugabedauer, Farbe) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
         "'" + list_EwZutat[i] -> getName().replace("'","''") +	"'," +
         QString::number(list_EwZutat[i] -> getMenge()) +	"," +
@@ -13672,6 +13674,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
         QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
+        QString::number(list_EwZutat[i] -> getDauerTage()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {

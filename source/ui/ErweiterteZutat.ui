@@ -303,7 +303,7 @@
          <widget class="QSpinBox" name="spinBox_EWZ_DauerTage"/>
         </item>
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="label_tage">
           <property name="text">
            <string>Tage</string>
           </property>

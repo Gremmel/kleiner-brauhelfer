@@ -86,6 +86,8 @@ public:
   int getEntnahmeindex();
   int getZugabestatus() const;
   void setZugabestatus(int value);
+  int getDauerTage();
+  void setDauerTage(int value);
   //Markiert die Zutat als zugegeben
   void zutatZugeben();
   //Markiert die Zutat als entnommen
@@ -108,6 +110,8 @@ private slots:
   void on_buttonZugeben_clicked();
 
   void on_buttonEntnehmen_clicked();
+
+  void on_spinBox_EWZ_DauerTage_valueChanged(int arg1);
 
 protected:
   void closeEvent(QCloseEvent *event);

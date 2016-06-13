@@ -2,6 +2,7 @@
 #include "erweitertezutatimpl.h"
 #include "definitionen.h"
 #include "rohstoffaustauschen.h"
+#include "dialogdatum.h"
 
 //
 ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
@@ -103,9 +104,11 @@ void ErweiterteZutatImpl::setUIStatus()
     dateEdit_zugabezeitpunkt_von->setVisible(true);
     if (comboBox_entnahme->currentIndex() == 0) {
       spinBox_EWZ_DauerTage->setVisible(true);
+      label_tage->setVisible(true);
     }
     else {
       spinBox_EWZ_DauerTage->setVisible(false);
+      label_tage->setVisible(false);
     }
 
     if (zugabestatus == 0) {
@@ -138,6 +141,7 @@ void ErweiterteZutatImpl::setUIStatus()
     comboBox_entnahme->setVisible(false);
     dateEdit_zugabezeitpunkt_von->setVisible(false);
     spinBox_EWZ_DauerTage->setVisible(false);
+    label_tage->setVisible(false);
     buttonZugeben->setVisible(false);
     buttonEntnehmen->setVisible(false);
   }
@@ -251,6 +255,16 @@ void ErweiterteZutatImpl::setZugabestatus(int value)
   setUIStatus();
 }
 
+int ErweiterteZutatImpl::getDauerTage()
+{
+  return spinBox_EWZ_DauerTage->value();
+}
+
+void ErweiterteZutatImpl::setDauerTage(int value)
+{
+  spinBox_EWZ_DauerTage->setValue(value);
+}
+
 void ErweiterteZutatImpl::zutatZugeben()
 {
   //zugabedatum setzten
@@ -260,8 +274,6 @@ void ErweiterteZutatImpl::zutatZugeben()
 
 void ErweiterteZutatImpl::zutatEntnehmen()
 {
-  //Entnahmedatum setzen
-  Zugabezeitpunkt_bis = QDateTime::currentDateTime();
   on_buttonEntnehmen_clicked();
 }
 
@@ -588,7 +600,24 @@ void ErweiterteZutatImpl::on_buttonZugeben_clicked()
 
 void ErweiterteZutatImpl::on_buttonEntnehmen_clicked()
 {
+  //Dialog für das Setzen des Entnahmedatums
+  DialogDatum* dlg = new DialogDatum(this, trUtf8("Entnahmedatum"), trUtf8("Zugabedatum übernehmen"));
+
+  dlg->exec();
+  //Entnahmedatum setzen
+  Zugabezeitpunkt_bis.setDate(dlg->getDatum());
+  delete dlg;
+  //Anzahl Tage berechnen
+  if (Zugabezeitpunkt_bis.date() < dateEdit_zugabezeitpunkt_von->date())
+    Zugabezeitpunkt_bis.setDate(dateEdit_zugabezeitpunkt_von->date());
+  int tage = dateEdit_zugabezeitpunkt_von->date().daysTo(Zugabezeitpunkt_bis.date());
+  spinBox_EWZ_DauerTage->setValue(tage);
   zugabestatus = 2;
   setUIStatus();
+  emit sig_Aenderung();
+}
+
+void ErweiterteZutatImpl::on_spinBox_EWZ_DauerTage_valueChanged(int )
+{
   emit sig_Aenderung();
 }
