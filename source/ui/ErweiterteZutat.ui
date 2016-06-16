@@ -289,7 +289,7 @@
           </property>
           <item>
            <property name="text">
-            <string>Entnahme</string>
+            <string>Entnahme nach</string>
            </property>
           </item>
           <item>
@@ -300,18 +300,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QDateEdit" name="dateEdit_zugabezeitpunkt_bis">
-          <property name="toolTip">
-           <string>Datum Entnahmezeitpunkt</string>
-          </property>
-          <property name="statusTip">
-           <string/>
-          </property>
-          <property name="displayFormat">
-           <string>dd.MM.yyyy</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
+         <widget class="QSpinBox" name="spinBox_EWZ_DauerTage"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tage">
+          <property name="text">
+           <string>Tage</string>
           </property>
          </widget>
         </item>
