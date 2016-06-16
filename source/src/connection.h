@@ -2437,6 +2437,10 @@ static bool ErstelleVerbindung() {
       if (query.value(0).toInt() == 20){
         updateNr = 20;
       }
+      //Wenn Version der Datenbank 21 ist dann auf versionstand 22 Updaten
+      if (query.value(0).toInt() == 21){
+        updateNr = 21;
+      }
 
 			//wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
       else if (query.value(0).toInt() > DB_VERSION) {
@@ -2839,6 +2843,38 @@ static bool ErstelleVerbindung() {
       // Fehlermeldung Konnte Datenbank nicht updaten
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V20_V21, TYPE_KRITISCH,
+        CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
+      return false;
+    }
+    QSqlDatabase::database().commit();
+    updateNr = 21;
+  }
+  //Update von 21 auf 22
+  if (updateNr == 21) {
+    bool io = true;
+    QSqlDatabase::database().transaction();
+    //Spalte Zugabestatus
+    QString sql = "ALTER TABLE 'WeitereZutatenGaben' ADD COLUMN 'Zugabedauer' NUMERIC DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    //Versionsstand auf 22 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=22";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      io = false;
+    }
+    if (!io){
+      // Fehlermeldung Konnte Datenbank nicht updaten
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V21_V22, TYPE_KRITISCH,
         CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
       return false;
     }

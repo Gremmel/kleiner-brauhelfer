@@ -2,17 +2,20 @@
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-#define DEBUG true
+//#define DEBUG true
 
 //Version
-#define VERSION "1.4.2.4"
-#define VERSION_INT 1040204
+#define VERSION "1.4.2.5"
+#define VERSION_INT 1040205
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
 //V18 Tabelle Ausruestung um Kosten erweitert
 //V19 Sudaten um Eintrag Spunden erweitert
-#define DB_VERSION 21
+//V20 Um Tabelle Anhänge erweitert und Link in Rohrstoffen
+//V21 Um Zugabezeitpunkt für Weitere Zutaten erweitert
+//V22 Um Zugabedauer für Weitere Zutate erweitert
+#define DB_VERSION 22
 //Version der XML Datei
 //Version 2 mit Weiteren Zutaten
 //Version 3 mit Temperaturen im Schnellgärverlauf/Hauptgärverlauf
@@ -199,7 +202,7 @@
 #define ERR_SQL_DB_UPDATE_V18_V19 131
 #define ERR_SQL_DB_UPDATE_V19_V20 132
 #define ERR_SQL_DB_UPDATE_V20_V21 133
-
+#define ERR_SQL_DB_UPDATE_V21_V22 134
 
 
 #define ERR_VERSION_SUD_V1 200
