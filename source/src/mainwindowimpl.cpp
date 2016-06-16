@@ -10366,7 +10366,9 @@ void MainWindowImpl::ErstelleZusammenfassung()
   style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
   style += "p.version{color:#999999;font-size:11pt;margin-top:5px;}";
   //Style für Kommentar
-  style += "p.kommentar{color:#555555;font-size:11pt;margin-bottom:5px;}";
+  style += "p.kommentar{color:#555555;font-size:10pt;margin-bottom:5px;margin-left:5px;}";
+  //Style für Div Box ohne Rahmen
+  style += "p.zugegeben{color:#555555;font-size:10pt;margin-bottom:2px;margin-left:5px;}";
   //Style für Div Box ohne Rahmen
   style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
   //Style für Div Box mit Rahmen
@@ -10755,6 +10757,24 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "<p class='value'>" + trUtf8("Anstellen") + "</p>";
       s += "</td>";
       s += "</tr>";
+      //Zugabezeitpunkt
+      if (list_EwZutat[i]->getZugabestatus() > EWZ_Zugabestatus_nichtZugegeben) {
+        s += "<tr style=''>";
+        s += "<td colspan='5'>";
+        s += "<p class='zugegeben'>Zugegeben am "+ list_EwZutat[i]->getZugabezeitpunkt_von().toString("dd.MM.yyyy")+"</p>";
+        //wenn entnahme
+        if (list_EwZutat[i]->getEntnahmeindex() == EWZ_Entnahmeindex_MitEntnahme) {
+          //wenn entnommen
+          if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Entnommen) {
+            s += "<p class='kommentar'>"+ trUtf8("Entnommen am ")+ list_EwZutat[i]->getZugabezeitpunkt_bis().toString("dd.MM.yyyy")
+                + " (" + trUtf8("Tage: ") +
+                QString::number(list_EwZutat[i]->getDauerTage())+")</p>";
+            //wenn entnahme
+          }
+        }
+        s += "</td>";
+        s += "</tr>";
+      }
       //wenn ein Kommentar vorhanden ist eine Zeile für den Komentar einfügen
       if (list_EwZutat[i]->getBemerkung() != "") {
         s += "<tr style=''>";
