@@ -3330,7 +3330,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
           FeldNr_Name = query_ewz.record().indexOf("Zugabedauer");
-          ewz -> setDauerTage(query_ewz.value(FeldNr_Name).toInt());
+          ewz -> setDauerTage(query_ewz.value(FeldNr_Name).toInt()/1440);
         }
       }
 
@@ -13699,7 +13699,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
         QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
-        QString::number(list_EwZutat[i] -> getDauerTage()) +	"," +
+        QString::number(list_EwZutat[i] -> getDauerTage()*1440) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {

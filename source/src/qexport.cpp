@@ -2460,15 +2460,15 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
           Anteil.appendChild(element);
 
           //Zeit
-//          komentar = doc.createComment("Zeit in Minuten");
-//          Anteil.appendChild(komentar);
-//          FeldNr = query_Hopfen.record().indexOf("Zeit");
-//          element = doc.createElement("TIME");
-//          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
-//          element.appendChild(text);
-//          Anteil.appendChild(element);
+          komentar = doc.createComment("Zeit in Minuten");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Zugabedauer");
+          element = doc.createElement("TIME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
 
-          //Hopfen aud Rohstoffe abfragen um an alpha und pellets zu kommen
+          //Hopfen aus Rohstoffe abfragen um an alpha und pellets zu kommen
           sql = "SELECT * FROM Hopfen WHERE Beschreibung='" + Name + "';";
           QSqlQuery query;
 					if (!query.exec(sql)) {
