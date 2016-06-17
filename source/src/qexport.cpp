@@ -2468,6 +2468,17 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
           element.appendChild(text);
           Anteil.appendChild(element);
 
+          //Notiz
+          komentar = doc.createComment("Notiz");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Bemerkung");
+          element = doc.createElement("NOTES");
+          QString Notiz;
+          Notiz = query_Hopfen.value(FeldNr).toString();
+          text = doc.createTextNode(Notiz.toHtmlEscaped());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+          
           //Hopfen aus Rohstoffe abfragen um an alpha und pellets zu kommen
           sql = "SELECT * FROM Hopfen WHERE Beschreibung='" + Name + "';";
           QSqlQuery query;
