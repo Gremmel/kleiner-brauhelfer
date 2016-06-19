@@ -2519,6 +2519,179 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         }
       }
 
+      //Malze und alles mit Ausbeute in den weiteren zutaten
+      QDomElement fermentables = doc.createElement("FERMENTABLES");
+      komentar = doc.createComment("Malze und alles mit Ausbeute in den weiteren zutaten");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(fermentables);
+
+      //Schuettung Abfragen
+      QSqlQuery query_Malz;
+      sql = "SELECT * FROM Malzschuettung WHERE SudID=" + QString::number(SudNr) + ";";
+      if (!query_Malz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Malz.next()){
+          Anteil = doc.createElement("FERMENTABLE");
+          fermentables.appendChild(Anteil);
+
+          //Version Fermentable Tag
+          komentar = doc.createComment("Version Fermentable Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Malzbeschreibung (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          text = doc.createTextNode(query_Malz.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Type
+          komentar = doc.createComment("May be Grain, Sugar, Extract, Dry Extract or Adjunct.  Extract refers to liquid extract.");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("TYPE");
+          text = doc.createTextNode("Grain");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Menge
+          komentar = doc.createComment("Berechneter Gewichtsanteil der Schuettung in KG");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("erg_Menge");
+          element = doc.createElement("AMOUNT");
+          text = doc.createTextNode(query_Malz.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Ausbeute
+          komentar = doc.createComment("Ausbeute (Percent dry yield (fine grain) for the grain, or the raw yield by weight if this is an extract adjunct or sugar.)");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("YIELD");
+          text = doc.createTextNode("80");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Farbe
+          komentar = doc.createComment("Farbwert (The color of the item in Lovibond Units (SRM for liquid extracts).)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("Farbe");
+          element = doc.createElement("COLOR");
+          //EBC in Lovibond umrechnen
+          double ebc = query_Malz.value(FeldNr).toDouble();
+          double srm = ebc * 0.508;
+          double l = (srm + 0.76) / 1.3546;
+          text = doc.createTextNode(QString::number(l));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          i++;
+        }
+      }
+      //Anteile der Weiteren Zutaten mit Ausbeute
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(SudNr) + ";";
+      QSqlQuery query_ewz;
+      if (!query_ewz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        while (query_ewz.next()){
+          FeldNr = query_ewz.record().indexOf("Ausbeute");
+          double Ausbeute = query_ewz.value(FeldNr).toDouble();
+
+          if (Ausbeute > 0) {
+            Anteil = doc.createElement("FERMENTABLE");
+            fermentables.appendChild(Anteil);
+
+            //Version Fermentable Tag
+            komentar = doc.createComment("Version Fermentable Tag");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("VERSION");
+            text = doc.createTextNode(BeerXMLVersion);
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Name
+            komentar = doc.createComment("Name");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Name");
+            element = doc.createElement("NAME");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Type
+            komentar = doc.createComment("May be Grain, Sugar, Extract, Dry Extract or Adjunct.  Extract refers to liquid extract.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Name");
+            int typ = query_ewz.value(FeldNr).toInt();
+            if (typ == EWZ_Typ_Honig)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Zucker)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Frucht)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Sonstiges)
+              text = doc.createTextNode("Adjunct");
+            else if (typ == EWZ_Typ_Gewuerz)
+              text = doc.createTextNode("Adjunct");
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Menge
+            komentar = doc.createComment("Berechneter Gewichtsanteil der Schuettung in KG");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("erg_Menge");
+            element = doc.createElement("AMOUNT");
+            text = doc.createTextNode(QString::number(query_ewz.value(FeldNr).toDouble() / 1000));
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Ausbeute
+            komentar = doc.createComment("Ausbeute (Percent dry yield (fine grain) for the grain, or the raw yield by weight if this is an extract adjunct or sugar.)");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("YIELD");
+            FeldNr = query_ewz.record().indexOf("Ausbeute");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Farbe
+            komentar = doc.createComment("Farbwert (The color of the item in Lovibond Units (SRM for liquid extracts).)");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Farbe");
+            element = doc.createElement("COLOR");
+            //EBC in Lovibond umrechnen
+            double ebc = query_ewz.value(FeldNr).toDouble();
+            double srm = ebc * 0.508;
+            double l = (srm + 0.76) / 1.3546;
+            text = doc.createTextNode(QString::number(l));
+            element.appendChild(text);
+            Anteil.appendChild(element);
+          }
+        }
+      }
+
       //xml Datei Speichern
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
 				//Kann Suddatei nicht erstellen
