@@ -2688,6 +2688,19 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
             text = doc.createTextNode(QString::number(l));
             element.appendChild(text);
             Anteil.appendChild(element);
+
+            //zugabezeitpunkt
+            komentar = doc.createComment("May be TRUE if this item is normally added after the boil.  The default value is FALSE since most grains are added during the mash or boil.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("ADD_AFTER_BOIL");
+            FeldNr = query_ewz.record().indexOf("Zeitpunkt");
+            int zeitpunkt = query_ewz.value(FeldNr).toInt();
+            if (zeitpunkt == EWZ_Zeitpunkt_Gaerung)
+              text = doc.createTextNode("TRUE");
+            else
+              text = doc.createTextNode("FALSE");
+            element.appendChild(text);
+            Anteil.appendChild(element);
           }
         }
       }
