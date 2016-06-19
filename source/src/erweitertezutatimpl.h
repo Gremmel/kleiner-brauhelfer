@@ -86,8 +86,8 @@ public:
   int getEntnahmeindex();
   int getZugabestatus() const;
   void setZugabestatus(int value);
-  int getDauerTage();
-  void setDauerTage(int value);
+  int getDauerMinuten();
+  void setDauerMinuten(int value);
   //Markiert die Zutat als zugegeben
   void zutatZugeben();
   //Markiert die Zutat als entnommen

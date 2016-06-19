@@ -3331,7 +3331,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
           FeldNr_Name = query_ewz.record().indexOf("Zugabedauer");
-          ewz -> setDauerTage(query_ewz.value(FeldNr_Name).toInt());
+          ewz -> setDauerMinuten(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 
@@ -10769,7 +10769,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
           if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Entnommen) {
             s += "<p class='kommentar'>"+ trUtf8("Entnommen am ")+ list_EwZutat[i]->getZugabezeitpunkt_bis().toString("dd.MM.yyyy")
                 + " (" + trUtf8("Tage: ") +
-                QString::number(list_EwZutat[i]->getDauerTage())+")</p>";
+                QString::number(list_EwZutat[i]->getDauerMinuten()/1440)+")</p>";
             //wenn entnahme
           }
         }
@@ -11040,7 +11040,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11094,7 +11094,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11148,7 +11148,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -13695,7 +13695,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
         QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
-        QString::number(list_EwZutat[i] -> getDauerTage()) +	"," +
+        QString::number(list_EwZutat[i] -> getDauerMinuten()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {
