@@ -104,11 +104,11 @@ void ErweiterteZutatImpl::setUIStatus()
     dateEdit_zugabezeitpunkt_von->setVisible(true);
     if (comboBox_entnahme->currentIndex() == 0) {
       spinBox_EWZ_DauerTage->setVisible(true);
-      label_tage->setVisible(true);
+      label_dauer->setVisible(true);
     }
     else {
       spinBox_EWZ_DauerTage->setVisible(false);
-      label_tage->setVisible(false);
+      label_dauer->setVisible(false);
     }
 
     if (zugabestatus == 0) {
@@ -137,15 +137,27 @@ void ErweiterteZutatImpl::setUIStatus()
     }
   }
   else {
+    if (comboBox_Zugabezeitpunkt->currentIndex() == EWZ_Zeitpunkt_Kochbeginn && (typ != EWZ_Typ_Honig && typ != EWZ_Typ_Zucker)) {
+      spinBox_EWZ_DauerTage->setVisible(true);
+      label_dauer->setVisible(true);
+    }
+    else {
+      spinBox_EWZ_DauerTage->setVisible(false);
+      label_dauer->setVisible(false);
+    }
     label_von->setVisible(false);
     comboBox_entnahme->setVisible(false);
     dateEdit_zugabezeitpunkt_von->setVisible(false);
-    spinBox_EWZ_DauerTage->setVisible(false);
-    label_tage->setVisible(false);
     buttonZugeben->setVisible(false);
     buttonEntnehmen->setVisible(false);
   }
-
+  //Text für Zugabedauer
+  if (comboBox_Zugabezeitpunkt->currentIndex() == EWZ_Zeitpunkt_Gaerung) {
+    label_dauer->setText(trUtf8("Tage"));
+  }
+  else {
+    label_dauer->setText(trUtf8("Minuten"));
+  }
 }
 
 void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
@@ -255,13 +267,18 @@ void ErweiterteZutatImpl::setZugabestatus(int value)
   setUIStatus();
 }
 
-int ErweiterteZutatImpl::getDauerTage()
+int ErweiterteZutatImpl::getDauerMinuten()
 {
-  return spinBox_EWZ_DauerTage->value();
+  if (comboBox_Zugabezeitpunkt->currentIndex() == EWZ_Zeitpunkt_Gaerung)
+    return spinBox_EWZ_DauerTage->value()*1440;
+  else
+    return spinBox_EWZ_DauerTage->value();
 }
 
-void ErweiterteZutatImpl::setDauerTage(int value)
+void ErweiterteZutatImpl::setDauerMinuten(int value)
 {
+  if (comboBox_Zugabezeitpunkt->currentIndex() == EWZ_Zeitpunkt_Gaerung)
+    value = value / 1440;
   spinBox_EWZ_DauerTage->setValue(value);
 }
 
@@ -291,27 +308,27 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       }
       //Icon setzten
       //Honig
-      if (typ == 0){
+      if (typ == EWZ_Typ_Honig){
         pixmapTyp.load(":/ewz/ewz_typ_0.svg");
         label_Icon -> setPixmap(pixmapTyp);
       }
       //Zucker
-      else if (typ == 1){
+      else if (typ == EWZ_Typ_Zucker){
         pixmapTyp.load(":/ewz/ewz_typ_1.svg");
         label_Icon -> setPixmap(pixmapTyp);
       }
       //Gewürze
-      else if (typ == 2){
+      else if (typ == EWZ_Typ_Gewuerz){
         pixmapTyp.load(":/ewz/ewz_typ_2.svg");
         label_Icon -> setPixmap(pixmapTyp);
       }
       //Früchte
-      else if (typ == 3){
+      else if (typ == EWZ_Typ_Frucht){
         pixmapTyp.load(":/ewz/ewz_typ_3.svg");
         label_Icon -> setPixmap(pixmapTyp);
       }
       //Sonstiges
-      else if (typ == 4){
+      else if (typ == EWZ_Typ_Sonstiges){
         pixmapTyp.load(":/ewz/ewz_typ_4.svg");
         label_Icon -> setPixmap(pixmapTyp);
       }
@@ -321,13 +338,13 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
         einheit = sig_getEwzEinheit(string);
       }
       //Kilogramm
-      if (einheit == 0){
+      if (einheit == EWZ_Einheit_Kg){
         label_Mengeneinheit -> setText("g/L");
         ergWidget -> label_Einheit -> setText("Kg");
         ergWidget -> spinBox_Wert -> setDecimals(3);
       }
       //Gramm
-      else if (einheit == 1){
+      else if (einheit == EWZ_Einheit_g){
         label_Mengeneinheit -> setText("g/L");
         ergWidget -> label_Einheit -> setText("g");
         ergWidget -> spinBox_Wert -> setDecimals(0);
@@ -335,7 +352,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
     }
     //Typ ist Hopfen
     else {
-      typ = 100;
+      typ = EWZ_Typ_Hopfen;
       pixmapTyp.load(":/ewz/ewz_typ_100.svg");
       label_Icon -> setPixmap(pixmapTyp);
       label_Mengeneinheit -> setText("g/L");
@@ -352,11 +369,11 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
     ZugabezeitpunktListe.clear();
     ZugabezeitpunktListe.append(trUtf8("bei der Gärung"));
     // Alles ausser Hopfen
-    if (typ == 0 || typ == 1){
+    if (typ == EWZ_Typ_Honig || typ == EWZ_Typ_Zucker){
       ZugabezeitpunktListe.append(trUtf8("bei Kochbegin"));
       ZugabezeitpunktListe.append(trUtf8("beim Maischen"));
     }
-    else if (typ < 100){
+    else if (typ < EWZ_Typ_Hopfen){
       ZugabezeitpunktListe.append(trUtf8("beim Kochen"));
       ZugabezeitpunktListe.append(trUtf8("beim Maischen"));
     }

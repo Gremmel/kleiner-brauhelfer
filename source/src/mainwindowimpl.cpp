@@ -289,6 +289,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   pushButton_EingabeHSWVorHopfenseihen -> hide();
   horizontalLayout_107 -> setSpacing(0);
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
+  on_tableWidget_Hefe_itemSelectionChanged();
 
   LeseKonfig();
 
@@ -3330,7 +3331,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
           FeldNr_Name = query_ewz.record().indexOf("Zugabedauer");
-          ewz -> setDauerTage(query_ewz.value(FeldNr_Name).toInt()/1440);
+          ewz -> setDauerMinuten(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 
@@ -10768,7 +10769,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
           if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Entnommen) {
             s += "<p class='kommentar'>"+ trUtf8("Entnommen am ")+ list_EwZutat[i]->getZugabezeitpunkt_bis().toString("dd.MM.yyyy")
                 + " (" + trUtf8("Tage: ") +
-                QString::number(list_EwZutat[i]->getDauerTage())+")</p>";
+                QString::number(list_EwZutat[i]->getDauerMinuten()/1440)+")</p>";
             //wenn entnahme
           }
         }
@@ -11039,7 +11040,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11093,7 +11094,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11147,7 +11148,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -13699,7 +13700,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
         QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
-        QString::number(list_EwZutat[i] -> getDauerTage()*1440) +	"," +
+        QString::number(list_EwZutat[i] -> getDauerMinuten()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {
@@ -15292,7 +15293,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
 void MainWindowImpl::on_tableWidget_Malz_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Malz -> selectedItems().count() == 3) {
+  if (tableWidget_Malz -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_MalzKopie -> setDisabled(false);
     pushButton_MalzDel -> setDisabled(false);
@@ -15308,7 +15309,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hopfen -> selectedItems().count() == 3) {
+  if (tableWidget_Hopfen -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_HopfenKopie -> setDisabled(false);
     pushButton_HopfenDel -> setDisabled(false);
@@ -15323,21 +15324,21 @@ void MainWindowImpl::on_tableWidget_Hefe_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
+  if (tableWidget_Hefe -> selectedItems().count() == 7) {
     //Alle Buttons enablen
-    pushButton_WeitereZutatenKopie -> setDisabled(false);
-    pushButton_WeitereZutatenDel -> setDisabled(false);
+    pushButton_HefeKopie -> setDisabled(false);
+    pushButton_HefeDel -> setDisabled(false);
   }
   else {
-    pushButton_WeitereZutatenKopie -> setDisabled(true);
-    pushButton_WeitereZutatenDel -> setDisabled(true);
+    pushButton_HefeKopie -> setDisabled(true);
+    pushButton_HefeDel -> setDisabled(true);
   }
 }
 
 void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 2) {
+  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
     //Alle Buttons enablen
     pushButton_WeitereZutatenDel -> setDisabled(false);
     pushButton_WeitereZutatenKopie -> setDisabled(false);
