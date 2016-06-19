@@ -2705,6 +2705,77 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         }
       }
 
+      //Hefe
+      QDomElement yeasts = doc.createElement("YEASTS");
+      komentar = doc.createComment("Hefe");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(yeasts);
+
+      QDomElement yeast = doc.createElement("YEAST");
+      yeasts.appendChild(yeast);
+
+      //Version Fermentable Tag
+      komentar = doc.createComment("Version Yeast Tag");
+      yeast.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Name
+      komentar = doc.createComment("Name Hefe");
+      yeast.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("AuswahlHefe");
+      element = doc.createElement("NAME");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      QString AuswahlHefe = query_sud.value(FeldNr).toString();
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Type
+      komentar = doc.createComment("May be Ale, Lager, Wheat, Wine or Champagne (Wird im KBH nicht definiert, deshalb immer Lager");
+      yeast.appendChild(komentar);
+      element = doc.createElement("TYPE");
+      text = doc.createTextNode("Lager");
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Form
+      komentar = doc.createComment("May be Liquid, Dry, Slant or Culture");
+      yeast.appendChild(komentar);
+      element = doc.createElement("FORM");
+      sql = "SELECT TypTrFl FROM Hefe WHERE Beschreibung='" + AuswahlHefe.toHtmlEscaped() + "';";
+      QSqlQuery query;
+      if (!query.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        query.first();
+        FeldNr = query_ewz.record().indexOf("TypTrFl");
+        int typ = query_ewz.value(FeldNr).toInt();
+        if (typ == Hefe_Fluessig)
+          text = doc.createTextNode("Liquid");
+        else if (typ == Hefe_Trocken)
+          text = doc.createTextNode("Dry");
+        else if (typ == Hefe_Unbekannt)
+          text = doc.createTextNode("Dry");
+      }
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Menge
+      komentar = doc.createComment("The amount of yeast, measured in liters.  For a starter this is the size of the starter.  If the flag AMOUNT_IS_WEIGHT is set to TRUE then this measurement is in kilograms and not liters.");
+      yeast.appendChild(komentar);
+      element = doc.createElement("AMOUNT");
+      //Menge kann im Moment noch nicht sicher ermittelt werden deshalb wird erst einmal 0 eingetragen
+      text = doc.createTextNode("0");
+      element.appendChild(text);
+      yeast.appendChild(element);
+
       //xml Datei Speichern
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
 				//Kann Suddatei nicht erstellen

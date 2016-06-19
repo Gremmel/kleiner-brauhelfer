@@ -148,6 +148,11 @@
 #define EWZ_Einheit_Kg 0
 #define EWZ_Einheit_g 1
 
+//Hefe Art
+#define Hefe_Unbekannt 0
+#define Hefe_Trocken 1
+#define Hefe_Fluessig 2
+
 //Rohstoffart Rohstoffvorlagen
 #define R_Malz 1
 #define R_Hopfen 2
