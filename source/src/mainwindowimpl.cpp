@@ -289,6 +289,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   pushButton_EingabeHSWVorHopfenseihen -> hide();
   horizontalLayout_107 -> setSpacing(0);
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
+  on_tableWidget_Hefe_itemSelectionChanged();
 
   LeseKonfig();
 
@@ -15287,7 +15288,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
 void MainWindowImpl::on_tableWidget_Malz_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Malz -> selectedItems().count() == 3) {
+  if (tableWidget_Malz -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_MalzKopie -> setDisabled(false);
     pushButton_MalzDel -> setDisabled(false);
@@ -15303,7 +15304,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hopfen -> selectedItems().count() == 3) {
+  if (tableWidget_Hopfen -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_HopfenKopie -> setDisabled(false);
     pushButton_HopfenDel -> setDisabled(false);
@@ -15318,21 +15319,21 @@ void MainWindowImpl::on_tableWidget_Hefe_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
+  if (tableWidget_Hefe -> selectedItems().count() == 7) {
     //Alle Buttons enablen
-    pushButton_WeitereZutatenKopie -> setDisabled(false);
-    pushButton_WeitereZutatenDel -> setDisabled(false);
+    pushButton_HefeKopie -> setDisabled(false);
+    pushButton_HefeDel -> setDisabled(false);
   }
   else {
-    pushButton_WeitereZutatenKopie -> setDisabled(true);
-    pushButton_WeitereZutatenDel -> setDisabled(true);
+    pushButton_HefeKopie -> setDisabled(true);
+    pushButton_HefeDel -> setDisabled(true);
   }
 }
 
 void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 2) {
+  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
     //Alle Buttons enablen
     pushButton_WeitereZutatenDel -> setDisabled(false);
     pushButton_WeitereZutatenKopie -> setDisabled(false);
