@@ -2689,6 +2689,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
             element.appendChild(text);
             Anteil.appendChild(element);
 
+
             //zugabezeitpunkt
             komentar = doc.createComment("May be TRUE if this item is normally added after the boil.  The default value is FALSE since most grains are added during the mash or boil.");
             Anteil.appendChild(komentar);
@@ -2697,8 +2698,19 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
             int zeitpunkt = query_ewz.value(FeldNr).toInt();
             if (zeitpunkt == EWZ_Zeitpunkt_Gaerung)
               text = doc.createTextNode("TRUE");
-            else
+            else {
               text = doc.createTextNode("FALSE");
+            }
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Kommentar
+            komentar = doc.createComment("Detailed notes on the item including usage.  May be multiline.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("NOTES");
+            FeldNr = query_ewz.record().indexOf("Bemerkung");
+            QString s = query_ewz.value(FeldNr).toString();
+            text = doc.createTextNode(s.toHtmlEscaped());
             element.appendChild(text);
             Anteil.appendChild(element);
           }
@@ -2775,6 +2787,123 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
       text = doc.createTextNode("0");
       element.appendChild(text);
       yeast.appendChild(element);
+
+
+      //Misc
+      //The term "misc" encompasses all non-fermentable miscellaneous ingredients that are not hops or
+      //yeast and do not significantly change the gravity of the beer.
+      //For example: spices, clarifying agents, water treatments, etc…
+      QDomElement miscs = doc.createElement("MISCS");
+      komentar = doc.createComment("Hefe");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(miscs);
+
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(SudNr) + " AND Typ != " +  QString::number(EWZ_Typ_Hopfen) + ";";
+      if (!query_ewz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement misc;
+
+        while (query_ewz.next()){
+          FeldNr = query_ewz.record().indexOf("Ausbeute");
+          double Ausbeute = query_ewz.value(FeldNr).toDouble();
+
+          if (Ausbeute == 0) {
+            misc = doc.createElement("MISC");
+            miscs.appendChild(misc);
+
+            //Version Fermentable Tag
+            komentar = doc.createComment("Version MISC Tag");
+            misc.appendChild(komentar);
+            element = doc.createElement("VERSION");
+            text = doc.createTextNode(BeerXMLVersion);
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Name
+            komentar = doc.createComment("Name Weitere Zutat ohne Ausbeute");
+            misc.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Name");
+            element = doc.createElement("NAME");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            QString AuswahlHefe = query_ewz.value(FeldNr).toString();
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Type
+            komentar = doc.createComment("May be Spice, Fining, Water Agent, Herb, Flavor or Other ");
+            misc.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Typ");
+            int typ = query_ewz.value(FeldNr).toInt();
+            if (typ == EWZ_Typ_Gewuerz)
+              text = doc.createTextNode("Spice");
+            else if (typ == EWZ_Typ_Frucht)
+              text = doc.createTextNode("Flavor");
+            else
+              text = doc.createTextNode("Other");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Use
+            komentar = doc.createComment("May be Boil, Mash, Primary, Secondary, Bottling");
+            misc.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Zeitpunkt");
+            int zeitpunkt = query_ewz.value(FeldNr).toInt();
+            if (zeitpunkt == EWZ_Zeitpunkt_Gaerung)
+              text = doc.createTextNode("Primary");
+            else if (zeitpunkt == EWZ_Zeitpunkt_Kochbeginn)
+              text = doc.createTextNode("Boil");
+            else if (zeitpunkt == EWZ_Zeitpunkt_Maischen)
+              text = doc.createTextNode("Mash");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Time
+            komentar = doc.createComment("Amount of time the misc was boiled, steeped, mashed, etc in minutes.");
+            misc.appendChild(komentar);
+            element = doc.createElement("TIME");
+            FeldNr = query_ewz.record().indexOf("Zugabedauer");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Menge
+            komentar = doc.createComment("Amount of time the misc was boiled, steeped, mashed, etc in minutes.");
+            misc.appendChild(komentar);
+            element = doc.createElement("AMOUNT");
+            FeldNr = query_ewz.record().indexOf("erg_Menge");
+            text = doc.createTextNode(QString::number(query_ewz.value(FeldNr).toDouble() / 1000));
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Mengenangabe ist Gewicht
+            komentar = doc.createComment("TRUE if the amount measurement is a weight measurement and FALSE if the amount is a volume measurement.  Default value (if not present) is assumed to be FALSE.");
+            misc.appendChild(komentar);
+            element = doc.createElement("AMOUNT_IS_WEIGHT");
+            text = doc.createTextNode("TRUE");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Kommentar
+            komentar = doc.createComment("Detailed notes on the item including usage.  May be multiline.");
+            misc.appendChild(komentar);
+            element = doc.createElement("NOTES");
+            FeldNr = query_ewz.record().indexOf("Bemerkung");
+            QString s = query_ewz.value(FeldNr).toString();
+            text = doc.createTextNode(s.toHtmlEscaped());
+            element.appendChild(text);
+            misc.appendChild(element);
+          }
+        }
+      }
+
 
       //xml Datei Speichern
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
