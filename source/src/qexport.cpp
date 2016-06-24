@@ -2817,7 +2817,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
             misc = doc.createElement("MISC");
             miscs.appendChild(misc);
 
-            //Version Fermentable Tag
+            //Version Misc Tag
             komentar = doc.createComment("Version MISC Tag");
             misc.appendChild(komentar);
             element = doc.createElement("VERSION");
@@ -2904,6 +2904,157 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         }
       }
 
+      //MASH
+      QDomElement mash = doc.createElement("MASH");
+      komentar = doc.createComment("A mash profile is a record used either within a recipe or outside the recipe to precisely specify the mash method used");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(mash);
+      
+      //Version MASH Tag
+      komentar = doc.createComment("Version MASH Tag");
+      mash.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //Name
+      komentar = doc.createComment("Name of the mash profile.");
+      mash.appendChild(komentar);
+      element = doc.createElement("NAME");
+      text = doc.createTextNode("Temperatur");
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //GRAIN_TEMP
+      komentar = doc.createComment("The temperature of the grain before adding it to the mash in degrees Celsius.");
+      mash.appendChild(komentar);
+      element = doc.createElement("GRAIN_TEMP");
+      text = doc.createTextNode("20");
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //Maischen
+      QDomElement mash_steps = doc.createElement("MASH_STEPS");
+      komentar = doc.createComment("A mash step is an internal record used within a mash profile to denote a separate step in a multi-step mash.  A mash step is not intended for use outside of a mash profile.");
+      mash.appendChild(komentar);
+      mash.appendChild(mash_steps);
+
+      //Rasten Abfragen
+			QSqlQuery query_rasten;
+			sql = "SELECT * FROM Rasten WHERE SudID=" + QString::number(SudNr) + ";";
+			if (!query_rasten.exec(sql)) {
+				// Fehlermeldung Datenbankabfrage
+				ErrorMessage *errorMessage = new ErrorMessage();
+				errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+					CANCEL_NO, trUtf8("Rueckgabe:\n") + query_rasten.lastError().databaseText()
+					+ trUtf8("\nSQL Befehl:\n") + sql);
+			}
+			else {
+				QDomElement Rast;
+
+        //Einmaischen
+        Rast = doc.createElement("MASH_STEP");
+        mash_steps.appendChild(Rast);
+        
+        //Version MASH_STEP Tag
+        komentar = doc.createComment("Version MASH_STEP Tag");
+        Rast.appendChild(komentar);
+        element = doc.createElement("VERSION");
+        text = doc.createTextNode(BeerXMLVersion);
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Name
+        komentar = doc.createComment("Einmaischen bei:");
+        Rast.appendChild(komentar);
+        element = doc.createElement("NAME");
+        text = doc.createTextNode("Einmaischen");
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Type
+        komentar = doc.createComment("May be Infusion, Temperature or Decoction depending on the type of step.  Infusion denotes adding hot water, Temperature denotes heating with an outside heat source, and decoction denotes drawing off some mash for boiling.");
+        Rast.appendChild(komentar);
+        komentar = doc.createComment("Im KBH immer Temperature");
+        Rast.appendChild(komentar);
+        element = doc.createElement("TYPE");
+        text = doc.createTextNode("Temperature");
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Temperatur
+        komentar = doc.createComment("Temperatur der Rast");
+        Rast.appendChild(komentar);
+        FeldNr = query_sud.record().indexOf("EinmaischenTemp");
+        element = doc.createElement("STEP_TEMP");
+        text = doc.createTextNode(query_sud.value(FeldNr).toString());
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Dauer
+        komentar = doc.createComment("Rastdauer");
+        Rast.appendChild(komentar);
+        element = doc.createElement("STEP_TIME");
+        text = doc.createTextNode("0");
+        element.appendChild(text);
+        Rast.appendChild(element);
+        
+        
+				int i = 1;
+				while (query_rasten.next()){
+					//Alle Rasten einlesen
+					Rast = doc.createElement("MASH_STEP");
+					mash_steps.appendChild(Rast);
+					
+          //Version MASH_STEP Tag
+          komentar = doc.createComment("Version MASH_STEP Tag");
+          Rast.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Rast.appendChild(element);
+
+          //Rast Name
+					komentar = doc.createComment("Berschreibung der Rast");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastName");
+					element = doc.createElement("NAME");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+          //Type
+          komentar = doc.createComment("May be Infusion, Temperature or Decoction depending on the type of step.  Infusion denotes adding hot water, Temperature denotes heating with an outside heat source, and decoction denotes drawing off some mash for boiling.");
+          Rast.appendChild(komentar);
+          komentar = doc.createComment("Im KBH immer Temperature");
+          Rast.appendChild(komentar);
+          element = doc.createElement("TYPE");
+          text = doc.createTextNode("Temperature");
+          element.appendChild(text);
+          Rast.appendChild(element);
+
+          //Rast Temperatur
+					komentar = doc.createComment("Temperatur der Rast");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastTemp");
+					element = doc.createElement("STEP_TEMP");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+					//Rast Dauer
+					komentar = doc.createComment("Rastdauer");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastDauer");
+					element = doc.createElement("STEP_TIME");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+					i++;
+				}
+			}
 
       //xml Datei Speichern
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
