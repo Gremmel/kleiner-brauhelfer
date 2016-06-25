@@ -21,6 +21,7 @@ private:
 	int VersionDatenbank;
 	int VersionXML;
 	QString AustauschRohstoff;
+  QString encodeHtml(QString str);
 public:
 	int ImportSudXML(QString cDateiname);
 	int errCol;

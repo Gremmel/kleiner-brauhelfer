@@ -2194,7 +2194,10 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 
       QFile file(Dateiname);
       QTextStream out(&file);
-      out.setCodec("ISO-8859-1");
+      QString strXml;
+      QTextStream xml(&strXml);
+      out.setCodec("UTF-8");
+      //out.setCodec("ISO-8859-1");
 
       QDomText text;
 			QDomElement element;
@@ -2202,35 +2205,10 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 			//Daten in XML Datei schreiben
 			QDomDocument doc("");
 
-      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
-      doc.appendChild( header );    
+      //QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"UTF-8\"" );
+      doc.appendChild( header );
       
-      //Global
-      QDomElement global = doc.createElement("GLOBAL");
-      doc.appendChild(global);
-      //Erstelldatum der Sud export Datei
-      komentar = doc.createComment("Erstellungsdatum der Exportdatei");
-      global.appendChild(komentar);
-      element = doc.createElement("DATUM");
-      text = doc.createTextNode(QDateTime::currentDateTime().toString(Qt::ISODate));
-      element.setAttribute("Einheit","Qt::ISODate");
-      element.appendChild(text);
-      global.appendChild(element);
-
-      komentar = doc.createComment("Programmname");
-      global.appendChild(komentar);
-      element = doc.createElement("PROGRAMMNAME");
-      text = doc.createTextNode(APP_NAME);
-      element.appendChild(text);
-      global.appendChild(element);
-
-      komentar = doc.createComment("Versionsstand kleiner-brauhelfer");
-      global.appendChild(komentar);
-      element = doc.createElement("PROGRAMMVERSION");
-      text = doc.createTextNode(VERSION);
-      element.appendChild(text);
-      global.appendChild(element);
-
       //Rezepte
       QDomElement Rezepte = doc.createElement("RECIPES");
       komentar = doc.createComment("Rezepte");
@@ -2304,7 +2282,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
       Rezept.appendChild(element);
 
       //Hopfenliste
-      QDomElement Hopfengaben = doc.createElement("HPOS");
+      QDomElement Hopfengaben = doc.createElement("HOPS");
       komentar = doc.createComment("Hopfenliste");
       Rezept.appendChild(komentar);
       Rezept.appendChild(Hopfengaben);
@@ -3057,13 +3035,24 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 			}
 
       //xml Datei Speichern
-			if (!file.open(QFile::WriteOnly | QFile::Text)) {
+      if (!file.open(QFile::ReadWrite | QFile::Text)) {
 				//Kann Suddatei nicht erstellen
 				return 1;
 			}
 			
+
 			const int IndentSize = 2;
-			doc.save(out, IndentSize);
+      doc.save(xml, IndentSize);
+
+      //jetzt im string die umlaute/sonderzeichen in HTML Entitäten umwandeln
+      //ein test mit BeerSmith hat ergeben das das programm nicht mit sonderzeichen umgehen kann
+      //und HTML Entitäten in NCR dezimal verlangt
+
+      //das muss leider hier so gemacht werden weil die funktion createTextNote ansonsten die & zeichen
+      //in &amp; umwandelt
+
+      strXml = encodeHtml(strXml);
+      out << strXml;
     }
   }
   return 0;
@@ -4516,7 +4505,25 @@ void QExport::HinweisAusgeben(QString Text)
 	msgBox.exec();
 
 	//while (QCoreApplication::hasPendingEvents())
-	QCoreApplication::processEvents();
+  QCoreApplication::processEvents();
+}
+
+QString QExport::encodeHtml(QString str)
+{
+  str.replace("Ä","&#196;");
+  str.replace("ä","&#228;");
+
+  str.replace("Ö","&#214;");
+  str.replace("ö","&#246;");
+
+  str.replace("Ü","&#220;");
+  str.replace("ü","&#252;");
+
+  str.replace("ß","&#223;");
+
+  str.replace("º","&#186;");
+  str.replace("°","&#176;");
+  return str;
 }
 
 
