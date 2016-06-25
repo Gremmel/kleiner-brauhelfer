@@ -4523,6 +4523,9 @@ QString QExport::encodeHtml(QString str)
 
   str.replace("º","&#186;");
   str.replace("°","&#176;");
+
+  str.replace("®","&#174;");
+  str.replace("©","&#169;");
   return str;
 }
 
