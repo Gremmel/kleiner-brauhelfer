@@ -2197,7 +2197,6 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
       QString strXml;
       QTextStream xml(&strXml);
       out.setCodec("UTF-8");
-      //out.setCodec("ISO-8859-1");
 
       QDomText text;
 			QDomElement element;
@@ -2205,7 +2204,6 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 			//Daten in XML Datei schreiben
 			QDomDocument doc("");
 
-      //QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
       QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"UTF-8\"" );
       doc.appendChild( header );
       
