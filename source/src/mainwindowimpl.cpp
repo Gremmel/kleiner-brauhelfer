@@ -3275,6 +3275,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           berEwz -> setAttribute(Qt::WA_DeleteOnClose);
 
           ewz -> ergWidget = berEwz;
+          ewz -> setBierWurdeGebraut(BierWurdeGebraut);
+          ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           //Funktionen verknüpfen das das objekt die Daten holen kann
           connect(ewz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_ewzClose(int) ));
           connect(ewz, SIGNAL( sig_getEwzTyp(QString) ), this, SLOT( slot_getEwzTyp(QString) ));
@@ -3301,8 +3303,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
             ewz -> setEwListe(ewzListe);
             ewz -> setHopfenListe(HopfenListe);
           }
-          ewz -> setBierWurdeGebraut(BierWurdeGebraut);
-          ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
           //Ergebnisswidget dem Layout zuordnen
