@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "kleiner-brauhelfer"
-#define MyAppVersion "1.4.2.2"
+#define MyAppVersion "1.4.3.1"
 #define MyAppPublisher "Gremmelsoft"
 #define MyAppURL "http://www.joerum.de/kleiner-brauhelfer"
 #define MyAppExeName "brauhelfer.exe"
@@ -22,9 +22,9 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\kleiner_brauhelfer
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=D:\tmp\kb_freigabe_v1.4.2.2
-OutputBaseFilename=kb_setup_qt_v1_4_2_2.exe
-SetupIconFile=D:\Dokumente\Programmierung\kleiner-brauhelfer_svn\install\win_7_qt5_3_0\logo.ico
+OutputDir=C:\Users\user\Documents\kleiner-brauhelfer\setup_win32
+OutputBaseFilename=kb_setup_qt_v1_4_3_1
+SetupIconFile=C:\Users\user\Documents\kleiner-brauhelfer\setup_win32\win_7_qt5_3_0\logo.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -38,8 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "D:\Dokumente\Programmierung\kleiner-brauhelfer_svn\install\win_7_qt5_3_0\brauhelfer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumente\Programmierung\kleiner-brauhelfer_svn\install\win_7_qt5_3_0\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\user\Documents\kleiner-brauhelfer\setup_win32\win_7_qt5_3_0\brauhelfer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\user\Documents\kleiner-brauhelfer\setup_win32\win_7_qt5_3_0\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
