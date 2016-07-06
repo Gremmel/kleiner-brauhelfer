@@ -6941,9 +6941,11 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
     QDoubleSpinBox* sbPreis=(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,4);
     QString s6 = tableWidget_Malz -> item(i,5) -> text();
     QString s7 = tableWidget_Malz -> item(i,6) -> text();
+    QString s9 = tableWidget_Malz -> item(i,9) -> text();
     QTableWidgetItem *newItem1 = new QTableWidgetItem(s1 + trUtf8(" Kopie"));
     QTableWidgetItem *newItem6 = new QTableWidgetItem(s6);
     QTableWidgetItem *newItem7 = new QTableWidgetItem(s7);
+    QTableWidgetItem *newItem9 = new QTableWidgetItem(s9);
 
     i = tableWidget_Malz -> rowCount();
     tableWidget_Malz -> setRowCount(i+1);
@@ -7003,6 +7005,7 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
     tableWidget_Malz -> setItem(i, 0, newItem1);
     tableWidget_Malz -> setItem(i, 5, newItem6);
     tableWidget_Malz -> setItem(i, 6, newItem7);
+    tableWidget_Malz -> setItem(i, 9, newItem9);
 
     setAenderung(true);
     AenderungRohstofftabelle = true;
@@ -7027,10 +7030,12 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
   QDoubleSpinBox* sbPreis=(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,3);
   QString s6 = tableWidget_Hopfen -> item(i,5) -> text();
   QString s7 = tableWidget_Hopfen -> item(i,7) -> text();
+  QString s10 = tableWidget_Hopfen -> item(i,10) -> text();
   QTableWidgetItem *newItem1 = new QTableWidgetItem(s1 + trUtf8(" Kopie"));
   QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
   QTableWidgetItem *newItem6 = new QTableWidgetItem(s6);
   QTableWidgetItem *newItem7 = new QTableWidgetItem(s7);
+  QTableWidgetItem *newItem10 = new QTableWidgetItem(s10);
   newItem5 -> setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
   newItem5 -> setCheckState(tableWidget_Hopfen -> item(i,4) -> checkState());
   QComboBox* comboTyp=(QComboBox*)tableWidget_Hopfen -> cellWidget(i,6);
@@ -7093,6 +7098,7 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
   tableWidget_Hopfen -> setItem(i, 4, newItem5);
   tableWidget_Hopfen -> setItem(i, 5, newItem6);
   tableWidget_Hopfen -> setItem(i, 7, newItem7);
+  tableWidget_Hopfen -> setItem(i, 10, newItem10);
 
   tableWidget_Hopfen->setSortingEnabled(true);
   Hopfen_Bezeichnung_Merker = s;
@@ -7118,6 +7124,7 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   QString s9 = tableWidget_Hefe -> item(i,9) -> text();
   QComboBox* comboSED=(QComboBox*)tableWidget_Hefe -> cellWidget(i,10);
   QString s11 = tableWidget_Hefe -> item(i,11) -> text();
+  QString s14 = tableWidget_Hefe -> item(i,14) -> text();
 
   QString s = Hefe_Bezeichnung_Merker;
   Hefe_Bezeichnung_Merker = "";
@@ -7128,6 +7135,7 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   QTableWidgetItem *newItem8 = new QTableWidgetItem(s8);
   QTableWidgetItem *newItem9 = new QTableWidgetItem(s9);
   QTableWidgetItem *newItem11 = new QTableWidgetItem(s11);
+  QTableWidgetItem *newItem14 = new QTableWidgetItem(s14);
   i = tableWidget_Hefe -> rowCount();
   tableWidget_Hefe -> setRowCount(i+1);
 
@@ -7213,6 +7221,9 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+
+  //Link
+  tableWidget_Hefe -> setItem(i, 14, newItem14);
 
   tableWidget_Hefe->setSortingEnabled(true);
   Hefe_Bezeichnung_Merker = s;
@@ -13202,6 +13213,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   QDoubleSpinBox* dsbPreis=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,6);
   QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text());
   QTableWidgetItem *newItem7 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,7) -> text());
+  QTableWidgetItem *newItem10 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,10) -> text());
 
 
   i = tableWidget_WeitereZutaten -> rowCount();
@@ -13283,6 +13295,9 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+
+  //Link
+  tableWidget_WeitereZutaten -> setItem(i, 10, newItem10);
 
   WZutaten_Bezeichnung_Merker = s;
   setAenderung(true);
