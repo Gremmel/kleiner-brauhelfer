@@ -13926,7 +13926,10 @@ void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1)
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1)
 {
-  spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+  if (checkBox_zumischen->isChecked()) {
+    //todo
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+  }
 }
 
 void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double arg1)
@@ -15854,12 +15857,6 @@ void MainWindowImpl::on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1)
 
 void MainWindowImpl::on_listWidget_Brauanlagen_currentRowChanged(int)
 {
-}
-
-
-void MainWindowImpl::on_pushButton_VerschneidungZumischen_clicked()
-{
-  spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() + spinBox_WasserVerschneidung->value()-spinBox_Speisemenge->value());
 }
 
 void MainWindowImpl::on_pushButton_MalzNeu_clicked()
