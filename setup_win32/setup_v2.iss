@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "kleiner-brauhelfer"
-#define MyAppVersion "1.4.3.1"
+#define MyAppVersion "1.4.3.2"
 #define MyAppPublisher "Gremmelsoft"
 #define MyAppURL "http://www.joerum.de/kleiner-brauhelfer"
 #define MyAppExeName "brauhelfer.exe"
@@ -23,7 +23,7 @@ DefaultDirName={pf}\kleiner_brauhelfer
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 OutputDir=C:\Users\user\Documents\kleiner-brauhelfer\setup_win32
-OutputBaseFilename=kb_setup_qt_v1_4_3_1
+OutputBaseFilename=kb_setup_qt_v1_4_3_2
 SetupIconFile=C:\Users\user\Documents\kleiner-brauhelfer\setup_win32\win_7_qt5_3_0\logo.ico
 Compression=lzma
 SolidCompression=yes
