@@ -597,6 +597,7 @@ private slots:
   void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
+  void on_checkBox_zumischen_clicked();
 };
 #endif
 

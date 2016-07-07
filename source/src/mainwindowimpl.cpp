@@ -13921,20 +13921,38 @@ void MainWindowImpl::on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1)
 
 void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1)
 {
-  spinBox_SWAnstellen -> setValue(arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(arg1);
+  }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1)
 {
   if (checkBox_zumischen->isChecked()) {
-    //todo
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
     spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
   }
 }
 
-void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double arg1)
+void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double )
 {
-  spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
 }
 
 void MainWindowImpl::on_spinBox_SW_valueChanged(double arg1)
@@ -16078,3 +16096,16 @@ void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked()
     }
   }
 }
+
+void MainWindowImpl::on_checkBox_zumischen_clicked()
+{
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
+}
+
