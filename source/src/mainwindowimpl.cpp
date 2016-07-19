@@ -9737,6 +9737,19 @@ void MainWindowImpl::SetDiagrammFarben()
     widget_DiaSchnellgaerverlauf -> colorL2 = color;
   }
 
+  //Farbe Linie 3 Schnellgärverlauf
+  HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_S_L3").toString();
+  if (HtmlColor == ""){
+    color = QColor::fromRgb(FARBE_GAERVERLAUF_DIAGRAMM_S_L3);
+  }
+  else {
+    color.setNamedColor(HtmlColor);
+  }
+  //wenn Farbwert gültig ist Farbe setzen
+  if (color.isValid()){
+    widget_DiaSchnellgaerverlauf -> colorL3 = color;
+  }
+
   //Farbe Linie 1 Hauptgärverlauf
   HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_H_L1").toString();
   if (HtmlColor == ""){
@@ -9761,6 +9774,19 @@ void MainWindowImpl::SetDiagrammFarben()
   //wenn Farbwert nicht gültig ist dann defaultfarbe setzen
   if (color.isValid()){
     widget_DiaHauptgaerverlauf -> colorL2 = color;
+  }
+
+  //Farbe Linie 3 Hauptgärverlauf
+  HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_H_L3").toString();
+  if (HtmlColor == ""){
+    color = QColor::fromRgb(FARBE_GAERVERLAUF_DIAGRAMM_H_L3);
+  }
+  else {
+    color.setNamedColor(HtmlColor);
+  }
+  //wenn Farbwert nicht gültig ist dann defaultfarbe setzen
+  if (color.isValid()){
+    widget_DiaHauptgaerverlauf -> colorL3 = color;
   }
 
   //Farbe Linie 1 Nachgärverlauf
