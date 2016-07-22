@@ -291,10 +291,10 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
   on_tableWidget_Hefe_itemSelectionChanged();
 
-  LeseKonfig();
-
   createActions();
   createMenus();
+
+  LeseKonfig();
 
   //Überprüfen ob Messages angezeigt werden sollen
   if (!keinInternet)
@@ -346,6 +346,11 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   tableWidget_Hefe->horizontalHeader()->resizeSection(14, 120);
   tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
   tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(10, 120);
+
+  //Fenster Maximieren wenn es zuletzt Maximiert war
+  if (maximiertStarten)
+    this->showMaximized();
+
 }
 
 void MainWindowImpl::on_MsgCheckFertig(int count)
@@ -2394,8 +2399,12 @@ void MainWindowImpl::SchreibeKonfig()
 
   //Position und Abmessung des Fensters speichern
   settings.beginGroup("MainWindow");
-  settings.setValue("size", size());
-  settings.setValue("pos", pos());
+  settings.setValue("istMaximiert", this->isMaximized());
+  //Neue Position nur Speichern wenn Anwendung nicht Maximiert ist
+  if (!this->isMaximized()) {
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+  }
   settings.endGroup();
 
   //Letzten Geladenen Datensatz merken
@@ -2436,6 +2445,7 @@ void MainWindowImpl::LeseKonfig()
   settings.beginGroup("MainWindow");
   resize(settings.value("size", QSize(600, 400)).toSize());
   move(settings.value("pos", QPoint(200, 200)).toPoint());
+  maximiertStarten = settings.value("istMaximiert", false).toBool();
   settings.endGroup();
 
   //Letzten Geladenen Datensatz auslesen
@@ -2526,17 +2536,17 @@ void MainWindowImpl::createActions()
   connect(EntsperreEingabefelder, SIGNAL(triggered()), this, SLOT(slot_EntsperreEingabefelder()));
 
   //Setzt das Bit BierGebraut zurück
-  ResetBierGebraut = new QAction(trUtf8("Bier wurde &Gebraut zurücksetzten"), this);
+  ResetBierGebraut = new QAction(trUtf8("\"Bier &gebraut\" zurücksetzten"), this);
   ResetBierGebraut -> setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetBierGebraut, SIGNAL(triggered()), this, SLOT(slot_ResetBierWurdeGebraut()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetAbgefuellt = new QAction(trUtf8("Bier &Abgefüllt zurücksetzten"), this);
+  ResetAbgefuellt = new QAction(trUtf8("\"Bier &abgefüllt\" zurücksetzten"), this);
   ResetAbgefuellt -> setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetAbgefuellt, SIGNAL(triggered()), this, SLOT(slot_ResetAbgefuellt()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetVerbraucht = new QAction(trUtf8("Bier &Verbraucht zurücksetzten"), this);
+  ResetVerbraucht = new QAction(trUtf8("\"Bier &verbraucht\" zurücksetzten"), this);
   ResetVerbraucht -> setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetVerbraucht, SIGNAL(triggered()), this, SLOT(slot_ResetBierVerbraucht()));
 

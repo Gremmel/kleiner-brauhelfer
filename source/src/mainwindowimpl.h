@@ -31,6 +31,8 @@ protected:
   void resizeEvent(QResizeEvent * event);
   void showEvent ( QShowEvent * event );
 private:
+  //die Anwendung am ende der init Funktion Maximiert starten
+  bool maximiertStarten;
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
   //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
