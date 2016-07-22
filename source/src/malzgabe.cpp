@@ -33,6 +33,13 @@ void malzgabe::setMalzListe(QStringList value)
 {
   malzListe = value;
   ErstelleAuswahlliste();
+  //Setzte Farbwerte der Liste entsprchend der vorhandenen Malzmenge
+  setMalzListeFarbe();
+}
+
+void malzgabe::setMalzListeFarbe()
+{
+
 }
 
 void malzgabe::setFehlProzent(double value)
@@ -160,13 +167,13 @@ void malzgabe::setDisabled(bool status)
   }
 
   ui->comboBox_Zutat -> setDisabled(status);
-  ui->comboBox_Zutat->setEditable(status);
+  ui->comboBox_Zutat -> setEditable(status);
   ui->dsb_MengeGramm -> setVisible(!status);
-  ui->label_Mengeneinheit_2->setVisible(!status);
+  ui->label_Mengeneinheit_2 -> setVisible(!status);
   ui->dsb_MengeGramm -> setButtonSymbols(bs);
   ui->dsb_Menge -> setReadOnly(status);
   ui->dsb_Menge -> setButtonSymbols(bs);
-  ui->pushButton_KorrekturMenge->setVisible(!status);
+  ui->pushButton_KorrekturMenge -> setVisible(!status);
   ui->pushButton_del -> setDisabled(status);
 }
 

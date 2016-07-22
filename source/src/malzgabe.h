@@ -24,6 +24,7 @@ public:
 	int getID();
 	doubleEditLineImpl* ergWidget;
 	void setMalzListe(QStringList value);
+    void setMalzListeFarbe();
 	void setFehlProzent(double value);
   double getFehlProzent();
 	double getMengeProzent();
