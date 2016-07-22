@@ -21,6 +21,7 @@ DialogInfo::~DialogInfo()
 void DialogInfo::Info(QWidget *parent, QString title, QString infotext, bool isHtml)
 {
   DialogInfo* dlg = new DialogInfo(parent, title, infotext, isHtml);
+  dlg->setWindowFlags(dlg->windowFlags()^Qt::WindowContextHelpButtonHint);
   dlg->exec();
   delete dlg;
 }

@@ -5,8 +5,8 @@
 //#define DEBUG true
 
 //Version
-#define VERSION "1.4.3.2"
-#define VERSION_INT 1040302
+#define VERSION "1.4.3.3"
+#define VERSION_INT 1040303
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
