@@ -3780,22 +3780,22 @@ void MainWindowImpl::BerHopfen()
   }
 
   //Alpha Prozent von den Hopfenauswahlen holen (und Pellets)
-  double Alphaprozent[list_Hopfengaben.count()];
+  double *Alphaprozent = new double[list_Hopfengaben.count()];
   QString s;
   //Pellets
-  bool Pellets[list_Hopfengaben.count()];
+  bool *Pellets = new bool[list_Hopfengaben.count()];
   //Vorderwürzehopfung
-  bool vwh[list_Hopfengaben.count()];
+  bool *vwh = new bool[list_Hopfengaben.count()];
   //Kochzeiten
-  int Kochzeiten[list_Hopfengaben.count()];
+  int *Kochzeiten = new int[list_Hopfengaben.count()];
   //Mengen
-  double MengenProzent[list_Hopfengaben.count()];
+  double *MengenProzent = new double[list_Hopfengaben.count()];
   //Ausbeute der einzelnen Hopfengaben
-  double Ausbeute[list_Hopfengaben.count()];
+  double *Ausbeute = new double[list_Hopfengaben.count()];
   //Berechnung anschmeissen
-  double HopfenMengen[list_Hopfengaben.count()];
+  double *HopfenMengen = new double[list_Hopfengaben.count()];
   //IBU Anteil der einzelnen Gaben
-  double IBUAnteil[list_Hopfengaben.count()];
+  double *IBUAnteil = new double[list_Hopfengaben.count()];
   //Berechnung nach IBUProzent
   bool berIBUProzent;
   if (comboBox_BerechnungsArtHopfen->currentIndex() == 0)
@@ -3862,6 +3862,14 @@ void MainWindowImpl::BerHopfen()
     list_Hopfengaben[i]->setAusbeute(Ausbeute[i]);
     list_Hopfengaben[i]->setErgMenge(HopfenMengen[i]);
   }
+  delete [] Alphaprozent;
+  delete [] Pellets;
+  delete [] vwh;
+  delete [] Kochzeiten;
+  delete [] MengenProzent;
+  delete [] Ausbeute;
+  delete [] HopfenMengen;
+  delete [] IBUAnteil;
 }
 
 
@@ -5029,7 +5037,7 @@ void MainWindowImpl::ErstelleSpickzettel()
     s += "</div>";
   }
 
-  s += "<div><p class='version'>"APP_NAME" v";
+  s += "<div><p class='version'>" APP_NAME " v";
   s += VERSION;
   s += "</p></div>";
 
@@ -7354,8 +7362,8 @@ void MainWindowImpl::BerFarbe(double cEBC)
   paletteF.setColor(QPalette::Base , Qt::red);
   QColor Bierfarbe;
   if (cEBC == 0){
-    double schuettung[list_Malzgaben.count() + list_EwZutat.count()];
-    double farbe[list_Malzgaben.count() + list_EwZutat.count()];
+    double *schuettung = new double[list_Malzgaben.count() + list_EwZutat.count()];
+    double *farbe = new double[list_Malzgaben.count() + list_EwZutat.count()];
     QString s;
     int gefunden = 0;
     for (int z = 0; z < list_Malzgaben.count(); z++){
@@ -7399,6 +7407,8 @@ void MainWindowImpl::BerFarbe(double cEBC)
       EBC = Berechnungen.getEBC();
     }
     doubleSpinBox_EBC -> setValue(EBC);
+    delete [] schuettung;
+    delete [] farbe;
   }
   else {
     Bierfarbe = Berechnungen.GetFarbwert(cEBC);
@@ -11300,7 +11310,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     s += "</div>";
   }
 
-  s += "<div><p class='version'>"APP_NAME" v";
+  s += "<div><p class='version'>" APP_NAME " v";
   s += VERSION;
   s += "</p></div>";
 
