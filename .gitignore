@@ -7,7 +7,6 @@
 *.la
 *.lai
 *.so
-*.dll
 *.dylib
 
 # Qt-es
@@ -37,3 +36,4 @@ Makefile*
 /build-brauhelfer-Desktop_Qt_5_3_0_GCC_64bit-Debug/
 /build-brauhelfer-Desktop_Qt_5_3_0_GCC_64bit-Release/
 /build-brauhelfer-Desktop_Qt_5_3_MinGW_32bit-Debug/
+/build-brauhelfer-Desktop_Qt_5_3_MinGW_32bit-Release/

@@ -5,14 +5,17 @@
 #define DEBUG true
 
 //Version
-#define VERSION "1.4.2.4"
-#define VERSION_INT 1040204
+#define VERSION "1.4.4.0"
+#define VERSION_INT 1040400
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
 //V18 Tabelle Ausruestung um Kosten erweitert
 //V19 Sudaten um Eintrag Spunden erweitert
-#define DB_VERSION 21
+//V20 Um Tabelle Anhänge erweitert und Link in Rohrstoffen
+//V21 Um Zugabezeitpunkt für Weitere Zutaten erweitert
+//V22 Um Zugabedauer für Weitere Zutate erweitert
+#define DB_VERSION 22
 //Version der XML Datei
 //Version 2 mit Weiteren Zutaten
 //Version 3 mit Temperaturen im Schnellgärverlauf/Hauptgärverlauf
@@ -145,6 +148,11 @@
 #define EWZ_Einheit_Kg 0
 #define EWZ_Einheit_g 1
 
+//Hefe Art
+#define Hefe_Unbekannt 0
+#define Hefe_Trocken 1
+#define Hefe_Fluessig 2
+
 //Rohstoffart Rohstoffvorlagen
 #define R_Malz 1
 #define R_Hopfen 2
@@ -199,7 +207,7 @@
 #define ERR_SQL_DB_UPDATE_V18_V19 131
 #define ERR_SQL_DB_UPDATE_V19_V20 132
 #define ERR_SQL_DB_UPDATE_V20_V21 133
-
+#define ERR_SQL_DB_UPDATE_V21_V22 134
 
 
 #define ERR_VERSION_SUD_V1 200
@@ -216,5 +224,7 @@
 #define TAB_Malz 0
 #define TAB_Hopfen 1
 #define TAB_WeitereZutaten 2
+
+#define BeerXMLVersion "1"
 
 #endif

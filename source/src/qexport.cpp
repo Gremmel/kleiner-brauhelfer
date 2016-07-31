@@ -17,11 +17,11 @@
 QExport::QExport(  ) 
 	: QObject()
 {
-	// TODO
+	// 
 }
 //
 
-//Exportiert einen Sud in eine XML Datei
+//Exportiert einen Sud in eine xsud XML Datei
 int QExport::ExportSudXML(int SudNr, QString Dateiname)
 {
 	//Sud aus Datenbank abfragen
@@ -42,6 +42,9 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 			QDomComment komentar;
 			//Daten in XML Datei schreiben
 			QDomDocument doc("");
+
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\"" );
+      doc.appendChild( header );    
 
 			//Wurzelelement
 			QDomElement daten = doc.createElement("xsud");
@@ -892,7 +895,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 					komentar = doc.createComment("Menge");
 					Anteil.appendChild(komentar);
 					FeldNr = query_WeitereZutaten.record().indexOf("Menge");
-					element = doc.createElement("Menge");
+					element = doc.createElement("AMOUNT");
 					element.setAttribute("Einheit","Gramm/Liter");
 					text = doc.createTextNode(query_WeitereZutaten.value(FeldNr).toString());
 					element.appendChild(text);
@@ -1688,7 +1691,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 			
 			//Hopfen In Weiteren Zutaten
 			sl.clear();
-			sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='100' AND SudID=" + QString::number(SudNr) + ";";
+			sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='"+QString::number(EWZ_Typ_Hopfen)+"' AND SudID=" + QString::number(SudNr) + ";";
 			if (!query_Hopfen.exec(sql)) {
 				// Fehlermeldung Datenbankabfrage
 				ErrorMessage *errorMessage = new ErrorMessage();
@@ -2171,6 +2174,886 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
 		}
 	}
 	return 0;
+}
+
+int QExport::ExportBeerXML(int SudNr, QString Dateiname)
+{
+  //Sud aus Datenbank abfragen
+	QSqlQuery query_sud;
+	int FeldNr;
+	QString sql = "SELECT * FROM Sud WHERE ID=" + QString::number(SudNr) + ";";
+	if (!query_sud.exec(sql)) {
+		// Fehlermeldung Datenbankabfrage
+		ErrorMessage *errorMessage = new ErrorMessage();
+		errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+			CANCEL_NO, trUtf8("Rueckgabe:\n") + query_sud.lastError().databaseText()
+			+ trUtf8("\nSQL Befehl:\n") + sql);
+	}
+	else {
+		if (query_sud.first()) {
+
+      QFile file(Dateiname);
+      QTextStream out(&file);
+      QString strXml;
+      QTextStream xml(&strXml);
+      out.setCodec("UTF-8");
+
+      QDomText text;
+			QDomElement element;
+			QDomComment komentar;
+			//Daten in XML Datei schreiben
+			QDomDocument doc("");
+
+      QDomProcessingInstruction header = doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"UTF-8\"" );
+      doc.appendChild( header );
+      
+      //Rezepte
+      QDomElement Rezepte = doc.createElement("RECIPES");
+      komentar = doc.createComment("Rezepte");
+      doc.appendChild(komentar);
+      doc.appendChild(Rezepte);
+      
+      //Rezept
+      QDomElement Rezept = doc.createElement("RECIPE");
+      komentar = doc.createComment("Rezept");
+      Rezepte.appendChild(komentar);
+      Rezepte.appendChild(Rezept);
+
+      //Version Rezept Tag
+      komentar = doc.createComment("Version Rezept Tag");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudname
+      komentar = doc.createComment("Rezeptname");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("NAME");
+      FeldNr = query_sud.record().indexOf("Sudname");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Type im kbh immer All Grain
+      komentar = doc.createComment("Typ (im KBH immer All Grain)");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("TYPE");
+      text = doc.createTextNode("All Grain");
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Brauer
+      komentar = doc.createComment("Im KBH wird kein Brauer Name angegeben");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("BREWER");
+      text = doc.createTextNode("Unbekannt");
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudmenge
+      komentar = doc.createComment("Sudmenge in Liter");
+      Rezept.appendChild(komentar);
+      element = doc.createElement("BATCH_SIZE");
+      FeldNr = query_sud.record().indexOf("Menge");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Gesamtkochdauer
+      komentar = doc.createComment("Gesamtkochdauer Zeit im Minuten");
+      Rezept.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("KochdauerNachBitterhopfung");
+      element = doc.createElement("BOIL_TIME");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Sudhausausbeute
+      komentar = doc.createComment("Sudhausausbeute bezogen auf die Ausschlagmenge in Prozent");
+      Rezept.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("erg_Sudhausausbeute");
+      element = doc.createElement("EFFICIENCY");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      Rezept.appendChild(element);
+
+      //Hopfenliste
+      QDomElement Hopfengaben = doc.createElement("HOPS");
+      komentar = doc.createComment("Hopfenliste");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(Hopfengaben);
+
+      //Hopfengaben Abfragen
+      QSqlQuery query_Hopfen;
+      sql = "SELECT * FROM Hopfengaben WHERE SudID=" + QString::number(SudNr) + ";";
+      if (!query_Hopfen.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Hopfen.next()){
+          Anteil = doc.createElement("HOP");
+          Hopfengaben.appendChild(Anteil);
+
+          //Version Hopfen Tag
+          komentar = doc.createComment("Version Hopfen Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Berschreibung Hopfen (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Alpha
+          komentar = doc.createComment("Alphaprozent gehalt des Hopfens");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Alpha");
+          element = doc.createElement("ALPHA");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //erg_Menge
+          komentar = doc.createComment("Berechnete Gewichtsmenge in kg");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("erg_Menge");
+          element = doc.createElement("AMOUNT");
+          double v = query_Hopfen.value(FeldNr).toFloat();
+          v = v / 1000;
+          text = doc.createTextNode(QString::number(v));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Vorderwürze oder Normal
+          komentar = doc.createComment("Art der Hopfung  First Wort/Boil/Dry Hop");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Vorderwuerze");
+          element = doc.createElement("USE");
+          if (query_Hopfen.value(FeldNr).toBool()) {
+            text = doc.createTextNode("First Wort");
+          }
+          else {
+            text = doc.createTextNode("Boil");
+          }
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Zeit
+          komentar = doc.createComment("Zeit in Minuten");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Zeit");
+          element = doc.createElement("TIME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Pellets
+          komentar = doc.createComment("Hopfenart Pellet/Leaf");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Pellets");
+          element = doc.createElement("FORM");
+          if (query_Hopfen.value(FeldNr).toBool())
+            text = doc.createTextNode("Pellet");
+          else
+            text = doc.createTextNode("Leaf");
+
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          i++;
+        }
+      }
+
+      //Hopfengaben für das Stopfen der Weiteren Zutaten abfragen Abfragen
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE Typ='"+QString::number(EWZ_Typ_Hopfen)+"' AND SudID=" + QString::number(SudNr) + ";";
+      if (!query_Hopfen.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Hopfen.next()){
+          Anteil = doc.createElement("HOP");
+          Hopfengaben.appendChild(Anteil);
+
+          //Version Hopfen Tag
+          komentar = doc.createComment("Version Hopfen Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Berschreibung Hopfen (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          QString Name;
+          Name = query_Hopfen.value(FeldNr).toString();
+          text = doc.createTextNode(Name);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Menge
+          komentar = doc.createComment("Berechnete Gewichtsmenge in kg");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("erg_Menge");
+          element = doc.createElement("AMOUNT");
+          double v = query_Hopfen.value(FeldNr).toFloat();
+          v = v / 1000;
+          text = doc.createTextNode(QString::number(v));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Stopfhopfen setzen
+          komentar = doc.createComment("Art der Hopfung  First Wort/Boil/Dry Hop");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("USE");
+          text = doc.createTextNode("Dry Hop");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Zeit
+          komentar = doc.createComment("Zeit in Minuten");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Zugabedauer");
+          element = doc.createElement("TIME");
+          text = doc.createTextNode(query_Hopfen.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Notiz
+          komentar = doc.createComment("Notiz");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Hopfen.record().indexOf("Bemerkung");
+          element = doc.createElement("NOTES");
+          QString Notiz;
+          Notiz = query_Hopfen.value(FeldNr).toString();
+          text = doc.createTextNode(Notiz.toHtmlEscaped());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+          
+          //Hopfen aus Rohstoffe abfragen um an alpha und pellets zu kommen
+          sql = "SELECT * FROM Hopfen WHERE Beschreibung='" + Name + "';";
+          QSqlQuery query;
+					if (!query.exec(sql)) {
+						// Fehlermeldung Datenbankabfrage
+						ErrorMessage *errorMessage = new ErrorMessage();
+						errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+							CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+							+ trUtf8("\nSQL Befehl:\n") + sql);
+					}
+					else {
+            if (query.first()){
+              //Alpha
+              komentar = doc.createComment("Alphaprozent gehalt des Hopfens");
+              Anteil.appendChild(komentar);
+              FeldNr = query.record().indexOf("Alpha");
+              element = doc.createElement("ALPHA");
+              text = doc.createTextNode(query.value(FeldNr).toString());
+              element.appendChild(text);
+              Anteil.appendChild(element);
+  
+              //Pellets
+              komentar = doc.createComment("Hopfenart Pellet/Leaf");
+              Anteil.appendChild(komentar);
+              FeldNr = query.record().indexOf("Pellets");
+              element = doc.createElement("FORM");
+              if (query.value(FeldNr).toBool())
+                text = doc.createTextNode("Pellet");
+              else
+                text = doc.createTextNode("Leaf");
+            }
+          }
+
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          i++;
+        }
+      }
+
+      //Malze und alles mit Ausbeute in den weiteren zutaten
+      QDomElement fermentables = doc.createElement("FERMENTABLES");
+      komentar = doc.createComment("Malze und alles mit Ausbeute in den weiteren zutaten");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(fermentables);
+
+      //Schuettung Abfragen
+      QSqlQuery query_Malz;
+      sql = "SELECT * FROM Malzschuettung WHERE SudID=" + QString::number(SudNr) + ";";
+      if (!query_Malz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        int i = 1;
+        while (query_Malz.next()){
+          Anteil = doc.createElement("FERMENTABLE");
+          fermentables.appendChild(Anteil);
+
+          //Version Fermentable Tag
+          komentar = doc.createComment("Version Fermentable Tag");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Name
+          komentar = doc.createComment("Malzbeschreibung (Name)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("Name");
+          element = doc.createElement("NAME");
+          text = doc.createTextNode(query_Malz.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Type
+          komentar = doc.createComment("May be Grain, Sugar, Extract, Dry Extract or Adjunct.  Extract refers to liquid extract.");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("TYPE");
+          text = doc.createTextNode("Grain");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Menge
+          komentar = doc.createComment("Berechneter Gewichtsanteil der Schuettung in KG");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("erg_Menge");
+          element = doc.createElement("AMOUNT");
+          text = doc.createTextNode(query_Malz.value(FeldNr).toString());
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Ausbeute
+          komentar = doc.createComment("Ausbeute (Percent dry yield (fine grain) for the grain, or the raw yield by weight if this is an extract adjunct or sugar.)");
+          Anteil.appendChild(komentar);
+          element = doc.createElement("YIELD");
+          text = doc.createTextNode("80");
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          //Farbe
+          komentar = doc.createComment("Farbwert (The color of the item in Lovibond Units (SRM for liquid extracts).)");
+          Anteil.appendChild(komentar);
+          FeldNr = query_Malz.record().indexOf("Farbe");
+          element = doc.createElement("COLOR");
+          //EBC in Lovibond umrechnen
+          double ebc = query_Malz.value(FeldNr).toDouble();
+          double srm = ebc * 0.508;
+          double l = (srm + 0.76) / 1.3546;
+          text = doc.createTextNode(QString::number(l));
+          element.appendChild(text);
+          Anteil.appendChild(element);
+
+          i++;
+        }
+      }
+      //Anteile der Weiteren Zutaten mit Ausbeute
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(SudNr) + ";";
+      QSqlQuery query_ewz;
+      if (!query_ewz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement Anteil;
+
+        while (query_ewz.next()){
+          FeldNr = query_ewz.record().indexOf("Ausbeute");
+          double Ausbeute = query_ewz.value(FeldNr).toDouble();
+
+          if (Ausbeute > 0) {
+            Anteil = doc.createElement("FERMENTABLE");
+            fermentables.appendChild(Anteil);
+
+            //Version Fermentable Tag
+            komentar = doc.createComment("Version Fermentable Tag");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("VERSION");
+            text = doc.createTextNode(BeerXMLVersion);
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Name
+            komentar = doc.createComment("Name");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Name");
+            element = doc.createElement("NAME");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Type
+            komentar = doc.createComment("May be Grain, Sugar, Extract, Dry Extract or Adjunct.  Extract refers to liquid extract.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Name");
+            int typ = query_ewz.value(FeldNr).toInt();
+            if (typ == EWZ_Typ_Honig)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Zucker)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Frucht)
+              text = doc.createTextNode("Sugar");
+            else if (typ == EWZ_Typ_Sonstiges)
+              text = doc.createTextNode("Adjunct");
+            else if (typ == EWZ_Typ_Gewuerz)
+              text = doc.createTextNode("Adjunct");
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Menge
+            komentar = doc.createComment("Berechneter Gewichtsanteil der Schuettung in KG");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("erg_Menge");
+            element = doc.createElement("AMOUNT");
+            text = doc.createTextNode(QString::number(query_ewz.value(FeldNr).toDouble() / 1000));
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Ausbeute
+            komentar = doc.createComment("Ausbeute (Percent dry yield (fine grain) for the grain, or the raw yield by weight if this is an extract adjunct or sugar.)");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("YIELD");
+            FeldNr = query_ewz.record().indexOf("Ausbeute");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Farbe
+            komentar = doc.createComment("Farbwert (The color of the item in Lovibond Units (SRM for liquid extracts).)");
+            Anteil.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Farbe");
+            element = doc.createElement("COLOR");
+            //EBC in Lovibond umrechnen
+            double ebc = query_ewz.value(FeldNr).toDouble();
+            double srm = ebc * 0.508;
+            double l = (srm + 0.76) / 1.3546;
+            text = doc.createTextNode(QString::number(l));
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+
+            //zugabezeitpunkt
+            komentar = doc.createComment("May be TRUE if this item is normally added after the boil.  The default value is FALSE since most grains are added during the mash or boil.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("ADD_AFTER_BOIL");
+            FeldNr = query_ewz.record().indexOf("Zeitpunkt");
+            int zeitpunkt = query_ewz.value(FeldNr).toInt();
+            if (zeitpunkt == EWZ_Zeitpunkt_Gaerung)
+              text = doc.createTextNode("TRUE");
+            else {
+              text = doc.createTextNode("FALSE");
+            }
+            element.appendChild(text);
+            Anteil.appendChild(element);
+
+            //Kommentar
+            komentar = doc.createComment("Detailed notes on the item including usage.  May be multiline.");
+            Anteil.appendChild(komentar);
+            element = doc.createElement("NOTES");
+            FeldNr = query_ewz.record().indexOf("Bemerkung");
+            QString s = query_ewz.value(FeldNr).toString();
+            text = doc.createTextNode(s.toHtmlEscaped());
+            element.appendChild(text);
+            Anteil.appendChild(element);
+          }
+        }
+      }
+
+      //Hefe
+      QDomElement yeasts = doc.createElement("YEASTS");
+      komentar = doc.createComment("Hefe");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(yeasts);
+
+      QDomElement yeast = doc.createElement("YEAST");
+      yeasts.appendChild(yeast);
+
+      //Version Fermentable Tag
+      komentar = doc.createComment("Version Yeast Tag");
+      yeast.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Name
+      komentar = doc.createComment("Name Hefe");
+      yeast.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("AuswahlHefe");
+      element = doc.createElement("NAME");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      QString AuswahlHefe = query_sud.value(FeldNr).toString();
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Type
+      komentar = doc.createComment("May be Ale, Lager, Wheat, Wine or Champagne (Wird im KBH nicht definiert, deshalb immer Lager");
+      yeast.appendChild(komentar);
+      element = doc.createElement("TYPE");
+      text = doc.createTextNode("Lager");
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Form
+      komentar = doc.createComment("May be Liquid, Dry, Slant or Culture");
+      yeast.appendChild(komentar);
+      element = doc.createElement("FORM");
+      sql = "SELECT TypTrFl FROM Hefe WHERE Beschreibung='" + AuswahlHefe.toHtmlEscaped() + "';";
+      QSqlQuery query;
+      if (!query.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        query.first();
+        FeldNr = query_ewz.record().indexOf("TypTrFl");
+        int typ = query_ewz.value(FeldNr).toInt();
+        if (typ == Hefe_Fluessig)
+          text = doc.createTextNode("Liquid");
+        else if (typ == Hefe_Trocken)
+          text = doc.createTextNode("Dry");
+        else if (typ == Hefe_Unbekannt)
+          text = doc.createTextNode("Dry");
+      }
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+      //Menge
+      komentar = doc.createComment("The amount of yeast, measured in liters.  For a starter this is the size of the starter.  If the flag AMOUNT_IS_WEIGHT is set to TRUE then this measurement is in kilograms and not liters.");
+      yeast.appendChild(komentar);
+      element = doc.createElement("AMOUNT");
+      //Menge kann im Moment noch nicht sicher ermittelt werden deshalb wird erst einmal 0 eingetragen
+      text = doc.createTextNode("0");
+      element.appendChild(text);
+      yeast.appendChild(element);
+
+
+      //Misc
+      //The term "misc" encompasses all non-fermentable miscellaneous ingredients that are not hops or
+      //yeast and do not significantly change the gravity of the beer.
+      //For example: spices, clarifying agents, water treatments, etc…
+      QDomElement miscs = doc.createElement("MISCS");
+      komentar = doc.createComment("Hefe");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(miscs);
+
+      sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(SudNr) + " AND Typ != " +  QString::number(EWZ_Typ_Hopfen) + ";";
+      if (!query_ewz.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+          CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
+          + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+      else {
+        QDomElement misc;
+
+        while (query_ewz.next()){
+          FeldNr = query_ewz.record().indexOf("Ausbeute");
+          double Ausbeute = query_ewz.value(FeldNr).toDouble();
+
+          if (Ausbeute == 0) {
+            misc = doc.createElement("MISC");
+            miscs.appendChild(misc);
+
+            //Version Misc Tag
+            komentar = doc.createComment("Version MISC Tag");
+            misc.appendChild(komentar);
+            element = doc.createElement("VERSION");
+            text = doc.createTextNode(BeerXMLVersion);
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Name
+            komentar = doc.createComment("Name Weitere Zutat ohne Ausbeute");
+            misc.appendChild(komentar);
+            FeldNr = query_ewz.record().indexOf("Name");
+            element = doc.createElement("NAME");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            QString AuswahlHefe = query_ewz.value(FeldNr).toString();
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Type
+            komentar = doc.createComment("May be Spice, Fining, Water Agent, Herb, Flavor or Other ");
+            misc.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Typ");
+            int typ = query_ewz.value(FeldNr).toInt();
+            if (typ == EWZ_Typ_Gewuerz)
+              text = doc.createTextNode("Spice");
+            else if (typ == EWZ_Typ_Frucht)
+              text = doc.createTextNode("Flavor");
+            else
+              text = doc.createTextNode("Other");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Use
+            komentar = doc.createComment("May be Boil, Mash, Primary, Secondary, Bottling");
+            misc.appendChild(komentar);
+            element = doc.createElement("TYPE");
+            FeldNr = query_ewz.record().indexOf("Zeitpunkt");
+            int zeitpunkt = query_ewz.value(FeldNr).toInt();
+            if (zeitpunkt == EWZ_Zeitpunkt_Gaerung)
+              text = doc.createTextNode("Primary");
+            else if (zeitpunkt == EWZ_Zeitpunkt_Kochbeginn)
+              text = doc.createTextNode("Boil");
+            else if (zeitpunkt == EWZ_Zeitpunkt_Maischen)
+              text = doc.createTextNode("Mash");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Time
+            komentar = doc.createComment("Amount of time the misc was boiled, steeped, mashed, etc in minutes.");
+            misc.appendChild(komentar);
+            element = doc.createElement("TIME");
+            FeldNr = query_ewz.record().indexOf("Zugabedauer");
+            text = doc.createTextNode(query_ewz.value(FeldNr).toString());
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Menge
+            komentar = doc.createComment("Amount of time the misc was boiled, steeped, mashed, etc in minutes.");
+            misc.appendChild(komentar);
+            element = doc.createElement("AMOUNT");
+            FeldNr = query_ewz.record().indexOf("erg_Menge");
+            text = doc.createTextNode(QString::number(query_ewz.value(FeldNr).toDouble() / 1000));
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Mengenangabe ist Gewicht
+            komentar = doc.createComment("TRUE if the amount measurement is a weight measurement and FALSE if the amount is a volume measurement.  Default value (if not present) is assumed to be FALSE.");
+            misc.appendChild(komentar);
+            element = doc.createElement("AMOUNT_IS_WEIGHT");
+            text = doc.createTextNode("TRUE");
+            element.appendChild(text);
+            misc.appendChild(element);
+
+            //Kommentar
+            komentar = doc.createComment("Detailed notes on the item including usage.  May be multiline.");
+            misc.appendChild(komentar);
+            element = doc.createElement("NOTES");
+            FeldNr = query_ewz.record().indexOf("Bemerkung");
+            QString s = query_ewz.value(FeldNr).toString();
+            text = doc.createTextNode(s.toHtmlEscaped());
+            element.appendChild(text);
+            misc.appendChild(element);
+          }
+        }
+      }
+
+      //MASH
+      QDomElement mash = doc.createElement("MASH");
+      komentar = doc.createComment("A mash profile is a record used either within a recipe or outside the recipe to precisely specify the mash method used");
+      Rezept.appendChild(komentar);
+      Rezept.appendChild(mash);
+      
+      //Version MASH Tag
+      komentar = doc.createComment("Version MASH Tag");
+      mash.appendChild(komentar);
+      element = doc.createElement("VERSION");
+      text = doc.createTextNode(BeerXMLVersion);
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //Name
+      komentar = doc.createComment("Name of the mash profile.");
+      mash.appendChild(komentar);
+      element = doc.createElement("NAME");
+      text = doc.createTextNode("Temperatur");
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //GRAIN_TEMP
+      komentar = doc.createComment("The temperature of the grain before adding it to the mash in degrees Celsius.");
+      mash.appendChild(komentar);
+      element = doc.createElement("GRAIN_TEMP");
+      text = doc.createTextNode("20");
+      element.appendChild(text);
+      mash.appendChild(element);
+
+      //Maischen
+      QDomElement mash_steps = doc.createElement("MASH_STEPS");
+      komentar = doc.createComment("A mash step is an internal record used within a mash profile to denote a separate step in a multi-step mash.  A mash step is not intended for use outside of a mash profile.");
+      mash.appendChild(komentar);
+      mash.appendChild(mash_steps);
+
+      //Rasten Abfragen
+			QSqlQuery query_rasten;
+			sql = "SELECT * FROM Rasten WHERE SudID=" + QString::number(SudNr) + ";";
+			if (!query_rasten.exec(sql)) {
+				// Fehlermeldung Datenbankabfrage
+				ErrorMessage *errorMessage = new ErrorMessage();
+				errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+					CANCEL_NO, trUtf8("Rueckgabe:\n") + query_rasten.lastError().databaseText()
+					+ trUtf8("\nSQL Befehl:\n") + sql);
+			}
+			else {
+				QDomElement Rast;
+
+        //Einmaischen
+        Rast = doc.createElement("MASH_STEP");
+        mash_steps.appendChild(Rast);
+        
+        //Version MASH_STEP Tag
+        komentar = doc.createComment("Version MASH_STEP Tag");
+        Rast.appendChild(komentar);
+        element = doc.createElement("VERSION");
+        text = doc.createTextNode(BeerXMLVersion);
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Name
+        komentar = doc.createComment("Einmaischen bei:");
+        Rast.appendChild(komentar);
+        element = doc.createElement("NAME");
+        text = doc.createTextNode("Einmaischen");
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Type
+        komentar = doc.createComment("May be Infusion, Temperature or Decoction depending on the type of step.  Infusion denotes adding hot water, Temperature denotes heating with an outside heat source, and decoction denotes drawing off some mash for boiling.");
+        Rast.appendChild(komentar);
+        komentar = doc.createComment("Im KBH immer Temperature");
+        Rast.appendChild(komentar);
+        element = doc.createElement("TYPE");
+        text = doc.createTextNode("Temperature");
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Temperatur
+        komentar = doc.createComment("Temperatur der Rast");
+        Rast.appendChild(komentar);
+        FeldNr = query_sud.record().indexOf("EinmaischenTemp");
+        element = doc.createElement("STEP_TEMP");
+        text = doc.createTextNode(query_sud.value(FeldNr).toString());
+        element.appendChild(text);
+        Rast.appendChild(element);
+
+        //Rast Dauer
+        komentar = doc.createComment("Rastdauer");
+        Rast.appendChild(komentar);
+        element = doc.createElement("STEP_TIME");
+        text = doc.createTextNode("0");
+        element.appendChild(text);
+        Rast.appendChild(element);
+        
+        
+				int i = 1;
+				while (query_rasten.next()){
+					//Alle Rasten einlesen
+					Rast = doc.createElement("MASH_STEP");
+					mash_steps.appendChild(Rast);
+					
+          //Version MASH_STEP Tag
+          komentar = doc.createComment("Version MASH_STEP Tag");
+          Rast.appendChild(komentar);
+          element = doc.createElement("VERSION");
+          text = doc.createTextNode(BeerXMLVersion);
+          element.appendChild(text);
+          Rast.appendChild(element);
+
+          //Rast Name
+					komentar = doc.createComment("Berschreibung der Rast");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastName");
+					element = doc.createElement("NAME");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+          //Type
+          komentar = doc.createComment("May be Infusion, Temperature or Decoction depending on the type of step.  Infusion denotes adding hot water, Temperature denotes heating with an outside heat source, and decoction denotes drawing off some mash for boiling.");
+          Rast.appendChild(komentar);
+          komentar = doc.createComment("Im KBH immer Temperature");
+          Rast.appendChild(komentar);
+          element = doc.createElement("TYPE");
+          text = doc.createTextNode("Temperature");
+          element.appendChild(text);
+          Rast.appendChild(element);
+
+          //Rast Temperatur
+					komentar = doc.createComment("Temperatur der Rast");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastTemp");
+					element = doc.createElement("STEP_TEMP");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+					//Rast Dauer
+					komentar = doc.createComment("Rastdauer");
+					Rast.appendChild(komentar);
+					FeldNr = query_rasten.record().indexOf("RastDauer");
+					element = doc.createElement("STEP_TIME");
+					text = doc.createTextNode(query_rasten.value(FeldNr).toString());
+					element.appendChild(text);
+					Rast.appendChild(element);
+
+					i++;
+				}
+			}
+
+      //xml Datei Speichern
+      if (!file.open(QFile::ReadWrite | QFile::Text)) {
+				//Kann Suddatei nicht erstellen
+				return 1;
+			}
+			
+
+			const int IndentSize = 2;
+      doc.save(xml, IndentSize);
+
+      //jetzt im string die umlaute/sonderzeichen in HTML Entitäten umwandeln
+      //ein test mit BeerSmith hat ergeben das das programm nicht mit sonderzeichen umgehen kann
+      //und HTML Entitäten in NCR dezimal verlangt
+
+      //das muss leider hier so gemacht werden weil die funktion createTextNote ansonsten die & zeichen
+      //in &amp; umwandelt
+
+      strXml = encodeHtml(strXml);
+      out << strXml;
+    }
+  }
+  return 0;
 }
 
 
@@ -3620,7 +4503,28 @@ void QExport::HinweisAusgeben(QString Text)
 	msgBox.exec();
 
 	//while (QCoreApplication::hasPendingEvents())
-	QCoreApplication::processEvents();
+  QCoreApplication::processEvents();
+}
+
+QString QExport::encodeHtml(QString str)
+{
+  str.replace("Ä","&#196;");
+  str.replace("ä","&#228;");
+
+  str.replace("Ö","&#214;");
+  str.replace("ö","&#246;");
+
+  str.replace("Ü","&#220;");
+  str.replace("ü","&#252;");
+
+  str.replace("ß","&#223;");
+
+  str.replace("º","&#186;");
+  str.replace("°","&#176;");
+
+  str.replace("®","&#174;");
+  str.replace("©","&#169;");
+  return str;
 }
 
 

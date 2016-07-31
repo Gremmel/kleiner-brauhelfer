@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1269</width>
-    <height>887</height>
+    <height>980</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,7 +27,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>8</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -304,7 +304,7 @@
              <x>0</x>
              <y>0</y>
              <width>866</width>
-             <height>763</height>
+             <height>856</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -1437,7 +1437,7 @@ p, li { white-space: pre-wrap; }
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>92</width>
+                          <width>100</width>
                           <height>100</height>
                          </rect>
                         </property>
@@ -1508,7 +1508,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QTabWidget" name="TabWidget_Zutaten">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_Grundzutaten">
                  <attribute name="title">
@@ -1540,8 +1540,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>59</width>
-                       <height>16</height>
+                       <width>419</width>
+                       <height>564</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1633,8 +1633,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>415</width>
-                       <height>435</height>
+                       <width>98</width>
+                       <height>28</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1701,8 +1701,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>55</width>
-                       <height>16</height>
+                       <width>98</width>
+                       <height>28</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_80" stretch="0,1">
@@ -2506,7 +2506,7 @@ p, li { white-space: pre-wrap; }
                <x>0</x>
                <y>0</y>
                <width>344</width>
-               <height>411</height>
+               <height>477</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -3285,8 +3285,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1198</width>
-             <height>837</height>
+             <width>1219</width>
+             <height>856</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -3884,10 +3884,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_VerschneidungZumischen">
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Überträgt die Würzemenge nach dem Hopfenseihen + Verschneidung in die Würzemenge beim Anstellen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
+                    <widget class="QCheckBox" name="checkBox_zumischen">
                      <property name="text">
                       <string>zumischen</string>
                      </property>
@@ -4927,7 +4924,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QGroupBox" name="groupBox_28">
                 <property name="title">
-                 <string>sonstiges</string>
+                 <string>Sonstiges</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_84">
                  <property name="spacing">
@@ -7794,7 +7791,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>866</width>
+             <width>847</width>
              <height>300</height>
             </rect>
            </property>
@@ -7990,7 +7987,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
              <x>0</x>
              <y>0</y>
              <width>1219</width>
-             <height>670</height>
+             <height>763</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8189,7 +8186,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                      <item>
                       <widget class="QLabel" name="label_gaerungEwzZugenMenge">
                        <property name="text">
-                        <string>menge</string>
+                        <string>Menge</string>
                        </property>
                       </widget>
                      </item>
@@ -8290,7 +8287,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>734</width>
+             <width>715</width>
              <height>300</height>
             </rect>
            </property>
@@ -8511,7 +8508,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                <x>0</x>
                <y>0</y>
                <width>342</width>
-               <height>722</height>
+               <height>815</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -10219,7 +10216,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            <item>
             <widget class="QGroupBox" name="groupBox_20">
              <property name="title">
-              <string>sonstiges</string>
+              <string>Sonstiges</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_33">
               <item>
@@ -11379,7 +11376,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
              <x>0</x>
              <y>0</y>
              <width>1219</width>
-             <height>608</height>
+             <height>701</height>
             </rect>
            </property>
            <attribute name="label">

@@ -121,8 +121,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>586</width>
-              <height>612</height>
+              <width>548</width>
+              <height>631</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -261,7 +261,7 @@
                   <item>
                    <widget class="QLabel" name="label_2">
                     <property name="text">
-                     <string>Schnellgäerverlauf Linie Stammwürze</string>
+                     <string>Schnellgärverlauf Linie Stammwürze</string>
                     </property>
                    </widget>
                   </item>
@@ -314,7 +314,7 @@
                   <item>
                    <widget class="QLabel" name="label_3">
                     <property name="text">
-                     <string>Schnellgäerverlauf Linie Alkoholgehalt</string>
+                     <string>Schnellgärverlauf Linie Alkoholgehalt</string>
                     </property>
                    </widget>
                   </item>
@@ -367,7 +367,7 @@
                   <item>
                    <widget class="QLabel" name="label_16">
                     <property name="text">
-                     <string>Schnellgäerverlauf Linie Temperatur</string>
+                     <string>Schnellgärverlauf Linie Temperatur</string>
                     </property>
                    </widget>
                   </item>
@@ -593,7 +593,7 @@
                   <item>
                    <widget class="QLabel" name="label_7">
                     <property name="text">
-                     <string>Nachgäerverlauf Linie CO2 Gehalt</string>
+                     <string>Nachgärverlauf Linie CO2 Gehalt</string>
                     </property>
                    </widget>
                   </item>
@@ -646,7 +646,7 @@
                   <item>
                    <widget class="QLabel" name="label_14">
                     <property name="text">
-                     <string>Nachgäerverlauf Linie Temperatur</string>
+                     <string>Nachgärverlauf Linie Temperatur</string>
                     </property>
                    </widget>
                   </item>
@@ -1179,7 +1179,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_15">
            <property name="title">
-            <string>PDF Speichern</string>
+            <string>PDF speichern</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_21">
             <item>
@@ -1364,8 +1364,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>573</width>
-              <height>753</height>
+              <width>562</width>
+              <height>598</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">

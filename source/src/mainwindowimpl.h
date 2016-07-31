@@ -31,6 +31,8 @@ protected:
   void resizeEvent(QResizeEvent * event);
   void showEvent ( QShowEvent * event );
 private:
+  //die Anwendung am ende der init Funktion Maximiert starten
+  bool maximiertStarten;
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
   //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
@@ -579,7 +581,6 @@ private slots:
   void on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1);
   void on_listWidget_Brauanlagen_currentRowChanged(int currentRow);
   void on_dspinBox_KostenAusruestung_valueChanged(double arg1);
-  void on_pushButton_VerschneidungZumischen_clicked();
   void on_pushButton_MalzNeu_clicked();
   void on_pushButton_HopfenNeu_clicked();
   void on_pushButton_HefeNeu_clicked();
@@ -598,6 +599,7 @@ private slots:
   void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
+  void on_checkBox_zumischen_clicked();
 };
 #endif
 

@@ -289,11 +289,12 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   pushButton_EingabeHSWVorHopfenseihen -> hide();
   horizontalLayout_107 -> setSpacing(0);
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
-
-  LeseKonfig();
+  on_tableWidget_Hefe_itemSelectionChanged();
 
   createActions();
   createMenus();
+
+  LeseKonfig();
 
   //Überprüfen ob Messages angezeigt werden sollen
   if (!keinInternet)
@@ -345,6 +346,11 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   tableWidget_Hefe->horizontalHeader()->resizeSection(14, 120);
   tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
   tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(10, 120);
+
+  //Fenster Maximieren wenn es zuletzt Maximiert war
+  if (maximiertStarten)
+    this->showMaximized();
+
 }
 
 void MainWindowImpl::on_MsgCheckFertig(int count)
@@ -2393,8 +2399,12 @@ void MainWindowImpl::SchreibeKonfig()
 
   //Position und Abmessung des Fensters speichern
   settings.beginGroup("MainWindow");
-  settings.setValue("size", size());
-  settings.setValue("pos", pos());
+  settings.setValue("istMaximiert", this->isMaximized());
+  //Neue Position nur Speichern wenn Anwendung nicht Maximiert ist
+  if (!this->isMaximized()) {
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+  }
   settings.endGroup();
 
   //Letzten Geladenen Datensatz merken
@@ -2435,6 +2445,7 @@ void MainWindowImpl::LeseKonfig()
   settings.beginGroup("MainWindow");
   resize(settings.value("size", QSize(600, 400)).toSize());
   move(settings.value("pos", QPoint(200, 200)).toPoint());
+  maximiertStarten = settings.value("istMaximiert", false).toBool();
   settings.endGroup();
 
   //Letzten Geladenen Datensatz auslesen
@@ -2525,17 +2536,17 @@ void MainWindowImpl::createActions()
   connect(EntsperreEingabefelder, SIGNAL(triggered()), this, SLOT(slot_EntsperreEingabefelder()));
 
   //Setzt das Bit BierGebraut zurück
-  ResetBierGebraut = new QAction(trUtf8("Bier wurde &Gebraut zurücksetzten"), this);
+  ResetBierGebraut = new QAction(trUtf8("\"Bier &gebraut\" zurücksetzten"), this);
   ResetBierGebraut -> setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetBierGebraut, SIGNAL(triggered()), this, SLOT(slot_ResetBierWurdeGebraut()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetAbgefuellt = new QAction(trUtf8("Bier &Abgefüllt zurücksetzten"), this);
+  ResetAbgefuellt = new QAction(trUtf8("\"Bier &abgefüllt\" zurücksetzten"), this);
   ResetAbgefuellt -> setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetAbgefuellt, SIGNAL(triggered()), this, SLOT(slot_ResetAbgefuellt()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetVerbraucht = new QAction(trUtf8("Bier &Verbraucht zurücksetzten"), this);
+  ResetVerbraucht = new QAction(trUtf8("\"Bier &verbraucht\" zurücksetzten"), this);
   ResetVerbraucht -> setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
   connect(ResetVerbraucht, SIGNAL(triggered()), this, SLOT(slot_ResetBierVerbraucht()));
 
@@ -3274,6 +3285,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           berEwz -> setAttribute(Qt::WA_DeleteOnClose);
 
           ewz -> ergWidget = berEwz;
+          ewz -> setBierWurdeGebraut(BierWurdeGebraut);
+          ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           //Funktionen verknüpfen das das objekt die Daten holen kann
           connect(ewz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_ewzClose(int) ));
           connect(ewz, SIGNAL( sig_getEwzTyp(QString) ), this, SLOT( slot_getEwzTyp(QString) ));
@@ -3300,8 +3313,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
             ewz -> setEwListe(ewzListe);
             ewz -> setHopfenListe(HopfenListe);
           }
-          ewz -> setBierWurdeGebraut(BierWurdeGebraut);
-          ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
           //Ergebnisswidget dem Layout zuordnen
@@ -3329,6 +3340,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ewz -> setZugabezeitpunkt(date_von,date_bis);
           FeldNr_Name = query_ewz.record().indexOf("Entnahmeindex");
           ewz -> setEntnahmeindex(query_ewz.value(FeldNr_Name).toInt());
+          FeldNr_Name = query_ewz.record().indexOf("Zugabedauer");
+          ewz -> setDauerMinuten(query_ewz.value(FeldNr_Name).toInt());
         }
       }
 
@@ -6938,9 +6951,11 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
     QDoubleSpinBox* sbPreis=(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,4);
     QString s6 = tableWidget_Malz -> item(i,5) -> text();
     QString s7 = tableWidget_Malz -> item(i,6) -> text();
+    QString s9 = tableWidget_Malz -> item(i,9) -> text();
     QTableWidgetItem *newItem1 = new QTableWidgetItem(s1 + trUtf8(" Kopie"));
     QTableWidgetItem *newItem6 = new QTableWidgetItem(s6);
     QTableWidgetItem *newItem7 = new QTableWidgetItem(s7);
+    QTableWidgetItem *newItem9 = new QTableWidgetItem(s9);
 
     i = tableWidget_Malz -> rowCount();
     tableWidget_Malz -> setRowCount(i+1);
@@ -7000,6 +7015,7 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
     tableWidget_Malz -> setItem(i, 0, newItem1);
     tableWidget_Malz -> setItem(i, 5, newItem6);
     tableWidget_Malz -> setItem(i, 6, newItem7);
+    tableWidget_Malz -> setItem(i, 9, newItem9);
 
     setAenderung(true);
     AenderungRohstofftabelle = true;
@@ -7024,10 +7040,12 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
   QDoubleSpinBox* sbPreis=(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,3);
   QString s6 = tableWidget_Hopfen -> item(i,5) -> text();
   QString s7 = tableWidget_Hopfen -> item(i,7) -> text();
+  QString s10 = tableWidget_Hopfen -> item(i,10) -> text();
   QTableWidgetItem *newItem1 = new QTableWidgetItem(s1 + trUtf8(" Kopie"));
   QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
   QTableWidgetItem *newItem6 = new QTableWidgetItem(s6);
   QTableWidgetItem *newItem7 = new QTableWidgetItem(s7);
+  QTableWidgetItem *newItem10 = new QTableWidgetItem(s10);
   newItem5 -> setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
   newItem5 -> setCheckState(tableWidget_Hopfen -> item(i,4) -> checkState());
   QComboBox* comboTyp=(QComboBox*)tableWidget_Hopfen -> cellWidget(i,6);
@@ -7090,6 +7108,7 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
   tableWidget_Hopfen -> setItem(i, 4, newItem5);
   tableWidget_Hopfen -> setItem(i, 5, newItem6);
   tableWidget_Hopfen -> setItem(i, 7, newItem7);
+  tableWidget_Hopfen -> setItem(i, 10, newItem10);
 
   tableWidget_Hopfen->setSortingEnabled(true);
   Hopfen_Bezeichnung_Merker = s;
@@ -7115,6 +7134,7 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   QString s9 = tableWidget_Hefe -> item(i,9) -> text();
   QComboBox* comboSED=(QComboBox*)tableWidget_Hefe -> cellWidget(i,10);
   QString s11 = tableWidget_Hefe -> item(i,11) -> text();
+  QString s14 = tableWidget_Hefe -> item(i,14) -> text();
 
   QString s = Hefe_Bezeichnung_Merker;
   Hefe_Bezeichnung_Merker = "";
@@ -7125,6 +7145,7 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   QTableWidgetItem *newItem8 = new QTableWidgetItem(s8);
   QTableWidgetItem *newItem9 = new QTableWidgetItem(s9);
   QTableWidgetItem *newItem11 = new QTableWidgetItem(s11);
+  QTableWidgetItem *newItem14 = new QTableWidgetItem(s14);
   i = tableWidget_Hefe -> rowCount();
   tableWidget_Hefe -> setRowCount(i+1);
 
@@ -7210,6 +7231,9 @@ void MainWindowImpl::slot_pushButton_HefeKopie()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+
+  //Link
+  tableWidget_Hefe -> setItem(i, 14, newItem14);
 
   tableWidget_Hefe->setSortingEnabled(true);
   Hefe_Bezeichnung_Merker = s;
@@ -9723,6 +9747,19 @@ void MainWindowImpl::SetDiagrammFarben()
     widget_DiaSchnellgaerverlauf -> colorL2 = color;
   }
 
+  //Farbe Linie 3 Schnellgärverlauf
+  HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_S_L3").toString();
+  if (HtmlColor == ""){
+    color = QColor::fromRgb(FARBE_GAERVERLAUF_DIAGRAMM_S_L3);
+  }
+  else {
+    color.setNamedColor(HtmlColor);
+  }
+  //wenn Farbwert gültig ist Farbe setzen
+  if (color.isValid()){
+    widget_DiaSchnellgaerverlauf -> colorL3 = color;
+  }
+
   //Farbe Linie 1 Hauptgärverlauf
   HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_H_L1").toString();
   if (HtmlColor == ""){
@@ -9747,6 +9784,19 @@ void MainWindowImpl::SetDiagrammFarben()
   //wenn Farbwert nicht gültig ist dann defaultfarbe setzen
   if (color.isValid()){
     widget_DiaHauptgaerverlauf -> colorL2 = color;
+  }
+
+  //Farbe Linie 3 Hauptgärverlauf
+  HtmlColor = settings.value("FARBE_GAERVERLAUF_DIAGRAMM_H_L3").toString();
+  if (HtmlColor == ""){
+    color = QColor::fromRgb(FARBE_GAERVERLAUF_DIAGRAMM_H_L3);
+  }
+  else {
+    color.setNamedColor(HtmlColor);
+  }
+  //wenn Farbwert nicht gültig ist dann defaultfarbe setzen
+  if (color.isValid()){
+    widget_DiaHauptgaerverlauf -> colorL3 = color;
   }
 
   //Farbe Linie 1 Nachgärverlauf
@@ -10364,7 +10414,9 @@ void MainWindowImpl::ErstelleZusammenfassung()
   style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
   style += "p.version{color:#999999;font-size:11pt;margin-top:5px;}";
   //Style für Kommentar
-  style += "p.kommentar{color:#555555;font-size:11pt;margin-bottom:5px;}";
+  style += "p.kommentar{color:#555555;font-size:10pt;margin-bottom:5px;margin-left:5px;}";
+  //Style für Div Box ohne Rahmen
+  style += "p.zugegeben{color:#555555;font-size:10pt;margin-bottom:2px;margin-left:5px;}";
   //Style für Div Box ohne Rahmen
   style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
   //Style für Div Box mit Rahmen
@@ -10753,6 +10805,24 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "<p class='value'>" + trUtf8("Anstellen") + "</p>";
       s += "</td>";
       s += "</tr>";
+      //Zugabezeitpunkt
+      if (list_EwZutat[i]->getZugabestatus() > EWZ_Zugabestatus_nichtZugegeben) {
+        s += "<tr style=''>";
+        s += "<td colspan='5'>";
+        s += "<p class='zugegeben'>Zugegeben am "+ list_EwZutat[i]->getZugabezeitpunkt_von().toString("dd.MM.yyyy")+"</p>";
+        //wenn entnahme
+        if (list_EwZutat[i]->getEntnahmeindex() == EWZ_Entnahmeindex_MitEntnahme) {
+          //wenn entnommen
+          if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Entnommen) {
+            s += "<p class='kommentar'>"+ trUtf8("Entnommen am ")+ list_EwZutat[i]->getZugabezeitpunkt_bis().toString("dd.MM.yyyy")
+                + " (" + trUtf8("Tage: ") +
+                QString::number(list_EwZutat[i]->getDauerMinuten()/1440)+")</p>";
+            //wenn entnahme
+          }
+        }
+        s += "</td>";
+        s += "</tr>";
+      }
       //wenn ein Kommentar vorhanden ist eine Zeile für den Komentar einfügen
       if (list_EwZutat[i]->getBemerkung() != "") {
         s += "<tr style=''>";
@@ -11017,7 +11087,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11071,7 +11141,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11125,7 +11195,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
@@ -11670,11 +11740,16 @@ void MainWindowImpl::on_pushButton_SudExport_clicked()
   }
   //Sudname anhängen
   p += "/" + Sudname + ".xsud";
-  s = QFileDialog::getSaveFileName(this, trUtf8("Export Sud"), p, trUtf8("Sud Export Dateien (*.xsud)"),0);
+  s = QFileDialog::getSaveFileName(this, trUtf8("Export Sud"), p, trUtf8("KBH Sud Export Dateien (*.xsud)") + ";;" + trUtf8("BeerXML (*.xml)"),0);
   if (!s.isEmpty()) {
     QFileInfo fileinfo(s);
     settings.setValue("recentExportPath",fileinfo.path());
-    Export.ExportSudXML(SudID, s);
+    if (s.right(4) == ".xml") {
+      Export.ExportBeerXML(SudID, s);
+    }
+    else {
+      Export.ExportSudXML(SudID, s);
+    }
   }
 
 }
@@ -13174,6 +13249,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   QDoubleSpinBox* dsbPreis=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,6);
   QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text());
   QTableWidgetItem *newItem7 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,7) -> text());
+  QTableWidgetItem *newItem10 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,10) -> text());
 
 
   i = tableWidget_WeitereZutaten -> rowCount();
@@ -13255,6 +13331,9 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+
+  //Link
+  tableWidget_WeitereZutaten -> setItem(i, 10, newItem10);
 
   WZutaten_Bezeichnung_Merker = s;
   setAenderung(true);
@@ -13658,7 +13737,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
 
   for (int i=0; i < list_EwZutat.count(); i++){
     sql = "INSERT INTO WeitereZutatenGaben(SudID, Name, Menge, Einheit, Typ, Zeitpunkt,";
-    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Zugabestatus, Farbe) VALUES(" +
+    sql += "Bemerkung, erg_Menge, Ausbeute, Zeitpunkt_von, Zeitpunkt_bis, Entnahmeindex, Zugabestatus, Zugabedauer, Farbe) VALUES(" +
         QString::number(AktuelleSudID) +	"," +
         "'" + list_EwZutat[i] -> getName().replace("'","''") +	"'," +
         QString::number(list_EwZutat[i] -> getMenge()) +	"," +
@@ -13672,6 +13751,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB()
         "\"" + list_EwZutat[i] -> getZugabezeitpunkt_bis().toString(Qt::ISODate) +	"\"," +
         QString::number(list_EwZutat[i] -> getEntnahmeindex()) +	"," +
         QString::number(list_EwZutat[i] -> getZugabestatus()) +	"," +
+        QString::number(list_EwZutat[i] -> getDauerMinuten()) +	"," +
         QString::number(list_EwZutat[i] -> getFarbe()) +	"" +
         +")";
     if (!query.exec(sql)) {
@@ -13877,17 +13957,38 @@ void MainWindowImpl::on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1)
 
 void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1)
 {
-  spinBox_SWAnstellen -> setValue(arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(arg1);
+  }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1)
 {
-  spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
 }
 
-void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double arg1)
+void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double )
 {
-  spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
 }
 
 void MainWindowImpl::on_spinBox_SW_valueChanged(double arg1)
@@ -15264,7 +15365,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
 void MainWindowImpl::on_tableWidget_Malz_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Malz -> selectedItems().count() == 3) {
+  if (tableWidget_Malz -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_MalzKopie -> setDisabled(false);
     pushButton_MalzDel -> setDisabled(false);
@@ -15280,7 +15381,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hopfen -> selectedItems().count() == 3) {
+  if (tableWidget_Hopfen -> selectedItems().count() == 4) {
     //Alle Buttons enablen
     pushButton_HopfenKopie -> setDisabled(false);
     pushButton_HopfenDel -> setDisabled(false);
@@ -15295,21 +15396,21 @@ void MainWindowImpl::on_tableWidget_Hefe_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
   //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
+  if (tableWidget_Hefe -> selectedItems().count() == 7) {
     //Alle Buttons enablen
-    pushButton_WeitereZutatenKopie -> setDisabled(false);
-    pushButton_WeitereZutatenDel -> setDisabled(false);
+    pushButton_HefeKopie -> setDisabled(false);
+    pushButton_HefeDel -> setDisabled(false);
   }
   else {
-    pushButton_WeitereZutatenKopie -> setDisabled(true);
-    pushButton_WeitereZutatenDel -> setDisabled(true);
+    pushButton_HefeKopie -> setDisabled(true);
+    pushButton_HefeDel -> setDisabled(true);
   }
 }
 
 void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 {
   //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 2) {
+  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
     //Alle Buttons enablen
     pushButton_WeitereZutatenDel -> setDisabled(false);
     pushButton_WeitereZutatenKopie -> setDisabled(false);
@@ -15812,12 +15913,6 @@ void MainWindowImpl::on_listWidget_Brauanlagen_currentRowChanged(int)
 {
 }
 
-
-void MainWindowImpl::on_pushButton_VerschneidungZumischen_clicked()
-{
-  spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() + spinBox_WasserVerschneidung->value()-spinBox_Speisemenge->value());
-}
-
 void MainWindowImpl::on_pushButton_MalzNeu_clicked()
 {
   tableWidget_Malz->setSortingEnabled(false);
@@ -16037,3 +16132,16 @@ void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked()
     }
   }
 }
+
+void MainWindowImpl::on_checkBox_zumischen_clicked()
+{
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
+}
+

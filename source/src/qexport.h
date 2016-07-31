@@ -21,6 +21,7 @@ private:
 	int VersionDatenbank;
 	int VersionXML;
 	QString AustauschRohstoff;
+  QString encodeHtml(QString str);
 public:
 	int ImportSudXML(QString cDateiname);
 	int errCol;
@@ -28,6 +29,7 @@ public:
 	QString errMsg;
 	int IfXmlOK(QString cDateiname);
 	int ExportSudXML(int SudNr, QString Dateiname);
+	int ExportBeerXML(int SudNr, QString Dateiname);
 	QExport();
 	
 };

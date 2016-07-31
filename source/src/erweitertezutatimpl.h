@@ -47,6 +47,7 @@ private:
   int z;
   bool NativStyle;
   int zugabestatus;
+  QDateTime Zugabezeitpunkt_bis;
 
 public:
   double getErg_Kosten();
@@ -85,6 +86,8 @@ public:
   int getEntnahmeindex();
   int getZugabestatus() const;
   void setZugabestatus(int value);
+  int getDauerMinuten();
+  void setDauerMinuten(int value);
   //Markiert die Zutat als zugegeben
   void zutatZugeben();
   //Markiert die Zutat als entnommen
@@ -101,13 +104,14 @@ private slots:
   void on_pushButton_del_clicked();
   void on_fadeout_fertig();
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
-  void on_dateEdit_zugabezeitpunkt_bis_dateChanged(const QDate &date);
 
   void on_comboBox_entnahme_currentIndexChanged(int index);
 
   void on_buttonZugeben_clicked();
 
   void on_buttonEntnehmen_clicked();
+
+  void on_spinBox_EWZ_DauerTage_valueChanged(int arg1);
 
 protected:
   void closeEvent(QCloseEvent *event);

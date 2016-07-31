@@ -28,7 +28,8 @@ FORMS = ui/mainwindow.ui \
  ui/hopfengabe.ui \
  ui/dialogberverdampfung.ui \
  ui/dialoginfo.ui \
- ui/anhangwidget.ui
+ ui/anhangwidget.ui \
+ ui/dialogdatum.ui
 HEADERS = src/mainwindowimpl.h \
  src/berechnungen.h \
  src/korrektswimpl.h \
@@ -61,7 +62,8 @@ HEADERS = src/mainwindowimpl.h \
  src/brauanlage.h \
  src/dialoginfo.h \
  src/infotexts.h \
- src/anhangwidget.h
+ src/anhangwidget.h \
+ src/dialogdatum.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -92,7 +94,8 @@ SOURCES = src/mainwindowimpl.cpp \
  src/dialogberverdampfung.cpp \
  src/brauanlage.cpp \
  src/dialoginfo.cpp \
- src/anhangwidget.cpp
+ src/anhangwidget.cpp \
+ src/dialogdatum.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
 TEMPLATE = app
