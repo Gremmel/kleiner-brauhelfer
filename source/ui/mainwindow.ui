@@ -3884,10 +3884,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_VerschneidungZumischen">
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Überträgt die Würzemenge nach dem Hopfenseihen + Verschneidung in die Würzemenge beim Anstellen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
+                    <widget class="QCheckBox" name="checkBox_zumischen">
                      <property name="text">
                       <string>zumischen</string>
                      </property>

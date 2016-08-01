@@ -581,7 +581,6 @@ private slots:
   void on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1);
   void on_listWidget_Brauanlagen_currentRowChanged(int currentRow);
   void on_dspinBox_KostenAusruestung_valueChanged(double arg1);
-  void on_pushButton_VerschneidungZumischen_clicked();
   void on_pushButton_MalzNeu_clicked();
   void on_pushButton_HopfenNeu_clicked();
   void on_pushButton_HefeNeu_clicked();
@@ -600,6 +599,7 @@ private slots:
   void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
+  void on_checkBox_zumischen_clicked();
 };
 #endif
 
