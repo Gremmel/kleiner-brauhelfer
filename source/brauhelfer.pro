@@ -2,10 +2,19 @@ QT = gui \
  core \
  svg \
  sql \
- webkitwidgets \
  network \
  printsupport \
  xml
+
+equals(QT_MAJOR_VERSION, 5)
+{
+  greaterThan(QT_MINOR_VERSION, 4){
+    QT +=  webenginewidgets
+  } else {
+    QT += webkitwidgets
+  }
+}
+
 CONFIG += qt warn_on
 DESTDIR = bin
 OBJECTS_DIR = build
@@ -63,7 +72,8 @@ HEADERS = src/mainwindowimpl.h \
  src/dialoginfo.h \
  src/infotexts.h \
  src/anhangwidget.h \
- src/dialogdatum.h
+ src/dialogdatum.h \
+ src/mywebview.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -95,7 +105,8 @@ SOURCES = src/mainwindowimpl.cpp \
  src/brauanlage.cpp \
  src/dialoginfo.cpp \
  src/anhangwidget.cpp \
- src/dialogdatum.cpp
+ src/dialogdatum.cpp \
+ src/mywebview.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
 TEMPLATE = app
