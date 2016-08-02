@@ -276,12 +276,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //SpinBox Stammwürze nach Kochende mit SpinBox Stammwüzre vor dem Hopfenseihen verbinden
   connect(spinBox_SWKochende, SIGNAL( valueChanged(double) ), spinBox_SWVorHopfenseihen, SLOT( setValue(double) ));
 
-  // links extern weiterleiten
-  webView_Info->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(webView_Info, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
-  webView_Zusammenfassung->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(webView_Zusammenfassung, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
-
   //SpinBox Stammwürze vor dem Hopfenseigen ausblenden da nicht mehr benötigt
   label_116 -> hide();
   spinBox_SWVorHopfenseihen -> hide();
@@ -3907,9 +3901,6 @@ void MainWindowImpl::ErstelleSpickzettelV2()
 
   //textEdit -> setPlainText(seite);
 
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
   webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
 }
 
@@ -5048,9 +5039,6 @@ void MainWindowImpl::ErstelleSpickzettel()
 
   //textEdit -> setPlainText(seite);
 
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
   webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
 
 }
@@ -11319,10 +11307,6 @@ void MainWindowImpl::ErstelleZusammenfassung()
   ende = "</body></html>";
   seite += ende;
 
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
-
   webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
   //webView_Zusammenfassung -> reload();
 }
@@ -13133,15 +13117,7 @@ void MainWindowImpl::ErstelleSudInfo()
   ende = "</body></html>";
   seite += ende;
 
-  webView_Info -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Info -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Info -> setRenderHint(QPainter::HighQualityAntialiasing, true);
   webView_Info -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
-}
-
-void MainWindowImpl::slot_urlClicked(const QUrl &url)
-{
-  QDesktopServices::openUrl(url);
 }
 
 void MainWindowImpl::on_TabWidget_Zutaten_currentChanged(int index)

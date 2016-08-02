@@ -237,7 +237,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_35">
           <item>
-           <widget class="QWebView" name="webView_Info" native="true">
+           <widget class="MyWebView" name="webView_Info">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -8453,7 +8453,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_21">
         <item>
-         <widget class="QWebView" name="webView_Zusammenfassung" native="true">
+         <widget class="MyWebView" name="webView_Zusammenfassung">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -12400,7 +12400,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_58">
         <item>
-         <widget class="QWebView" name="webView_Anleitung" native="true"/>
+         <widget class="MyWebView" name="webView_Anleitung"/>
         </item>
        </layout>
       </widget>
@@ -12471,9 +12471,9 @@ p, li { white-space: pre-wrap; }
    <header>./src/mycombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>QWebView</class>
+   <class>MyWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header>./src/mywebview.h</header>
   </customwidget>
   <customwidget>
    <class>StarView</class>
