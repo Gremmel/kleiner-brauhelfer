@@ -25,6 +25,8 @@ signals:
   double sig_getEwzPreisHopfen(QString zutat);
   void sig_Aenderung();
   void sig_zugeben(QString zutat, int typ, double menge);
+  double sig_getHopfenMenge(QString name);
+  double sig_getEwzMenge(QString name);
 
 private:
   double farbe;
@@ -48,6 +50,7 @@ private:
   bool NativStyle;
   int zugabestatus;
   QDateTime Zugabezeitpunkt_bis;
+  bool StyleDunkel;
 
 public:
   double getErg_Kosten();
@@ -72,6 +75,7 @@ public:
   QString getName();
   void setHopfenListe(QStringList value);
   void setEwListe(QStringList value);
+  void setEwListeFarbe();
   void setID(int value);
   int getID();
   doubleEditLineImpl* ergWidget;
@@ -95,6 +99,8 @@ public:
 
   bool getBierWurdeAbgefuellt() const;
   void setBierWurdeAbgefuellt(bool value);
+
+  void setStyleDunkel(bool value);
 
 private slots:
   void on_textEdit_Komentar_textChanged();

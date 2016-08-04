@@ -323,6 +323,10 @@ private slots:
   void slot_EwzAenderung();
   void slot_MalzAenderung();
   void slot_HopfenAenderung();
+  double slot_MalzGetMenge(QString name);
+  double slot_EwzGetMenge(QString name);
+  double slot_HopfenGetMenge(QString name);
+  double slot_HefeGetMenge(QString name);
   int slot_getEwzEinheit(QString zutat);
   int slot_getEwzTyp(QString zutat);
   void slot_ewzClose(int id);

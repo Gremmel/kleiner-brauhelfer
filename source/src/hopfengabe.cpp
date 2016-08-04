@@ -181,6 +181,9 @@ void hopfengabe::setErgMenge(double value)
 	else {
 		ui->spinBox_Kochdauer->setReadOnly(false);
 	}
+  //Setzte Farbwerte der Liste entsprchend der vorhandenen Mengen
+  setHopfenListeFarbe();
+
 }
 
 double hopfengabe::getErgMenge()
@@ -306,13 +309,39 @@ void hopfengabe::ErstelleAuswahlliste()
 				ui->comboBox_Zutat -> setCurrentIndex(i);
 			}
 		}
-	}
+  }
+}
+
+void hopfengabe::setHopfenListeFarbe()
+{
+  double menge = 0;
+  for (int i=0; i < ui->comboBox_Zutat->count(); i++) {
+    menge = sig_getHopfenMenge(ui->comboBox_Zutat->itemText(i));
+    //Hintergund einfärben wenn von dieser Zutat nicht mehr da ist
+    if (menge == 0) {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_HELL),Qt::TextColorRole);
+    }
+    else {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor(Qt::white),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor(40,40,40),Qt::TextColorRole);
+    }
+  }
+}
+
+void hopfengabe::setStyleDunkel(bool value)
+{
+  StyleDunkel = value;
 }
 
 void hopfengabe::closeEvent(QCloseEvent *)
 {
-	emit sig_Aenderung();
-	ergWidget -> close();
+  emit sig_Aenderung();
+  ergWidget -> close();
 }
 
 void hopfengabe::on_dsb_Menge_valueChanged(double )
