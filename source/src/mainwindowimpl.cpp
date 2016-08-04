@@ -13787,8 +13787,8 @@ void MainWindowImpl::slot_HopfenAenderung()
 
 double MainWindowImpl::slot_MalzGetMenge(QString name)
 {
-  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+  //todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
+  //    (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
   for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
     if (tableWidget_Malz -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,3);
@@ -13800,8 +13800,8 @@ double MainWindowImpl::slot_MalzGetMenge(QString name)
 
 double MainWindowImpl::slot_EwzGetMenge(QString name)
 {
-  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+//  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
+//      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
   for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
     if (tableWidget_WeitereZutaten -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
@@ -13813,8 +13813,8 @@ double MainWindowImpl::slot_EwzGetMenge(QString name)
 
 double MainWindowImpl::slot_HopfenGetMenge(QString name)
 {
-  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+//  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
+//      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
   for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
     if (tableWidget_Hopfen -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,2);
