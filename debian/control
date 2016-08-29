@@ -1,0 +1,20 @@
+Source: kleiner-brauhelfer
+Section: utils
+Priority: extra
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Build-Depends:
+    debhelper (>= 7),
+    qt5-qmake,
+    libqt5svg5-dev,
+    libqt5webkit5-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/Gremmel/kleiner-brauhelfer
+
+Package: kleiner-brauhelfer
+Section: utils
+Architecture: any
+Depends:
+    ${shlibs:Depends},
+    ${misc:Depends}
+Description: kleiner brauhelfer
+ Ein Programm zum berechnen und verwalten von Biersuden.
