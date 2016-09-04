@@ -8052,6 +8052,34 @@ void MainWindowImpl::slot_pushButton_SudKopie()
                                     + trUtf8("\nSQL Befehl:\n") + sql);
       }
     }
+
+    //Anhänge Kopieren
+    QSqlQuery query_anhang;
+    sql = "SELECT * FROM Anhang WHERE SudID=" + SudIDFrom + ";";
+    if (!query_anhang.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
+                                  + trUtf8("\nSQL Befehl:\n") + sql);
+    }
+    while (query_anhang.next()){
+      sql = "INSERT INTO Anhang ";
+      sql += "(";
+      sql += "'SudID',";
+      sql += "'Pfad'";
+      sql += ")Values(";
+      sql += "'" + SudIDNeu + "',";
+      sql += "'" + query_anhang.value(2).toString().replace("'","''") + "'";
+      sql += ");";
+      if (!query.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+                                    + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+    }
   }
 
   QSqlDatabase::database().commit();
@@ -11291,9 +11319,9 @@ void MainWindowImpl::ErstelleZusammenfassung()
     s += "<p class='h2'>" + trUtf8("Anhänge:") + "</p>";
     for (int i=0; i<list_Anhang.count();i++){
       if (AnhangWidget::isImage(list_Anhang[i]->getPfad()))
-        s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br>";
+        s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br></br>";
       else
-        s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br>";
+        s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br></br>";
     }
     s += "</div>";
   }
@@ -13105,9 +13133,9 @@ void MainWindowImpl::ErstelleSudInfo()
         if (QDir::isRelativePath(pfad))
           pfad = dbpfad.filePath(pfad);
         if (AnhangWidget::isImage(pfad))
-          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br>";
+          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br></br>";
         else
-          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br>";
+          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br></br>";
       }
     }
   }
@@ -15997,7 +16025,7 @@ void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked()
 
 void MainWindowImpl::on_pushButton_NeuerAnhang_clicked()
 {
-  AddAnhang("");
+  AddAnhang(NULL);
   setAenderung(true);
 }
 
@@ -16012,7 +16040,10 @@ void MainWindowImpl::AddAnhang(QString pfad)
   AnhangWidget* anhang = new AnhangWidget(scrollArea_7);
   anhang -> setAttribute(Qt::WA_DeleteOnClose);
   anhang->setBasisPfad(dbpfad);
-  anhang->setPfad(pfad);
+  if (pfad == NULL)
+      anhang->openDialog();
+  else
+      anhang->setPfad(pfad);
   anhang->setID((int)time(NULL)+rand());
 
   verticalLayout_Anhang -> addWidget(anhang);
