@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+INSTBINDIR=debian/kleiner-brauhelfer/usr/bin
+INSTLANGDIR=debian/kleiner-brauhelfer/usr/share/kleiner-brauhelfer/languages
+INSTPIXDIR=debian/kleiner-brauhelfer/usr/share/pixmaps
+INSTAPPDIR=debian/kleiner-brauhelfer/usr/share/applications
+
+define DESKTOPFILE
+	[Desktop Entry]
+	Name=kleiner-brauhelfer
+	Comment=Ein Programm zum berechnen und verwalten von Biersuden
+	Exec=/usr/bin/brauhelfer
+	Icon=/usr/share/pixmaps/kleiner-brauhelfer.svg
+	Terminal=false
+	Type=Application
+	Categories=Qt;KDE;Science;Utility;
+	StartupNotify=false
+	X-KDE-StartupNotify=false
+endef
+export DESKTOPFILE
+
+%:
+	dh $@ --buildsystem=qmake --builddirectory=build
+
+override_dh_auto_configure:
+	mkdir -p build
+	cd build && qmake -qt=5 ../source/brauhelfer.pro
+
+override_dh_auto_install:
+	mkdir -p $(INSTBINDIR)
+	mkdir -p $(INSTLANGDIR)
+	mkdir -p $(INSTPIXDIR)
+	mkdir -p $(INSTAPPDIR)
+	cp build/bin/brauhelfer $(INSTBINDIR)
+	cp source/languages/*.png $(INSTLANGDIR)
+	cp source/languages/*.qm $(INSTLANGDIR)
+	cp source/res/logo.svg $(INSTPIXDIR)/kleiner-brauhelfer.svg
+	echo "$$DESKTOPFILE" > $(INSTAPPDIR)/kleiner-brauhelfer.desktop
