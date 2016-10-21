@@ -1487,7 +1487,7 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QPushButton" name="pushButton_NeuerAnhang">
                        <property name="text">
-                        <string>neuen Anhang einfügen</string>
+                        <string>Anhang hinzufügen</string>
                        </property>
                       </widget>
                      </item>

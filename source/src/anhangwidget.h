@@ -23,6 +23,7 @@ public:
   QString getFullPfad() const;
   void setPfad(const QString pfad);
   void setBasisPfad(const QString basis);
+  void openDialog();
 
 signals:
 	void sig_vorClose(int ID);

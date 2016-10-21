@@ -5954,7 +5954,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     }
     //überprüfen ob in den Weiterten zutaten der Gleiche Hopfen verwendet wird
     for (int o=0; o < list_EwZutat.count(); o++){
-      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == 100)) {
+      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
         soll += list_EwZutat[o] -> getErg_Menge();
       }
     }
@@ -8048,6 +8048,34 @@ void MainWindowImpl::slot_pushButton_SudKopie()
       sql += "'" + query_WeitereZutaten.value(8).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(9).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "'";
+      sql += ");";
+      if (!query.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+                                    + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+    }
+
+    //Anhänge Kopieren
+    QSqlQuery query_anhang;
+    sql = "SELECT * FROM Anhang WHERE SudID=" + SudIDFrom + ";";
+    if (!query_anhang.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
+                                  + trUtf8("\nSQL Befehl:\n") + sql);
+    }
+    while (query_anhang.next()){
+      sql = "INSERT INTO Anhang ";
+      sql += "(";
+      sql += "'SudID',";
+      sql += "'Pfad'";
+      sql += ")Values(";
+      sql += "'" + SudIDNeu + "',";
+      sql += "'" + query_anhang.value(2).toString().replace("'","''") + "'";
       sql += ");";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
@@ -11298,9 +11326,9 @@ void MainWindowImpl::ErstelleZusammenfassung()
     s += "<p class='h2'>" + trUtf8("Anhänge:") + "</p>";
     for (int i=0; i<list_Anhang.count();i++){
       if (AnhangWidget::isImage(list_Anhang[i]->getPfad()))
-        s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br>";
+        s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br></br>";
       else
-        s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br>";
+        s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br></br>";
     }
     s += "</div>";
   }
@@ -13112,9 +13140,9 @@ void MainWindowImpl::ErstelleSudInfo()
         if (QDir::isRelativePath(pfad))
           pfad = dbpfad.filePath(pfad);
         if (AnhangWidget::isImage(pfad))
-          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br>";
+          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br></br>";
         else
-          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br>";
+          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br></br>";
       }
     }
   }
@@ -13785,43 +13813,77 @@ void MainWindowImpl::slot_HopfenAenderung()
   }
 }
 
+//Gibt die noch vorhandene Restmenge zurück
 double MainWindowImpl::slot_MalzGetMenge(QString name)
 {
-  //todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-  //    (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+  double rest = 0;
   for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
     if (tableWidget_Malz -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,3);
-      return spinBoxMenge -> value();
+      rest = spinBoxMenge -> value();
     }
   }
-  return -1;
+  //Alle verwendeten Malzgaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  if (rest > 0) {
+    for (int i=0; i < list_Malzgaben.count(); i++){
+      if (list_Malzgaben[i] -> getName() == name)
+        verwendet  += list_Malzgaben[i] -> getErgMenge();
+    }
+  }
+  return rest - verwendet;
 }
 
+//Gibt die noch vorhandene Restmenge zurück
+//todo Einheitsgröße berücksichtigen
 double MainWindowImpl::slot_EwzGetMenge(QString name)
 {
-//  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-//      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+  double rest = 0;
   for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
     if (tableWidget_WeitereZutaten -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
-      return spinBoxMenge -> value();
+      rest = spinBoxMenge -> value();
     }
   }
-  return -1;
+  //Nun überprüfen ob die zutat in den weiteren Zutaten noch einmal vorkommt
+  double verwendet = 0;
+  for (int o=0; o < list_EwZutat.count(); o++){
+    if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() != EWZ_Typ_Hopfen)) {
+      verwendet += list_EwZutat[o] -> getErg_Menge();
+    }
+  }
+  return rest - verwendet;
 }
 
+//Gibt die noch vorhandene Restmenge zurück
 double MainWindowImpl::slot_HopfenGetMenge(QString name)
 {
-//  todo vielleicht hier nur die menge zurückgeben die noch übrig sind wenn alle anderen verwendungen abgezogen sind
-//      (wie bei kontrolle genug rohrstoffe vorhanden eventuell)
+  double rest = 0;
   for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
     if (tableWidget_Hopfen -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,2);
-      return spinBoxMenge -> value();
+      rest = spinBoxMenge -> value();
     }
   }
-  return -1;
+  //Alle verwendeten Hopfengaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  //Bei den Hopfengaben
+  if (rest > 0) {
+    for (int i=0; i < list_Hopfengaben.count(); i++){
+      if (list_Hopfengaben[i] -> getName() == name)
+        verwendet += list_Hopfengaben[i] -> getErgMenge();
+    }
+    //Bei den Weiteren Zutaten
+    for (int o=0; o < list_EwZutat.count(); o++){
+      if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
+        verwendet += list_EwZutat[o] -> getErg_Menge();
+      }
+    }
+  }
+  rest = rest - verwendet;
+  if (rest < 0)
+    rest = 0;
+  return rest;
 }
 
 double MainWindowImpl::slot_HefeGetMenge(QString name)
@@ -16057,7 +16119,7 @@ void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked()
 
 void MainWindowImpl::on_pushButton_NeuerAnhang_clicked()
 {
-  AddAnhang("");
+  AddAnhang(NULL);
   setAenderung(true);
 }
 
@@ -16072,7 +16134,10 @@ void MainWindowImpl::AddAnhang(QString pfad)
   AnhangWidget* anhang = new AnhangWidget(scrollArea_7);
   anhang -> setAttribute(Qt::WA_DeleteOnClose);
   anhang->setBasisPfad(dbpfad);
-  anhang->setPfad(pfad);
+  if (pfad == NULL)
+      anhang->openDialog();
+  else
+      anhang->setPfad(pfad);
   anhang->setID((int)time(NULL)+rand());
 
   verticalLayout_Anhang -> addWidget(anhang);
