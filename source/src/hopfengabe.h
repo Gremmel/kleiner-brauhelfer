@@ -17,6 +17,7 @@ class hopfengabe : public QWidget
 signals:
 	void sig_vorClose(int ID);
 	void sig_Aenderung();
+  double sig_getHopfenMenge(QString name);
 
 public:
     explicit hopfengabe(QWidget *parent = 0);
@@ -60,8 +61,10 @@ public:
 	void setSollIBU(double value);
 	void setAusbeute(double value);
 
+  void setStyleDunkel(bool value);
+
 private slots:
-	void on_pushButton_del_clicked();
+  void on_pushButton_del_clicked();
 	void on_fadeout_fertig();
 
 	void on_dsb_Menge_valueChanged(double arg1);
@@ -86,6 +89,7 @@ private:
 	int ID;
 	QStringList hopfenListe;
 	void ErstelleAuswahlliste();
+  void setHopfenListeFarbe();
 	bool BierWurdeGebraut;
 	bool prozentOK;
 	int MaxKochzeit;
@@ -96,6 +100,7 @@ private:
 	bool berIBUProzent;
 	double MengeGrammWertAlt;
   double fehlProzent;
+  bool StyleDunkel;
 
 protected:
 	void closeEvent(QCloseEvent *event);

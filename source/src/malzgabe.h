@@ -16,14 +16,16 @@ class malzgabe : public QWidget
 signals:
 	void sig_vorClose(int ID);
 	void sig_Aenderung();
+  double sig_getMalzMenge(QString name);
 
 public:
-		explicit malzgabe(QWidget *parent = 0);
-		~malzgabe();
+  explicit malzgabe(QWidget *parent = 0);
+  ~malzgabe();
 	void setID(int value);
 	int getID();
 	doubleEditLineImpl* ergWidget;
 	void setMalzListe(QStringList value);
+  void setMalzListeFarbe();
 	void setFehlProzent(double value);
   double getFehlProzent();
 	double getMengeProzent();
@@ -45,8 +47,10 @@ public:
 
 	void berMenge();
 
+  void setStyleDunkel(bool value);
+
 private slots:
-	void on_pushButton_del_clicked();
+  void on_pushButton_del_clicked();
 	void on_fadeout_fertig();
 
 	void on_dsb_Menge_valueChanged(double arg1);
@@ -72,6 +76,7 @@ private:
 	double Farbe;
 	double GesamtMenge;
   double fehlProzent;
+  bool StyleDunkel;
 
 protected:
 	void closeEvent(QCloseEvent *event);

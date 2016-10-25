@@ -77,6 +77,13 @@
 
 //Farben
 
+//Farbe für Comboauswahl Text nichts mehr auf Lager
+#define FARBE_COMBO_ROHSTOFF_EMPTY_HELL 180,0,0
+#define FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL 220,0,0
+//Farbe für Comboauswahl Text nicht genug auf Lager ist
+#define FARBE_COMBO_ROHSTOFF_LOW_HELL 219,137,9
+#define FARBE_COMBO_ROHSTOFF_LOW_DUNKEL 255,186,0
+
 //Farbe für Highlighted Text Style Auswahl
 #define FARBE_STYLE_HIGHLIGHT 0,85,255
 

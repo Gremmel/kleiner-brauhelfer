@@ -3274,6 +3274,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           //Zutatenobjekt hinzufügen
           ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
           ewz -> setAttribute(Qt::WA_DeleteOnClose);
+          ewz -> setStyleDunkel(StyleDunkel);
           //Ergebnisswidget ersetellen
           doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
           berEwz -> setAttribute(Qt::WA_DeleteOnClose);
@@ -3290,6 +3291,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_getEwzPreis(QString) ), this, SLOT( slot_getEwzPreis(QString) ));
           connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
           connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
+          connect(ewz, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
+          connect(ewz, SIGNAL( sig_getEwzMenge(QString) ), this, SLOT( slot_EwzGetMenge(QString) ));
           if (BierWurdeGebraut) {
             //Da Bier schon gebraut wurde die daten aus der Datenbank benutzten und nicht aus den Rohstoffdaten
             //da der Rohstoff unter umständen nicht mehr existiert oder verändert wurde
@@ -5951,7 +5954,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     }
     //überprüfen ob in den Weiterten zutaten der Gleiche Hopfen verwendet wird
     for (int o=0; o < list_EwZutat.count(); o++){
-      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == 100)) {
+      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
         soll += list_EwZutat[o] -> getErg_Menge();
       }
     }
@@ -6838,6 +6841,7 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
   //Hopfen hinzufügen
   //Zutatenobjekt hinzufügen
   hopfengabe* hopfen = new hopfengabe(this);
+  hopfen -> setStyleDunkel(StyleDunkel);
   hopfen -> setAttribute(Qt::WA_DeleteOnClose);
   //Ergebnisswidget ersetellen
   doubleEditLineImpl* berHopfen = new doubleEditLineImpl(this);
@@ -6853,6 +6857,7 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
 
   connect(hopfen, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_hopfenClose(int) ));
   connect(hopfen, SIGNAL( sig_Aenderung() ), this, SLOT( slot_HopfenAenderung() ));
+  connect(hopfen, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
 
   verticalLayout_Hopfengaben -> addWidget(hopfen);
   list_Hopfengaben.append(hopfen);
@@ -8251,6 +8256,7 @@ void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge,
   //Malz hinzufügen
   //Zutatenobjekt hinzufügen
   malzgabe* malz = new malzgabe(this);
+  malz -> setStyleDunkel(StyleDunkel);
   malz -> setAttribute(Qt::WA_DeleteOnClose);
   //Ergebnisswidget ersetellen
   doubleEditLineImpl* berMalz = new doubleEditLineImpl(this);
@@ -8262,6 +8268,7 @@ void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge,
 
   connect(malz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_malzClose(int) ));
   connect(malz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_MalzAenderung() ));
+  connect(malz, SIGNAL( sig_getMalzMenge(QString) ), this, SLOT( slot_MalzGetMenge(QString) ));
   //Zutatenliste füllen
   malz -> setBierWurdeGebraut(BierWurdeGebraut);
   malz -> setMalzListe(MalzListe);
@@ -13457,6 +13464,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
 {
   //Zutatenobjekt hinzufügen
   ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
+  ewz -> setStyleDunkel(StyleDunkel);
   ewz -> setAttribute(Qt::WA_DeleteOnClose);
   //Ergebnisswidget ersetellen
   doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
@@ -13474,6 +13482,8 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
   connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
   connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
+  connect(ewz, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
+  connect(ewz, SIGNAL( sig_getEwzMenge(QString) ), this, SLOT( slot_EwzGetMenge(QString) ));
   //Zutatenliste füllen
   ewz -> setEwListe(ewzListe);
   ewz -> setHopfenListe(HopfenListe);
@@ -13801,6 +13811,95 @@ void MainWindowImpl::slot_HopfenAenderung()
     setAenderung(true);
     BerAlles();
   }
+}
+
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_MalzGetMenge(QString name)
+{
+  double rest = 0;
+  for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
+    if (tableWidget_Malz -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,3);
+      rest = spinBoxMenge -> value();
+    }
+  }
+  //Alle verwendeten Malzgaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  if (rest > 0) {
+    for (int i=0; i < list_Malzgaben.count(); i++){
+      if (list_Malzgaben[i] -> getName() == name)
+        verwendet  += list_Malzgaben[i] -> getErgMenge();
+    }
+  }
+  return rest - verwendet;
+}
+
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_EwzGetMenge(QString name)
+{
+  double rest = 0;
+  int Einheit=0;
+  for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
+    if (tableWidget_WeitereZutaten -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
+      rest = spinBoxMenge -> value();
+      QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(i,2);
+      Einheit = comboEinheit -> currentIndex();
+      if (Einheit == EWZ_Einheit_Kg){
+        rest = rest * 1000;
+      }
+    }
+  }
+  //Nun überprüfen ob die zutat in den weiteren Zutaten noch einmal vorkommt
+  double verwendet = 0;
+  for (int o=0; o < list_EwZutat.count(); o++){
+    if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() != EWZ_Typ_Hopfen)) {
+      verwendet += list_EwZutat[o] -> getErg_Menge();
+    }
+  }
+  return rest - verwendet;
+}
+
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_HopfenGetMenge(QString name)
+{
+  double rest = 0;
+  for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
+    if (tableWidget_Hopfen -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,2);
+      rest = spinBoxMenge -> value();
+    }
+  }
+  //Alle verwendeten Hopfengaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  //Bei den Hopfengaben
+  if (rest > 0) {
+    for (int i=0; i < list_Hopfengaben.count(); i++){
+      if (list_Hopfengaben[i] -> getName() == name)
+        verwendet += list_Hopfengaben[i] -> getErgMenge();
+    }
+    //Bei den Weiteren Zutaten
+    for (int o=0; o < list_EwZutat.count(); o++){
+      if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
+        verwendet += list_EwZutat[o] -> getErg_Menge();
+      }
+    }
+  }
+  rest = rest - verwendet;
+  if (rest < 0)
+    rest = 0;
+  return rest;
+}
+
+double MainWindowImpl::slot_HefeGetMenge(QString name)
+{
+  for (int i=0; i < tableWidget_Hefe -> rowCount(); i++){
+    if (tableWidget_Hefe -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hefe -> cellWidget(i,1);
+      return spinBoxMenge -> value();
+    }
+  }
+  return -1;
 }
 
 

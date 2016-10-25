@@ -35,6 +35,33 @@ void malzgabe::setMalzListe(QStringList value)
   ErstelleAuswahlliste();
 }
 
+void malzgabe::setMalzListeFarbe()
+{
+  double menge = 0;
+  for (int i=0; i < ui->comboBox_Zutat->count(); i++) {
+    menge = sig_getMalzMenge(ui->comboBox_Zutat->itemText(i));
+    //Hintergund einfärben wenn von dieser Zutat nicht mehr da ist
+    if (menge == 0) {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_HELL),Qt::TextColorRole);
+    }
+    else if (menge < ui->dsb_MengeGramm->value()) {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_DUNKEL),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_HELL),Qt::TextColorRole);
+    }
+    else {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor(Qt::white),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor(40,40,40),Qt::TextColorRole);
+    }
+  }
+}
+
 void malzgabe::setFehlProzent(double value)
 {
   fehlProzent = value;
@@ -91,6 +118,8 @@ void malzgabe::setErgMenge(double value)
 {
   ui->dsb_MengeGramm->setValue(value);
   ergWidget->spinBox_Wert->setValue(value);
+  //Setzte Farbwerte der Liste entsprchend der vorhandenen Malzmenge
+  setMalzListeFarbe();
 }
 
 double malzgabe::getErgMenge()
@@ -160,13 +189,13 @@ void malzgabe::setDisabled(bool status)
   }
 
   ui->comboBox_Zutat -> setDisabled(status);
-  ui->comboBox_Zutat->setEditable(status);
+  ui->comboBox_Zutat -> setEditable(status);
   ui->dsb_MengeGramm -> setVisible(!status);
-  ui->label_Mengeneinheit_2->setVisible(!status);
+  ui->label_Mengeneinheit_2 -> setVisible(!status);
   ui->dsb_MengeGramm -> setButtonSymbols(bs);
   ui->dsb_Menge -> setReadOnly(status);
   ui->dsb_Menge -> setButtonSymbols(bs);
-  ui->pushButton_KorrekturMenge->setVisible(!status);
+  ui->pushButton_KorrekturMenge -> setVisible(!status);
   ui->pushButton_del -> setDisabled(status);
 }
 
@@ -202,6 +231,11 @@ void malzgabe::ErstelleAuswahlliste()
       }
     }
   }
+}
+
+void malzgabe::setStyleDunkel(bool value)
+{
+  StyleDunkel = value;
 }
 
 void malzgabe::closeEvent(QCloseEvent *)
