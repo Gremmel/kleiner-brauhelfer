@@ -64,6 +64,7 @@ public:
   void setName(QString Name);
   void setErg_Menge(double value);
   double getErg_Menge();
+  //Menge in gramm
   double erg_Menge;
   QString getBemerkung();
   int getZeitpunkt();

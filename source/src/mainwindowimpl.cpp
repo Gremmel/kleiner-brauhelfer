@@ -13835,14 +13835,19 @@ double MainWindowImpl::slot_MalzGetMenge(QString name)
 }
 
 //Gibt die noch vorhandene Restmenge zurück
-//todo Einheitsgröße berücksichtigen
 double MainWindowImpl::slot_EwzGetMenge(QString name)
 {
   double rest = 0;
+  int Einheit=0;
   for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
     if (tableWidget_WeitereZutaten -> item(i,0) -> text() == name){
       QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
       rest = spinBoxMenge -> value();
+      QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(i,2);
+      Einheit = comboEinheit -> currentIndex();
+      if (Einheit == EWZ_Einheit_Kg){
+        rest = rest * 1000;
+      }
     }
   }
   //Nun überprüfen ob die zutat in den weiteren Zutaten noch einmal vorkommt

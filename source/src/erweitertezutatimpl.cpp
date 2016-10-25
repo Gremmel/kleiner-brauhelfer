@@ -219,23 +219,27 @@ void ErweiterteZutatImpl::setEwListe(QStringList value)
 void ErweiterteZutatImpl::setEwListeFarbe()
 {
   double menge = 0;
+  double rest = 0;
   QString name;
   int ttyp = -1;
+  menge = erg_Menge;
+//  if (einheit == EWZ_Einheit_Kg)
+//    menge = menge + 1000;
   for (int i=0; i < comboBox_Zutat->count(); i++) {
     name = comboBox_Zutat->itemText(i);
     ttyp = sig_getEwzTyp(name);
     if (ttyp == -1)
-      menge = sig_getHopfenMenge(name);
+      rest = sig_getHopfenMenge(name);
     else
-      menge = sig_getEwzMenge(name);
-    //Hintergund einfärben wenn von dieser Zutat nicht mehr da ist
-    if (menge == 0) {
+      rest = sig_getEwzMenge(name);
+    //Hintergrund einfärben wenn von dieser Zutat nicht mehr da ist
+    if (rest == 0) {
       if (StyleDunkel)
         comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL),Qt::TextColorRole);
       else
         comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_HELL),Qt::TextColorRole);
     }
-    else if (menge < ergWidget->spinBox_Wert->value()) {
+    else if (rest < menge) {
       if (StyleDunkel)
         comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_DUNKEL),Qt::TextColorRole);
       else
