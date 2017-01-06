@@ -10291,12 +10291,11 @@ void MainWindowImpl::SetMaxAnzahlSterne()
 void MainWindowImpl::slot_einstellungen()
 {
   EinstellungsdialogImpl edia;
-  edia.exec();
-  if (edia.NeuerDBPfad) {
-    close();
-  }
-  //Farben für Diagramme neu einlesen
-  if (edia.B_OK){
+  if (edia.exec() == QDialog::Accepted) {
+    if (edia.NeuerDBPfad) {
+      close();
+    }
+    //Farben für Diagramme neu einlesen
     SetMaxAnzahlSterne();
     SetDiagrammFarben();
     FuelleBrauuebersicht();
@@ -10326,11 +10325,8 @@ void MainWindowImpl::slot_schuettungProzent()
     rdia.comboBox_S_6 -> addItem(tableWidget_Malz -> item(i,0) -> text() );
   }
 
-  //Dialog öffnen mit ansicht Schüttungsübernahme
-  rdia.exec();
-
   //Schüttung übernehmen
-  if (rdia.b_OK  && !BierWurdeGebraut){
+  if (rdia.exec() == QDialog::Accepted  && !BierWurdeGebraut){
     //Erstmal Zutatenlsite leeren
     for (int i=0; i < list_Malzgaben.count(); i++){
       list_Malzgaben[i] -> close();
@@ -10363,13 +10359,10 @@ void MainWindowImpl::slot_schuettungProzent()
 void MainWindowImpl::slot_berIBU()
 {
   Dialog_Berechne_IBUImpl rdia;
-  //Dialog öffnen mit ansicht Berechnung Bittere
-  rdia.exec();
   //IBU Wert übernehmen
-  if (rdia.b_OK  && !BierWurdeGebraut){
+  if (rdia.exec() == QDialog::Accepted  && !BierWurdeGebraut){
     spinBox_IBU -> setValue(qRound(rdia.doubleSpinBox_IBU -> value()));
   }
-
 }
 
 void MainWindowImpl::on_tableWidget_Schnellgaerverlauf_itemChanged(QTableWidgetItem* )
@@ -11566,13 +11559,10 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen()
 
 void MainWindowImpl::on_pushButton_EingabeHMengeVHopfenseihen_clicked()
 {
-  EingabeHVolumenImpl dia;
-  dia.setHoehe(getSudpfanneHoehe());
-  dia.setDurchmesser(getSudpfanneDurchmesser());
+  EingabeHVolumenImpl dia(getSudpfanneDurchmesser(), getSudpfanneHoehe());
   dia.setLiter(spinBox_WuerzemengeVorHopfenseihen -> value());
   dia.setWindowTitle(trUtf8("Eingabehilfe für Volumen Sudpfanne"));
-  dia.exec();
-  if (!dia.abgebrochen){
+  if (dia.exec() == QDialog::Accepted){
     spinBox_WuerzemengeVorHopfenseihen -> setValue(dia.spinBox_Liter20Grad -> value());
   }
 }
@@ -11596,13 +11586,12 @@ void MainWindowImpl::BerAusruestung()
 
 void MainWindowImpl::on_pushButton_EingabeHMengeNHopfenseihen_clicked()
 {
-  EingabeHVolumenImpl dia;
+  EingabeHVolumenImpl dia(getSudpfanneDurchmesser(), getSudpfanneHoehe());
   dia.setLiter(spinBox_WuerzemengeKochende -> value());
   dia.setWindowTitle(trUtf8("Eingabehilfe für Volumen nach dem Hopfenseihen"));
   dia.setVisibleVonOben(false);
   dia.setVisibleVonUnten(false);
-  dia.exec();
-  if (!dia.abgebrochen){
+  if (dia.exec() == QDialog::Accepted){
     spinBox_WuerzemengeKochende -> setValue(dia.spinBox_Liter20Grad -> value());
   }
 }
@@ -15622,8 +15611,7 @@ void MainWindowImpl::on_pushButton_EingabeHVerdampfungsziffer_clicked()
   bver.setHoehe(spinBox_SudpfanneHoehe->value());
   bver.setMenge1(doubleSpinBox_VolumenPfannevoll->value());
   bver.setMenge2(Berechnungen.BerVolumenWasser(20,99,spinBox_WuerzemengeKochende->value()));
-  bver.exec();
-  if (!bver.abgebrochen) {
+  if (bver.exec() == QDialog::Accepted) {
     doubleSpinBox_Verdampfung->setValue(bver.getVerdampfungsziffer());
   }
 }

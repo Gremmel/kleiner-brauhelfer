@@ -37,7 +37,6 @@ private:
   double Hoehe;
 
 public:
-	bool abgebrochen;
   void setMenge1(double value);
   void setMenge2(double value);
   void setKochdauer(int value);

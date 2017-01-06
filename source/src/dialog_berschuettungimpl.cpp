@@ -4,7 +4,6 @@ Dialog_BerSchuettungImpl::Dialog_BerSchuettungImpl( QWidget * parent, Qt::Window
 	: QDialog(parent, f)
 {
 	setupUi(this);
-	b_OK = false;
 }
 //
 
@@ -60,13 +59,10 @@ void Dialog_BerSchuettungImpl::on_doubleSpinBox_Menge_S_6_valueChanged(double )
 
 void Dialog_BerSchuettungImpl::on_buttonBox_accepted()
 {
-	b_OK = true;
-	hide();
-
+    accept();
 }
 
 void Dialog_BerSchuettungImpl::on_buttonBox_rejected()
 {
-	b_OK = false;
-	hide();
+    reject();
 }

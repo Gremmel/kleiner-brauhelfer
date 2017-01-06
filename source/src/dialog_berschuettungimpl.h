@@ -10,7 +10,6 @@ Q_OBJECT
 private:
 	void BerAlles();
 public:
-	bool b_OK;
 	Dialog_BerSchuettungImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
 private slots:
 	void on_buttonBox_rejected();

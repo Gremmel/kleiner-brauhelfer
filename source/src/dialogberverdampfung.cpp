@@ -7,27 +7,21 @@ DialogBerVerdampfung::DialogBerVerdampfung(QWidget *parent) :
 	ui(new Ui::DialogBerVerdampfung)
 {
 	ui->setupUi(this);
-  abgebrochen = true;
 }
 
 DialogBerVerdampfung::~DialogBerVerdampfung()
 {
 	delete ui;
-	abgebrochen = true;
 }
 
 void DialogBerVerdampfung::on_buttonBox_accepted()
 {
-	abgebrochen = false;
 	accept();
-	hide();
 }
 
 void DialogBerVerdampfung::on_buttonBox_rejected()
 {
-	abgebrochen = true;
-	rejected();
-	hide();
+    reject();
 }
 
 void DialogBerVerdampfung::on_dSpinBox_Menge1_valueChanged(double )
@@ -123,7 +117,6 @@ void DialogBerVerdampfung::setHoehe(double value)
   Hoehe = value;
 }
 
-
 double DialogBerVerdampfung::getDurchmesser() const
 {
   return Durchmesser;
@@ -133,7 +126,6 @@ void DialogBerVerdampfung::setDurchmesser(double value)
 {
   Durchmesser = value;
 }
-
 
 void DialogBerVerdampfung::setMenge1(double value)
 {
@@ -160,5 +152,3 @@ double DialogBerVerdampfung::getVerdampfungsziffer()
 {
   return ui->dSpinBox_Verdampfungsziffer->value();
 }
-
-

@@ -487,15 +487,13 @@ void EinstellungsdialogImpl::on_buttonBox_accepted()
   SchreibeKonfigFarben();
   SchreibeKonfigErweitert();
   SchreibeKonfigAnsicht();
-  B_OK = true;
-  hide();
+  accept();
 }
 
 void EinstellungsdialogImpl::on_buttonBox_rejected()
 {
   NeuerDBPfad = false;
-  B_OK = false;
-  hide();
+  reject();
 }
 
 void EinstellungsdialogImpl::SchreibeKonfigDB()

@@ -21,7 +21,6 @@ private:
   QString DBDirVorher;
   void StyleFelderEinausblenden();
 public:
-  bool B_OK;
   bool NeuerDBPfad;
   EinstellungsdialogImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
 private slots:

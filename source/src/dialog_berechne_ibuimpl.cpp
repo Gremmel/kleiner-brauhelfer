@@ -4,7 +4,6 @@ Dialog_Berechne_IBUImpl::Dialog_Berechne_IBUImpl( QWidget * parent, Qt::WindowFl
 	: QDialog(parent, f)
 {
 	setupUi(this);
-	b_OK = false;
 }
 //
 
@@ -200,14 +199,12 @@ void Dialog_Berechne_IBUImpl::on_checkBox_Pellets_H_6_clicked()
 
 void Dialog_Berechne_IBUImpl::on_buttonBox_accepted()
 {
-	b_OK = true;
-	hide();
+    accept();
 }
 
 void Dialog_Berechne_IBUImpl::on_buttonBox_rejected()
 {
-	b_OK = false;
-	hide();
+    reject();
 }
 
 void Dialog_Berechne_IBUImpl::on_spinBox_Nachisomerisierung_valueChanged(int )
