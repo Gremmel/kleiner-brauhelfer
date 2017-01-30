@@ -83,7 +83,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableWidget" name="tableWidget_Sudauswahl">
+           <widget class="MyTableWidget" name="tableWidget_Sudauswahl">
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
             </property>
@@ -7848,7 +7848,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_44">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Schnellgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Schnellgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -8028,7 +8028,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_46">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Hauptgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Hauptgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -8329,7 +8329,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_48">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Nachgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Nachgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -9970,7 +9970,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_55">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Geraete">
+             <widget class="MyTableWidget" name="tableWidget_Geraete">
               <column>
                <property name="text">
                 <string>Geräteliste</string>
@@ -11384,7 +11384,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Malz">
+             <widget class="MyTableWidget" name="tableWidget_Malz">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11494,7 +11494,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Hopfen">
+             <widget class="MyTableWidget" name="tableWidget_Hopfen">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11609,7 +11609,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Hefe">
+             <widget class="MyTableWidget" name="tableWidget_Hefe">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11744,7 +11744,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_79">
             <item>
-             <widget class="QTableWidget" name="tableWidget_WeitereZutaten">
+             <widget class="MyTableWidget" name="tableWidget_WeitereZutaten">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -12490,6 +12490,11 @@ p, li { white-space: pre-wrap; }
    <extends>QWidget</extends>
    <header>./src/mydiagrammview.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>./src/mytablewidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

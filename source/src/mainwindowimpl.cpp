@@ -12027,6 +12027,7 @@ void MainWindowImpl::on_tableWidget_Sudauswahl_itemSelectionChanged()
     pushButton_merken->setDisabled(true);
     pushButton_vergessen->setDisabled(true);
   }
+  tableWidget_Sudauswahl->setFocus();
 }
 
 void MainWindowImpl::ErstelleSudInfo()
