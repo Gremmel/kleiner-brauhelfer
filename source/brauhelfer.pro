@@ -96,6 +96,6 @@ SOURCES = src/mainwindowimpl.cpp \
  src/dialoginfo.cpp \
  src/anhangwidget.cpp \
  src/dialogdatum.cpp
-TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts
+TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
 TEMPLATE = app
