@@ -19,7 +19,13 @@ public:
     void setTextSizeMultiplier(qreal factor);
 
 public slots:
-    void print(QPrinter * printer) const;
+    void print(QPrinter* printer);
+
+private slots:
+    void slotHandlePagePrinted(bool result);
+
+private:
+    QPrinter* currentPrinter;
 };
 
 #else
@@ -27,6 +33,7 @@ public slots:
 // Before Qt5.5 use WebKit
 
 #include <QWebView>
+#include <QPrinter>
 
 class MyWebView : public QWebView
 {
@@ -34,6 +41,9 @@ class MyWebView : public QWebView
 
 public:
     MyWebView(QWidget* parent = 0);
+
+public slots:
+    void print(QPrinter* printer);
 
 private slots:
     void slot_urlClicked(const QUrl &url);

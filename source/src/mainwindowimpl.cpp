@@ -5325,10 +5325,10 @@ void MainWindowImpl::slot_print()
   }
 
   webView_Zusammenfassung->setTextSizeMultiplier(zoom);
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setColorMode(QPrinter::Color);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setColorMode(QPrinter::Color);
 
-  QPrintDialog *dialog = new QPrintDialog(&printer, this);
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setWindowTitle("Print");
   //if (webView_Zusammenfassung->hasSelection())
   //	dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
@@ -5337,7 +5337,7 @@ void MainWindowImpl::slot_print()
     return;
   }
   //Drucken
-  webView_Zusammenfassung->print(&printer);
+  webView_Zusammenfassung->print(printer);
   webView_Zusammenfassung->setTextSizeMultiplier(1);
 
 }
@@ -7294,18 +7294,18 @@ void MainWindowImpl::slot_makePdf()
   }
 
   //printer einstellungen
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setOutputFormat(QPrinter::PdfFormat);
-  printer.setColorMode(QPrinter::Color);
-  printer.setResolution(1200);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setColorMode(QPrinter::Color);
+  printer->setResolution(1200);
   QFileDialog fd(this);
 
   //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
   QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/" + lineEdit_Sudname->text()+".pdf", trUtf8("Suddateien (*.pdf)"),0);
   if (!fileName.isEmpty()) {
-    printer.setOutputFileName(fileName);
+    printer->setOutputFileName(fileName);
     //pdf speichern
-    webView_Zusammenfassung -> print(&printer);
+    webView_Zusammenfassung -> print(printer);
 
     //Pfad abspeichern
     QFileInfo fi(fileName);
@@ -15628,17 +15628,17 @@ void MainWindowImpl::on_pushButton_SudinfoDrucken_clicked()
     ErstelleSudInfo();
   }
 
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setColorMode(QPrinter::Color);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setColorMode(QPrinter::Color);
 
-  QPrintDialog *dialog = new QPrintDialog(&printer, this);
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setWindowTitle("Print");
   if (dialog->exec() != QDialog::Accepted){
     //webView_Info->setZoomFactor(1);
   }
   else {
     //Drucken
-    webView_Info->print(&printer);
+    webView_Info->print(printer);
     webView_Info->setTextSizeMultiplier(1);
   }
 
@@ -15666,18 +15666,18 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
   }
 
   //printer einstellungen
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setOutputFormat(QPrinter::PdfFormat);
-  printer.setColorMode(QPrinter::Color);
-  printer.setResolution(1200);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setColorMode(QPrinter::Color);
+  printer->setResolution(1200);
   QFileDialog fd(this);
 
   //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
   QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/Rohstoffliste.pdf", trUtf8("Suddateien (*.pdf)"),0);
   if (!fileName.isEmpty()) {
-    printer.setOutputFileName(fileName);
+    printer->setOutputFileName(fileName);
     //pdf speichern
-    webView_Info -> print(&printer);
+    webView_Info -> print(printer);
 
     //Pfad abspeichern
     QFileInfo fi(fileName);
