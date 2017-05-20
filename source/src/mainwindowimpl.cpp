@@ -5218,6 +5218,9 @@ void MainWindowImpl::BerBraudaten()
                                                                        spinBox_SWJungbier -> value(), spinBox_JungbiermengeAbfuellen -> value() , spinBox_Speisemenge -> value(),
                                                                        checkBox_Spunden -> isChecked()));
 
+  // Abgefuellte Biermenge
+  spinBox_BiermengeAbfuellen -> setValue(spinBox_JungbiermengeAbfuellen -> value() + spinBox_SpeisemengeGesammt -> value() / 1000);
+
   //Erforderliche Zuckergabe gesammt
   spinBox_HaushaltszuckerGesammt -> setValue(Berechnungen.GetHaushaltszuckerGesammt());
 
@@ -10480,7 +10483,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p>" + trUtf8("Menge") + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_WuerzemengeAnstellen -> value()) + "</p>";
+  s += "<p class='value'>" + QString::number(spinBox_BiermengeAbfuellen -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
   s += "<p>" + trUtf8("Liter") + "</p>";
@@ -10532,7 +10535,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<td>";
   //Bittere anhand der Ausschlagmenge Berechnen
   double ibu = spinBox_IBU -> value()*highGravityFaktor;
-  ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_WuerzemengeAnstellen -> value() * ibu;
+  ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_BiermengeAbfuellen -> value() * ibu;
   ibu = qRound(ibu*10);
   ibu = ibu/10;
   s += "<p class='value'>" + QString::number(ibu) + "</p>";
