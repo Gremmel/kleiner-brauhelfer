@@ -223,17 +223,17 @@
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="264"/>
         <source>Schnellgärverlauf Linie Stammwürze</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast fermentation sample - OG Line</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="317"/>
         <source>Schnellgärverlauf Linie Alkoholgehalt</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast fermentation sample - ABV line</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="370"/>
         <source>Schnellgärverlauf Linie Temperatur</source>
-        <translation type="unfinished"></translation>
+        <translation>Fast fermentation sample - Temperature line</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="430"/>
@@ -2867,12 +2867,12 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="11407"/>
         <source>Farbe (EBC)</source>
-        <translation type="unfinished"></translation>
+        <translation>Color (EBC)</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="11412"/>
         <source>max. Schüttungsanteil</source>
-        <translation>Color (EBC)</translation>
+        <translation>max. share of fermentables</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11417"/>
@@ -3758,28 +3758,28 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2658"/>
         <source>Keine verbindung zur Datenbank</source>
-        <translation type="unfinished"></translation>
+        <translation>No database connection</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2659"/>
         <source>Die Datenbank-datei: </source>
-        <translation type="unfinished"></translation>
+        <translation>database file:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2659"/>
         <source> existiert nicht mehr!</source>
-        <translation type="unfinished"></translation>
+        <translation>does not exist anylonger!</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2660"/>
         <source>Wenn die Datenbank auf einem USB-Stick oder Netzlaufwerk liegt, stellen sie die verbindung wieder her und speichern sie anschliessend nocheinmal.</source>
-        <translation type="unfinished"></translation>
+        <translation>If the databse is on a USB flash drive or in the network, please connect to it and then save again.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3871"/>
         <location filename="../src/mainwindowimpl.cpp" line="3912"/>
         <source>Spickzettel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cheat Sheet</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3968"/>
@@ -3790,7 +3790,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10454"/>
         <location filename="../src/mainwindowimpl.cpp" line="12163"/>
         <source>Menge</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3974"/>
@@ -3805,7 +3805,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10907"/>
         <location filename="../src/mainwindowimpl.cpp" line="12169"/>
         <source>Liter</source>
-        <translation type="unfinished"></translation>
+        <translation>Litre</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="3980"/>
@@ -3816,7 +3816,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10466"/>
         <location filename="../src/mainwindowimpl.cpp" line="12176"/>
         <source>Stammwürze</source>
-        <translation type="unfinished"></translation>
+        <translation>Original gravity</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="3986"/>
@@ -3829,13 +3829,13 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10472"/>
         <location filename="../src/mainwindowimpl.cpp" line="12182"/>
         <source>°P</source>
-        <translation type="unfinished"></translation>
+        <translation>°P</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3993"/>
         <location filename="../src/mainwindowimpl.cpp" line="10479"/>
         <source>High Gravity Faktor</source>
-        <translation type="unfinished"></translation>
+        <translation>High gravity factor</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3999"/>
@@ -3861,21 +3861,21 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10589"/>
         <location filename="../src/mainwindowimpl.cpp" line="10726"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4006"/>
         <location filename="../src/mainwindowimpl.cpp" line="10504"/>
         <location filename="../src/mainwindowimpl.cpp" line="12189"/>
         <source>Bittere</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitterness</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4012"/>
         <location filename="../src/mainwindowimpl.cpp" line="10515"/>
         <location filename="../src/mainwindowimpl.cpp" line="12195"/>
         <source>IBU</source>
-        <translation type="unfinished"></translation>
+        <translation>IBU</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4018"/>
@@ -3888,14 +3888,14 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10783"/>
         <location filename="../src/mainwindowimpl.cpp" line="11261"/>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4030"/>
         <location filename="../src/mainwindowimpl.cpp" line="10521"/>
         <location filename="../src/mainwindowimpl.cpp" line="12202"/>
         <source>Farbe</source>
-        <translation type="unfinished"></translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4036"/>
@@ -3904,49 +3904,49 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10732"/>
         <location filename="../src/mainwindowimpl.cpp" line="12208"/>
         <source>EBC</source>
-        <translation type="unfinished"></translation>
+        <translation>EBC</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4042"/>
         <location filename="../src/mainwindowimpl.cpp" line="10533"/>
         <location filename="../src/mainwindowimpl.cpp" line="12215"/>
         <source>CO2 Gehalt</source>
-        <translation type="unfinished"></translation>
+        <translation>CO2 Level</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4048"/>
         <location filename="../src/mainwindowimpl.cpp" line="10563"/>
         <location filename="../src/mainwindowimpl.cpp" line="12221"/>
         <source>g/Liter</source>
-        <translation type="unfinished"></translation>
+        <translation>g/Litre</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4054"/>
         <location filename="../src/mainwindowimpl.cpp" line="10595"/>
         <source>Brauanlage</source>
-        <translation type="unfinished"></translation>
+        <translation>Brew equipment</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4107"/>
         <source>Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!</source>
-        <translation type="unfinished"></translation>
+        <translation>Individual amounts couldn&apos;t be calculated because the division does not sum up to 100%!</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4112"/>
         <location filename="../src/mainwindowimpl.cpp" line="10739"/>
         <source>Gesamt</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4149"/>
         <location filename="../src/mainwindowimpl.cpp" line="10769"/>
         <source>VWH </source>
-        <translation type="unfinished"></translation>
+        <translation>Pre-boil hopping</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4170"/>
         <source>Die einzelnen Hopfenhaben konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!</source>
-        <translation type="unfinished"></translation>
+        <translation>Individual hop amounts couldn&apos;t be calculated because the division does not sum up to 100%!</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4188"/>
@@ -3962,19 +3962,19 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="11142"/>
         <location filename="../src/mainwindowimpl.cpp" line="11196"/>
         <source>Gärung</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermentation</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4190"/>
         <location filename="../src/mainwindowimpl.cpp" line="10805"/>
         <source>Anstellen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pitching</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4211"/>
         <location filename="../src/mainwindowimpl.cpp" line="10855"/>
         <source>Hauptguss</source>
-        <translation type="unfinished"></translation>
+        <translation>Strike water</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4222"/>
@@ -3982,7 +3982,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10866"/>
         <location filename="../src/mainwindowimpl.cpp" line="10889"/>
         <source>Milchsäure (80%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lactic acid (80%)</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4228"/>
@@ -3990,25 +3990,25 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10872"/>
         <location filename="../src/mainwindowimpl.cpp" line="10895"/>
         <source>ml</source>
-        <translation type="unfinished"></translation>
+        <translation>ml</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4234"/>
         <location filename="../src/mainwindowimpl.cpp" line="10878"/>
         <source>Nachguss</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparging water</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4275"/>
         <location filename="../src/mainwindowimpl.cpp" line="10919"/>
         <source>Anzahl Einheiten:</source>
-        <translation type="unfinished"></translation>
+        <translation>Units amount:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4290"/>
         <location filename="../src/mainwindowimpl.cpp" line="10934"/>
         <source> zu </source>
-        <translation type="unfinished"></translation>
+        <translation> to </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4339"/>
@@ -4016,7 +4016,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="10982"/>
         <location filename="../src/mainwindowimpl.cpp" line="11036"/>
         <source>Kochbeginn</source>
-        <translation type="unfinished"></translation>
+        <translation>Begin of boil</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4341"/>
@@ -4031,7 +4031,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="11146"/>
         <location filename="../src/mainwindowimpl.cpp" line="11200"/>
         <source>Maischen</source>
-        <translation type="unfinished"></translation>
+        <translation>Mashing</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4431"/>
@@ -4042,12 +4042,12 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="11144"/>
         <location filename="../src/mainwindowimpl.cpp" line="11198"/>
         <source>Kochen</source>
-        <translation type="unfinished"></translation>
+        <translation>Boiling</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4565"/>
         <source>benötigte Gerätschaften</source>
-        <translation type="unfinished"></translation>
+        <translation>Neccessary equipment</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4608"/>
@@ -4058,207 +4058,207 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="4611"/>
         <location filename="../src/mainwindowimpl.cpp" line="4706"/>
         <source> Liter Wasser auf </source>
-        <translation type="unfinished"></translation>
+        <translation>Heat litres of water to</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4612"/>
         <source>°C erhitzen und Malzschüttung zugeben </source>
-        <translation type="unfinished"></translation>
+        <translation>°C and add malts</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4623"/>
         <source>Maische auf </source>
-        <translation type="unfinished"></translation>
+        <translation>Heat mash to</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4624"/>
         <source>°C erhitzen und </source>
-        <translation type="unfinished"></translation>
+        <translation>°C and rest for</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4625"/>
         <source> min Rast einlegen.</source>
-        <translation type="unfinished"></translation>
+        <translation>min.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4652"/>
         <location filename="../src/mainwindowimpl.cpp" line="4841"/>
         <location filename="../src/mainwindowimpl.cpp" line="5019"/>
         <source> Kg</source>
-        <translation type="unfinished"></translation>
+        <translation>Kg</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4654"/>
         <location filename="../src/mainwindowimpl.cpp" line="4843"/>
         <location filename="../src/mainwindowimpl.cpp" line="5021"/>
         <source> g</source>
-        <translation type="unfinished"></translation>
+        <translation>g</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4686"/>
         <location filename="../src/mainwindowimpl.cpp" line="4720"/>
         <source>Läutern</source>
-        <translation type="unfinished"></translation>
+        <translation>Lautering</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4693"/>
         <source>Läutern vorbereiten</source>
-        <translation type="unfinished"></translation>
+        <translation>Prepare lautering</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4696"/>
         <source>Maische in den Läutereimer schöpfen</source>
-        <translation type="unfinished"></translation>
+        <translation>Scoop mash into lauter tun</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4703"/>
         <source>Nachguss vorbereiten: </source>
-        <translation type="unfinished"></translation>
+        <translation>Prepare sparking water: Heat up to:</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4706"/>
         <source>°C erhitzen</source>
-        <translation type="unfinished"></translation>
+        <translation>°C</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4713"/>
         <source>Nach etwa 10 - 20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wait for approximately 10 to 20 minutes before starting to drain off wort. Return the work to the lauter tun until it becomes clear.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4723"/>
         <source>Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!!), bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drain ff wort slowly (Grains shall not run dry). Before grains turn run dry, add sparking water (in steps to about 2-3 litres) over a float.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4733"/>
         <source>Würze kochen</source>
-        <translation type="unfinished"></translation>
+        <translation>Boil wort</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4742"/>
         <source>Vorderwürzehopfung: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pre-boil hopping:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4746"/>
         <location filename="../src/mainwindowimpl.cpp" line="4794"/>
         <source>Nach </source>
-        <translation type="unfinished"></translation>
+        <translation>After</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4747"/>
         <location filename="../src/mainwindowimpl.cpp" line="4794"/>
         <source> min </source>
-        <translation type="unfinished"></translation>
+        <translation> min, add </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4749"/>
         <location filename="../src/mainwindowimpl.cpp" line="4796"/>
         <source>g </source>
-        <translation type="unfinished"></translation>
+        <translation>g </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4750"/>
         <source> Hopfen vorlegen</source>
-        <translation type="unfinished"></translation>
+        <translation> of hops</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4761"/>
         <source>Würze zum Kochen bringen</source>
-        <translation type="unfinished"></translation>
+        <translation>Brong wort to boil</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4784"/>
         <source>. Hopfengabe: </source>
-        <translation type="unfinished"></translation>
+        <translation>. Hop addition:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4797"/>
         <source> Hopfen untermischen</source>
-        <translation type="unfinished"></translation>
+        <translation>intermix hop</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4814"/>
         <source>Noch </source>
-        <translation type="unfinished"></translation>
+        <translation>Continue to boil for</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4814"/>
         <source>min weiter kochen</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4855"/>
         <source>Würzemenge eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter amount of wort</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4858"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge vor dem Hopfenseihen) eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4865"/>
         <source>Whirlpool</source>
-        <translation type="unfinished"></translation>
+        <translation>Whirlpool</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4868"/>
         <source>Kocher abschalten, wenn thermische Bewegung abgeflaut ist einen Whirlpool erzeugen</source>
-        <translation type="unfinished"></translation>
+        <translation>Turn off stove. When thermic motions abate, create a whirlpool</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4877"/>
         <source>ca. 15 min warten bis sich Trubkegel gebildet hat</source>
-        <translation type="unfinished"></translation>
+        <translation>wait appr. 15 min. for trub cone to form</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4886"/>
         <source>Abseihen / Anstellen</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtering / Pitching</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4893"/>
         <source>Hopfenseihen</source>
-        <translation type="unfinished"></translation>
+        <translation>Hop filtering</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4896"/>
         <source>Die Würze durch einen Filter in den Gärbehälter abfüllen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fill wort through a filter into fermentation vessel</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4903"/>
         <location filename="../src/mainwindowimpl.cpp" line="4955"/>
         <source>Würzemenge Eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter amount of wort</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4906"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge nach dem Hopfenseihen) eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4913"/>
         <location filename="../src/mainwindowimpl.cpp" line="4965"/>
         <source>Stammwürze Eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter original gravity</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4916"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze nach dem Hopfenseihen) eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Meassure original gravity and enter value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4923"/>
         <source>Verdünnen</source>
-        <translation type="unfinished"></translation>
+        <translation>Dilute</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4926"/>
         <source>Wenn gewünscht die Würze mit der berechneten Menge Wasser auf Sollstammwürze verdünnen</source>
-        <translation type="unfinished"></translation>
+        <translation>If desired, dilute wort with calculated amount of water to reach original gravity</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4934"/>
@@ -4273,97 +4273,99 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4945"/>
         <source>Abkühlen</source>
-        <translation type="unfinished"></translation>
+        <translation>Chilling</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4948"/>
         <source>Die Würze auf Anstelltemperatur bringen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bring wort to fermentation temperature.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4958"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge beim Anstellen) eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4968"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze beim Anstellen) eintragen</source>
-        <translation type="unfinished"></translation>
+        <translation>Meassure original gravity and enter value into the field &quot;Wort amount at pitching&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4975"/>
         <source>Hefe zugeben</source>
-        <translation type="unfinished"></translation>
+        <translation>Add yeast</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4978"/>
         <source>Die Würze mit dem Rührer gut durchlüften und die Hefe unterrühren.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stir wort well to aerate and stir yeast into wort.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4985"/>
         <source>Sud als gebraut markieren, zurücklehnen und ein Bier genießen (am besten ein Selbstgebrautes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mark beer as breweed, lean back, and enjoy a well temperatured beer (preferably one of your self made) </translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5002"/>
         <source>Bei der Gärung</source>
-        <translation type="unfinished"></translation>
+        <translation>During fermentation</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5178"/>
         <source>Stammwürze beim Anstellen</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount of wort when pitching yeast</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5181"/>
         <source>Stammwürze Soll nach dem Kochen</source>
-        <translation type="unfinished"></translation>
+        <translation>Targeted gravity after boil</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5362"/>
         <source>Sollen die verwendeten Rohstoffe vom Bestand abgezogen werden?
 
 Hinweis: Zutaten die bei der gärung hinzugegeben werden werden jetzt nicht verrechnet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Should the used ingredients be subtracted from your inventory?
+
+Note: Ingredients that will be added during fermentation will not yet be subtracted.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="5366"/>
         <location filename="../src/mainwindowimpl.cpp" line="13685"/>
         <source>Ja</source>
-        <translation type="unfinished"></translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="5367"/>
         <location filename="../src/mainwindowimpl.cpp" line="13686"/>
         <source>Nein</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5721"/>
         <source>Das Bier kann noch nicht als abgefüllt Markiert werden da der Sud Zutaten für die Gärung enthält die noch nicht als zugegeben oder entnommen Markiert wurden.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beer cannot be marked as bottles because recipie contains ingredients to be added during the fermentation process which haven&apos;t been marked as added yet.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="5722"/>
         <source>Bitte die Zutaten entfernen oder den Status noch entsprechend setzten</source>
-        <translation type="unfinished"></translation>
+        <translation>Please add ingredients, delete from the recipie, or change their status accordingly</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="5914"/>
         <location filename="../src/mainwindowimpl.cpp" line="6258"/>
         <source> Kg zu wenig vorhanden</source>
-        <translation type="unfinished"></translation>
+        <translation>Kg not available in sufficent amounts</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5926"/>
         <source>Maximal empfohlener Schüttungsanteil (</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal recommend share of fermentables (</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5926"/>
         <source>%) wurde überschritten</source>
-        <translation type="unfinished"></translation>
+        <translation>%) exceeded</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="5932"/>
@@ -4373,126 +4375,126 @@ Hinweis: Zutaten die bei der gärung hinzugegeben werden werden jetzt nicht verr
         <location filename="../src/mainwindowimpl.cpp" line="6268"/>
         <location filename="../src/mainwindowimpl.cpp" line="6271"/>
         <source>Rest </source>
-        <translation type="unfinished"></translation>
+        <translation>rest </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6026"/>
         <location filename="../src/mainwindowimpl.cpp" line="6176"/>
         <source> g zu wenig Hopfen vorhanden</source>
-        <translation type="unfinished"></translation>
+        <translation>g hops missing</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6079"/>
         <source> Einheiten zu wenig Hefe vorhanden</source>
-        <translation type="unfinished"></translation>
+        <translation> units yeast missing</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6084"/>
         <source>Einheiten</source>
-        <translation type="unfinished"></translation>
+        <translation>Units</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6261"/>
         <source> g zu wenig vorhanden</source>
-        <translation type="unfinished"></translation>
+        <translation> g missing</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6301"/>
         <source>!!!Achtung das Jungbier ist noch nicht weit genug endvergoren, der Restextrakt sollte nicht über </source>
-        <translation type="unfinished"></translation>
+        <translation>!!!Attention! Green beer is not yet enouch fermented. Residual extract should not exceed</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6301"/>
         <source>°P liegen</source>
-        <translation type="unfinished"></translation>
+        <translation>°P</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6328"/>
         <source>Kapazität Maischekessel um </source>
-        <translation type="unfinished"></translation>
+        <translation>Capacity of mash tun by</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6330"/>
         <location filename="../src/mainwindowimpl.cpp" line="6359"/>
         <source> Liter überschritten</source>
-        <translation type="unfinished"></translation>
+        <translation>litres exceeded</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6335"/>
         <location filename="../src/mainwindowimpl.cpp" line="6364"/>
         <source>noch </source>
-        <translation type="unfinished"></translation>
+        <translation>still </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6337"/>
         <location filename="../src/mainwindowimpl.cpp" line="6366"/>
         <source> Liter Platz</source>
-        <translation type="unfinished"></translation>
+        <translation>litres left</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6357"/>
         <source>Kapazität Sudpfanne um </source>
-        <translation type="unfinished"></translation>
+        <translation>Capacity of brew kettle</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6733"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6809"/>
         <source>Speichern?</source>
-        <translation type="unfinished"></translation>
+        <translation>Safe?</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6810"/>
         <source>Die Daten wurden verändert.</source>
-        <translation type="unfinished"></translation>
+        <translation>Data was changed.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6811"/>
         <source>Sollen die Änderungen gespeichert werden?</source>
-        <translation type="unfinished"></translation>
+        <translation>Should the changes be safed?</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6814"/>
         <source>Speichern</source>
-        <translation type="unfinished"></translation>
+        <translation>Safe</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6815"/>
         <source>Verwerfen</source>
-        <translation type="unfinished"></translation>
+        <translation>Discard</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6955"/>
         <location filename="../src/mainwindowimpl.cpp" line="7044"/>
         <location filename="../src/mainwindowimpl.cpp" line="7142"/>
         <source> Kopie</source>
-        <translation type="unfinished"></translation>
+        <translation> Copy</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7300"/>
         <location filename="../src/mainwindowimpl.cpp" line="15550"/>
         <source>PDF Datei Speichern unter</source>
-        <translation type="unfinished"></translation>
+        <translation>Safe PDF file as</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7300"/>
         <location filename="../src/mainwindowimpl.cpp" line="15550"/>
         <source>Suddateien (*.pdf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Beer files (*.pdf)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="7392"/>
         <source>Farbe konnte nicht berechnet werden da eine Auswahl in der Schüttungs-zusammenstellung
 in den Rohstoffdaten nicht mehr vorhanden ist</source>
-        <translation type="unfinished"></translation>
+        <translation>Color couldn&apos;t be calculated because of the ingredients in the recipie is missing in the ingredients&apos; inventory list</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7871"/>
         <source>Der Malzeintrag &lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>The malt entry &lt;b&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7871"/>
@@ -4502,57 +4504,59 @@ in den Rohstoffdaten nicht mehr vorhanden ist</source>
         <source>&lt;/b&gt; ist nicht mehr vorhanden.
 
  ersetzen durch?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;/b&gt; is not available any more.
+
+ substitute with?</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7926"/>
         <source>Der Hopfeneintrag &lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>The hop entry &lt;b&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7995"/>
         <source>Der Hopfeneintrag in den Weiteren Zutaten &lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Hop entry in additional ingredients &lt;b&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8018"/>
         <source>Der Rohstoffeintrag in den Weiteren Zutaten &lt;b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingredient entry in Additional Ingredients &lt;b&gt;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8072"/>
         <source>Löschen?</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete?</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8073"/>
         <source>Soll der Sud &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Should the beer &gt;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8073"/>
         <source>&lt; gelöscht werden?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; be deleted?</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8074"/>
         <source>Achtung: dies kann nicht rückgängig gemacht werden!</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention: This action cannot be undone!</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8076"/>
         <source>Löschen</source>
-        <translation type="unfinished"></translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8077"/>
         <source>Abrechen</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8537"/>
         <source>Schüttung: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fermentables:</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8537"/>
@@ -4563,37 +4567,37 @@ in den Rohstoffdaten nicht mehr vorhanden ist</source>
         <location filename="../src/mainwindowimpl.cpp" line="8547"/>
         <location filename="../src/mainwindowimpl.cpp" line="8548"/>
         <source> €</source>
-        <translation type="unfinished"></translation>
+        <translation> €</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8539"/>
         <source>Hopfen: </source>
-        <translation type="unfinished"></translation>
+        <translation>Hops: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8541"/>
         <source>Weitere Zutaten: </source>
-        <translation type="unfinished"></translation>
+        <translation>Additional Ingredients: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8543"/>
         <source>Hefe: </source>
-        <translation type="unfinished"></translation>
+        <translation>Yeast: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8545"/>
         <source>Nebenkosten: </source>
-        <translation type="unfinished"></translation>
+        <translation>Additional costs: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8547"/>
         <source>Brauanlage: </source>
-        <translation type="unfinished"></translation>
+        <translation>Brew equipment: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8548"/>
         <source>gesamt: </source>
-        <translation type="unfinished"></translation>
+        <translation>total: </translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8556"/>
@@ -4603,46 +4607,51 @@ Kosten konnten nicht berechnet werden da die Angaben im Rezept unvollständig
 oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+Costs couldn&apos;t be calculated because of missing information in the recipy
+or because an ingredient is missing from the inventory
+
+</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8558"/>
         <source>Überprüfe die Malzschüttung
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Check the malt bill</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8560"/>
         <source>Überprüfe die Hopfengaben
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Check the hop bill</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8562"/>
         <source>Überprüfe die Hefegabe</source>
-        <translation type="unfinished"></translation>
+        <translation>Check the yeast bill</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8701"/>
         <source>Verbraucht</source>
-        <translation type="unfinished"></translation>
+        <translation>Spent</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8709"/>
         <location filename="../src/mainwindowimpl.cpp" line="8719"/>
         <source>Woche</source>
-        <translation type="unfinished"></translation>
+        <translation>Week</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8710"/>
         <source>
  noch</source>
-        <translation type="unfinished"></translation>
+        <translation>still</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8710"/>
         <source>Tage</source>
-        <translation type="unfinished"></translation>
+        <translation>Days</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8764"/>
@@ -4650,7 +4659,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8895"/>
         <location filename="../src/mainwindowimpl.cpp" line="8988"/>
         <source>Sudhausausbeute</source>
-        <translation type="unfinished"></translation>
+        <translation>Mash efficiency</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8779"/>
@@ -4658,7 +4667,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8909"/>
         <location filename="../src/mainwindowimpl.cpp" line="9002"/>
         <source>Menge Schüttung</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount of fermentables</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8794"/>
@@ -4666,7 +4675,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8916"/>
         <location filename="../src/mainwindowimpl.cpp" line="9009"/>
         <source>Kosten/Liter</source>
-        <translation type="unfinished"></translation>
+        <translation>Costs per litre</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8809"/>
@@ -4674,7 +4683,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8923"/>
         <location filename="../src/mainwindowimpl.cpp" line="9016"/>
         <source>Alkohol</source>
-        <translation type="unfinished"></translation>
+        <translation>ABV</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8831"/>
@@ -4682,7 +4691,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8930"/>
         <location filename="../src/mainwindowimpl.cpp" line="9023"/>
         <source>Scheinbarer EVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparent attenuation</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8846"/>
@@ -4690,13 +4699,13 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="8949"/>
         <location filename="../src/mainwindowimpl.cpp" line="9042"/>
         <source>Effektive Ausbeute</source>
-        <translation type="unfinished"></translation>
+        <translation>Brewhouse efficiency</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8892"/>
         <location filename="../src/mainwindowimpl.cpp" line="8985"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8912"/>
@@ -4704,7 +4713,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="9005"/>
         <location filename="../src/mainwindowimpl.cpp" line="9006"/>
         <source>kg</source>
-        <translation type="unfinished"></translation>
+        <translation>Kg</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8919"/>
@@ -4712,36 +4721,36 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="9012"/>
         <location filename="../src/mainwindowimpl.cpp" line="9013"/>
         <source>€</source>
-        <translation type="unfinished"></translation>
+        <translation>€</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8926"/>
         <source>%vol</source>
-        <translation type="unfinished"></translation>
+        <translation>%vol</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9019"/>
         <source>vol%</source>
-        <translation type="unfinished"></translation>
+        <translation>vol%</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="9125"/>
         <location filename="../src/mainwindowimpl.cpp" line="9132"/>
         <source>Restextrakt °P</source>
-        <translation type="unfinished"></translation>
+        <translation>Residual extract °P</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9127"/>
         <location filename="../src/mainwindowimpl.cpp" line="9134"/>
         <source>Alkoholgehalt vol%</source>
-        <translation type="unfinished"></translation>
+        <translation>ABV vol%</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="9129"/>
         <location filename="../src/mainwindowimpl.cpp" line="9136"/>
         <location filename="../src/mainwindowimpl.cpp" line="9141"/>
         <source>Temperatur °C</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperature °C</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="9130"/>
@@ -4750,127 +4759,127 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="11242"/>
         <location filename="../src/mainwindowimpl.cpp" line="11255"/>
         <source>°C</source>
-        <translation type="unfinished"></translation>
+        <translation>°C</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9139"/>
         <source>CO2 Gehalt g/L</source>
-        <translation type="unfinished"></translation>
+        <translation>CO2 Level g/L</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9140"/>
         <source>g/L</source>
-        <translation type="unfinished"></translation>
+        <translation>g/L</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10397"/>
         <source>Zusammenfassung</source>
-        <translation type="unfinished"></translation>
+        <translation>Summary</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10492"/>
         <source>Alkoholgehalt</source>
-        <translation type="unfinished"></translation>
+        <translation>ABV</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10498"/>
         <source>%Vol</source>
-        <translation type="unfinished"></translation>
+        <translation>%Vol</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="10570"/>
         <source>scheinbarer Endvergärungsgrad</source>
-        <translation type="unfinished"></translation>
+        <translation>Apparent attenuation</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10583"/>
         <source>effektive Sudhausausbeute</source>
-        <translation type="unfinished"></translation>
+        <translation>Brewhouse efficiency</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10621"/>
         <source>Braudatum</source>
-        <translation type="unfinished"></translation>
+        <translation>Brew date</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="10630"/>
         <source>Abfülldatum</source>
-        <translation type="unfinished"></translation>
+        <translation>Date of bottling</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10639"/>
         <source>Angepeiltes Reifezeitende</source>
-        <translation type="unfinished"></translation>
+        <translation>Targeted end date of priming</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10677"/>
         <source>Beste Bewertung</source>
-        <translation type="unfinished"></translation>
+        <translation>Best evaluation</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10817"/>
         <source>Entnommen am </source>
-        <translation type="unfinished"></translation>
+        <translation>Extracted on</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="10818"/>
         <source>Tage: </source>
-        <translation type="unfinished"></translation>
+        <translation>Days: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11231"/>
         <source>Maischen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mashing: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11236"/>
         <source>Einmaischen bei</source>
-        <translation type="unfinished"></translation>
+        <translation>Initial mashing at</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11249"/>
         <source> bei </source>
-        <translation type="unfinished"></translation>
+        <translation> at </translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="11293"/>
         <source>Anhänge:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attachments:</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="11544"/>
         <source>Eingabehilfe für Volumen Sudpfanne</source>
-        <translation type="unfinished"></translation>
+        <translation>Input assistance for brew kettle voume</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="11572"/>
         <source>Eingabehilfe für Volumen nach dem Hopfenseihen</source>
-        <translation type="unfinished"></translation>
+        <translation>Input assistence for volume after hop filtering</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11743"/>
         <source>Export Sud</source>
-        <translation type="unfinished"></translation>
+        <translation>Export Beer</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11743"/>
         <source>KBH Sud Export Dateien (*.xsud)</source>
-        <translation type="unfinished"></translation>
+        <translation>KBH Beer export files (*.xsud)</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11743"/>
         <source>BeerXML (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>BeerXML (*.xml)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="11768"/>
         <source>Suddatei öffnen</source>
-        <translation type="unfinished"></translation>
+        <translation>Open Beer file</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11768"/>
         <source>Sud Export Dateien (*.xsud)</source>
-        <translation type="unfinished"></translation>
+        <translation>Beer export files (*.xsud)</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11778"/>
@@ -4880,7 +4889,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="11809"/>
         <location filename="../src/mainwindowimpl.cpp" line="11818"/>
         <source>Dateiname: </source>
-        <translation type="unfinished"></translation>
+        <translation>File name: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11785"/>
@@ -4888,59 +4897,59 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="11810"/>
         <location filename="../src/mainwindowimpl.cpp" line="11819"/>
         <source>Message: </source>
-        <translation type="unfinished"></translation>
+        <translation>Message: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11786"/>
         <location filename="../src/mainwindowimpl.cpp" line="11811"/>
         <source>Zeile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Line: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11787"/>
         <location filename="../src/mainwindowimpl.cpp" line="11812"/>
         <source>Spalte: </source>
-        <translation type="unfinished"></translation>
+        <translation>Column: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11829"/>
         <source>Sud wurde Importiert</source>
-        <translation type="unfinished"></translation>
+        <translation>Beer file was imported</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="12274"/>
         <source>Bei dem Sud &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>At Beer &gt;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12274"/>
         <source>&lt; wurde ein Rohstoff verändert und die Berechneten Werte stimmen nun nicht mehr. Zum neu Berechnen bitte den Sud Laden und wieder Speichern.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; an ingredient was changed and calculated values are now incorrect. For re-calculation please load the Beer again and safe it again.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12659"/>
         <source>benötigte Rohstoffe</source>
-        <translation type="unfinished"></translation>
+        <translation>necessary ingredients</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12666"/>
         <source>benötigt (kg)</source>
-        <translation type="unfinished"></translation>
+        <translation>necessary (kg)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12666"/>
         <source>übrig (kg)</source>
-        <translation type="unfinished"></translation>
+        <translation>left (kg)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12711"/>
         <source>benötigt (g)</source>
-        <translation type="unfinished"></translation>
+        <translation>necessary (kg)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12711"/>
         <source>übrig (g)</source>
-        <translation type="unfinished"></translation>
+        <translation>left (kg)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12754"/>
@@ -4950,7 +4959,7 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="12975"/>
         <location filename="../src/mainwindowimpl.cpp" line="13034"/>
         <source>benötigt</source>
-        <translation type="unfinished"></translation>
+        <translation>necessary</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12754"/>
@@ -4960,28 +4969,28 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="12975"/>
         <location filename="../src/mainwindowimpl.cpp" line="13034"/>
         <source>übrig</source>
-        <translation type="unfinished"></translation>
+        <translation>left</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="13106"/>
         <source>Anhänge</source>
-        <translation type="unfinished"></translation>
+        <translation>Attachments</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="13682"/>
         <source>Soll die Zutat</source>
-        <translation type="unfinished"></translation>
+        <translation>Should the ingredient</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="13682"/>
         <source>vom bestand abgezogen werden?</source>
-        <translation type="unfinished"></translation>
+        <translation>be subtracted from the inventory?</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="14046"/>
         <location filename="../src/mainwindowimpl.cpp" line="14572"/>
         <source>Woche </source>
-        <translation type="unfinished"></translation>
+        <translation>Week </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="15046"/>
@@ -4989,17 +4998,17 @@ oder die Auswahl in den Rohstoffdaten nicht mehr vorhanden ist
         <location filename="../src/mainwindowimpl.cpp" line="15188"/>
         <location filename="../src/mainwindowimpl.cpp" line="15242"/>
         <source>Bitte eine Bezeichnung angeben</source>
-        <translation type="unfinished"></translation>
+        <translation>Please enter a description</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="15590"/>
         <source>Neue Brauanlage</source>
-        <translation type="unfinished"></translation>
+        <translation>New brew equipment</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="15816"/>
         <source>alle vergessen</source>
-        <translation type="unfinished"></translation>
+        <translation>Discard all</translation>
     </message>
 </context>
 <context>
