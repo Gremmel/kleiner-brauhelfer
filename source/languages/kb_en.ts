@@ -3663,7 +3663,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2516"/>
         <source>&amp;Einstellungen</source>
-        <translation type="unfinished">&amp;Einstellungen</translation>
+        <translation>&amp;Settings</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2518"/>
@@ -4263,12 +4263,12 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4934"/>
         <source>Speise abfüllen</source>
-        <translation type="unfinished">Speise abfüllen</translation>
+        <translation type="unfinished">Bottle unfermented wort</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4937"/>
         <source> Liter Speise abfüllen</source>
-        <translation type="unfinished"> Liter Speise abfüllen</translation>
+        <translation type="unfinished">Litres of unfermented wort to bottle</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4945"/>
