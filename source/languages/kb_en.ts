@@ -263,7 +263,7 @@
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="703"/>
         <source>Brauübersicht</source>
-        <translation>Brew overview</translation>
+        <translation>Beer overview</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="726"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1190"/>
         <source>Zoomfaktor Spickzettel beim Speichern / Drucken</source>
-        <translation>Zoom factor for saving/printing cheat sheet</translation>
+        <translation>Zoom factor for saving/printing summary</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1227"/>
@@ -428,17 +428,17 @@
     <message utf8="true">
         <location filename="../ui/einstellungen.ui" line="1682"/>
         <source>Grünschlauchzeitpunkt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grünschlauchzeitpunkt</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1689"/>
         <source>Spundungsdruck</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spundungsdruck</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1720"/>
         <source>Speisemenge gesamt</source>
-        <translation type="unfinished"></translation>
+        <translation>Total amount of unfermented wort</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1727"/>
@@ -453,7 +453,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1765"/>
         <source>Speisemenge pro 0,5 Liter Flasche</source>
-        <translation></translation>
+        <translation>Unfermented wort per 0,5 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1772"/>
@@ -468,7 +468,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1810"/>
         <source>Speisemenge pro 0,33 Liter Flasche</source>
-        <translation type="unfinished"></translation>
+        <translation>Unfermented wort per 0,33 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1817"/>
@@ -543,12 +543,12 @@
     <message>
         <location filename="../ui/dialogdatum.ui" line="14"/>
         <source>Entnahmezeitpunkt</source>
-        <translation type="unfinished"></translation>
+        <translation>Date of extraction</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/dialogdatum.ui" line="27"/>
         <source>Zugabedatum übernehmen</source>
-        <translation type="unfinished"></translation>
+        <translation>Date of adding</translation>
     </message>
 </context>
 <context>
@@ -569,7 +569,7 @@
     <message utf8="true">
         <location filename="../ui/ber_schuettung.ui" line="20"/>
         <source>Prozentuale Aufteilung der Schüttung berechnen</source>
-        <translation>Calculate percental distribution of grain bill</translation>
+        <translation>Calculate percental distribution of grist</translation>
     </message>
     <message>
         <location filename="../ui/ber_schuettung.ui" line="44"/>
@@ -794,7 +794,7 @@ Path couldn&apos;t be changed</translation>
     <message utf8="true">
         <location filename="../src/errormessage.cpp" line="86"/>
         <source>Sud Dateien der Version 1 können leider nicht Importiert werden. Bitte Speichern Sie die Suddaten vorher noch mit der Vorgängerversion (0.9.4.2) vom kleinen-brauhelfer ab.</source>
-        <translation>Brew files of version 1 cannot be imported. Please save brew files with previous version of kleiner-brauhelfer (0.9.4.2).</translation>
+        <translation>Beer files of version 1 cannot be imported. Please save brew files with previous version of kleiner-brauhelfer (0.9.4.2).</translation>
     </message>
     <message>
         <location filename="../src/errormessage.cpp" line="89"/>
@@ -894,7 +894,7 @@ Path couldn&apos;t be changed</translation>
     <message utf8="true">
         <location filename="../src/errormessage.cpp" line="146"/>
         <source>Die Datei ist keine gültige Sud Datei</source>
-        <translation>File is not a valid brew file</translation>
+        <translation>File is not a valid beer file</translation>
     </message>
     <message utf8="true">
         <location filename="../src/errormessage.cpp" line="149"/>
@@ -1164,12 +1164,12 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="34"/>
         <source>Sudauswahl</source>
-        <translation>Choose Brew</translation>
+        <translation>Choose Beer</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="44"/>
         <source>a&amp;lle anzeigen</source>
-        <translation type="unfinished">show all</translation>
+        <translation>show all</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="51"/>
@@ -1194,7 +1194,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="79"/>
         <source>&amp;Merkliste</source>
-        <translation>&amp;Watch list</translation>
+        <translation>&amp;watch list</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="98"/>
@@ -1228,7 +1228,7 @@ Please correct path to databse in settings.</translation>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="153"/>
         <source>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</source>
-        <translation>Consider watch list entries as included when checking availabability of ingredients</translation>
+        <translation>Include beers on watch list when checking availabability of ingredients</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="165"/>
@@ -1238,38 +1238,38 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="172"/>
         <source>vergessen</source>
-        <translation>forget</translation>
+        <translation>Discard</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="190"/>
         <source>neuen Sud anlegen</source>
-        <translation>Create new brew entry</translation>
+        <translation>Create new beer entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="197"/>
         <source>Sud kopieren</source>
-        <translation>Copy brew entry</translation>
+        <translation>Copy beer entry</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="204"/>
         <source>Sud löschen</source>
-        <translation>Delete brew entry</translation>
+        <translation>Delete beer entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="215"/>
         <source>Sud importieren</source>
-        <translation>Import brew entry</translation>
+        <translation>Import beer entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="222"/>
         <source>Sud exportieren</source>
-        <translation>Export brew entry</translation>
+        <translation>Export beer entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="229"/>
         <location filename="../ui/mainwindow.ui" line="9912"/>
         <source>Sud laden</source>
-        <translation>Load brew entry</translation>
+        <translation>Load beer entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="261"/>
@@ -1297,7 +1297,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="348"/>
         <source>Sudname</source>
-        <translation>Name of Brew</translation>
+        <translation>Name of Beer</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="372"/>
@@ -1438,7 +1438,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="958"/>
         <source>Einmaischen bei</source>
-        <translation>Initial mash temperature</translation>
+        <translation>Dough-In Temperature</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="1006"/>
@@ -1489,7 +1489,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/mainwindow.ui" line="1315"/>
         <location filename="../ui/mainwindow.ui" line="11797"/>
         <source>Bemerkung</source>
-        <translation>Remark</translation>
+        <translation>Remarks</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="1376"/>
@@ -1505,7 +1505,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/mainwindow.ui" line="1515"/>
         <location filename="../ui/mainwindow.ui" line="11386"/>
         <source>Malz</source>
-        <translation>Malt</translation>
+        <translation>Grist</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="1590"/>
@@ -1554,12 +1554,12 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="1767"/>
         <source>Faktor für Hauptguss</source>
-        <translation>Water to grain ration</translation>
+        <translation>Liquor to grist ratio</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="1793"/>
         <source>Schüttungsmenge * Faktor</source>
-        <translation>Amount of grain * water-grain ratio</translation>
+        <translation>grist * water-grain ratio</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1815"/>
@@ -1601,7 +1601,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="2316"/>
         <source>Volumen Gesamtmaische ca.</source>
-        <translation>Total Volume of mash ca.</translation>
+        <translation>Total volume of mash ca.</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="2407"/>
@@ -1611,17 +1611,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="2559"/>
         <source>ber. Malz</source>
-        <translation>calc. malt</translation>
+        <translation>Malts, calculated</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="2565"/>
         <source>Mengen Malzgaben</source>
-        <translation>Amounts of malt</translation>
+        <translation>Amounts of malts</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="2599"/>
         <source>Gesamtschüttung</source>
-        <translation>Total grain amount</translation>
+        <translation>Total amount of grist</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="2650"/>
@@ -1631,7 +1631,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="2680"/>
         <source>ber. Hopfen</source>
-        <translation>calc. hops</translation>
+        <translation>Hops, calculated</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="2686"/>
@@ -1641,7 +1641,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="2730"/>
         <source>ber. WZ</source>
-        <translation>calc. add. Ingred.</translation>
+        <translation>Add. ingredients, calculated</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="2736"/>
@@ -1764,7 +1764,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="3583"/>
         <source>nach dem Hopfenseihen</source>
-        <translation>atfer hop filtering</translation>
+        <translation>After hop filtering</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="3609"/>
@@ -1799,7 +1799,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="3904"/>
         <source>vor der Hefezugabe</source>
-        <translation>before pitching yeast</translation>
+        <translation>Before pitching yeast</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="3930"/>
@@ -1809,7 +1809,7 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="3999"/>
         <source>abgefüllte Speisemenge</source>
-        <translation type="unfinished"></translation>
+        <translation>abgefüllte Speisemenge</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4073"/>
@@ -1824,7 +1824,7 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4238"/>
         <source>beim Abfüllen</source>
-        <translation>at Bottling</translation>
+        <translation>At bottling</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4249"/>
@@ -1839,7 +1839,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="4392"/>
         <source>Keine Zucker oder Speisegabe (Spunden)</source>
-        <translation type="unfinished">No sugar or fermentables</translation>
+        <translation>No additionas of sugar or unfermented wort (&quot;Spunden&quot;)</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4445"/>
@@ -1854,7 +1854,7 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4630"/>
         <source>Restextrakt Jungbier beim Abfüllen</source>
-        <translation>Residual extract fo green beer at bottling</translation>
+        <translation>Residual extract of green beer at bottling</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4729"/>
@@ -1880,9 +1880,9 @@ Es sind keine änderungen an den Rezept und Braudaten mehr möglich.
 Die Malz/Hopfen Mengen werden zur Dokumentation abgespeichert und nicht mehr berechnet.
 Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig gemacht werden.</source>
         <translation>Mark beer as brewed.
-Recipe and brew data can no longer be changed after this action.
+Recipe and beer data can no longer be changed after this action.
 Amounts of malt and hop ingredients will be saved.
-This action can only be undone by editing the brew file with an editor.</translation>
+This action can only be undone by editing the beer file with an editor.</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="4907"/>
@@ -1908,7 +1908,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="4959"/>
         <source>Ausbeute von diesem Sud bei der Durchschnittsanzeige (Ausrüstung) nicht mit einbeziehen </source>
-        <translation>Exclude brewhouse efficiency from average calculations (in brew eqipment)</translation>
+        <translation>Exclude brewhouse efficiency from average calculations (in brewing eqipment)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="5021"/>
@@ -1945,7 +1945,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="5344"/>
         <source>Stammwürze Soll vor dem Kochen</source>
-        <translation>Gravity before boil</translation>
+        <translation>Gravity before boiling</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="5463"/>
@@ -2020,12 +2020,12 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="6675"/>
         <source>Grünschlauchzeitpunkt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grünschlauchzeitpunkt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="6791"/>
         <source>Spundungsdruck</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spundungsdruck</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="6872"/>
@@ -2035,7 +2035,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="6913"/>
         <source>Speisemenge gesamt</source>
-        <translation type="unfinished"></translation>
+        <translation>Total amount of unfermented wort</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7008"/>
@@ -2050,7 +2050,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7201"/>
         <source>Speisemenge pro 0,5 Liter Flasche</source>
-        <translation type="unfinished"></translation>
+        <translation>Unfermented wort per 0,5 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7296"/>
@@ -2065,7 +2065,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7489"/>
         <source>Speisemenge pro 0,33 Liter Flasche</source>
-        <translation type="unfinished"></translation>
+        <translation>Unfermented wort per 0,33 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7584"/>
@@ -2131,7 +2131,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="7997"/>
         <source>Gärverlauf Hauptgärung</source>
-        <translation>Progress of Fermentation process</translation>
+        <translation>Progress of fermentation process</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8175"/>
@@ -2152,7 +2152,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="8298"/>
         <source>Gärverlauf Nachgärung</source>
-        <translation>Fermentation progress at Priming</translation>
+        <translation>Fermentation progress at priming</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8355"/>
@@ -2163,7 +2163,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="8455"/>
         <source>Spickzettel</source>
-        <translation>Cheat Sheet</translation>
+        <translation>Summary</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8498"/>
@@ -2213,7 +2213,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="8729"/>
         <source>gräulich, fahl</source>
-        <translation type="unfinished"></translation>
+        <translation>greyish, wan</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8755"/>
@@ -2444,7 +2444,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="9252"/>
         <source>rezent, fein perlend</source>
-        <translation>gentle</translation>
+        <translation>mildly sparkling</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="9259"/>
@@ -2614,7 +2614,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="9576"/>
         <source>Brau-Übersicht</source>
-        <translation>Brew overview</translation>
+        <translation>Beer overview</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="9616"/>
@@ -2739,7 +2739,7 @@ This action can only be undone by editing the brew file with an editor.</transla
         <location filename="../ui/mainwindow.ui" line="11707"/>
         <location filename="../ui/mainwindow.ui" line="11822"/>
         <source>neuer Eintrag</source>
-        <translation>add equipment</translation>
+        <translation>add entry</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="9996"/>
@@ -2748,7 +2748,7 @@ This action can only be undone by editing the brew file with an editor.</transla
         <location filename="../ui/mainwindow.ui" line="11728"/>
         <location filename="../ui/mainwindow.ui" line="11836"/>
         <source>lösche Eintrag</source>
-        <translation>remove equipment</translation>
+        <translation>remove entry</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10009"/>
@@ -2763,7 +2763,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="10059"/>
         <source>Ausbeute für die Schüttungsberechnung</source>
-        <translation>Efficiency (used for recipe calculations)</translation>
+        <translation>Efficiency for grist calculations</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="10091"/>
@@ -2778,7 +2778,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="10153"/>
         <source>Sude</source>
-        <translation>Brews</translation>
+        <translation>Beers</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10182"/>
@@ -2799,7 +2799,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="10329"/>
         <source>Korrektur der Nachgussmenge</source>
-        <translation>Correction of amount of sparging water</translation>
+        <translation>Correction of sparging water amount</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10406"/>
@@ -2872,7 +2872,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="11412"/>
         <source>max. Schüttungsanteil</source>
-        <translation>max. share of fermentables</translation>
+        <translation>max. share (on fermentables)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11417"/>
@@ -2926,7 +2926,7 @@ This action can only be undone by editing the brew file with an editor.</transla
         <location filename="../ui/mainwindow.ui" line="11579"/>
         <location filename="../ui/mainwindow.ui" line="11714"/>
         <source>neuer Eintrag aus Vorlage</source>
-        <translation>New entry from template</translation>
+        <translation>new entry from template</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11471"/>
@@ -3085,7 +3085,7 @@ This action can only be undone by editing the brew file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="12402"/>
         <source>Anleitung</source>
-        <translation>Instruction</translation>
+        <translation>Instructions</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/mainwindow.ui" line="12412"/>
@@ -3663,7 +3663,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2516"/>
         <source>&amp;Einstellungen</source>
-        <translation>&amp;Settings</translation>
+        <translation type="unfinished">&amp;Einstellungen</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2518"/>
@@ -3673,7 +3673,7 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2522"/>
         <source>&amp;Rezeptübernahme Schüttung</source>
-        <translation>&amp;Recipe transfer fermentables</translation>
+        <translation type="unfinished">&amp;Recipe transfer fermentables</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2524"/>
@@ -3683,7 +3683,7 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2528"/>
         <source>&amp;Rezeptübernahme Bittere</source>
-        <translation>&amp;Recipe transfer bittering</translation>
+        <translation type="unfinished">&amp;Recipe transfer bittering</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2530"/>
@@ -3693,7 +3693,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2534"/>
         <source>&amp;Entsperre Eingabefelder</source>
-        <translation>&amp;Unlock input field</translation>
+        <translation type="unfinished">&amp;Unlock input field</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2535"/>
@@ -3708,52 +3708,52 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2540"/>
         <source>Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück</source>
-        <translation>Resets &quot;beer brewed&quot; from open brew file in the database</translation>
+        <translation>Resets &quot;beer brewed&quot; from open beer file in the database</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2544"/>
         <source>&quot;Bier &amp;abgefüllt&quot; zurücksetzten</source>
-        <translation type="unfinished"></translation>
+        <translation>reset &quot;beer &amp;bottled&quot;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2545"/>
         <source>Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück</source>
-        <translation type="unfinished"></translation>
+        <translation>Resets the setting &quot;Beer Bottled&quot; for current beer in the database</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2549"/>
         <source>&quot;Bier &amp;verbraucht&quot; zurücksetzten</source>
-        <translation type="unfinished"></translation>
+        <translation>Reset &quot;Beer consumed&quot;</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2550"/>
         <source>Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück</source>
-        <translation type="unfinished"></translation>
+        <translation>Resets the setting &quot;Beer Consumed&quot; of current beer in the databse</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2554"/>
         <source>&amp;Reset Zugabestatus WZutaten</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reset status of adding ingredients</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="2555"/>
         <source>setzt den Zugabestatus der Weiteren Zutaten zurück</source>
-        <translation type="unfinished"></translation>
+        <translation>Resets status of additional ingredients</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2561"/>
         <source>&amp;Sprache</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Language</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2610"/>
         <source>&amp;geladener Sud</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;loaded beer</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2625"/>
         <source>&amp;Extras</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Extras</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="2658"/>
@@ -3779,7 +3779,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="3871"/>
         <location filename="../src/mainwindowimpl.cpp" line="3912"/>
         <source>Spickzettel</source>
-        <translation>Cheat Sheet</translation>
+        <translation>Summary</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="3968"/>
@@ -3924,12 +3924,12 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="4054"/>
         <location filename="../src/mainwindowimpl.cpp" line="10595"/>
         <source>Brauanlage</source>
-        <translation>Brew equipment</translation>
+        <translation>Brewing equipment</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4107"/>
         <source>Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!</source>
-        <translation>Individual amounts couldn&apos;t be calculated because the division does not sum up to 100%!</translation>
+        <translation>Individual amounts of grist couldn&apos;t be calculated because the portions don&apos;t sum up to 100%!</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4112"/>
@@ -4002,7 +4002,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl.cpp" line="4275"/>
         <location filename="../src/mainwindowimpl.cpp" line="10919"/>
         <source>Anzahl Einheiten:</source>
-        <translation>Units amount:</translation>
+        <translation>Amount of units:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4290"/>
@@ -4052,7 +4052,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4608"/>
         <source>Einmaischen: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dough in:</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="4611"/>
@@ -4263,12 +4263,12 @@ SQL Befehl:
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4934"/>
         <source>Speise abfüllen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Speise abfüllen</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4937"/>
         <source> Liter Speise abfüllen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> Liter Speise abfüllen</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="4945"/>
@@ -4360,7 +4360,7 @@ Note: Ingredients that will be added during fermentation will not yet be subtrac
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5926"/>
         <source>Maximal empfohlener Schüttungsanteil (</source>
-        <translation>Maximal recommend share of fermentables (</translation>
+        <translation>Maximal recommend share for fermentables (</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="5926"/>
@@ -4444,7 +4444,7 @@ Note: Ingredients that will be added during fermentation will not yet be subtrac
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6809"/>
         <source>Speichern?</source>
-        <translation>Safe?</translation>
+        <translation>Save?</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6810"/>
@@ -4454,12 +4454,12 @@ Note: Ingredients that will be added during fermentation will not yet be subtrac
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="6811"/>
         <source>Sollen die Änderungen gespeichert werden?</source>
-        <translation>Should the changes be safed?</translation>
+        <translation>Should the changes be saved?</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6814"/>
         <source>Speichern</source>
-        <translation>Safe</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="6815"/>
@@ -4477,7 +4477,7 @@ Note: Ingredients that will be added during fermentation will not yet be subtrac
         <location filename="../src/mainwindowimpl.cpp" line="7300"/>
         <location filename="../src/mainwindowimpl.cpp" line="15550"/>
         <source>PDF Datei Speichern unter</source>
-        <translation>Safe PDF file as</translation>
+        <translation>Save PDF file as</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="7300"/>
@@ -4592,7 +4592,7 @@ in den Rohstoffdaten nicht mehr vorhanden ist</source>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8547"/>
         <source>Brauanlage: </source>
-        <translation>Brew equipment: </translation>
+        <translation>Brewing equipment: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="8548"/>
@@ -4618,7 +4618,7 @@ or because an ingredient is missing from the inventory
         <location filename="../src/mainwindowimpl.cpp" line="8558"/>
         <source>Überprüfe die Malzschüttung
 </source>
-        <translation>Check the malt bill</translation>
+        <translation>Check the grain bill</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="8560"/>
@@ -4834,7 +4834,7 @@ or because an ingredient is missing from the inventory
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11236"/>
         <source>Einmaischen bei</source>
-        <translation>Initial mashing at</translation>
+        <translation>Dough-in at</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="11249"/>
@@ -4924,12 +4924,12 @@ or because an ingredient is missing from the inventory
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12274"/>
         <source>&lt; wurde ein Rohstoff verändert und die Berechneten Werte stimmen nun nicht mehr. Zum neu Berechnen bitte den Sud Laden und wieder Speichern.</source>
-        <translation>&lt; an ingredient was changed and calculated values are now incorrect. For re-calculation please load the Beer again and safe it again.</translation>
+        <translation>&lt; an ingredient was changed and calculated values are now incorrect. For re-calculation please load the Beer again and save it again.</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12659"/>
         <source>benötigte Rohstoffe</source>
-        <translation>necessary ingredients</translation>
+        <translation>Necessary ingredients</translation>
     </message>
     <message utf8="true">
         <location filename="../src/mainwindowimpl.cpp" line="12666"/>
@@ -5169,8 +5169,8 @@ SQL Befehl:
         <location filename="../src/qexport.cpp" line="3582"/>
         <source>In dieser Sud Datei ist der Eintrag Abgefüllte Biermenge noch nicht vorhanden
 Das die Menge in der Brauübersicht richtig dargestellt wird muss dieser Sud einmal geladen und weider gespeichert werden, dann wird dieser Wert neu berechnet.</source>
-        <translation>Missing entry for bottled beer amount in brew file
-For correct displaying of the amount in the brew overview, the brew needs to loaded and saved again. The value will be re-calculated.</translation>
+        <translation>Missing entry for bottled beer amount in beer file
+For correct displaying of the amount in the beer overview, the brew needs to loaded and saved again. The value will be re-calculated.</translation>
     </message>
     <message>
         <location filename="../src/qexport.cpp" line="4457"/>
@@ -5356,7 +5356,8 @@ Should this entry be replaced by the following?
         <location filename="../src/mainwindowimpl.cpp" line="11531"/>
         <source>Rückgabe:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgabe:
+</translation>
     </message>
     <message>
         <location filename="../src/connection.h" line="31"/>
@@ -5509,7 +5510,9 @@ Should this entry be replaced by the following?
         <source>
 SQL Befehl:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+SQL Befehl:
+</translation>
     </message>
     <message>
         <location filename="../src/connection.h" line="81"/>
@@ -5518,54 +5521,56 @@ SQL Befehl:
         <location filename="../src/getrohstoffvorlage.cpp" line="32"/>
         <source>Betroffener Kopierpfad:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Betroffener Kopierpfad:
+</translation>
     </message>
     <message>
         <location filename="../src/connection.h" line="433"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Einmaischen&apos; WHERE ID=1</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Einmaischen&apos; WHERE ID=1</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="441"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Gummirast (35°-40°)&apos; WHERE ID=2</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Gummirast (35°-40°)&apos; WHERE ID=2</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="449"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Weizenrast (45°)&apos; WHERE ID=3</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Weizenrast (45°)&apos; WHERE ID=3</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="457"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Eiweißrast (57°)&apos; WHERE ID=4</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Eiweißrast (57°)&apos; WHERE ID=4</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="465"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Maltoserast (60°-65°)&apos; WHERE ID=5</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Maltoserast (60°-65°)&apos; WHERE ID=5</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="473"/>
         <source>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Kombirast (66°-69°)&apos; WHERE ID=6</source>
-        <translation type="unfinished"></translation>
+        <translation>UPDATE &apos;Rastauswahl&apos; SET &apos;Text&apos; =&apos;Kombirast (66°-69°)&apos; WHERE ID=6</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="481"/>
         <source>INSERT INTO &apos;Rastauswahl&apos;  (&apos;Text&apos;) VALUES (&apos;Verzuckerung (70°-75°)&apos;)</source>
-        <translation type="unfinished"></translation>
+        <translation>INSERT INTO &apos;Rastauswahl&apos;  (&apos;Text&apos;) VALUES (&apos;Verzuckerung (70°-75°)&apos;)</translation>
     </message>
     <message utf8="true">
         <location filename="../src/connection.h" line="489"/>
         <source>INSERT INTO &apos;Rastauswahl&apos;  (&apos;Text&apos;) VALUES (&apos;Abmaischen (78°)&apos;)</source>
-        <translation type="unfinished"></translation>
+        <translation>INSERT INTO &apos;Rastauswahl&apos;  (&apos;Text&apos;) VALUES (&apos;Abmaischen (78°)&apos;)</translation>
     </message>
     <message>
         <location filename="../src/connection.h" line="1417"/>
         <location filename="../src/connection.h" line="1470"/>
         <source>Betroffener Pfad:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Betroffener Pfad:
+</translation>
     </message>
     <message>
         <location filename="../src/connection.h" line="1461"/>
@@ -5702,7 +5707,8 @@ SQL Befehl:
         <location filename="../src/getrohstoffvorlage.cpp" line="44"/>
         <source>Betroffene Datei:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Betroffene Datei:
+</translation>
     </message>
 </context>
 <context>
@@ -5773,7 +5779,7 @@ SQL Befehl:
     <message>
         <location filename="../ui/rohstoffaustauschen.ui" line="59"/>
         <source>Rohstoff im Sud mit Auswahl austauschen</source>
-        <translation>Change ingredient in brew from selection</translation>
+        <translation>Change beer ingredient from selection</translation>
     </message>
     <message utf8="true">
         <location filename="../ui/rohstoffaustauschen.ui" line="66"/>
