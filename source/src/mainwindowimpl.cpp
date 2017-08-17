@@ -25,7 +25,6 @@
 #include <qmath.h>
 #include "errormessage.h"
 #include "definitionen.h"
-#include "infotexts.h"
 #include "einstellungsdialogimpl.h"
 #include "getrohstoffvorlage.h"
 #include "rohstoffaustauschen.h"
@@ -287,6 +286,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
 
   createActions();
   createMenus();
+  retranslateMenus();
 
   LeseKonfig();
 
@@ -400,6 +400,7 @@ void MainWindowImpl::changeEvent(QEvent* event)
       //qDebug() << "LanguageChange";
       Gestartet = false;
       retranslateUi(this);
+      retranslateMenus();
       Gestartet = true;
     }
     // this event is send, if the system, language changes
@@ -2495,9 +2496,8 @@ void MainWindowImpl::LeseKonfig()
 void MainWindowImpl::createActions()
 {
 
-  saveAct = new QAction(trUtf8("&Speichern"), this);
+  saveAct = new QAction("", this);
   saveAct->setShortcuts(QKeySequence::Save);
-  saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
   connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
   for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -2507,52 +2507,44 @@ void MainWindowImpl::createActions()
   }
 
   //Aktionen in Menü Extras
-  einstellungen = new QAction(trUtf8("&Einstellungen"), this);
+  einstellungen = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  einstellungen -> setStatusTip(trUtf8("Öffnet einen Dialog mit Einstellungen"));
   connect(einstellungen, SIGNAL(triggered()), this, SLOT(slot_einstellungen()));
 
   //Assistent zum übernehmen von einem rezept
-  schuettungProzent = new QAction(trUtf8("&Rezeptübernahme Schüttung"), this);
+  schuettungProzent = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  schuettungProzent -> setStatusTip(trUtf8("Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
   connect(schuettungProzent, SIGNAL(triggered()), this, SLOT(slot_schuettungProzent()));
 
   //Assistent zum berechnen de IBU Wertes eines Rezeptes
-  berIBU = new QAction(trUtf8("&Rezeptübernahme Bittere"), this);
+  berIBU = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  berIBU -> setStatusTip(trUtf8("Öffnet einen Dialog zur Berechnung der Bittere"));
   connect(berIBU, SIGNAL(triggered()), this, SLOT(slot_berIBU()));
 
   //Hebt die Eingabesperre von einen als gebraut/Abgefüllt markierten Sud auf
-  EntsperreEingabefelder = new QAction(trUtf8("&Entsperre Eingabefelder"), this);
-  EntsperreEingabefelder -> setStatusTip(trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
+  EntsperreEingabefelder = new QAction("", this);
   connect(EntsperreEingabefelder, SIGNAL(triggered()), this, SLOT(slot_EntsperreEingabefelder()));
 
   //Setzt das Bit BierGebraut zurück
-  ResetBierGebraut = new QAction(trUtf8("\"Bier &gebraut\" zurücksetzten"), this);
-  ResetBierGebraut -> setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
+  ResetBierGebraut = new QAction("", this);
   connect(ResetBierGebraut, SIGNAL(triggered()), this, SLOT(slot_ResetBierWurdeGebraut()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetAbgefuellt = new QAction(trUtf8("\"Bier &abgefüllt\" zurücksetzten"), this);
-  ResetAbgefuellt -> setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
+  ResetAbgefuellt = new QAction("", this);
   connect(ResetAbgefuellt, SIGNAL(triggered()), this, SLOT(slot_ResetAbgefuellt()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetVerbraucht = new QAction(trUtf8("\"Bier &verbraucht\" zurücksetzten"), this);
-  ResetVerbraucht -> setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
+  ResetVerbraucht = new QAction("", this);
   connect(ResetVerbraucht, SIGNAL(triggered()), this, SLOT(slot_ResetBierVerbraucht()));
 
   //Setzt den Zugabestatus der Weiteren Zutaten zurück
-  ResetZugabestatus = new QAction(trUtf8("&Reset Zugabestatus WZutaten"), this);
-  ResetZugabestatus -> setStatusTip(trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+  ResetZugabestatus = new QAction("", this);
   connect(ResetZugabestatus, SIGNAL(triggered()), this, SLOT(slot_ResetWZZugabestatus()));
 }
 
 void MainWindowImpl::ErstelleSprachMenu()
 {
-  sprachMenu = menuBar()->addMenu(trUtf8("&Sprache"));
+  sprachMenu = menuBar()->addMenu("");
   QActionGroup* langGroup = new QActionGroup(sprachMenu);
   langGroup->setExclusive(true);
 
@@ -2601,7 +2593,7 @@ void MainWindowImpl::ErstelleSprachMenu()
 void MainWindowImpl::createMenus()
 {
   //Menü geladener Sud
-  geladenerSudMenu = menuBar()->addMenu(trUtf8("&geladener Sud"));
+  geladenerSudMenu = menuBar()->addMenu("");
   geladenerSudMenu->addAction(saveAct);
   separatorAct = geladenerSudMenu->addSeparator();
   geladenerSudMenu->addAction(schuettungProzent);
@@ -2616,11 +2608,38 @@ void MainWindowImpl::createMenus()
     geladenerSudMenu->addAction(recentFileActs[i]);
 
   //Menü Extras
-  extrasMenu = menuBar()->addMenu(trUtf8("&Extras"));
+  extrasMenu = menuBar()->addMenu("");
   extrasMenu->addAction(einstellungen);
 
   //Sprachauswahl Menü
   ErstelleSprachMenu();
+}
+
+void MainWindowImpl::retranslateMenus()
+{
+    geladenerSudMenu->setTitle(trUtf8("&geladener Sud"));
+    saveAct->setText(trUtf8("&Speichern"));
+    saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
+    schuettungProzent->setText(trUtf8("&Rezeptübernahme Schüttung"));
+    schuettungProzent->setStatusTip(trUtf8("Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
+    berIBU->setText(trUtf8("&Rezeptübernahme Bittere"));
+    berIBU -> setStatusTip(trUtf8("Öffnet einen Dialog zur Berechnung der Bittere"));
+    EntsperreEingabefelder->setText(trUtf8("&Entsperre Eingabefelder"));
+    EntsperreEingabefelder->setStatusTip(trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
+    ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzten"));
+    ResetBierGebraut->setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
+    ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzten"));
+    ResetAbgefuellt->setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
+    ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzten"));
+    ResetVerbraucht->setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
+    ResetZugabestatus->setText(trUtf8("&Reset Zugabestatus WZutaten"));
+    ResetZugabestatus->setStatusTip(trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+
+    extrasMenu->setTitle(trUtf8("&Extras"));
+    einstellungen->setText(trUtf8("&Einstellungen"));
+    einstellungen->setStatusTip(trUtf8("Öffnet einen Dialog mit Einstellungen"));
+
+    sprachMenu->setTitle(trUtf8("&Sprache"));
 }
 
 void MainWindowImpl::save()
@@ -16096,22 +16115,53 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellClicked(int row, int colu
 
 void MainWindowImpl::on_pushButton_CO2_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_CO2_TITLE, INFO_CO2_TEXT);
+  DialogInfo::Info(this, trUtf8("CO2 Gehalt"), trUtf8("<b>Typischer CO2 Gehalt in g/Liter:</b></br><table>\
+                                                      <tr><td>Lager, Pilsner </td><td>4,00 - 5,50</td></tr>\
+                                                      <tr><td>Weizenbier </td><td>6,50 - 9,00</td></tr>\
+                                                      <tr><td>Britische Ales </td><td>3,00 - 4,00</td></tr>\
+                                                      <tr><td>Porter Stout </td><td>3,40 - 4,50</td></tr>\
+                                                      <tr><td>Belgische Ales </td><td>3,80 - 4,80</td></tr>\
+                                                      <tr><td>Lambic </td><td>4,80 - 5,50</td></tr>\
+                                                      <tr><td>Frucht-Lambic </td><td>6,00 - 9,00</td></tr>\
+                                                      </table>"));
 }
 
 void MainWindowImpl::on_pushButton_IBU_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_IBU_TITLE, INFO_IBU_TEXT);
+  DialogInfo::Info(this, trUtf8("Bittere"), trUtf8("<b>Typische Bitterwerte in IBU:</b></br><table>\
+                                                   <tr><td>Weissbier </td><td>10-15</td></tr>\
+                                                   <tr><td>Märzen </td><td>18 - 28</td></tr>\
+                                                   <tr><td>Export </td><td>23 - 29</td></tr>\
+                                                   <tr><td>Kölsch </td><td>20 - 34</td></tr>\
+                                                   <tr><td>Stout </td><td>25 - 40</td></tr>\
+                                                   <tr><td>Altbier </td><td>28 - 40</td></tr>\
+                                                   <tr><td>Pils </td><td>20 - 50</td></tr>\
+                                                   <tr><td>IPA </td><td>&gt; 60</td></tr>\
+                                                   </table></br>\
+                                                   Neutrales Geschmacksempfinden bei IBU = 2*°P Stammwürze"));
 }
 
 void MainWindowImpl::on_pushButton_SW_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_SW_TITLE, INFO_SW_TEXT);
+  DialogInfo::Info(this, trUtf8("Stammwürze"), trUtf8("<b>Typische Stammwürze in °P:</b></br><table>\
+                                                      <tr><td>Bockbier </td><td>16–17,9</td></tr>\
+                                                      <tr><td>Doppelbock </td><td>&gt; 18</td></tr>\
+                                                      <tr><td>Exportbier </td><td>12–13,5</td></tr>\
+                                                      <tr><td>Altbier </td><td>11,9</td></tr>\
+                                                      <tr><td>Kölsch </td><td>11,3</td></tr>\
+                                                      <tr><td>Pilsener </td><td>11,3–12,3</td></tr>\
+                                                      <tr><td>Weizenbier </td><td>11–13</td></tr>\
+                                                      <tr><td>Helles </td><td>11–13</td></tr>\
+                                                      <tr><td>Berliner Weisse </td><td>7–8</td></tr>\
+                                                      </table>"));
 }
 
 void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_HIGHGRAVITY_TITLE, INFO_HIGHGRAVITY_TEXT);
+  DialogInfo::Info(this, trUtf8("High Gravity Faktor"), trUtf8("Mit High Gravity kann die Ausschlagmenge \
+                                                               erhöht werden (wenn die Sudpfanne an ihre Grenze kommt) indem stärker \
+                                                               eingebraut wird und dann vor der Hefezugabe wieder auf die gewünschte \
+                                                               Stammwürze verdünnt wird."));
 }
 
 void MainWindowImpl::on_pushButton_NeuerAnhang_clicked()

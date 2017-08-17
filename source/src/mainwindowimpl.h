@@ -235,6 +235,7 @@ private:
   void FuelleRezeptComboAuswahlen();
   void createMenus();
   void createActions();
+  void retranslateMenus();
   void LeseKonfig();
   void SchreibeKonfig();
   void LeseRohstoffe();
