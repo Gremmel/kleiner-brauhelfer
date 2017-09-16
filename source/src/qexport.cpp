@@ -3444,6 +3444,7 @@ void QExport::convertJSON(QString json, QString xsud)
 
 
     QTextStream outputStream(&xsud_file);
+    outputStream.setCodec("UTF-8");
     outputStream << xml.toUtf8();
     json_file.close();
     xsud_file.close();
