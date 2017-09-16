@@ -13,6 +13,15 @@
 #include <QDateTime>
 #include <QPushButton>
 #include <QCoreApplication>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
+#include <QDateTime>
+#include <QDate>
+#include <QString>
+#include <QSet>
+#include <QVector>
+#include <QPair>
 //
 QExport::QExport(  )
   : QObject()
@@ -3103,6 +3112,341 @@ int QExport::IfXmlOK(QString cDateiname)
     return 3;
   }
   return 0;
+}
+
+int findMax(QJsonObject jsn, QString s, int MAX=20)
+{
+    int i = 1;
+    for (; i < MAX; ++i) {
+        QString search = QString(s).replace("%%",QString("%1").arg(i));
+        if (!jsn.contains(search)) {
+            break;
+        }
+    }
+    return i;
+}
+
+void QExport::convertJSON(QString json, QString xsud)
+{
+    QFile json_file(json);
+    QFile xsud_file(xsud);
+
+    json_file.open(QIODevice::ReadOnly);
+    xsud_file.open(QIODevice::WriteOnly);
+
+    QByteArray rawData = json_file.readAll();
+
+    QJsonDocument jdoc(QJsonDocument::fromJson(rawData));
+
+    QJsonObject root = jdoc.object();
+
+    QString xml;
+
+    xml += "<?xml version=\"1.0\"?><xsud>";
+    QString date = QDate::currentDate().toString(Qt::ISODate);
+
+    QString today = QDateTime::currentDateTime().toString(Qt::ISODate);
+
+    xml += "<Global><!--Erstellungsdatum der Exportdatei--><Datum Einheit=\"Qt::ISODate\">";
+    xml += date;
+    xml += "</Datum></Global>";
+
+    xml += "<Version><!--Versionsstand der Datenbank--><Datenbank>22</Datenbank><!--Versionsstand der Exportdatei--><xsud>9</xsud><!--Versionsstand kleiner-brauhelfer--><kleiner-brauhelfer>1.4.3.2</kleiner-brauhelfer></Version>";
+
+    xml += "<Sud>";
+
+    xml += "<!--Bezeichner fuer den Sud--><Sudname>";
+    xml += root["Name"].toString();
+    xml += "</Sudname>";
+
+    xml += "<!--Zeitstempel fuer Erstellungsdatum in der Datenbank--><Erstellt Einheit=\"Qt::ISODate\">";
+    xml += date;
+    xml += "</Erstellt>";
+
+    xml += "<!--Zeitstempel wann Sud das letzte-mal in der Datenbank gespeichert wurde--><Gespeichert Einheit=\"Qt::ISODate\">";
+    xml += date;
+    xml += "</Gespeichert>";
+
+    xml += "<!--Soll Wuerze-Anstellmenge--><Menge Einheit=\"Liter\">";
+    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += "</Menge>";
+
+    xml += "<!--Soll Stammwuerze--><SW Einheit=\"Grad Plato\">";
+    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += "</SW>";
+
+    xml += "<!--Soll CO2 Gehalt--><CO2 Einheit=\"Gramm/Liter\">";
+    xml += root["Karbonisierung"].toString();
+    xml += "</CO2>";
+
+    xml += "<!--Soll Bittere--><IBU Einheit=\"IBU\">";
+    xml += QString::number(root["Bittere"].toInt());
+    xml += "</IBU>";
+
+    xml += "<!--Angepeilte Reifezeit--><Reifezeit Einheit=\"Wochen\">";
+    xml += "4";
+    xml += "</Reifezeit>";
+
+    xml += "<!--Allgemeiner Kommentar--><Kommentar><![CDATA[";
+    xml += root["Anmerkung_Autor"].toString();
+    xml += "]]></Kommentar>";
+
+    xml += "<!--Datum an dem der Sud gebraut wurde--><Braudatum Einheit=\"Qt::ISODate\">";
+    xml += today;
+    xml += "</Braudatum>";
+
+    xml += "<!--Flag ob Sud gebraut wurde--><BierWurdeGebraut Einheit=\"Bool\">0</BierWurdeGebraut><!--Flag ob Sud abgefuellt wurde--><BierWurdeAbgefuellt Einheit=\"Bool\">0</BierWurdeAbgefuellt><!--Flag ob Sud verbraucht wurde--><BierWurdeVerbraucht Einheit=\"Bool\">0</BierWurdeVerbraucht>";
+
+    xml += "<!--Kochdauer nach der ersten Hopfengabe--><KochdauerNachBitterhopfung Einheit=\"Minuten\">";
+    xml += root["Kochzeit_Wuerze"].toString();
+    xml += "</KochdauerNachBitterhopfung>";
+
+    xml += "<!--Faktor zum Berechnen der Hauptgussmenge (Schuettung * Faktor = Hauptgussmenge)--><FaktorHauptguss Einheit=\"Faktor\">0.8</FaktorHauptguss>";
+
+    xml += "<!--Name der Ausgewaehlten Hefe--><AuswahlHefe Einheit=\"Text\">";
+    xml += root["Hefe"].toString();
+    xml += "</AuswahlHefe>";
+
+    xml += "<!--Anzahl verwendeter Hefe Einheiten--><HefeAnzahlEinheiten Einheit=\"Integer\">1</HefeAnzahlEinheiten>";
+
+    xml += "<!--Wuerzemenge vor dem Hopfenseihen--><WuerzemengeVorHopfenseihen Einheit=\"Liter\">";
+    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += "</WuerzemengeVorHopfenseihen>";
+
+    xml += "<!--Stammwuerze vor dem Hopfenseihen--><SWVorHopfenseihen Einheit=\"Grad Plato\">";
+    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += "</SWVorHopfenseihen>";
+
+    xml += "<!--Wuerzemenge nach dem Hopfenseihen--><WuerzemengeKochende Einheit=\"Liter\">";
+    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += "</WuerzemengeKochende>";
+
+    xml += "<!--Stammwuerze nach dem Hopfenseihen--><SWKochende Einheit=\"Grad Plato\">";
+    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += "</SWKochende>";
+
+    xml += "<!--Abgefuellte Speisemenge--><Speisemenge Einheit=\"Liter\">0</Speisemenge>";
+
+    xml += "<!--Datum der Hefezugabe--><Anstelldatum Einheit=\"Qt::ISODate\">";
+    xml += today;
+    xml += "</Anstelldatum>";
+
+    xml += "<WuerzemengeAnstellen Einheit=\"Liter\">";
+    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += "</WuerzemengeAnstellen>";
+
+    xml += "<!--Stammwuerze bei der Hefezugabe--><SWAnstellen Einheit=\"Grad Plato\">";
+    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += "</SWAnstellen>";
+
+    xml += "<!--Abfuelldatum--><Abfuelldatum Einheit=\"Qt::ISODate\">";
+    xml += today;
+    xml += "</Abfuelldatum>";
+
+    xml += "<!--Restextrakt der Schnellgaerprobe--><SWSchnellgaerprobe Einheit=\"Grad Plato\">1</SWSchnellgaerprobe>";
+
+    xml += "<!--Restextrakt des Jungbieres aus der Hauptgaerung--><SWJungbier Einheit=\"Grad Plato\">3</SWJungbier>";
+
+    xml += "<!--Temperatur Jungbier beim Abfuellen--><TemperaturJungbier Einheit=\"Grad Celsius\">12</TemperaturJungbier>";
+
+    xml += "<!--Temperatur Einmaischen--><EinmaischenTemp Einheit=\"Grad Celsius\">";
+    xml += QString::number(root["Infusion_Einmaischtemperatur"].toDouble());
+    xml += "</EinmaischenTemp>";
+
+    xml += "<!--Kosten fuer Wasser / Strom / Gas etc.--><KostenWasserStrom Einheit=\"Euro\">0</KostenWasserStrom>";
+    xml += "<!--Dauer die der Hopfen noch nach dem Kochen Bittere abgeben kann--><Nachisomerisierungszeit Einheit=\"Minuten\">0</Nachisomerisierungszeit>";
+    xml += "<!--Aktives Tab im kleinen-brauhelfer nach dem Laden--><AktivTab Einheit=\"Integer\">1</AktivTab>";
+    xml += "<!--Aktives Tab im Gaerverlauf nach dem Laden--><AktivTab_Gaerverlauf Einheit=\"Integer\">1</AktivTab_Gaerverlauf>";
+
+    xml += "<!--Gewuenschte Restalkalitaet--><RestalkalitaetSoll Einheit=\"Grad Deutsche Haerte\">0</RestalkalitaetSoll>";
+
+    xml += "<!--Flag ob eine Schnellgaeprobe gemacht wurde--><SchnellgaerprobeAktiv Einheit=\"Bool\">0</SchnellgaerprobeAktiv>";
+
+    xml += "<!--Bierfarbe--><erg_Farbe Einheit=\"EBC\">1</erg_Farbe>";
+
+    xml += "<!--Jungbiermenge beim Abfuellen--><JungbiermengeAbfuellen Einheit=\"Liter\">";
+    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += "</JungbiermengeAbfuellen>";
+
+    xml += "<!--Beste Bewertung (Anzahl Sterne)--><Bewertung Einheit=\"Integer\">0</Bewertung><!--Reifewoche der Besten Bewertung--><BewertungText Einheit=\"Text\"></BewertungText><!--Maximale Anzahl Sterne bei diesem Sud--><BewertungMaxSterne Einheit=\"Integer\">5</BewertungMaxSterne><!--Art der Hopfenberechnung--><berechnungsArtHopfen Einheit=\"Integer\">0</berechnungsArtHopfen><!--High Gravity Faktor--><highGravityFaktor Einheit=\"Integer\">0</highGravityFaktor>";
+
+    // Rasten
+    xml += "<Rasten>";
+
+    int max_rast = findMax(root, "Infusion_Rasttemperatur%%");
+
+    for (int i = 1; i < max_rast; ++i) {
+        xml += QString("<Rast_%1>").arg(i);
+        xml += "<!--1 = Rast ist Aktiv--><RastAktiv Einheit=\"Bool\">1</RastAktiv>";
+
+        xml += QString("<!--Berschreibung der Rast--><RastName Einheit=\"Text\">%1. Rast</RastName>").arg(i);
+        xml += QString("<!--Temperatur der Rast--><RastTemp Einheit=\"Grad Celsius\">%1</RastTemp>").arg(root[QString("Infusion_Rasttemperatur%1").arg(i)].toString());
+        xml += QString("<!--Rastdauer--><RastDauer Einheit=\"Minuten\">%1</RastDauer>").arg(root[QString("Infusion_Rastzeit%1").arg(i)].toString());
+
+        xml += QString("</Rast_%1>").arg(i);
+    }
+
+    xml += "</Rasten>";
+    xml += "<Schuettung>";
+
+    // save for later use
+    QSet< QPair<QString,QString> > malze;
+
+    int max_schuettung = findMax(root,"Malz%%");
+
+    float gesamt_schuettung = 0.0f;
+
+    for (int i = 1; i < max_schuettung; ++i) {
+        float kg = 0.0f;
+        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
+            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
+        } else {
+             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
+        }
+        gesamt_schuettung += kg;
+    }
+
+    for (int i = 1; i < max_schuettung; ++i) {
+        xml += QString("<Anteil_%1>").arg(i);
+
+        xml += QString("<!--Malzbeschreibung (Name)--><Name Einheit=\"Text\">%1</Name>").arg(root[QString("Malz%1").arg(i)].toString());
+        float kg = 0.0f;
+        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
+            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
+        } else {
+             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
+        }
+        xml += QString("<!--Prozentualer Anteil der Schuettung--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg((kg/gesamt_schuettung)*100.0f);
+        xml += QString("<!--Berechneter Gewichtsanteil der Schuettung--><erg_Menge Einheit=\"Kg\">%1</erg_Menge>").arg(kg);
+        xml += "<!--Malz - Farbwert--><Farbe Einheit=\"EBC\">1</Farbe>";
+
+        QPair<QString, QString> malz(root[QString("Malz%1").arg(i)].toString(),QString::number(kg));
+        malze += malz;
+
+        xml += QString("</Anteil_%1>").arg(i);
+    }
+
+    xml += "</Schuettung>";
+    xml += "<Hopfengaben>";
+
+    // save for later use
+    QSet< QPair<QString,QString> > hopfen;
+
+    int max_hopfen = findMax(root, "Hopfen_%%_Sorte");
+
+    float gesamt_hopfen = 0.0f;
+    for (int i = 1; i < max_hopfen; ++i) {
+        gesamt_hopfen += root[QString("Hopfen_%1_Menge").arg(i)].toString().toFloat();
+    }
+
+    for (int i = 1; i < max_hopfen; ++i) {
+        xml += QString("<Anteil_%1>").arg(i);
+        xml += "<!--1 = Hopfengabe Aktiv--><Aktiv Einheit=\"Bool\">1</Aktiv>";
+        xml += QString("<!--Berschreibung Hopfen (Name)--><Name Einheit=\"Text\">%1</Name>").arg(root[QString("Hopfen_%1_Sorte").arg(i)].toString());
+        xml += QString("<!--Zeit nach Hopfengabe 1--><Zeit Einheit=\"Minuten\">%1</Zeit>").arg(root[QString("Hopfen_%1_Kochzeit").arg(i)].toString());
+        xml += QString("<!--Prozentualer Gewichts-anteil der Hopfengabe--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg((root[QString("Hopfen_%1_Menge").arg(i)].toString().toFloat()/gesamt_hopfen)*100.0f);
+        xml += QString("<!--Berechnete Gewichtsmenge--><erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(root[QString("Hopfen_%1_Menge").arg(i)].toString());
+        xml += QString("<!--Beschreibungstext--><erg_Hopfentext Einheit=\"Text\">%1 %2 %% Alpha</erg_Hopfentext>").arg(root[QString("Hopfen_%1_Sorte").arg(i)].toString()).arg(root[QString("Hopfen_%1_alpha").arg(i)].toString());
+        xml += QString("<!--Alphaprozent gehalt des Hopfens--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(root[QString("Hopfen_%1_alpha").arg(i)].toString());
+        xml += "<!--Hopfenart 1 = Pellets--><Pellets Einheit=\"Bool\">1</Pellets>";
+        xml += "<!--Wen diese Gabe eine Vorderwuerzehopfung ist dann = 1--><Vorderwuerze Einheit=\"Bool\">0</Vorderwuerze>";
+
+        QPair<QString, QString> hop(root[QString("Hopfen_%1_Sorte").arg(i)].toString(),root[QString("Hopfen_%1_alpha").arg(i)].toString());
+        hopfen += hop;
+
+        xml += QString("</Anteil_%1>").arg(i);
+    }
+
+    xml += "</Hopfengaben>";
+    xml += "<WeitereZutatenGaben/><Schnellgaerverlauf/><Hauptgaerverlauf/><Nachgaerverlauf/><Bewertungen/>";
+    xml += "</Sud>";
+
+    xml += "<!--Hier sind die Rohstoffe aufgelistet die Im Sud verwendet wurden--><Rohstoffe>";
+
+    xml += "<Malz>";
+
+    QList< QPair<QString,QString> > malze_list = malze.toList();
+
+    for (int i = 0; i < malze_list.size(); ++i) {
+        QString m_name = malze_list[i].first;
+        QString m_gew = malze_list[i].second;
+
+        xml += QString("<Eintrag_%1>").arg(i+1);
+
+        xml += QString("<!--Malzbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(m_name);
+        xml += "<!--Malzfarbwert--><Farbe Einheit=\"EBU\">1</Farbe>";
+        xml += "<!--Maximal empfohlener Schuettungsanteil--><MaxProzent Einheit=\"Prozent\">100</MaxProzent>";
+
+        xml += QString("<!--Vorhandene Rohstoffmenge--><Menge Einheit=\"Kg\">%1</Menge>").arg(m_gew);
+        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Kg\">0</Preis>";
+        xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
+        xml += "<!--Anwendung--><Anwendung Einheit=\"Text\"><![CDATA[]]></Anwendung>";
+        xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
+        xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
+
+        xml += QString("</Eintrag_%1>").arg(i+1);
+    }
+
+    xml += "</Malz>";
+    xml += "<Hopfen>";
+
+    QList< QPair<QString,QString> > hopfen_list = hopfen.toList();
+
+    for (int i = 0; i < hopfen_list.size(); ++i) {
+        QString h_sorte = hopfen_list[i].first;
+        QString h_alpha = hopfen_list[i].second;
+
+        xml += QString("<Eintrag_%1>").arg(i+1);
+
+        xml += QString("<!--Hopfenbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(h_sorte);
+        xml += QString("<!--Alphaprozentgehalt--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(h_alpha);
+        xml += "<!--Vorhandene Menge--><Menge Einheit=\"Gramm\">0</Menge>";
+        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Kg\">0</Preis>";
+        xml += "<!--Hopfenart 1=Pellets--><Pellets Einheit=\"Text\">1</Pellets>";
+        xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
+        xml += "<!--Eigenschaften--><Eigenschaften Einheit=\"Text\"><![CDATA[]]></Eigenschaften>";
+        xml += "<!--Typ 1=Aroma 2=Bitter 3=Universal--><Typ Einheit=\"Integer\">3</Typ>";
+        xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
+        xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
+
+        xml += QString("</Eintrag_%1>").arg(i+1);
+    }
+
+    xml += "</Hopfen>";
+
+    xml += "<Hefe>";
+
+    QString hefe = root["Hefe"].toString();
+
+    xml += QString("<Eintrag_1><!--Hefebeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(hefe);
+    xml += "<!--Vorhandene Menge--><Menge Einheit=\"Einheiten\">0</Menge>";
+    xml += "<!--Benoetigte Einheiten--><Einheiten Einheit=\"Einheiten\"></Einheiten>";
+    xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Einheit\">0</Preis>";
+    xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
+    xml += "<!--TypOGUG 1=Obergaerig 2=Untergaerig--><TypOGUG Einheit=\"Integer\">1</TypOGUG>";
+    xml += "<!--TypTrFl 1=Trocken 2=Fluessig--><TypTrFl Einheit=\"Integer\">1</TypTrFl>";
+    xml += "<!--Verpackungsmenge--><Verpackungsmenge Einheit=\"Text\"></Verpackungsmenge>";
+    xml += "<!--Wuerzemenge--><Wuerzemenge Einheit=\"Integer\">0</Wuerzemenge>";
+    xml += "<!--Eigenschaften--><Eigenschaften Einheit=\"Text\"><![CDATA[]]></Eigenschaften>";
+    xml += "<!--SED 1=Hoch 2=Mittel 3=Niedrig--><SED Einheit=\"Integer\">1</SED>";
+    xml += "<!--EVG Endvergaerungsgrad--><EVG Einheit=\"Text\"></EVG>";
+    xml += "<!--Temperatur--><Temperatur Einheit=\"Text\"></Temperatur>";
+    xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
+    xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
+
+    xml += "</Eintrag_1>";
+
+    xml += "</Hefe>";
+    // todo add here more code
+    xml += "<WeitereZutaten/>";
+    xml += "</Rohstoffe>";
+    xml += "</xsud>";
+
+
+    QTextStream outputStream(&xsud_file);
+    outputStream << xml.toUtf8();
+    json_file.close();
+    xsud_file.close();
 }
 
 

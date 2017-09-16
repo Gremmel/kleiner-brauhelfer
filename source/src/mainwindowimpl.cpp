@@ -21,6 +21,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QDesktopServices>
+#include <QTemporaryFile>
 
 #include <qmath.h>
 #include "errormessage.h"
@@ -11805,10 +11806,19 @@ void MainWindowImpl::on_pushButton_SudImport_clicked()
   if (p == "") {
     p = QDir::homePath();
   }
-  s = QFileDialog::getOpenFileName(this, trUtf8("Suddatei öffnen"), p, trUtf8("Sud Export Dateien (*.xsud)"),0);
+  s = QFileDialog::getOpenFileName(this, trUtf8("Suddatei öffnen"), p, trUtf8("Sud Export Dateien (*.xsud);; Maische Malz und Mehr (*.json)"),0);
   if (!s.isEmpty()) {
     QFileInfo fileinfo(s);
     settings.setValue("recentExportPath",fileinfo.path());
+    // Überprüfen ob eine gültige JSON Datei vorliegt
+    QTemporaryFile file;
+    if (s.endsWith(".json")) {
+        if (file.open()) {
+            QString tmpFile = file.fileName();
+            Export.convertJSON(s,tmpFile);
+            s = tmpFile;
+        }
+    }
     //Überprüfen ob eine gültige xml Datei vorliegt
     int r = Export.IfXmlOK(s);
     //Datei konnte nicht geöffnet werden
