@@ -34,6 +34,7 @@
 #include "dialogberverdampfung.h"
 #include "brauanlage.h"
 #include "dialoginfo.h"
+#include "mytablewidgetitemnumeric.h"
 //
 MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   : QMainWindow(parent, f)
@@ -979,6 +980,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxFarbe -> setDecimals(1);
   connect(spinBoxFarbe, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 1, spinBoxFarbe);
+  tableWidget_Malz -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxFarbe->text()));
+  spinBoxFarbe->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 1))));
+  connect(spinBoxFarbe, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Maximaler Schüttungsanteil
   MyDoubleSpinBox *spinBoxMaxSchuettung = new MyDoubleSpinBox();
@@ -988,6 +992,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxMaxSchuettung -> setValue(100);
   connect(spinBoxMaxSchuettung, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 2, spinBoxMaxSchuettung);
+  tableWidget_Malz -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMaxSchuettung->text()));
+  spinBoxMaxSchuettung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 2))));
+  connect(spinBoxMaxSchuettung, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Menge
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -997,6 +1004,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxMenge -> setSingleStep(0.1);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 3, spinBoxMenge);
+  tableWidget_Malz -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 3))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1006,6 +1016,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxPreis -> setSingleStep(0.1);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 4, spinBoxPreis);
+  tableWidget_Malz -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 4))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Datum Eingelagert
   QDateEdit * deEinlagerung = new QDateEdit(QDate::currentDate());
@@ -1013,6 +1026,8 @@ void MainWindowImpl::MalzNeueZeile()
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Malz -> setCellWidget(i, 7, deEinlagerung);
+  tableWidget_Malz -> setItem(i, 7, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 7))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1020,6 +1035,8 @@ void MainWindowImpl::MalzNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Malz -> setCellWidget(i, 8, deMhd);
+  tableWidget_Malz -> setItem(i, 8, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 8))));
 
   //Link
   QTableWidgetItem *newItem4 = new QTableWidgetItem("");
@@ -1092,6 +1109,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxAlpha -> setSingleStep(0.1);
   connect(spinBoxAlpha, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 1, spinBoxAlpha);
+  tableWidget_Hopfen -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxAlpha->text()));
+  spinBoxAlpha->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 1))));
+  connect(spinBoxAlpha, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Menge
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1101,6 +1121,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxMenge -> setSingleStep(10);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 2, spinBoxMenge);
+  tableWidget_Hopfen -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 2))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1110,6 +1133,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxPreis -> setSingleStep(1);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 3, spinBoxPreis);
+  tableWidget_Hopfen -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 3))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Combobox Typ
   MyComboBox *comboBoxTyp = new MyComboBox();
@@ -1123,6 +1149,8 @@ void MainWindowImpl::HopfenNeueZeile()
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hopfen -> setCellWidget(i, 8, deEinlagerung);
+  tableWidget_Hopfen -> setItem(i, 8, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 8))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1130,6 +1158,8 @@ void MainWindowImpl::HopfenNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
+  tableWidget_Hopfen -> setItem(i, 9, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 9))));
 
   //Link
   QTableWidgetItem *newItemLink = new QTableWidgetItem("");
@@ -1250,6 +1280,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxMenge -> setValue(0);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 1, spinBoxMenge);
+  tableWidget_Hefe -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 1))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Würzemenge
   MyDoubleSpinBox *spinBoxWuerzemenge = new MyDoubleSpinBox();
@@ -1260,6 +1293,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxWuerzemenge -> setValue(0);
   connect(spinBoxWuerzemenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 2, spinBoxWuerzemenge);
+  tableWidget_Hefe -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxWuerzemenge->text()));
+  spinBoxWuerzemenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 2))));
+  connect(spinBoxWuerzemenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1270,6 +1306,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxPreis -> setValue(0);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 3, spinBoxPreis);
+  tableWidget_Hefe -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 3))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
   //Bemerkung
   tableWidget_Hefe -> setItem(i, 4, newItem4);
@@ -1304,13 +1343,14 @@ void MainWindowImpl::HefeNeueZeile()
   //Endvergärungsgrad
   tableWidget_Hefe -> setItem(i, 11, newItem11);
 
-
   //Datum Eingelagert
   QDateEdit * deEinlagerung = new QDateEdit(QDate::currentDate());
   deEinlagerung->setDisplayFormat("dd.MM.yyyy");
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 12, deEinlagerung);
+  tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1318,6 +1358,8 @@ void MainWindowImpl::HefeNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+  tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
   //Link
   QTableWidgetItem *newItemLink = new QTableWidgetItem("");
@@ -1328,10 +1370,7 @@ void MainWindowImpl::HefeNeueZeile()
   AenderungRohstofftabelle = true;
 
   Hefe_Bezeichnung_Merker = s;
-
 }
-
-
 
 void MainWindowImpl::SchreibeRohstoffeDB()
 {
@@ -1565,14 +1604,12 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_Malz -> clearContents();
     tableWidget_Malz -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem2 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       tableWidget_Malz -> setRowCount(tableWidget_Malz -> rowCount()+1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 0, newItem1);
+      tableWidget_Malz -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
+
       //Farbe
       MyDoubleSpinBox *spinBoxFarbe = new MyDoubleSpinBox();
       spinBoxFarbe -> setMinimum(0);
@@ -1582,6 +1619,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxFarbe -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxFarbe, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 1, spinBoxFarbe);
+      tableWidget_Malz -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxFarbe->text()));
+      spinBoxFarbe->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 1))));
+      connect(spinBoxFarbe, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Maximaler Schüttungsanteil
       MyDoubleSpinBox *spinBoxMaxSchuettung = new MyDoubleSpinBox();
@@ -1592,6 +1632,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMaxSchuettung -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMaxSchuettung, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 2, spinBoxMaxSchuettung);
+      tableWidget_Malz -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMaxSchuettung->text()));
+      spinBoxMaxSchuettung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 2))));
+      connect(spinBoxMaxSchuettung, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1603,6 +1646,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 3, spinBoxMenge);
+      tableWidget_Malz -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 3))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1614,16 +1660,17 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 4, spinBoxPreis);
+      tableWidget_Malz -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 4))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem2 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 5, newItem2);
+      tableWidget_Malz -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Anwendung
       FeldNr = query.record().indexOf("Anwendung");
-      newItem3 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 6, newItem3);
+      tableWidget_Malz -> setItem(i, 6, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1633,6 +1680,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Malz -> setCellWidget(i, 7, deEinlagerung);
+      tableWidget_Malz -> setItem(i, 7, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 7))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1642,6 +1691,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Malz -> setCellWidget(i, 8, deMhd);
+      tableWidget_Malz -> setItem(i, 8, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 8))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1672,16 +1723,11 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_Hopfen -> clearContents();
     tableWidget_Hopfen -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
-      QTableWidgetItem *newItem6 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
       tableWidget_Hopfen -> setRowCount(tableWidget_Hopfen -> rowCount()+1);
 
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 0, newItem1);
+      tableWidget_Hopfen -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Alpha
       MyDoubleSpinBox *spinBoxAlpha = new MyDoubleSpinBox();
@@ -1693,6 +1739,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxAlpha -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxAlpha, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 1, spinBoxAlpha);
+      tableWidget_Hopfen -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxAlpha->text()));
+      spinBoxAlpha->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 1))));
+      connect(spinBoxAlpha, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1704,6 +1753,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 2, spinBoxMenge);
+      tableWidget_Hopfen -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 2))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1715,8 +1767,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 3, spinBoxPreis);
+      tableWidget_Hopfen -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 3))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Pellets
+      QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
       FeldNr = query.record().indexOf("Pellets");
       bool b = query.value(FeldNr).toBool();
       if (b)
@@ -1725,10 +1781,10 @@ void MainWindowImpl::LeseRohstoffeDB()
         newItem5 -> setCheckState(Qt::Unchecked);
       newItem5 -> setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
       tableWidget_Hopfen -> setItem(i, 4, newItem5);
+
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem6 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 5, newItem6);
+      tableWidget_Hopfen -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Typ
       MyComboBox *comboBoxTyp = new MyComboBox();
@@ -1740,8 +1796,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Eigenschaften
       FeldNr = query.record().indexOf("Eigenschaften");
-      newItem7 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 7, newItem7);
+      tableWidget_Hopfen -> setItem(i, 7, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1751,6 +1806,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hopfen -> setCellWidget(i, 8, deEinlagerung);
+      tableWidget_Hopfen -> setItem(i, 8, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 8))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1760,6 +1817,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
+      tableWidget_Hopfen -> setItem(i, 9, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 9))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1785,18 +1844,12 @@ void MainWindowImpl::LeseRohstoffeDB()
     int i=0;
     tableWidget_Hefe -> clearContents();
     tableWidget_Hefe -> setRowCount(0);
-    while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem8 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem9 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem11 = new QTableWidgetItem("");
+    while (query.next()){      
       tableWidget_Hefe -> setRowCount(tableWidget_Hefe -> rowCount()+1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 0, newItem1);
+      tableWidget_Hefe -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1808,6 +1861,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 1, spinBoxMenge);
+      tableWidget_Hefe -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 1))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Benötigte einheiten wird nicht mehr gebraucht
       //			FeldNr = query.record().indexOf("Einheiten");
@@ -1825,6 +1881,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxWuerzemenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxWuerzemenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 2, spinBoxWuerzemenge);
+      tableWidget_Hefe -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxWuerzemenge->text()));
+      spinBoxWuerzemenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 2))));
+      connect(spinBoxWuerzemenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1836,16 +1895,17 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 3, spinBoxPreis);
+      tableWidget_Hefe -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 3))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem4 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 4, newItem4);
+      tableWidget_Hefe -> setItem(i, 4, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Verpackungsmenge
       FeldNr = query.record().indexOf("Verpackungsmenge");
-      newItem5 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 5, newItem5);
+      tableWidget_Hefe -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Typ Obergärig Untergärig
       MyComboBox *comboBoxTypOGUG = new MyComboBox();
@@ -1865,13 +1925,11 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Temperaturbereich
       FeldNr = query.record().indexOf("Temperatur");
-      newItem8 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 8, newItem8);
+      tableWidget_Hefe -> setItem(i, 8, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Eigenschaften
       FeldNr = query.record().indexOf("Eigenschaften");
-      newItem9 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 9, newItem9);
+      tableWidget_Hefe -> setItem(i, 9, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Sedimentation
       MyComboBox *comboBoxSED = new MyComboBox();
@@ -1883,8 +1941,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Endvergärungsgrad
       FeldNr = query.record().indexOf("EVG");
-      newItem11 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 11, newItem11);
+      tableWidget_Hefe -> setItem(i, 11, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1894,6 +1951,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hefe -> setCellWidget(i, 12, deEinlagerung);
+      tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1903,6 +1962,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+      tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1930,13 +1991,11 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_WeitereZutaten -> clearContents();
     tableWidget_WeitereZutaten -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
       tableWidget_WeitereZutaten -> setRowCount(tableWidget_WeitereZutaten -> rowCount() +1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_WeitereZutaten -> setItem(i, 0, newItem1);
+      tableWidget_WeitereZutaten -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1947,6 +2006,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 1, spinBoxMenge);
+      tableWidget_WeitereZutaten -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->text()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 1))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Combobox Einheiten
       MyComboBox *comboBoxEinheiten = new MyComboBox();
@@ -1977,6 +2039,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxAusbeute, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxAusbeute, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 4, spinBoxAusbeute);
+      tableWidget_WeitereZutaten -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxAusbeute->text()));
+      spinBoxAusbeute->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 4))));
+      connect(spinBoxAusbeute, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //EBC
       MyDoubleSpinBox *spinBoxEBC = new MyDoubleSpinBox();
@@ -1989,6 +2054,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxEBC, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxEBC, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 5, spinBoxEBC);
+      tableWidget_WeitereZutaten -> setItem(i, 5, new MyTableWidgetItemNumeric(spinBoxEBC->text()));
+      spinBoxEBC->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 5))));
+      connect(spinBoxEBC, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -2000,11 +2068,13 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 6, spinBoxPreis);
+      tableWidget_WeitereZutaten -> setItem(i, 6, new MyTableWidgetItemNumeric(spinBoxPreis->text()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 6))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(const QString&)), this, SLOT(slot_tableSpinBoxValueChanged(const QString&)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem7 -> setText(query.value(FeldNr).toString());
-      tableWidget_WeitereZutaten -> setItem(i, 7, newItem7);
+      tableWidget_WeitereZutaten -> setItem(i, 7, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -2014,6 +2084,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 8, deEinlagerung);
+      tableWidget_WeitereZutaten -> setItem(i, 8, new MyTableWidgetItemNumeric(QString::number(deEinlagerung->date().toJulianDay())));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 8))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -2023,6 +2095,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+      tableWidget_WeitereZutaten -> setItem(i, 9, new MyTableWidgetItemNumeric(QString::number(deMhd->date().toJulianDay())));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 9))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -3678,8 +3752,17 @@ void MainWindowImpl::BerAlles()
 }
 
 
-void MainWindowImpl::slot_dateChanged(QDate)
+void MainWindowImpl::slot_dateChanged(QDate date)
 {
+    // synchronize with table widget item for sorting
+    QVariant prop = QObject::sender()->property("TableWidgetItem");
+    if (prop.isValid())
+    {
+      QTableWidgetItem* item = static_cast<QTableWidgetItem*>(prop.value<void*>());
+      item->setText(QString::number(date.toJulianDay()));
+    }
+
+
   if (Gestartet) {
     setAenderung(true);
   }
@@ -3695,12 +3778,22 @@ void MainWindowImpl::slot_AenderungAusruestung(int )
   AenderungAusruestung = true;
 }
 
-
 void MainWindowImpl::slot_spinBoxValueChanged(double )
 {
   if (Gestartet) {
     BerAlles();
     setAenderung(true);
+  }
+}
+
+void MainWindowImpl::slot_tableSpinBoxValueChanged(const QString& text)
+{
+  // synchronize with table widget item for sorting
+  QVariant prop = QObject::sender()->property("TableWidgetItem");
+  if (prop.isValid())
+  {
+    QTableWidgetItem* item = static_cast<QTableWidgetItem*>(prop.value<void*>());
+    item->setText(text);
   }
 }
 
@@ -8683,15 +8776,15 @@ void MainWindowImpl::FuelleBrauuebersicht()
       QTableWidgetItem *newItem2 = new QTableWidgetItem("");
       QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem6 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem8 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem9 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem10 = new QTableWidgetItem("");
+      QTableWidgetItem *newItem5 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem6 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem7 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem8 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem9 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem10 = new MyTableWidgetItemNumeric("");
       QTableWidgetItem *newItem11 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem12 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem13 = new QTableWidgetItem("");
+      QTableWidgetItem *newItem12 = new MyTableWidgetItemNumeric("");
+      QTableWidgetItem *newItem13 = new MyTableWidgetItemNumeric("");
       tableWidget_Brauuebersicht -> setRowCount(tableWidget_Brauuebersicht -> rowCount()+1);
       //ID
       FeldNr = query.record().indexOf("ID");
@@ -8922,6 +9015,8 @@ void MainWindowImpl::FuelleBrauuebersicht()
 
       i++;
     }
+    tableWidget_Brauuebersicht -> setSortingEnabled(true);
+
     //Diagramm füllen wenn 2 oder mehr Datensätze vorhanden sind
     if (i > 1){
       sql = abfrage + " ORDER BY Braudatum";
@@ -15462,7 +15557,8 @@ void MainWindowImpl::on_tableWidget_Malz_currentCellChanged(int currentRow, int 
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Malz -> item(currentRow,currentColumn);
-    Malz_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Malz_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15472,7 +15568,8 @@ void MainWindowImpl::on_tableWidget_Hopfen_currentCellChanged(int currentRow, in
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Hopfen -> item(currentRow,currentColumn);
-    Hopfen_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Hopfen_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15483,7 +15580,8 @@ void MainWindowImpl::on_tableWidget_Hefe_currentCellChanged(int currentRow, int 
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Hefe -> item(currentRow,currentColumn);
-    Hefe_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Hefe_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15493,7 +15591,8 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_WeitereZutaten -> item(currentRow,currentColumn);
-    WZutaten_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        WZutaten_Bezeichnung_Merker = newItem->text();
   }
 }
 

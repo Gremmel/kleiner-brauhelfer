@@ -73,7 +73,8 @@ HEADERS = src/mainwindowimpl.h \
  src/anhangwidget.h \
  src/dialogdatum.h \
  src/mywebview.h \
- src/mytablewidget.h
+ src/mytablewidget.h \
+ src/mytablewidgetitemnumeric.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -107,7 +108,8 @@ SOURCES = src/mainwindowimpl.cpp \
  src/anhangwidget.cpp \
  src/dialogdatum.cpp \
  src/mywebview.cpp \
- src/mytablewidget.cpp
+ src/mytablewidget.cpp \
+ src/mytablewidgetitemnumeric.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
 TEMPLATE = app

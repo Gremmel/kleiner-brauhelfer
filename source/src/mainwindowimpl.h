@@ -437,6 +437,7 @@ private slots:
   void slot_pushButton_HefeDel();
   void HefeNeueZeile();
   void slot_spinBoxValueChanged(double d);
+  void slot_tableSpinBoxValueChanged(const QString&);
   void slot_EwzAenderungRohstoffe();
   void on_pushButton_NeueRast_clicked();
   void on_pushButton_RastNachOben(int id);

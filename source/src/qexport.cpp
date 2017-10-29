@@ -902,7 +902,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
           komentar = doc.createComment("Menge");
           Anteil.appendChild(komentar);
           FeldNr = query_WeitereZutaten.record().indexOf("Menge");
-          element = doc.createElement("AMOUNT");
+          element = doc.createElement("Menge");
           element.setAttribute("Einheit","Gramm/Liter");
           text = doc.createTextNode(query_WeitereZutaten.value(FeldNr).toString());
           element.appendChild(text);
