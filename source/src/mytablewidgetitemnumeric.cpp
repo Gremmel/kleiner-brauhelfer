@@ -2,5 +2,5 @@
 
 bool MyTableWidgetItemNumeric::operator<(const QTableWidgetItem &other) const
 {
-    return text().toDouble() < other.text().toDouble();
+    return QLocale::system().toDouble(text()) < QLocale::system().toDouble(other.text());
 }

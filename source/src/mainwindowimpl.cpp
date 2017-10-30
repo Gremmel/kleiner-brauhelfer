@@ -8152,7 +8152,8 @@ void MainWindowImpl::slot_pushButton_SudKopie()
       sql += "'Bemerkung', ";
       sql += "'erg_Menge', ";
       sql += "'Ausbeute', ";
-      sql += "'Farbe' ";
+      sql += "'Farbe', ";
+      sql += "'Zugabedauer' ";
       sql += ")Values(";
       sql += "'" + SudIDNeu + "',";
       sql += "'" + name.replace("'","''") + "',";
@@ -8163,7 +8164,8 @@ void MainWindowImpl::slot_pushButton_SudKopie()
       sql += "'" + query_WeitereZutaten.value(7).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(8).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(9).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "'";
+      sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "',";
+      sql += "'" + query_WeitereZutaten.value(15).toString().replace("'","''") + "'";
       sql += ");";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
