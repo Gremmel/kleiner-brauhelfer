@@ -15,6 +15,14 @@ equals(QT_MAJOR_VERSION, 5)
   }
 }
 
+TEMPLATE = app
+TARGET = kleiner-brauhelfer
+VERSION = 1.4.4.0
+VERSION_INT = 1040400
+DEFINES += TARGET=\\\"$$TARGET\\\" VERSION=\\\"$$VERSION\\\" VERSION_INT=$$VERSION_INT
+
+win32:RC_ICONS += res/logo.ico
+
 CONFIG += qt warn_on
 DESTDIR = bin
 OBJECTS_DIR = build
@@ -112,4 +120,3 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mytablewidgetitemnumeric.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
-TEMPLATE = app
