@@ -736,7 +736,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
           Anteil.appendChild(komentar);
           FeldNr = query_Malz.record().indexOf("erg_Menge");
           element = doc.createElement("erg_Menge");
-          element.setAttribute("Einheit","Kg");
+          element.setAttribute("Einheit","kg");
           text = doc.createTextNode(query_Malz.value(FeldNr).toString());
           element.appendChild(text);
           Anteil.appendChild(element);
@@ -909,7 +909,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
           Anteil.appendChild(element);
 
           //Einheit
-          komentar = doc.createComment("Einheiten Typ 0=Kg 1=g");
+          komentar = doc.createComment("Einheiten Typ 0=kg 1=g");
           Anteil.appendChild(komentar);
           FeldNr = query_WeitereZutaten.record().indexOf("Einheit");
           element = doc.createElement("Einheit");
@@ -1478,7 +1478,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Menge");
                 element = doc.createElement("Menge");
-                element.setAttribute("Einheit","Kg");
+                element.setAttribute("Einheit","kg");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
@@ -1488,7 +1488,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Preis");
                 element = doc.createElement("Preis");
-                element.setAttribute("Einheit","Euro/Kg");
+                element.setAttribute("Einheit","Euro/kg");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
@@ -1618,7 +1618,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Preis");
                 element = doc.createElement("Preis");
-                element.setAttribute("Einheit","Euro/Kg");
+                element.setAttribute("Einheit","Euro/kg");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
@@ -1767,7 +1767,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Preis");
                 element = doc.createElement("Preis");
-                element.setAttribute("Einheit","Euro/Kg");
+                element.setAttribute("Einheit","Euro/kg");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
@@ -2072,13 +2072,13 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Menge");
                 element = doc.createElement("Menge");
-                element.setAttribute("Einheit","Kg/g");
+                element.setAttribute("Einheit","kg/g");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
 
                 //Einheiten
-                komentar = doc.createComment("Einheiten Typ 0=Kg 1=g");
+                komentar = doc.createComment("Einheiten Typ 0=kg 1=g");
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Einheiten");
                 element = doc.createElement("Einheiten");
@@ -2122,7 +2122,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
                 Eintrag.appendChild(komentar);
                 FeldNr = query.record().indexOf("Preis");
                 element = doc.createElement("Preis");
-                element.setAttribute("Einheit","Euro/Kg");
+                element.setAttribute("Einheit","Euro/kg");
                 text = doc.createTextNode(query.value(FeldNr).toString());
                 element.appendChild(text);
                 Eintrag.appendChild(element);
@@ -3317,7 +3317,7 @@ void QExport::convertJSON(QString json, QString xsud)
              kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
         }
         xml += QString("<!--Prozentualer Anteil der Schuettung--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg((kg/gesamt_schuettung)*100.0f);
-        xml += QString("<!--Berechneter Gewichtsanteil der Schuettung--><erg_Menge Einheit=\"Kg\">%1</erg_Menge>").arg(kg);
+        xml += QString("<!--Berechneter Gewichtsanteil der Schuettung--><erg_Menge Einheit=\"kg\">%1</erg_Menge>").arg(kg);
         xml += "<!--Malz - Farbwert--><Farbe Einheit=\"EBC\">1</Farbe>";
 
         QPair<QString, QString> malz(root[QString("Malz%1").arg(i)].toString(),QString::number(kg));
@@ -3377,8 +3377,8 @@ void QExport::convertJSON(QString json, QString xsud)
         xml += "<!--Malzfarbwert--><Farbe Einheit=\"EBU\">1</Farbe>";
         xml += "<!--Maximal empfohlener Schuettungsanteil--><MaxProzent Einheit=\"Prozent\">100</MaxProzent>";
 
-        xml += QString("<!--Vorhandene Rohstoffmenge--><Menge Einheit=\"Kg\">%1</Menge>").arg(m_gew);
-        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Kg\">0</Preis>";
+        xml += QString("<!--Vorhandene Rohstoffmenge--><Menge Einheit=\"kg\">%1</Menge>").arg(m_gew);
+        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/kg\">0</Preis>";
         xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
         xml += "<!--Anwendung--><Anwendung Einheit=\"Text\"><![CDATA[]]></Anwendung>";
         xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
@@ -3401,7 +3401,7 @@ void QExport::convertJSON(QString json, QString xsud)
         xml += QString("<!--Hopfenbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(h_sorte);
         xml += QString("<!--Alphaprozentgehalt--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(h_alpha);
         xml += "<!--Vorhandene Menge--><Menge Einheit=\"Gramm\">0</Menge>";
-        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Kg\">0</Preis>";
+        xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/kg\">0</Preis>";
         xml += "<!--Hopfenart 1=Pellets--><Pellets Einheit=\"Text\">1</Pellets>";
         xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
         xml += "<!--Eigenschaften--><Eigenschaften Einheit=\"Text\"><![CDATA[]]></Eigenschaften>";
@@ -4247,7 +4247,7 @@ int QExport::ImportSudXML(QString cDateiname)
                 else
                   s = "";
                 sql += "'" + s + "',";
-                //Einheiten Typ 0=Kg 1=g
+                //Einheiten Typ 0=kg 1=g
                 e = Anteil.firstChildElement("Einheit");
                 if (!e.isNull())
                   s = e.text();
@@ -5027,7 +5027,7 @@ void QExport::RohstoffWeitereZutatUebernehmen(QString Name)
                 //Vorhandene Menge
                 s = "0";
                 sql += "'" + s + "',";
-                //Einheiten Typ 0=Kg 1=g
+                //Einheiten Typ 0=kg 1=g
                 e = Eintrag.firstChildElement("Einheiten");
                 if (!e.isNull())
                   s = e.text();

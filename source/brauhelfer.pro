@@ -110,6 +110,6 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mywebview.cpp \
  src/mytablewidget.cpp \
  src/mytablewidgetitemnumeric.cpp
-TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
+TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc
 TEMPLATE = app

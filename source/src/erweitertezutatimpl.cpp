@@ -383,7 +383,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       //Kilogramm
       if (einheit == EWZ_Einheit_Kg){
         label_Mengeneinheit -> setText("g/L");
-        ergWidget -> label_Einheit -> setText("Kg");
+        ergWidget -> label_Einheit -> setText("kg");
         ergWidget -> spinBox_Wert -> setDecimals(3);
       }
       //Gramm
@@ -630,7 +630,7 @@ void ErweiterteZutatImpl::setFarbe(double value)
 
 double ErweiterteZutatImpl::getErg_Kosten()
 {
-  //Menge in Gramm Preis ist in Kg
+  //Menge in Gramm Preis ist in kg
   return erg_Menge * preis/1000;
 }
 

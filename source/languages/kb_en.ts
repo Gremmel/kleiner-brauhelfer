@@ -6,21 +6,17 @@
     <message>
         <location filename="../ui/anhangwidget.ui" line="76"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/anhangwidget.ui" line="108"/>
-        <source>Relativer Pfad</source>
-        <translation>Path relative to file system</translation>
-    </message>
-    <message>
-        <source>Bild auswählen</source>
-        <translation type="vanished">Select image</translation>
+        <source>relativ zur Datenbank</source>
+        <translation>relative to database</translation>
     </message>
     <message>
         <location filename="../src/anhangwidget.cpp" line="71"/>
         <source>Anhang auswählen</source>
-        <translation type="unfinished"></translation>
+        <translation>Select attachment</translation>
     </message>
 </context>
 <context>
@@ -83,7 +79,7 @@
         <location filename="../ui/ber_ibu.ui" line="525"/>
         <location filename="../ui/ber_ibu.ui" line="605"/>
         <source>g</source>
-        <translation>g</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/ber_ibu.ui" line="222"/>
@@ -151,7 +147,7 @@
     <message>
         <location filename="../src/bewertung.cpp" line="60"/>
         <source>Woche: </source>
-        <translation>Week:</translation>
+        <translation>Week: </translation>
     </message>
 </context>
 <context>
@@ -432,12 +428,12 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1682"/>
         <source>Grünschlauchzeitpunkt</source>
-        <translation type="unfinished">Grünschlauchzeitpunkt</translation>
+        <translation>Green bottling time</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1689"/>
         <source>Spundungsdruck</source>
-        <translation type="unfinished">Spundungsdruck</translation>
+        <translation>Bung pressure</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1720"/>
@@ -501,13 +497,13 @@
         <location filename="../ui/dialogberverdampfung.ui" line="28"/>
         <location filename="../ui/dialogberverdampfung.ui" line="214"/>
         <source>Füllhöhe von Oberkannte aus gemessen</source>
-        <translation>Fill level measured from top </translation>
+        <translation>Fill level measured from top</translation>
     </message>
     <message>
         <location filename="../ui/dialogberverdampfung.ui" line="87"/>
         <location filename="../ui/dialogberverdampfung.ui" line="273"/>
         <source>Füllhöhe vom Boden aus gemessen</source>
-        <translation>Fill level measured from bottom </translation>
+        <translation>Fill level measured from bottom</translation>
     </message>
     <message>
         <location filename="../ui/dialogberverdampfung.ui" line="146"/>
@@ -587,8 +583,8 @@
         <location filename="../ui/ber_schuettung.ui" line="308"/>
         <location filename="../ui/ber_schuettung.ui" line="386"/>
         <location filename="../ui/ber_schuettung.ui" line="464"/>
-        <source>Kg</source>
-        <translation>Kg</translation>
+        <source>kg</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/ber_schuettung.ui" line="94"/>
@@ -681,7 +677,7 @@
     <message>
         <location filename="../src/einstellungsdialogimpl.cpp" line="17"/>
         <source>Pfad zur Datenbank: </source>
-        <translation>Path to database:</translation>
+        <translation>Path to database: </translation>
     </message>
     <message>
         <location filename="../src/einstellungsdialogimpl.cpp" line="30"/>
@@ -728,7 +724,8 @@ The programme will exit after copying is finished and need to be restarted.</tra
         <location filename="../src/einstellungsdialogimpl.cpp" line="525"/>
         <source>Betroffene Datei:
 </source>
-        <translation>Affected file:</translation>
+        <translation>Affected file:
+</translation>
     </message>
     <message>
         <location filename="../src/einstellungsdialogimpl.cpp" line="1069"/>
@@ -798,7 +795,7 @@ Path couldn&apos;t be changed</translation>
     <message>
         <location filename="../src/errormessage.cpp" line="86"/>
         <source>Sud Dateien der Version 1 können leider nicht Importiert werden. Bitte Speichern Sie die Suddaten vorher noch mit der Vorgängerversion (0.9.4.2) vom kleinen-brauhelfer ab.</source>
-        <translation>Beer files of version 1 cannot be imported. Please save brew files with previous version of kleiner-brauhelfer (0.9.4.2).</translation>
+        <translation>Brew files of version 1 cannot be imported. Please save brew files with previous version of kleiner-brauhelfer (0.9.4.2).</translation>
     </message>
     <message>
         <location filename="../src/errormessage.cpp" line="89"/>
@@ -898,7 +895,7 @@ Path couldn&apos;t be changed</translation>
     <message>
         <location filename="../src/errormessage.cpp" line="146"/>
         <source>Die Datei ist keine gültige Sud Datei</source>
-        <translation>File is not a valid beer file</translation>
+        <translation>File is not a valid brew file</translation>
     </message>
     <message>
         <location filename="../src/errormessage.cpp" line="149"/>
@@ -947,7 +944,7 @@ Please correct path to databse in settings.</translation>
         <source>
 (Fehlernummer: </source>
         <translation>
-(Error no.:</translation>
+(Error no.: </translation>
     </message>
     <message>
         <location filename="../src/errormessage.cpp" line="176"/>
@@ -1125,7 +1122,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/KorrektSw.ui" line="14"/>
         <source>Korrektur Stammwürze</source>
-        <translation>OG Correction</translation>
+        <translation>Original Gravity Correction</translation>
     </message>
     <message>
         <location filename="../ui/KorrektSw.ui" line="22"/>
@@ -1140,7 +1137,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/KorrektSw.ui" line="84"/>
         <source>Gemessene Stammwürze (Spindel) </source>
-        <translation>Hydrometer reading of extract</translation>
+        <translation>Hydrometer reading of extract </translation>
     </message>
     <message>
         <location filename="../ui/KorrektSw.ui" line="135"/>
@@ -1168,17 +1165,17 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="34"/>
         <source>Sudauswahl</source>
-        <translation>Choose Beer</translation>
+        <translation>Brew Selection</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="44"/>
         <source>a&amp;lle anzeigen</source>
-        <translation>show all</translation>
+        <translation>show a&amp;ll</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="51"/>
         <source>&amp;nicht gebraut</source>
-        <translation>not brewed</translation>
+        <translation>&amp;not brewed</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="58"/>
@@ -1193,12 +1190,12 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="72"/>
         <source>ni&amp;cht verbraucht</source>
-        <translation>not consumed</translation>
+        <translation>not &amp;consumed</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="79"/>
         <source>&amp;Merkliste</source>
-        <translation>&amp;watch list</translation>
+        <translation>&amp;pinned list</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="98"/>
@@ -1222,58 +1219,48 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="116"/>
         <source>erstellt</source>
-        <translation>created</translation>
+        <translation>Created</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="124"/>
         <source>zuletzt gespeichert</source>
-        <translation>last saved</translation>
+        <translation>Last saved</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="153"/>
         <source>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</source>
-        <translation>Include beers on watch list when checking availabability of ingredients</translation>
+        <translation>Include pinned brews when checking availabability of ingredients</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="165"/>
         <source>Merken</source>
-        <translation>Remember</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="172"/>
-        <source>vergessen</source>
-        <translation>Discard</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="190"/>
-        <source>neuen Sud anlegen</source>
-        <translation>Create new beer entry</translation>
+        <translation>Pin brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="197"/>
         <source>Sud kopieren</source>
-        <translation>Copy beer entry</translation>
+        <translation>Copy brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="204"/>
         <source>Sud löschen</source>
-        <translation>Delete beer entry</translation>
+        <translation>Delete brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="215"/>
         <source>Sud importieren</source>
-        <translation>Import beer entry</translation>
+        <translation>Import brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="222"/>
         <source>Sud exportieren</source>
-        <translation>Export beer entry</translation>
+        <translation>Export brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="229"/>
         <location filename="../ui/mainwindow.ui" line="10004"/>
         <source>Sud laden</source>
-        <translation>Load beer entry</translation>
+        <translation>Load brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="261"/>
@@ -1291,7 +1278,7 @@ Please correct path to databse in settings.</translation>
         <location filename="../ui/mainwindow.ui" line="278"/>
         <location filename="../ui/mainwindow.ui" line="8577"/>
         <source>PDF speichern</source>
-        <translation>Save PDF</translation>
+        <translation>Save to PDF</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="290"/>
@@ -1301,7 +1288,7 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="348"/>
         <source>Sudname</source>
-        <translation>Name of Beer</translation>
+        <translation>Brew name</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="372"/>
@@ -1454,12 +1441,12 @@ Please correct path to databse in settings.</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="1105"/>
         <source>neue Rast einfügen</source>
-        <translation>add a rest</translation>
+        <translation>Add rest</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1141"/>
         <source>gesamte Kochdauer (inkl. Zeit bis Eiweißbruch)</source>
-        <translation>Total boil time (incl.time to hot break) </translation>
+        <translation>Total boil time (incl.time to hot break)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1195"/>
@@ -1500,10 +1487,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/mainwindow.ui" line="1376"/>
         <source>Anhänge</source>
         <translation>Attachments</translation>
-    </message>
-    <message>
-        <source>neuen Anhang einfügen</source>
-        <translation type="vanished">Insert new attachement</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1515"/>
@@ -1630,7 +1613,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="2650"/>
         <source>kg</source>
-        <translation>Kg</translation>
+        <translation>kg</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="2680"/>
@@ -1791,13 +1774,24 @@ p, li { white-space: pre-wrap; }
         <translation>Amount of water to reach targeted OG</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Überträgt die Würzemenge nach dem Hopfenseihen + Verschneidung in die Würzemenge beim Anstellen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transfers amount of wort after hop filtering plus amount of blending into amount of wort when pitching yeast&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../ui/mainwindow.ui" line="1490"/>
         <source>Anhang hinzufügen</source>
-        <translation type="unfinished"></translation>
+        <translation>Add attachment</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="172"/>
+        <source>Vergessen</source>
+        <translation>Unpin brew</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="179"/>
+        <source>Alle vergessen</source>
+        <translation>Unpin all</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="190"/>
+        <source>Neuen Sud anlegen</source>
+        <translation>Create new brew</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="3889"/>
@@ -1847,7 +1841,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="4389"/>
         <source>Biermenge beim Abfüllen</source>
-        <translation type="unfinished"></translation>
+        <translation>Amout of beer</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="4484"/>
@@ -1921,7 +1915,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="5051"/>
         <source>Ausbeute von diesem Sud bei der Durchschnittsanzeige (Ausrüstung) nicht mit einbeziehen </source>
-        <translation>Exclude brewhouse efficiency from average calculations (in brewing eqipment)</translation>
+        <translation>Exclude brewhouse efficiency from average calculations (in brewing eqipment) </translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="5113"/>
@@ -1936,7 +1930,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="5246"/>
         <source>Füllhöhe von Oberkante aus gemessen</source>
-        <translation>Fill level measured from top </translation>
+        <translation>Fill level measured from top</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="5327"/>
@@ -1953,7 +1947,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="5341"/>
         <source>Füllhöhe vom Boden aus gemessen</source>
-        <translation>Fill level measured from bottom </translation>
+        <translation>Fill level measured from bottom</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="5436"/>
@@ -2033,12 +2027,13 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="6767"/>
         <source>Grünschlauchzeitpunkt</source>
-        <translation type="unfinished">Grünschlauchzeitpunkt</translation>
+        <translatorcomment>Green bottling time</translatorcomment>
+        <translation>Grünschlauchzeitpunkt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="6883"/>
         <source>Spundungsdruck</source>
-        <translation type="unfinished">Spundungsdruck</translation>
+        <translation>Bung pressure</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="6964"/>
@@ -2093,7 +2088,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7876"/>
         <source>Gärverlauf</source>
-        <translation>Fermentation progress</translation>
+        <translation>Fermentation Progress</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7894"/>
@@ -2181,7 +2176,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="8590"/>
         <source>Bewertung</source>
-        <translation>Evaluation</translation>
+        <translation>Rating</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8654"/>
@@ -2300,7 +2295,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="8989"/>
-        <source>mäßge Haltbarkeit</source>
+        <source>mäßige Haltbarkeit</source>
         <translation>medicore stability</translation>
     </message>
     <message>
@@ -2336,7 +2331,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="9066"/>
         <source>rein, abgerundet</source>
-        <translation>clear,harmonic </translation>
+        <translation>clear, harmonic</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="9073"/>
@@ -2562,7 +2557,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="9527"/>
         <source>wenig herb, unterentwickelt</source>
-        <translation>little bitterness,underdeveloped </translation>
+        <translation>little bitterness, underdeveloped</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="9534"/>
@@ -2627,7 +2622,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="9668"/>
         <source>Brau-Übersicht</source>
-        <translation>Beer overview</translation>
+        <translation>Brew Overview</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="9708"/>
@@ -2766,7 +2761,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="10101"/>
         <source>Daten der Brauanlage: </source>
-        <translation>Brewhouse characteristics:</translation>
+        <translation>Brewhouse characteristics: </translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10122"/>
@@ -2791,12 +2786,12 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="10245"/>
         <source>Sude</source>
-        <translation>Beers</translation>
+        <translation>brews</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10274"/>
         <source>Durchschnittliche Sudhausausbeute von allen als gebraut Markierten Suden</source>
-        <translation>Average brewhouse efficiency from all beers marked as brewed</translation>
+        <translation>Average brewhouse efficiency from all brews marked as brewed</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10325"/>
@@ -2889,14 +2884,14 @@ This action can only be undone by editing the beer file with an editor.</transla
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11509"/>
-        <source>Menge (Kg)</source>
+        <source>Menge (kg)</source>
         <translation>Weight (kg)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11514"/>
         <location filename="../ui/mainwindow.ui" line="11619"/>
-        <source>Preis/Kg</source>
-        <translation>Price/Kg</translation>
+        <source>Preis/kg</source>
+        <translation>Price/kg</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="11519"/>
@@ -3168,437 +3163,418 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindowImpl</name>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="81"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4109"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4139"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4352"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4398"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4444"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4490"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4536"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10768"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10793"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11022"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11076"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11130"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11184"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11238"/>
-        <source>Kg</source>
-        <translation>Kg</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindowimpl.cpp" line="82"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4178"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4205"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4354"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4400"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4446"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4492"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4538"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10825"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10847"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11024"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11078"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11132"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11186"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11240"/>
+        <location filename="../src/mainwindowimpl.cpp" line="84"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4272"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4299"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4448"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4494"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4540"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4586"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4632"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10923"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10945"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11122"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11176"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11230"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11284"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11338"/>
         <source>g</source>
         <translation>g</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="88"/>
+        <location filename="../src/mainwindowimpl.cpp" line="90"/>
         <source>Honig</source>
         <translation>Honey</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="89"/>
+        <location filename="../src/mainwindowimpl.cpp" line="91"/>
         <source>Zucker</source>
         <translation>Sugar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="90"/>
+        <location filename="../src/mainwindowimpl.cpp" line="92"/>
         <source>Gewürz</source>
         <translation>Spice</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="91"/>
+        <location filename="../src/mainwindowimpl.cpp" line="93"/>
         <source>Frucht</source>
         <translation>Fruit</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="92"/>
+        <location filename="../src/mainwindowimpl.cpp" line="94"/>
         <source>Sonstiges</source>
         <translation>Miscellaneous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="96"/>
+        <location filename="../src/mainwindowimpl.cpp" line="98"/>
         <source>Aroma</source>
         <translation>Aroma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="97"/>
+        <location filename="../src/mainwindowimpl.cpp" line="99"/>
         <source>Bitter</source>
         <translation>Bittering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="98"/>
+        <location filename="../src/mainwindowimpl.cpp" line="100"/>
         <source>Universal</source>
         <translation>Universal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="102"/>
+        <location filename="../src/mainwindowimpl.cpp" line="104"/>
         <source>OG</source>
-        <translation>top f.</translation>
+        <translation>top f</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="103"/>
+        <location filename="../src/mainwindowimpl.cpp" line="105"/>
         <source>UG</source>
-        <translation>bottom f.</translation>
+        <translation>bottom f</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="107"/>
+        <location filename="../src/mainwindowimpl.cpp" line="109"/>
         <source>Trocken</source>
         <translation>dry</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="108"/>
+        <location filename="../src/mainwindowimpl.cpp" line="110"/>
         <source>Flüssig</source>
         <translation>liquid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="112"/>
+        <location filename="../src/mainwindowimpl.cpp" line="114"/>
         <source>hoch</source>
         <translation>high</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="113"/>
+        <location filename="../src/mainwindowimpl.cpp" line="115"/>
         <source>mittel</source>
         <translation>medium</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="114"/>
+        <location filename="../src/mainwindowimpl.cpp" line="116"/>
         <source>niedrig</source>
         <translation>low</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="366"/>
-        <location filename="../src/mainwindowimpl.cpp" line="377"/>
-        <location filename="../src/mainwindowimpl.cpp" line="800"/>
-        <location filename="../src/mainwindowimpl.cpp" line="836"/>
-        <location filename="../src/mainwindowimpl.cpp" line="909"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1347"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1374"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1386"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1415"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1427"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1461"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1475"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1505"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1519"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1528"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1537"/>
+        <location filename="../src/mainwindowimpl.cpp" line="368"/>
+        <location filename="../src/mainwindowimpl.cpp" line="379"/>
+        <location filename="../src/mainwindowimpl.cpp" line="802"/>
+        <location filename="../src/mainwindowimpl.cpp" line="838"/>
+        <location filename="../src/mainwindowimpl.cpp" line="911"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1387"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1414"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1426"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1455"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1467"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1501"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1515"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1545"/>
         <location filename="../src/mainwindowimpl.cpp" line="1559"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1666"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1780"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1924"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2044"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2077"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2096"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2127"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2137"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2172"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2191"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2222"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2232"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2245"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2276"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2286"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1568"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1577"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1599"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1718"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1840"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1986"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2119"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2152"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2171"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2202"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2212"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2247"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2266"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2297"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2307"/>
         <location filename="../src/mainwindowimpl.cpp" line="2320"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2362"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2372"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2874"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2914"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2351"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2361"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2395"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2437"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2447"/>
         <location filename="../src/mainwindowimpl.cpp" line="2949"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2964"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3165"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3220"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3249"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3282"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3380"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3408"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4578"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5113"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5150"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5163"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5886"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5903"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5992"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6009"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6024"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6082"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6142"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6159"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6174"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6229"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6246"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7490"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7609"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7619"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7638"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7654"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7664"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7676"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7707"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7819"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7829"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7844"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7866"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7877"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7921"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7932"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7985"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7998"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8078"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8090"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8106"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8144"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8154"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8164"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2989"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3024"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3039"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3240"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3295"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3324"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3357"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3455"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3483"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4672"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5207"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5244"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5257"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5980"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5997"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6086"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6103"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6118"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6176"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6236"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6253"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6268"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6323"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6340"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7584"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7703"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7713"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7732"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7748"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7758"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7770"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7801"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7913"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7923"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7938"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7960"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7971"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8015"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8026"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8079"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8092"/>
         <location filename="../src/mainwindowimpl.cpp" line="8174"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8184"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8194"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8204"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8214"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8225"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8236"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8327"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8343"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8361"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8413"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8430"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8467"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8672"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8739"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8934"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9027"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9151"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9266"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9284"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9302"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9465"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9483"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9503"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9658"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9676"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9694"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10594"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10699"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11406"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11415"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11445"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11679"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11687"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11695"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11709"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11717"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11740"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12147"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12292"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12331"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12374"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12413"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12454"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12507"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12546"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12586"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12627"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12668"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13141"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13393"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13414"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13445"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13455"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13770"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13797"/>
-        <location filename="../src/mainwindowimpl.cpp" line="14154"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15219"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15236"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15287"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15304"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15313"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15367"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15416"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15433"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15925"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15953"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15979"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15999"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16016"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16222"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16247"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16259"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8186"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8202"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8240"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8250"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8260"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8270"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8280"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8290"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8300"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8310"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8321"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8332"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8423"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8439"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8457"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8509"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8526"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8563"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8768"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8835"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9032"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9125"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9249"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9364"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9382"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9400"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9563"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9581"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9601"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9756"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9774"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9792"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10692"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10797"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11504"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11513"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11543"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11777"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11785"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11793"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11807"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11815"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11838"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12254"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12399"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12438"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12481"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12520"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12561"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12614"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12653"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12693"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12734"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12775"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13248"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13500"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13521"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13552"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13562"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13877"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13904"/>
+        <location filename="../src/mainwindowimpl.cpp" line="14261"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15326"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15343"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15394"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15411"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15420"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15474"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15523"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15540"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16036"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16064"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16090"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16110"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16127"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16336"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16361"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16373"/>
         <source>Rückgabe:
 </source>
         <translation>Return:
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="367"/>
-        <location filename="../src/mainwindowimpl.cpp" line="378"/>
-        <location filename="../src/mainwindowimpl.cpp" line="801"/>
-        <location filename="../src/mainwindowimpl.cpp" line="837"/>
-        <location filename="../src/mainwindowimpl.cpp" line="910"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1348"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1375"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1387"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1416"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1428"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1462"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1476"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1506"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1520"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1529"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1538"/>
+        <location filename="../src/mainwindowimpl.cpp" line="369"/>
+        <location filename="../src/mainwindowimpl.cpp" line="380"/>
+        <location filename="../src/mainwindowimpl.cpp" line="803"/>
+        <location filename="../src/mainwindowimpl.cpp" line="839"/>
+        <location filename="../src/mainwindowimpl.cpp" line="912"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1388"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1415"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1427"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1456"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1468"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1502"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1516"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1546"/>
         <location filename="../src/mainwindowimpl.cpp" line="1560"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1667"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1781"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1925"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2045"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2078"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2097"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2128"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2138"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2173"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2192"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2223"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2233"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2246"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2277"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2287"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1569"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1578"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1600"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1719"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1841"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1987"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2120"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2153"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2172"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2203"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2213"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2248"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2267"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2298"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2308"/>
         <location filename="../src/mainwindowimpl.cpp" line="2321"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2363"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2373"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2875"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2915"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2352"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2362"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2396"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2438"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2448"/>
         <location filename="../src/mainwindowimpl.cpp" line="2950"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2965"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3166"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3221"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3250"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3283"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3381"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3409"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4579"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5114"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5151"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5164"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5887"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5904"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5993"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6010"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6025"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6083"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6143"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6160"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6175"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6230"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6247"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7491"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7610"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7620"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7639"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7655"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7665"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7677"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7708"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7820"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7830"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7845"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7867"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7878"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7922"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7933"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7986"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7999"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8079"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8091"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8107"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8145"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8155"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8165"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2990"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3025"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3040"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3241"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3296"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3325"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3358"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3456"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3484"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4673"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5208"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5245"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5258"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5981"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5998"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6087"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6104"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6119"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6177"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6237"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6254"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6269"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6324"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6341"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7585"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7704"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7714"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7733"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7749"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7759"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7771"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7802"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7914"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7924"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7939"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7961"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7972"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8016"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8027"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8080"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8093"/>
         <location filename="../src/mainwindowimpl.cpp" line="8175"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8185"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8195"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8205"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8215"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8226"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8237"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8328"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8344"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8362"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8414"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8431"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8468"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8673"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8740"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8935"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9028"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9152"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9267"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9285"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9303"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9466"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9484"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9504"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9659"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9677"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9695"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10595"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10700"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11407"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11416"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11446"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11680"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11688"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11696"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11710"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11718"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11741"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12148"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12293"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12332"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12375"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12414"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12455"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12508"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12547"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12587"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12628"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12669"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13142"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13394"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13415"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13446"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13456"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13771"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13798"/>
-        <location filename="../src/mainwindowimpl.cpp" line="14155"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15220"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15237"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15288"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15305"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15314"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15368"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15417"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15434"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15926"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15954"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15980"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16000"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16017"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16223"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16248"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16260"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8187"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8203"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8241"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8251"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8261"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8271"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8281"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8291"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8301"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8311"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8322"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8333"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8424"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8440"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8458"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8510"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8527"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8564"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8769"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8836"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9033"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9126"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9250"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9365"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9383"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9401"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9564"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9582"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9602"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9757"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9775"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9793"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10693"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10798"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11505"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11514"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11544"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11778"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11786"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11794"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11808"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11816"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11839"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12255"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12400"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12439"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12482"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12521"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12562"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12615"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12654"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12694"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12735"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12776"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13249"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13501"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13522"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13553"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13563"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13878"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13905"/>
+        <location filename="../src/mainwindowimpl.cpp" line="14262"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15327"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15344"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15395"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15412"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15421"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15475"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15524"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15541"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16037"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16065"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16091"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16111"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16128"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16337"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16362"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16374"/>
         <source>
 SQL Befehl:
 </source>
@@ -3607,742 +3583,730 @@ SQL Befehl:
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="961"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1072"/>
+        <location filename="../src/mainwindowimpl.cpp" line="963"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1090"/>
         <source>Neuer Eintrag</source>
         <translation>Add entry</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="1073"/>
-        <location filename="../src/mainwindowimpl.cpp" line="1675"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7068"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1091"/>
+        <location filename="../src/mainwindowimpl.cpp" line="1775"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7162"/>
         <source>Pellets</source>
         <translation>Pellets</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="1973"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13217"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13325"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2036"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13324"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13432"/>
         <source>Anteil an der Stamwürze in Prozent: 0=Wird bei der Berechnung der Stammwürze nicht berücksichtigt</source>
         <translatorcomment>Share on OG in %; 0= will not be considered for calculating the gravity</translatorcomment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="1985"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13227"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13336"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2051"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13334"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13443"/>
         <source>Farbwert: 0=Wird bei der berechnung der Farbe nicht berücksichtigt</source>
         <translation>Color value; 0=will not be considered for calculating the color</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="1996"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13236"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13346"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2065"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13343"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13453"/>
         <source>Preis pro Kilogramm</source>
-        <translation>Price/Kg</translation>
+        <translation>Price/kg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2105"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2200"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2254"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2341"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13423"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2180"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2275"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2329"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2416"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13530"/>
         <source>Der Rohstoff &lt;b&gt;</source>
         <translation>The ingredient &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2105"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2180"/>
         <source>&lt;/b&gt; den Du löschen frochtest, wird in dem noch nicht gebrauten Sud &lt;b&gt;</source>
-        <translation>&lt;/b&gt; you want to remove is still considered in yet not brewed beer&lt;b&gt;</translation>
+        <translation>&lt;/b&gt; you want to remove is still considered as not brewed&lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2200"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13423"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2275"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13530"/>
         <source>&lt;/b&gt; den Du löschen möchtest, wird in den Weiteren Zutaten in dem noch nicht gebrauten Sud &lt;b&gt;</source>
         <translation>&lt;/b&gt; you want to remove is still part of the additional ingredients of the yet unbrewed beer &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2254"/>
-        <location filename="../src/mainwindowimpl.cpp" line="2341"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2329"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2416"/>
         <source>&lt;/b&gt; den Du löschen möchtest, wird in dem noch nicht gebrauten Sud &lt;b&gt;</source>
-        <translation>&lt;/b&gt; you want to remove is still onsidered in the yet unbrewed beer &lt;b&gt;</translation>
+        <translation>&lt;/b&gt; you want to remove is still considered as not brewed&lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2621"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2696"/>
         <source>&amp;Speichern</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2622"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2697"/>
         <source>Speichere die aktuellen Suddaten</source>
         <translation>Save the current brew data</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2639"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2714"/>
         <source>&amp;Einstellungen</source>
         <translation>&amp;Settings</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2640"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2715"/>
         <source>Öffnet einen Dialog mit Einstellungen</source>
         <translation>Opens a dialogue with settings</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2623"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2698"/>
         <source>&amp;Rezeptübernahme Schüttung</source>
-        <translation type="unfinished">&amp;Recipe transfer fermentables</translation>
+        <translation>&amp;Recipe transfer fermentables</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2624"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2699"/>
         <source>Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung</source>
         <translation>Opens dialogue to support recipe transfer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2625"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2700"/>
         <source>&amp;Rezeptübernahme Bittere</source>
-        <translation type="unfinished">&amp;Recipe transfer bittering</translation>
+        <translation>&amp;Recipe transfer bittering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2626"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2701"/>
         <source>Öffnet einen Dialog zur Berechnung der Bittere</source>
         <translation>Opens dialogue for calculating bitterness</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2627"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2702"/>
         <source>&amp;Entsperre Eingabefelder</source>
-        <translation type="unfinished">&amp;Unlock input field</translation>
+        <translation>&amp;Unlock input field</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2628"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2703"/>
         <source>Hebt die Eingabesperre der Eingabefelder auf</source>
         <translation>Removes lock on input fields</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2629"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2704"/>
         <source>&quot;Bier &amp;gebraut&quot; zurücksetzten</source>
-        <translation>Reset &quot;Beer &amp; brewed&quot;</translation>
+        <translation>Reset &quot;brew &amp;brewed&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2630"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2705"/>
         <source>Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück</source>
         <translation>Resets &quot;beer brewed&quot; from open beer file in the database</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2631"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2706"/>
         <source>&quot;Bier &amp;abgefüllt&quot; zurücksetzten</source>
-        <translation>reset &quot;beer &amp;bottled&quot;</translation>
+        <translation>Reset &quot;brew &amp;bottled&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2632"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2707"/>
         <source>Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück</source>
         <translation>Resets the setting &quot;Beer Bottled&quot; for current beer in the database</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2633"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2708"/>
         <source>&quot;Bier &amp;verbraucht&quot; zurücksetzten</source>
-        <translation>Reset &quot;Beer consumed&quot;</translation>
+        <translation>Reset &quot;&amp;brew consumed&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2634"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2709"/>
         <source>Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück</source>
         <translation>Resets the setting &quot;Beer Consumed&quot; of current beer in the databse</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2635"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2710"/>
         <source>&amp;Reset Zugabestatus WZutaten</source>
-        <translation>&amp;Reset status of adding ingredients</translation>
+        <translation>&amp;Reset status of additional ingredients</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2636"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2711"/>
         <source>setzt den Zugabestatus der Weiteren Zutaten zurück</source>
         <translation>Resets status of additional ingredients</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2642"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2717"/>
         <source>&amp;Sprache</source>
-        <translation type="unfinished">&amp;Language</translation>
+        <translation>&amp;Language</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2620"/>
-        <source>&amp;geladener Sud</source>
-        <translation type="unfinished">&amp;loaded beer</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2638"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2713"/>
         <source>&amp;Extras</source>
-        <translation type="unfinished">&amp;Extras</translation>
+        <translation>&amp;Extras</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2671"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2746"/>
         <source>Keine verbindung zur Datenbank</source>
         <translation>No database connection</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2672"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2747"/>
         <source>Die Datenbank-datei: </source>
-        <translation>database file:</translation>
+        <translation>database file: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2672"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2747"/>
         <source> existiert nicht mehr!</source>
-        <translation>does not exist anylonger!</translation>
+        <translation> does not exist anylonger!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="2673"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2748"/>
         <source>Wenn die Datenbank auf einem USB-Stick oder Netzlaufwerk liegt, stellen sie die verbindung wieder her und speichern sie anschliessend nocheinmal.</source>
         <translation>If the databse is on a USB flash drive or in the network, please connect to it and then save again.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="3895"/>
-        <location filename="../src/mainwindowimpl.cpp" line="3933"/>
+        <location filename="../src/mainwindowimpl.cpp" line="3989"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4027"/>
         <source>Spickzettel</source>
         <translation>Summary</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="3989"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8789"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8793"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8940"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9033"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10502"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12204"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4083"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8885"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8889"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9038"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9131"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10600"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12311"/>
         <source>Menge</source>
         <translation>Amount</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="3995"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4238"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4261"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4284"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8946"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9039"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10508"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10909"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10932"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10955"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12210"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4089"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4332"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4355"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4378"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9044"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9137"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10606"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11007"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11030"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11053"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12317"/>
         <source>Liter</source>
         <translation>Litre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4001"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8804"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8808"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8957"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9050"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10514"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12217"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16146"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4095"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8900"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8904"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9055"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9148"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10612"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12324"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16257"/>
         <source>Stammwürze</source>
         <translation>Original gravity</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4007"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8960"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8961"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9053"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9054"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9181"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9188"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10520"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12223"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4101"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9058"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9059"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9151"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9152"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9279"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9286"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10618"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12330"/>
         <source>°P</source>
         <translation>°P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4014"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10527"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16161"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4108"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10625"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16272"/>
         <source>High Gravity Faktor</source>
         <translation>High gravity factor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4020"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4115"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8953"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8954"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8982"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9000"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9001"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9010"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9011"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9046"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9047"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9075"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9093"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9094"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9103"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9104"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9183"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9190"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10533"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10624"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10637"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10774"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4114"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4209"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9051"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9052"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9080"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9098"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9099"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9108"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9109"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9144"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9145"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9173"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9191"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9192"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9201"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9202"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9281"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9288"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10631"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10722"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10735"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10872"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4027"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10552"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12230"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16131"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4121"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10650"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12337"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16242"/>
         <source>Bittere</source>
         <translation>Bitterness</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4033"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10563"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12236"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4127"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10661"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12343"/>
         <source>IBU</source>
         <translation>IBU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4039"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4133"/>
         <source>Nachisomerisierungs-Zeit</source>
         <translation>Post-boil isomerisation time</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4045"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4184"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10831"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11309"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4139"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4278"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10929"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11407"/>
         <source>min</source>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4051"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10569"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12243"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4145"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10667"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12350"/>
         <source>Farbe</source>
         <translation>Color</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4057"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4121"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10575"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10780"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12249"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4151"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4215"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10673"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10878"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12356"/>
         <source>EBC</source>
         <translation>EBC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4063"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10581"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12256"/>
-        <location filename="../src/mainwindowimpl.cpp" line="16118"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4157"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10679"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12363"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16229"/>
         <source>CO2 Gehalt</source>
         <translation>CO2 Level</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4069"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10611"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12262"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4163"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10709"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12369"/>
         <source>g/Liter</source>
         <translation>g/Litre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4075"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10643"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4169"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10741"/>
         <source>Brauanlage</source>
         <translation>Brewing equipment</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4128"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4222"/>
         <source>Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!</source>
         <translation>Individual amounts of grist couldn&apos;t be calculated because the portions don&apos;t sum up to 100%!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4133"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10787"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4227"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10885"/>
         <source>Gesamt</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4170"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10817"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4264"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10915"/>
         <source>VWH </source>
-        <translation>Pre-boil hopping</translation>
+        <translation>Pre-boil hopping </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4191"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4285"/>
         <source>Die einzelnen Hopfenhaben konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!</source>
         <translation>Individual hop amounts couldn&apos;t be calculated because the division does not sum up to 100%!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4209"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4358"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4404"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4450"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4496"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4542"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10851"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11028"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11082"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11136"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11190"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11244"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4303"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4452"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4498"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4544"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4590"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4636"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10949"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11126"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11180"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11234"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11288"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11342"/>
         <source>Gärung</source>
         <translation>Fermentation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4211"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10853"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4305"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10951"/>
         <source>Anstellen</source>
         <translation>Pitching</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4232"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10903"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4326"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11001"/>
         <source>Hauptguss</source>
         <translation>Strike water</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4243"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4266"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10914"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10937"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4337"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4360"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11012"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11035"/>
         <source>Milchsäure (80%)</source>
         <translation>Lactic acid (80%)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4249"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4272"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10920"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10943"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4343"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4366"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11018"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11041"/>
         <source>ml</source>
         <translation>ml</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4255"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10926"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4349"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11024"/>
         <source>Nachguss</source>
         <translation>Sparging water</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4296"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10967"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4390"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11065"/>
         <source>Anzahl Einheiten:</source>
         <translation>Amount of units:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4311"/>
-        <location filename="../src/mainwindowimpl.cpp" line="10982"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4405"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11080"/>
         <source> zu </source>
         <translation> to </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4360"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4406"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11030"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11084"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4454"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4500"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11128"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11182"/>
         <source>Kochbeginn</source>
         <translation>Begin of boil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4362"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4408"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4454"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4500"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4546"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4622"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11032"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11086"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11140"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11194"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11248"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4456"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4502"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4548"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4594"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4640"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4716"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11130"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11184"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11238"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11292"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11346"/>
         <source>Maischen</source>
         <translation>Mashing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4452"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4498"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4544"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4832"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11138"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11192"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11246"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4546"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4592"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4638"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4926"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11236"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11290"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11344"/>
         <source>Kochen</source>
         <translation>Boiling</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4586"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4680"/>
         <source>benötigte Gerätschaften</source>
         <translation>Neccessary equipment</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4629"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4723"/>
         <source>Einmaischen: </source>
-        <translation>Dough in:</translation>
+        <translation>Dough in: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4632"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4727"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4726"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4821"/>
         <source> Liter Wasser auf </source>
-        <translation>Heat litres of water to</translation>
+        <translation> Heat litres of water to </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4633"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4727"/>
         <source>°C erhitzen und Malzschüttung zugeben </source>
-        <translation>°C and add malts</translation>
+        <translation>°C and add malts </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4644"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4738"/>
         <source>Maische auf </source>
-        <translation>Heat mash to</translation>
+        <translation>Heat mash to </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4645"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4739"/>
         <source>°C erhitzen und </source>
-        <translation>°C and rest for</translation>
+        <translation>°C and rest for </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4646"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4740"/>
         <source> min Rast einlegen.</source>
-        <translation>min.</translation>
+        <translation> min.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4673"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4862"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5040"/>
-        <source> Kg</source>
-        <translation>Kg</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4675"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4864"/>
-        <location filename="../src/mainwindowimpl.cpp" line="5042"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4769"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4958"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5136"/>
         <source> g</source>
-        <translation>g</translation>
+        <translation> g</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4707"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4741"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4801"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4835"/>
         <source>Läutern</source>
         <translation>Lautering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4714"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4808"/>
         <source>Läutern vorbereiten</source>
         <translation>Prepare lautering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4717"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4811"/>
         <source>Maische in den Läutereimer schöpfen</source>
         <translation>Scoop mash into lauter tun</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4724"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4818"/>
         <source>Nachguss vorbereiten: </source>
-        <translation>Prepare sparking water: Heat up to:</translation>
+        <translation>Prepare sparking water: Heat up to: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4727"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4821"/>
         <source>°C erhitzen</source>
         <translation>°C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4734"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4828"/>
         <source>Nach etwa 10 - 20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.</source>
         <translation>Wait for approximately 10 to 20 minutes before starting to drain off wort. Return the work to the lauter tun until it becomes clear.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4744"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4838"/>
         <source>Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!!), bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.</source>
         <translation>Drain ff wort slowly (Grains shall not run dry). Before grains turn run dry, add sparking water (in steps to about 2-3 litres) over a float.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4754"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4848"/>
         <source>Würze kochen</source>
         <translation>Boil wort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4763"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4857"/>
         <source>Vorderwürzehopfung: </source>
-        <translation>Pre-boil hopping:</translation>
+        <translation>Pre-boil hopping: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4767"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4815"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4861"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4909"/>
         <source>Nach </source>
-        <translation>After</translation>
+        <translation>After </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4768"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4815"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4862"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4909"/>
         <source> min </source>
         <translation> min, add </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4770"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4817"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4864"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4911"/>
         <source>g </source>
         <translation>g </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4771"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4865"/>
         <source> Hopfen vorlegen</source>
         <translation> of hops</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4782"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4876"/>
         <source>Würze zum Kochen bringen</source>
         <translation>Brong wort to boil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4805"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4899"/>
         <source>. Hopfengabe: </source>
-        <translation>. Hop addition:</translation>
+        <translation>. Hop addition: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4818"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4912"/>
         <source> Hopfen untermischen</source>
-        <translation>intermix hop</translation>
+        <translation> intermix hop</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4835"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4929"/>
         <source>Noch </source>
-        <translation>Continue to boil for</translation>
+        <translation>Continue to boil for </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4835"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4929"/>
         <source>min weiter kochen</source>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4876"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4970"/>
         <source>Würzemenge eintragen</source>
         <translation>Enter amount of wort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4879"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4973"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge vor dem Hopfenseihen) eintragen</source>
         <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4886"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4980"/>
         <source>Whirlpool</source>
         <translation>Whirlpool</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4889"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4983"/>
         <source>Kocher abschalten, wenn thermische Bewegung abgeflaut ist einen Whirlpool erzeugen</source>
         <translation>Turn off stove. When thermic motions abate, create a whirlpool</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4898"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4992"/>
         <source>ca. 15 min warten bis sich Trubkegel gebildet hat</source>
         <translation>wait appr. 15 min. for trub cone to form</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4907"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5001"/>
         <source>Abseihen / Anstellen</source>
         <translation>Filtering / Pitching</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4914"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5008"/>
         <source>Hopfenseihen</source>
         <translation>Hop filtering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4917"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5011"/>
         <source>Die Würze durch einen Filter in den Gärbehälter abfüllen</source>
         <translation>Fill wort through a filter into fermentation vessel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4924"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4976"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5018"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5070"/>
         <source>Würzemenge Eintragen</source>
         <translation>Enter amount of wort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4927"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5021"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge nach dem Hopfenseihen) eintragen</source>
         <translation>Determine amount of wort and enter the value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4934"/>
-        <location filename="../src/mainwindowimpl.cpp" line="4986"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5028"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5080"/>
         <source>Stammwürze Eintragen</source>
         <translation>Enter original gravity</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4937"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5031"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze nach dem Hopfenseihen) eintragen</source>
         <translation>Meassure original gravity and enter value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4944"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5038"/>
         <source>Verdünnen</source>
         <translation>Dilute</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4947"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5041"/>
         <source>Wenn gewünscht die Würze mit der berechneten Menge Wasser auf Sollstammwürze verdünnen</source>
         <translation>If desired, dilute wort with calculated amount of water to reach original gravity</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4955"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5049"/>
         <source>Speise abfüllen</source>
-        <translation type="unfinished">Bottle unfermented wort</translation>
+        <translation>Bottle unfermented wort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4958"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5052"/>
         <source> Liter Speise abfüllen</source>
-        <translation type="unfinished">Litres of unfermented wort to bottle</translation>
+        <translation> Litres of unfermented wort for bottling</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4966"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5060"/>
         <source>Abkühlen</source>
         <translation>Chilling</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4969"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5063"/>
         <source>Die Würze auf Anstelltemperatur bringen.</source>
         <translation>Bring wort to fermentation temperature.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4979"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5073"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge beim Anstellen) eintragen</source>
         <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4989"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5083"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze beim Anstellen) eintragen</source>
         <translation>Meassure original gravity and enter value into the field &quot;Wort amount at pitching&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4996"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5090"/>
         <source>Hefe zugeben</source>
         <translation>Add yeast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="4999"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5093"/>
         <source>Die Würze mit dem Rührer gut durchlüften und die Hefe unterrühren.</source>
         <translation>Stir wort well to aerate and stir yeast into wort.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5006"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5100"/>
         <source>Sud als gebraut markieren, zurücklehnen und ein Bier genießen (am besten ein Selbstgebrautes)</source>
-        <translation>Mark beer as breweed, lean back, and enjoy a well temperatured beer (preferably one of your self made) </translation>
+        <translation>Mark beer as breweed, lean back, and enjoy a well temperatured beer (preferably one of your self made)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5023"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5117"/>
         <source>Bei der Gärung</source>
         <translation>During fermentation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5196"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5290"/>
         <source>Stammwürze beim Anstellen</source>
         <translation>Amount of wort when pitching yeast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5199"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5293"/>
         <source>Stammwürze Soll nach dem Kochen</source>
         <translation>Targeted gravity after boil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5383"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5477"/>
         <source>Sollen die verwendeten Rohstoffe vom Bestand abgezogen werden?
 
 Hinweis: Zutaten die bei der gärung hinzugegeben werden werden jetzt nicht verrechnet.</source>
@@ -4351,177 +4315,171 @@ Hinweis: Zutaten die bei der gärung hinzugegeben werden werden jetzt nicht verr
 Note: Ingredients that will be added during fermentation will not yet be subtracted.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5387"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13721"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5481"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13828"/>
         <source>Ja</source>
         <translation>Yes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5388"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13722"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5482"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13829"/>
         <source>Nein</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5742"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5836"/>
         <source>Das Bier kann noch nicht als abgefüllt Markiert werden da der Sud Zutaten für die Gärung enthält die noch nicht als zugegeben oder entnommen Markiert wurden.</source>
         <translation>Beer cannot be marked as bottles because recipie contains ingredients to be added during the fermentation process which haven&apos;t been marked as added yet.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5743"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5837"/>
         <source>Bitte die Zutaten entfernen oder den Status noch entsprechend setzten</source>
         <translation>Please add ingredients, delete from the recipie, or change their status accordingly</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5935"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6279"/>
-        <source> Kg zu wenig vorhanden</source>
-        <translation>Kg not available in sufficent amounts</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5947"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6041"/>
         <source>Maximal empfohlener Schüttungsanteil (</source>
         <translation>Maximal recommend share for fermentables (</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5947"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6041"/>
         <source>%) wurde überschritten</source>
         <translation>%) exceeded</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="5953"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6052"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6105"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6202"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6289"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6292"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6047"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6146"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6199"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6296"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6383"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6386"/>
         <source>Rest </source>
         <translation>rest </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6047"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6197"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6141"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6291"/>
         <source> g zu wenig Hopfen vorhanden</source>
-        <translation>g hops missing</translation>
+        <translation> g hops missing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6100"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6194"/>
         <source> Einheiten zu wenig Hefe vorhanden</source>
         <translation> units yeast missing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6105"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6199"/>
         <source>Einheiten</source>
         <translation>Units</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6282"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6376"/>
         <source> g zu wenig vorhanden</source>
         <translation> g missing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6322"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6416"/>
         <source>!!!Achtung das Jungbier ist noch nicht weit genug endvergoren, der Restextrakt sollte nicht über </source>
-        <translation>!!!Attention! Green beer is not yet enouch fermented. Residual extract should not exceed</translation>
+        <translation>!!!Attention! Green beer is not yet enouch fermented. Residual extract should not exceed </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6322"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6416"/>
         <source>°P liegen</source>
         <translation>°P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6349"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6443"/>
         <source>Kapazität Maischekessel um </source>
-        <translation>Capacity of mash tun by</translation>
+        <translation>Capacity of mash tun by </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6351"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6380"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6445"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6474"/>
         <source> Liter überschritten</source>
-        <translation>litres exceeded</translation>
+        <translation> litres exceeded</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6356"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6385"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6450"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6479"/>
         <source>noch </source>
         <translation>still </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6358"/>
-        <location filename="../src/mainwindowimpl.cpp" line="6387"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6452"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6481"/>
         <source> Liter Platz</source>
-        <translation>litres left</translation>
+        <translation> litres left</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6378"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6472"/>
         <source>Kapazität Sudpfanne um </source>
-        <translation>Capacity of brew kettle</translation>
+        <translation>Capacity of brew kettle </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6754"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6848"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6830"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6924"/>
         <source>Speichern?</source>
         <translation>Save?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6831"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6925"/>
         <source>Die Daten wurden verändert.</source>
         <translation>Data was changed.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6832"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6926"/>
         <source>Sollen die Änderungen gespeichert werden?</source>
         <translation>Should the changes be saved?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6835"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6929"/>
         <source>Speichern</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6836"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6930"/>
         <source>Verwerfen</source>
         <translation>Discard</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="6978"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7067"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7165"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7072"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7161"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7259"/>
         <source> Kopie</source>
         <translation> Copy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7323"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15695"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7417"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15806"/>
         <source>PDF Datei Speichern unter</source>
         <translation>Save PDF file as</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7323"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15695"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7417"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15806"/>
         <source>Suddateien (*.pdf)</source>
-        <translation>Beer files (*.pdf)</translation>
+        <translation>Brew files (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7415"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7509"/>
         <source>Farbe konnte nicht berechnet werden da eine Auswahl in der Schüttungs-zusammenstellung
 in den Rohstoffdaten nicht mehr vorhanden ist</source>
         <translation>Color couldn&apos;t be calculated because of the ingredients in the recipie is missing in the ingredients&apos; inventory list</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7896"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7990"/>
         <source>Der Malzeintrag &lt;b&gt;</source>
         <translation>The malt entry &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7896"/>
-        <location filename="../src/mainwindowimpl.cpp" line="7951"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8020"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8043"/>
+        <location filename="../src/mainwindowimpl.cpp" line="7990"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8045"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8114"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8137"/>
         <source>&lt;/b&gt; ist nicht mehr vorhanden.
 
  ersetzen durch?</source>
@@ -4530,98 +4488,98 @@ in den Rohstoffdaten nicht mehr vorhanden ist</source>
  substitute with?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="7951"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8045"/>
         <source>Der Hopfeneintrag &lt;b&gt;</source>
         <translation>The hop entry &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8020"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8114"/>
         <source>Der Hopfeneintrag in den Weiteren Zutaten &lt;b&gt;</source>
         <translation>Hop entry in additional ingredients &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8043"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8137"/>
         <source>Der Rohstoffeintrag in den Weiteren Zutaten &lt;b&gt;</source>
         <translation>Ingredient entry in Additional Ingredients &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8125"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8221"/>
         <source>Löschen?</source>
         <translation>Delete?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8126"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8222"/>
         <source>Soll der Sud &gt;</source>
         <translation>Should the beer &gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8126"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8222"/>
         <source>&lt; gelöscht werden?</source>
         <translation>&lt; be deleted?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8127"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8223"/>
         <source>Achtung: dies kann nicht rückgängig gemacht werden!</source>
         <translation>Attention: This action cannot be undone!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8129"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8225"/>
         <source>Löschen</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8130"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8226"/>
         <source>Abrechen</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8592"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8688"/>
         <source>Schüttung: </source>
-        <translation>Fermentables:</translation>
+        <translation>Fermentables: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8592"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8594"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8596"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8598"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8600"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8602"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8603"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8688"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8690"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8692"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8694"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8696"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8698"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8699"/>
         <source> €</source>
         <translation> €</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8594"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8690"/>
         <source>Hopfen: </source>
         <translation>Hops: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8596"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8692"/>
         <source>Weitere Zutaten: </source>
         <translation>Additional Ingredients: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8598"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8694"/>
         <source>Hefe: </source>
         <translation>Yeast: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8600"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8696"/>
         <source>Nebenkosten: </source>
         <translation>Additional costs: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8602"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8698"/>
         <source>Brauanlage: </source>
         <translation>Brewing equipment: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8603"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8699"/>
         <source>gesamt: </source>
         <translation>total: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8611"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8707"/>
         <source>
 
 Kosten konnten nicht berechnet werden da die Angaben im Rezept unvollständig
@@ -4636,420 +4594,456 @@ or because an ingredient is missing from the inventory
 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8613"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8709"/>
         <source>Überprüfe die Malzschüttung
 </source>
-        <translation>Check the grain bill</translation>
+        <translation>Check the grain bill
+</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8615"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8711"/>
         <source>Überprüfe die Hopfengaben
 </source>
-        <translation>Check the hop bill</translation>
+        <translation>Check the hop bill
+</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8617"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8713"/>
         <source>Überprüfe die Hefegabe</source>
         <translation>Check the yeast bill</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8756"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8852"/>
         <source>Verbraucht</source>
         <translation>Spent</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8764"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8774"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8860"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8870"/>
         <source>Woche</source>
         <translation>Week</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8765"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8861"/>
         <source>
  noch</source>
-        <translation>still</translation>
+        <translation>
+ still</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8765"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8861"/>
         <source>Tage</source>
         <translation>Days</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8819"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8823"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8950"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9043"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8915"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8919"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9048"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9141"/>
         <source>Sudhausausbeute</source>
         <translation>Mash efficiency</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8834"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8838"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8964"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9057"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8930"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8934"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9062"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9155"/>
         <source>Menge Schüttung</source>
         <translation>Amount of fermentables</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8849"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8853"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8971"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9064"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8945"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8949"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9069"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9162"/>
         <source>Kosten/Liter</source>
         <translation>Costs per litre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8864"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8868"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8978"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9071"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8960"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8964"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9076"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9169"/>
         <source>Alkohol</source>
         <translation>ABV</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8886"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8890"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8985"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9078"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8982"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8986"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9083"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9176"/>
         <source>Scheinbarer EVG</source>
         <translation>Apparent attenuation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8901"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8905"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9004"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9097"/>
+        <location filename="../src/mainwindowimpl.cpp" line="8997"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9001"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9102"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9195"/>
         <source>Effektive Ausbeute</source>
         <translation>Brewhouse efficiency</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8947"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9040"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9045"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9138"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8967"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8968"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9060"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9061"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16072"/>
+        <source>Alle vergessen</source>
+        <translation>Unpin all</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindowimpl.cpp" line="83"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4203"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4233"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4446"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4492"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4538"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4584"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4630"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9065"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9066"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9158"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9159"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10866"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10891"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11120"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11174"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11228"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11282"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11336"/>
         <source>kg</source>
         <translation>Kg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8974"/>
-        <location filename="../src/mainwindowimpl.cpp" line="8975"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9067"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9068"/>
+        <location filename="../src/mainwindowimpl.cpp" line="2695"/>
+        <source>&amp;Geladener Sud</source>
+        <translation>Loaded &amp;brew</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindowimpl.cpp" line="4767"/>
+        <location filename="../src/mainwindowimpl.cpp" line="4956"/>
+        <location filename="../src/mainwindowimpl.cpp" line="5134"/>
+        <source> kg</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindowimpl.cpp" line="6029"/>
+        <location filename="../src/mainwindowimpl.cpp" line="6373"/>
+        <source> kg zu wenig vorhanden</source>
+        <translation> kg insufficent amount</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindowimpl.cpp" line="9072"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9073"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9165"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9166"/>
         <source>€</source>
         <translation>€</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="8981"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9079"/>
         <source>%vol</source>
         <translation>%vol</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9074"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9172"/>
         <source>vol%</source>
         <translation>vol%</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9180"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9187"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9278"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9285"/>
         <source>Restextrakt °P</source>
         <translation>Residual extract °P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9182"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9189"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9280"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9287"/>
         <source>Alkoholgehalt vol%</source>
         <translation>ABV vol%</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9184"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9191"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9196"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9282"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9289"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9294"/>
         <source>Temperatur °C</source>
         <translation>Temperature °C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9185"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9192"/>
-        <location filename="../src/mainwindowimpl.cpp" line="9197"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11290"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11303"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9283"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9290"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9295"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11388"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11401"/>
         <source>°C</source>
         <translation>°C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9194"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9292"/>
         <source>CO2 Gehalt g/L</source>
         <translation>CO2 Level g/L</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="9195"/>
+        <location filename="../src/mainwindowimpl.cpp" line="9293"/>
         <source>g/L</source>
         <translation>g/L</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10445"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10543"/>
         <source>Zusammenfassung</source>
         <translation>Summary</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10540"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10638"/>
         <source>Alkoholgehalt</source>
         <translation>ABV</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10546"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10644"/>
         <source>%Vol</source>
         <translation>%Vol</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10618"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10716"/>
         <source>scheinbarer Endvergärungsgrad</source>
         <translation>Apparent attenuation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10631"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10729"/>
         <source>effektive Sudhausausbeute</source>
         <translation>Brewhouse efficiency</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10669"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10767"/>
         <source>Braudatum</source>
         <translation>Brew date</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10678"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10776"/>
         <source>Abfülldatum</source>
         <translation>Date of bottling</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10687"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10785"/>
         <source>Angepeiltes Reifezeitende</source>
         <translation>Targeted end date of priming</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10725"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10823"/>
         <source>Beste Bewertung</source>
         <translation>Best evaluation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10865"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10963"/>
         <source>Entnommen am </source>
-        <translation>Extracted on</translation>
+        <translation>Extracted on </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="10866"/>
+        <location filename="../src/mainwindowimpl.cpp" line="10964"/>
         <source>Tage: </source>
         <translation>Days: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11279"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11377"/>
         <source>Maischen:</source>
-        <translation>Mashing: </translation>
+        <translation>Mashing:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11284"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11382"/>
         <source>Einmaischen bei</source>
         <translation>Dough-in at</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11297"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11395"/>
         <source> bei </source>
         <translation> at </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11341"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11439"/>
         <source>Anhänge:</source>
         <translation>Attachments:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11586"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11684"/>
         <source>Eingabehilfe für Volumen Sudpfanne</source>
         <translation>Input assistance for brew kettle voume</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11613"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11711"/>
         <source>Eingabehilfe für Volumen nach dem Hopfenseihen</source>
         <translation>Input assistence for volume after hop filtering</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11783"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11881"/>
         <source>Export Sud</source>
-        <translation>Export Beer</translation>
+        <translation>Export Brew</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11783"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11881"/>
         <source>KBH Sud Export Dateien (*.xsud)</source>
-        <translation>KBH Beer export files (*.xsud)</translation>
+        <translation>KBH brew export files (*.xsud)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11783"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11881"/>
         <source>BeerXML (*.xml)</source>
         <translation>BeerXML (*.xml)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11808"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11906"/>
         <source>Suddatei öffnen</source>
-        <translation>Open Beer file</translation>
+        <translation>Open brew file</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11808"/>
-        <source>Sud Export Dateien (*.xsud)</source>
-        <translation>Beer export files (*.xsud)</translation>
+        <location filename="../src/mainwindowimpl.cpp" line="11906"/>
+        <source>Sud Export Dateien (*.xsud);; Maische Malz und Mehr (*.json)</source>
+        <translation>Brew export file (*.xsud);; Maische Malz und Mehr (*.json)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11818"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11824"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11833"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11843"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11849"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11858"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11925"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11931"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11940"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11950"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11956"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11965"/>
         <source>Dateiname: </source>
         <translation>File name: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11825"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11834"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11850"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11859"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11932"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11941"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11957"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11966"/>
         <source>Message: </source>
         <translation>Message: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11826"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11851"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11933"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11958"/>
         <source>Zeile: </source>
         <translation>Line: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11827"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11852"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11934"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11959"/>
         <source>Spalte: </source>
         <translation>Column: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="11869"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11976"/>
         <source>Sud wurde Importiert</source>
-        <translation>Beer file was imported</translation>
+        <translation>Brew file was imported</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12315"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12422"/>
         <source>Bei dem Sud &gt;</source>
         <translation>At Beer &gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12315"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12422"/>
         <source>&lt; wurde ein Rohstoff verändert und die Berechneten Werte stimmen nun nicht mehr. Zum neu Berechnen bitte den Sud Laden und wieder Speichern.</source>
-        <translation>&lt; an ingredient was changed and calculated values are now incorrect. For re-calculation please load the Beer again and save it again.</translation>
+        <translation>&lt; an ingredient was changed and calculated values are now incorrect. For re-calculation please load the brew again and save it again.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12700"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12807"/>
         <source>benötigte Rohstoffe</source>
         <translation>Necessary ingredients</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12707"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12814"/>
         <source>benötigt (kg)</source>
         <translation>necessary (kg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12707"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12814"/>
         <source>übrig (kg)</source>
         <translation>left (kg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12752"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12859"/>
         <source>benötigt (g)</source>
         <translation>necessary (kg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12752"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12859"/>
         <source>übrig (g)</source>
         <translation>left (kg)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12795"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12839"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12898"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12957"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13016"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13075"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12902"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12946"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13005"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13064"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13123"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13182"/>
         <source>benötigt</source>
         <translation>necessary</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="12795"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12839"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12898"/>
-        <location filename="../src/mainwindowimpl.cpp" line="12957"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13016"/>
-        <location filename="../src/mainwindowimpl.cpp" line="13075"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12902"/>
+        <location filename="../src/mainwindowimpl.cpp" line="12946"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13005"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13064"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13123"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13182"/>
         <source>übrig</source>
         <translation>left</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="13147"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13254"/>
         <source>Anhänge</source>
         <translation>Attachments</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="13718"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13825"/>
         <source>Soll die Zutat</source>
         <translation>Should the ingredient</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="13718"/>
+        <location filename="../src/mainwindowimpl.cpp" line="13825"/>
         <source>vom bestand abgezogen werden?</source>
         <translation>be subtracted from the inventory?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="14192"/>
-        <location filename="../src/mainwindowimpl.cpp" line="14718"/>
+        <location filename="../src/mainwindowimpl.cpp" line="14299"/>
+        <location filename="../src/mainwindowimpl.cpp" line="14825"/>
         <source>Woche </source>
         <translation>Week </translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="15192"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15259"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15334"/>
-        <location filename="../src/mainwindowimpl.cpp" line="15388"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15299"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15366"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15441"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15495"/>
         <source>Bitte eine Bezeichnung angeben</source>
         <translation>Please enter a description</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="15735"/>
+        <location filename="../src/mainwindowimpl.cpp" line="15846"/>
         <source>Neue Brauanlage</source>
         <translation>New brew equipment</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="15961"/>
-        <source>alle vergessen</source>
-        <translation>Discard all</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindowimpl.cpp" line="16118"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16229"/>
         <source>&lt;b&gt;Typischer CO2 Gehalt in g/Liter:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                      &lt;tr&gt;&lt;td&gt;Lager, Pilsner &lt;/td&gt;&lt;td&gt;4,00 - 5,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Weizenbier &lt;/td&gt;&lt;td&gt;6,50 - 9,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Britische Ales &lt;/td&gt;&lt;td&gt;3,00 - 4,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Porter Stout &lt;/td&gt;&lt;td&gt;3,40 - 4,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Belgische Ales &lt;/td&gt;&lt;td&gt;3,80 - 4,80&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Lambic &lt;/td&gt;&lt;td&gt;4,80 - 5,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Frucht-Lambic &lt;/td&gt;&lt;td&gt;6,00 - 9,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Typical amout of CO2 in g/Liter:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                      &lt;tr&gt;&lt;td&gt;Lager, Pilsner &lt;/td&gt;&lt;td&gt;4,00 - 5,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Weizenbier &lt;/td&gt;&lt;td&gt;6,50 - 9,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Britische Ales &lt;/td&gt;&lt;td&gt;3,00 - 4,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Porter Stout &lt;/td&gt;&lt;td&gt;3,40 - 4,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Belgische Ales &lt;/td&gt;&lt;td&gt;3,80 - 4,80&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Lambic &lt;/td&gt;&lt;td&gt;4,80 - 5,50&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Frucht-Lambic &lt;/td&gt;&lt;td&gt;6,00 - 9,00&lt;/td&gt;&lt;/tr&gt;                                                      &lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="16131"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16242"/>
         <source>&lt;b&gt;Typische Bitterwerte in IBU:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                   &lt;tr&gt;&lt;td&gt;Weissbier &lt;/td&gt;&lt;td&gt;10-15&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Märzen &lt;/td&gt;&lt;td&gt;18 - 28&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Export &lt;/td&gt;&lt;td&gt;23 - 29&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Kölsch &lt;/td&gt;&lt;td&gt;20 - 34&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Stout &lt;/td&gt;&lt;td&gt;25 - 40&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Altbier &lt;/td&gt;&lt;td&gt;28 - 40&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Pils &lt;/td&gt;&lt;td&gt;20 - 50&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;IPA &lt;/td&gt;&lt;td&gt;&amp;gt; 60&lt;/td&gt;&lt;/tr&gt;                                                   &lt;/table&gt;&lt;/br&gt;                                                   Neutrales Geschmacksempfinden bei IBU = 2*°P Stammwürze</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Typical bitter values in IBU:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                   &lt;tr&gt;&lt;td&gt;Weissbier &lt;/td&gt;&lt;td&gt;10-15&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Märzen &lt;/td&gt;&lt;td&gt;18 - 28&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Export &lt;/td&gt;&lt;td&gt;23 - 29&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Kölsch &lt;/td&gt;&lt;td&gt;20 - 34&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Stout &lt;/td&gt;&lt;td&gt;25 - 40&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Altbier &lt;/td&gt;&lt;td&gt;28 - 40&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;Pils &lt;/td&gt;&lt;td&gt;20 - 50&lt;/td&gt;&lt;/tr&gt;                                                   &lt;tr&gt;&lt;td&gt;IPA &lt;/td&gt;&lt;td&gt;&amp;gt; 60&lt;/td&gt;&lt;/tr&gt;                                                   &lt;/table&gt;&lt;/br&gt;                                                   Neutrales Geschmacksempfinden bei IBU = 2*°P Stammwürze</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="16146"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16257"/>
         <source>&lt;b&gt;Typische Stammwürze in °P:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                      &lt;tr&gt;&lt;td&gt;Bockbier &lt;/td&gt;&lt;td&gt;16–17,9&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Doppelbock &lt;/td&gt;&lt;td&gt;&amp;gt; 18&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Exportbier &lt;/td&gt;&lt;td&gt;12–13,5&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Altbier &lt;/td&gt;&lt;td&gt;11,9&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Kölsch &lt;/td&gt;&lt;td&gt;11,3&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Pilsener &lt;/td&gt;&lt;td&gt;11,3–12,3&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Weizenbier &lt;/td&gt;&lt;td&gt;11–13&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Helles &lt;/td&gt;&lt;td&gt;11–13&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Berliner Weisse &lt;/td&gt;&lt;td&gt;7–8&lt;/td&gt;&lt;/tr&gt;                                                      &lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Typical wort in °P:&lt;/b&gt;&lt;/br&gt;&lt;table&gt;                                                      &lt;tr&gt;&lt;td&gt;Bockbier &lt;/td&gt;&lt;td&gt;16–17,9&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Doppelbock &lt;/td&gt;&lt;td&gt;&amp;gt; 18&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Exportbier &lt;/td&gt;&lt;td&gt;12–13,5&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Altbier &lt;/td&gt;&lt;td&gt;11,9&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Kölsch &lt;/td&gt;&lt;td&gt;11,3&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Pilsener &lt;/td&gt;&lt;td&gt;11,3–12,3&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Weizenbier &lt;/td&gt;&lt;td&gt;11–13&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Helles &lt;/td&gt;&lt;td&gt;11–13&lt;/td&gt;&lt;/tr&gt;                                                      &lt;tr&gt;&lt;td&gt;Berliner Weisse &lt;/td&gt;&lt;td&gt;7–8&lt;/td&gt;&lt;/tr&gt;                                                      &lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindowimpl.cpp" line="16161"/>
+        <location filename="../src/mainwindowimpl.cpp" line="16272"/>
         <source>Mit High Gravity kann die Ausschlagmenge                                                                erhöht werden (wenn die Sudpfanne an ihre Grenze kommt) indem stärker                                                                eingebraut wird und dann vor der Hefezugabe wieder auf die gewünschte                                                                Stammwürze verdünnt wird.</source>
-        <translation type="unfinished"></translation>
+        <translation>With high gravity you can increase the wort outcome (when the brew kettle is too small) by increasing the original gravity during mashing and cooking and cut the wort with water before fermentation to achieve the desired original gravity.</translation>
     </message>
 </context>
 <context>
@@ -5084,75 +5078,75 @@ or because an ingredient is missing from the inventory
 <context>
     <name>QExport</name>
     <message>
-        <location filename="../src/qexport.cpp" line="35"/>
-        <location filename="../src/qexport.cpp" line="628"/>
-        <location filename="../src/qexport.cpp" line="692"/>
-        <location filename="../src/qexport.cpp" line="755"/>
-        <location filename="../src/qexport.cpp" line="869"/>
-        <location filename="../src/qexport.cpp" line="1407"/>
-        <location filename="../src/qexport.cpp" line="1549"/>
-        <location filename="../src/qexport.cpp" line="1697"/>
-        <location filename="../src/qexport.cpp" line="2021"/>
-        <location filename="../src/qexport.cpp" line="2187"/>
-        <location filename="../src/qexport.cpp" line="2293"/>
-        <location filename="../src/qexport.cpp" line="2387"/>
-        <location filename="../src/qexport.cpp" line="2509"/>
-        <location filename="../src/qexport.cpp" line="2585"/>
-        <location filename="../src/qexport.cpp" line="2739"/>
-        <location filename="../src/qexport.cpp" line="2780"/>
-        <location filename="../src/qexport.cpp" line="2924"/>
+        <location filename="../src/qexport.cpp" line="44"/>
+        <location filename="../src/qexport.cpp" line="637"/>
+        <location filename="../src/qexport.cpp" line="701"/>
+        <location filename="../src/qexport.cpp" line="764"/>
+        <location filename="../src/qexport.cpp" line="878"/>
+        <location filename="../src/qexport.cpp" line="1416"/>
+        <location filename="../src/qexport.cpp" line="1558"/>
+        <location filename="../src/qexport.cpp" line="1706"/>
+        <location filename="../src/qexport.cpp" line="2030"/>
+        <location filename="../src/qexport.cpp" line="2196"/>
+        <location filename="../src/qexport.cpp" line="2302"/>
+        <location filename="../src/qexport.cpp" line="2396"/>
+        <location filename="../src/qexport.cpp" line="2518"/>
+        <location filename="../src/qexport.cpp" line="2594"/>
+        <location filename="../src/qexport.cpp" line="2748"/>
+        <location filename="../src/qexport.cpp" line="2789"/>
+        <location filename="../src/qexport.cpp" line="2933"/>
         <source>Rueckgabe:
 </source>
         <translation>Rueckgabe:
 </translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="36"/>
-        <location filename="../src/qexport.cpp" line="629"/>
-        <location filename="../src/qexport.cpp" line="693"/>
-        <location filename="../src/qexport.cpp" line="756"/>
-        <location filename="../src/qexport.cpp" line="870"/>
-        <location filename="../src/qexport.cpp" line="985"/>
-        <location filename="../src/qexport.cpp" line="1048"/>
-        <location filename="../src/qexport.cpp" line="1111"/>
-        <location filename="../src/qexport.cpp" line="1175"/>
-        <location filename="../src/qexport.cpp" line="1408"/>
-        <location filename="../src/qexport.cpp" line="1424"/>
-        <location filename="../src/qexport.cpp" line="1550"/>
-        <location filename="../src/qexport.cpp" line="1564"/>
-        <location filename="../src/qexport.cpp" line="1698"/>
-        <location filename="../src/qexport.cpp" line="1713"/>
-        <location filename="../src/qexport.cpp" line="1849"/>
-        <location filename="../src/qexport.cpp" line="2022"/>
-        <location filename="../src/qexport.cpp" line="2038"/>
-        <location filename="../src/qexport.cpp" line="2188"/>
-        <location filename="../src/qexport.cpp" line="2294"/>
-        <location filename="../src/qexport.cpp" line="2388"/>
-        <location filename="../src/qexport.cpp" line="2464"/>
-        <location filename="../src/qexport.cpp" line="2510"/>
-        <location filename="../src/qexport.cpp" line="2586"/>
-        <location filename="../src/qexport.cpp" line="2740"/>
-        <location filename="../src/qexport.cpp" line="2781"/>
-        <location filename="../src/qexport.cpp" line="2925"/>
-        <location filename="../src/qexport.cpp" line="3596"/>
-        <location filename="../src/qexport.cpp" line="3606"/>
-        <location filename="../src/qexport.cpp" line="3662"/>
-        <location filename="../src/qexport.cpp" line="3730"/>
-        <location filename="../src/qexport.cpp" line="3839"/>
-        <location filename="../src/qexport.cpp" line="3960"/>
-        <location filename="../src/qexport.cpp" line="4018"/>
-        <location filename="../src/qexport.cpp" line="4077"/>
-        <location filename="../src/qexport.cpp" line="4136"/>
-        <location filename="../src/qexport.cpp" line="4324"/>
-        <location filename="../src/qexport.cpp" line="4355"/>
-        <location filename="../src/qexport.cpp" line="4381"/>
-        <location filename="../src/qexport.cpp" line="4406"/>
-        <location filename="../src/qexport.cpp" line="4432"/>
-        <location filename="../src/qexport.cpp" line="4470"/>
-        <location filename="../src/qexport.cpp" line="4629"/>
-        <location filename="../src/qexport.cpp" line="4733"/>
-        <location filename="../src/qexport.cpp" line="4854"/>
-        <location filename="../src/qexport.cpp" line="5003"/>
+        <location filename="../src/qexport.cpp" line="45"/>
+        <location filename="../src/qexport.cpp" line="638"/>
+        <location filename="../src/qexport.cpp" line="702"/>
+        <location filename="../src/qexport.cpp" line="765"/>
+        <location filename="../src/qexport.cpp" line="879"/>
+        <location filename="../src/qexport.cpp" line="994"/>
+        <location filename="../src/qexport.cpp" line="1057"/>
+        <location filename="../src/qexport.cpp" line="1120"/>
+        <location filename="../src/qexport.cpp" line="1184"/>
+        <location filename="../src/qexport.cpp" line="1417"/>
+        <location filename="../src/qexport.cpp" line="1433"/>
+        <location filename="../src/qexport.cpp" line="1559"/>
+        <location filename="../src/qexport.cpp" line="1573"/>
+        <location filename="../src/qexport.cpp" line="1707"/>
+        <location filename="../src/qexport.cpp" line="1722"/>
+        <location filename="../src/qexport.cpp" line="1858"/>
+        <location filename="../src/qexport.cpp" line="2031"/>
+        <location filename="../src/qexport.cpp" line="2047"/>
+        <location filename="../src/qexport.cpp" line="2197"/>
+        <location filename="../src/qexport.cpp" line="2303"/>
+        <location filename="../src/qexport.cpp" line="2397"/>
+        <location filename="../src/qexport.cpp" line="2473"/>
+        <location filename="../src/qexport.cpp" line="2519"/>
+        <location filename="../src/qexport.cpp" line="2595"/>
+        <location filename="../src/qexport.cpp" line="2749"/>
+        <location filename="../src/qexport.cpp" line="2790"/>
+        <location filename="../src/qexport.cpp" line="2934"/>
+        <location filename="../src/qexport.cpp" line="3941"/>
+        <location filename="../src/qexport.cpp" line="3951"/>
+        <location filename="../src/qexport.cpp" line="4007"/>
+        <location filename="../src/qexport.cpp" line="4075"/>
+        <location filename="../src/qexport.cpp" line="4184"/>
+        <location filename="../src/qexport.cpp" line="4305"/>
+        <location filename="../src/qexport.cpp" line="4363"/>
+        <location filename="../src/qexport.cpp" line="4422"/>
+        <location filename="../src/qexport.cpp" line="4481"/>
+        <location filename="../src/qexport.cpp" line="4669"/>
+        <location filename="../src/qexport.cpp" line="4700"/>
+        <location filename="../src/qexport.cpp" line="4726"/>
+        <location filename="../src/qexport.cpp" line="4751"/>
+        <location filename="../src/qexport.cpp" line="4777"/>
+        <location filename="../src/qexport.cpp" line="4815"/>
+        <location filename="../src/qexport.cpp" line="4974"/>
+        <location filename="../src/qexport.cpp" line="5078"/>
+        <location filename="../src/qexport.cpp" line="5199"/>
+        <location filename="../src/qexport.cpp" line="5348"/>
         <source>
 SQL Befehl:
 </source>
@@ -5161,70 +5155,70 @@ SQL Befehl:
 </translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="984"/>
-        <location filename="../src/qexport.cpp" line="1047"/>
-        <location filename="../src/qexport.cpp" line="1110"/>
-        <location filename="../src/qexport.cpp" line="1174"/>
-        <location filename="../src/qexport.cpp" line="1423"/>
-        <location filename="../src/qexport.cpp" line="1563"/>
-        <location filename="../src/qexport.cpp" line="1712"/>
-        <location filename="../src/qexport.cpp" line="1848"/>
-        <location filename="../src/qexport.cpp" line="2037"/>
-        <location filename="../src/qexport.cpp" line="2463"/>
-        <location filename="../src/qexport.cpp" line="3595"/>
-        <location filename="../src/qexport.cpp" line="3605"/>
-        <location filename="../src/qexport.cpp" line="3661"/>
-        <location filename="../src/qexport.cpp" line="3729"/>
-        <location filename="../src/qexport.cpp" line="3838"/>
-        <location filename="../src/qexport.cpp" line="3959"/>
-        <location filename="../src/qexport.cpp" line="4017"/>
-        <location filename="../src/qexport.cpp" line="4076"/>
-        <location filename="../src/qexport.cpp" line="4135"/>
-        <location filename="../src/qexport.cpp" line="4323"/>
-        <location filename="../src/qexport.cpp" line="4354"/>
-        <location filename="../src/qexport.cpp" line="4380"/>
-        <location filename="../src/qexport.cpp" line="4405"/>
-        <location filename="../src/qexport.cpp" line="4431"/>
-        <location filename="../src/qexport.cpp" line="4469"/>
-        <location filename="../src/qexport.cpp" line="4628"/>
-        <location filename="../src/qexport.cpp" line="4732"/>
-        <location filename="../src/qexport.cpp" line="4853"/>
-        <location filename="../src/qexport.cpp" line="5002"/>
+        <location filename="../src/qexport.cpp" line="993"/>
+        <location filename="../src/qexport.cpp" line="1056"/>
+        <location filename="../src/qexport.cpp" line="1119"/>
+        <location filename="../src/qexport.cpp" line="1183"/>
+        <location filename="../src/qexport.cpp" line="1432"/>
+        <location filename="../src/qexport.cpp" line="1572"/>
+        <location filename="../src/qexport.cpp" line="1721"/>
+        <location filename="../src/qexport.cpp" line="1857"/>
+        <location filename="../src/qexport.cpp" line="2046"/>
+        <location filename="../src/qexport.cpp" line="2472"/>
+        <location filename="../src/qexport.cpp" line="3940"/>
+        <location filename="../src/qexport.cpp" line="3950"/>
+        <location filename="../src/qexport.cpp" line="4006"/>
+        <location filename="../src/qexport.cpp" line="4074"/>
+        <location filename="../src/qexport.cpp" line="4183"/>
+        <location filename="../src/qexport.cpp" line="4304"/>
+        <location filename="../src/qexport.cpp" line="4362"/>
+        <location filename="../src/qexport.cpp" line="4421"/>
+        <location filename="../src/qexport.cpp" line="4480"/>
+        <location filename="../src/qexport.cpp" line="4668"/>
+        <location filename="../src/qexport.cpp" line="4699"/>
+        <location filename="../src/qexport.cpp" line="4725"/>
+        <location filename="../src/qexport.cpp" line="4750"/>
+        <location filename="../src/qexport.cpp" line="4776"/>
+        <location filename="../src/qexport.cpp" line="4814"/>
+        <location filename="../src/qexport.cpp" line="4973"/>
+        <location filename="../src/qexport.cpp" line="5077"/>
+        <location filename="../src/qexport.cpp" line="5198"/>
+        <location filename="../src/qexport.cpp" line="5347"/>
         <source>Rückgabe:
 </source>
         <translation>Rückgabe:
 </translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="3102"/>
-        <location filename="../src/qexport.cpp" line="3124"/>
-        <location filename="../src/qexport.cpp" line="4336"/>
-        <location filename="../src/qexport.cpp" line="4543"/>
-        <location filename="../src/qexport.cpp" line="4655"/>
-        <location filename="../src/qexport.cpp" line="4761"/>
-        <location filename="../src/qexport.cpp" line="4883"/>
+        <location filename="../src/qexport.cpp" line="3111"/>
+        <location filename="../src/qexport.cpp" line="3469"/>
+        <location filename="../src/qexport.cpp" line="4681"/>
+        <location filename="../src/qexport.cpp" line="4888"/>
+        <location filename="../src/qexport.cpp" line="5000"/>
+        <location filename="../src/qexport.cpp" line="5106"/>
+        <location filename="../src/qexport.cpp" line="5228"/>
         <source>Die Datei ist keine gültige xsud Importdatei</source>
         <translation>File is not a valid xsud file</translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="3580"/>
+        <location filename="../src/qexport.cpp" line="3925"/>
         <source>In dieser Sud Datei ist der Eintrag Abgefüllte Biermenge noch nicht vorhanden
 Das die Menge in der Brauübersicht richtig dargestellt wird muss dieser Sud einmal geladen und weider gespeichert werden, dann wird dieser Wert neu berechnet.</source>
         <translation>Missing entry for bottled beer amount in beer file
 For correct displaying of the amount in the beer overview, the brew needs to loaded and saved again. The value will be re-calculated.</translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="4455"/>
+        <location filename="../src/qexport.cpp" line="4800"/>
         <source>Der Rohstoff &lt;b&gt;</source>
         <translation>Ingredient &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="4455"/>
+        <location filename="../src/qexport.cpp" line="4800"/>
         <source>&lt;/b&gt; ist in deiner Rohstoffauswahl nicht vorhanden</source>
         <translation>&lt;/b&gt; not existing in ingredient list</translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="4456"/>
+        <location filename="../src/qexport.cpp" line="4801"/>
         <source>
 
 Soll dieser Eintrag mit der folgenden Auswahl ersetzt werden?
@@ -5235,12 +5229,12 @@ Should this entry be replaced by the following?
 </translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="4457"/>
+        <location filename="../src/qexport.cpp" line="4802"/>
         <source>oder der Datenbank hinzugefügt werden.</source>
         <translation>or added to the databse.</translation>
     </message>
     <message>
-        <location filename="../src/qexport.cpp" line="4497"/>
+        <location filename="../src/qexport.cpp" line="4842"/>
         <source>Hinweis!</source>
         <translation>Note!</translation>
     </message>
@@ -5390,11 +5384,11 @@ Should this entry be replaced by the following?
         <location filename="../src/connection.h" line="2838"/>
         <location filename="../src/connection.h" line="2861"/>
         <location filename="../src/connection.h" line="2870"/>
-        <location filename="../src/mainwindowimpl.cpp" line="932"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11485"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11507"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11564"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11575"/>
+        <location filename="../src/mainwindowimpl.cpp" line="934"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11583"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11605"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11662"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11673"/>
         <source>Rückgabe:
 </source>
         <translation>Rückgabe:
@@ -5543,11 +5537,11 @@ Should this entry be replaced by the following?
         <location filename="../src/connection.h" line="2839"/>
         <location filename="../src/connection.h" line="2862"/>
         <location filename="../src/connection.h" line="2871"/>
-        <location filename="../src/mainwindowimpl.cpp" line="933"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11486"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11508"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11565"/>
-        <location filename="../src/mainwindowimpl.cpp" line="11576"/>
+        <location filename="../src/mainwindowimpl.cpp" line="935"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11584"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11606"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11663"/>
+        <location filename="../src/mainwindowimpl.cpp" line="11674"/>
         <source>
 SQL Befehl:
 </source>
@@ -5820,7 +5814,7 @@ SQL Befehl:
     <message>
         <location filename="../ui/rohstoffaustauschen.ui" line="59"/>
         <source>Rohstoff im Sud mit Auswahl austauschen</source>
-        <translation>Change beer ingredient from selection</translation>
+        <translation>Change brew ingredient from selection</translation>
     </message>
     <message>
         <location filename="../ui/rohstoffaustauschen.ui" line="66"/>
@@ -5859,7 +5853,7 @@ SQL Befehl:
     <message>
         <location filename="../ui/hopfengabe.ui" line="192"/>
         <source>g</source>
-        <translation>g</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/hopfengabe.ui" line="212"/>
@@ -5937,12 +5931,12 @@ SQL Befehl:
     <message>
         <location filename="../ui/malzgabe.ui" line="155"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/malzgabe.ui" line="184"/>
         <source>kg</source>
-        <translation>kg</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/malzgabe.cpp" line="147"/>

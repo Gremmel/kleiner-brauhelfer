@@ -80,7 +80,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //String Listen füllen
 
   //Liste für Einheiten
-  EinheitenListe.append(trUtf8("Kg"));
+  EinheitenListe.append(trUtf8("kg"));
   EinheitenListe.append(trUtf8("g"));
   //EinheitenListe.append(trUtf8("L"));
   //EinheitenListe.append(trUtf8("ml"));
@@ -286,11 +286,11 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
   on_tableWidget_Hefe_itemSelectionChanged();
 
+  LeseKonfig();
+
   createActions();
   createMenus();
   retranslateMenus();
-
-  LeseKonfig();
 
   //Überprüfen ob Messages angezeigt werden sollen
   if (!keinInternet)
@@ -725,15 +725,15 @@ void switchTranslator(QTranslator& translator, const QString& filename)
 
 void MainWindowImpl::loadSprache(const QString &rLanguage)
 {
-  qDebug() << "m_currLang: " << m_currLang;
-  qDebug() << "rLanguage: " << rLanguage;
+  //qDebug() << "m_currLang: " << m_currLang;
+  //qDebug() << "rLanguage: " << rLanguage;
   if(m_currLang != rLanguage)
   {
     m_currLang = rLanguage;
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
-    QString languageName = QLocale::languageToString(locale.language());
     switchTranslator(m_translator, QString(m_langPath+"/kb_%1.qm").arg(rLanguage));
+    switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
     switchTranslator(m_translatorQt, QString(m_langPath+"/qt_%1.qm").arg(rLanguage));
   }
 }
@@ -2557,7 +2557,7 @@ void MainWindowImpl::LeseKonfig()
     str = "de";
   }
   sprachauswahl = str;
-  qDebug() << "sprachauswahl" << sprachauswahl;
+  //qDebug() << "sprachauswahl" << sprachauswahl;
   settings.endGroup();
 
   //Einstellungen Sonstiges
@@ -2631,7 +2631,7 @@ void MainWindowImpl::ErstelleSprachMenu()
   //defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
   //srachauswahl aus configdatei
   QString defaultLocale = sprachauswahl;
-  qDebug() << "defaultLocale" << defaultLocale;
+  //qDebug() << "defaultLocale" << defaultLocale;
 
   m_langPath = QApplication::applicationDirPath();
   m_langPath.append("/languages");
@@ -2692,7 +2692,7 @@ void MainWindowImpl::createMenus()
 
 void MainWindowImpl::retranslateMenus()
 {
-    geladenerSudMenu->setTitle(trUtf8("&geladener Sud"));
+    geladenerSudMenu->setTitle(trUtf8("&Geladener Sud"));
     saveAct->setText(trUtf8("&Speichern"));
     saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
     schuettungProzent->setText(trUtf8("&Rezeptübernahme Schüttung"));
@@ -4200,7 +4200,7 @@ void MainWindowImpl::ErstelleSpickzettel()
       s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
       s += "</td>";
       s += "<td>";
-      s += "<p>" + trUtf8("Kg") + "</p>";
+      s += "<p>" + trUtf8("kg") + "</p>";
       s += "</td>";
       s += "<td align='right'>";
       s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
@@ -4230,7 +4230,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("Kg") + "</p>";
+  s += "<p>" + trUtf8("kg") + "</p>";
   s += "</td>";
   s += "</tr>";
   s += "</tbody></table>";
@@ -4443,7 +4443,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -4489,7 +4489,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -4535,7 +4535,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -4581,7 +4581,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -4627,7 +4627,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -4764,7 +4764,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         else
           s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
+          s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
         s += "<br>";
@@ -4953,7 +4953,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         else
           s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
+          s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
         s += "<br>";
@@ -5131,7 +5131,7 @@ void MainWindowImpl::ErstelleSpickzettel()
         else
           s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
+          s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
         s += "<br>";
@@ -6026,7 +6026,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
     if (soll > ist){
       QString sf;
-      sf = QString::number(soll - ist) + trUtf8(" Kg zu wenig vorhanden");
+      sf = QString::number(soll - ist) + trUtf8(" kg zu wenig vorhanden");
       list_Malzgaben[i] -> ergWidget -> setToolTip(sf);
       list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(true);
       list_Malzgaben[i] -> ergWidget -> icon_warnung -> setVisible(false);
@@ -6044,7 +6044,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
         list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(false);
       }
       else {
-        list_Malzgaben[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "Kg");
+        list_Malzgaben[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "kg");
         list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(false);
         list_Malzgaben[i] -> ergWidget -> icon_warnung -> setVisible(false);
       }
@@ -6370,7 +6370,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
       if (soll > ist){
         QString sf;
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg){
-          sf = QString::number(soll - ist) + trUtf8(" Kg zu wenig vorhanden");
+          sf = QString::number(soll - ist) + trUtf8(" kg zu wenig vorhanden");
         }
         else{
           sf = QString::number(soll - ist) + trUtf8(" g zu wenig vorhanden");
@@ -6380,7 +6380,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
       }
       else {
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg){
-          list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "Kg");
+          list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "kg");
         }
         else {
           list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "g");
@@ -10863,7 +10863,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
     s += "</td>";
     s += "<td>";
-    s += "<p>" + trUtf8("Kg") + "</p>";
+    s += "<p>" + trUtf8("kg") + "</p>";
     s += "</td>";
     s += "<td align='right'>";
     s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
@@ -10888,7 +10888,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("Kg") + "</p>";
+  s += "<p>" + trUtf8("kg") + "</p>";
   s += "</td>";
   s += "</tr>";
   s += "</tbody></table>";
@@ -11117,7 +11117,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -11171,7 +11171,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -11225,7 +11225,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -11279,7 +11279,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -11333,7 +11333,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "</td>";
         s += "<td>";
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
+          s += "<p>" + trUtf8("kg") + "</p>";
         else
           s += "<p>" + trUtf8("g") + "</p>";
         s += "</td>";
@@ -15307,7 +15307,7 @@ void MainWindowImpl::on_tableWidget_Malz_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Malz->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Malzeintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Malzeintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Malz->rowCount();
           }
@@ -15374,7 +15374,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Hopfen->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Hopfeneintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Hopfeneintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Hopfen->rowCount();
           }
@@ -15449,7 +15449,7 @@ void MainWindowImpl::on_tableWidget_Hefe_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Hefe->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Hefeeintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Hefeeintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Hefe->rowCount();
           }
@@ -15503,7 +15503,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellChanged(int row, int colu
         if (i != row){
           if (tableWidget_WeitereZutaten->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Eintrag in den Weiteren Zutaten ist doppelt: " << newItem->text();
+            //qDebug() << "Eintrag in den Weiteren Zutaten ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_WeitereZutaten->rowCount();
           }
@@ -15821,7 +15821,7 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
         QStringList arguments;
         arguments << fileName;
         QProcess *myProcess = new QProcess();
-        qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
+        //qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
         myProcess->start(prog,arguments);
       }
     }
@@ -16069,7 +16069,7 @@ void MainWindowImpl::setButtonsTextMerken()
     while (query.next()) {
       anzahl++;
     }
-    QString text = trUtf8("alle vergessen");
+    QString text = trUtf8("Alle vergessen");
     text += " (" + QString::number(anzahl) + ")";
     pushButton_alleVergessen->setText(text);
   }
@@ -16298,11 +16298,14 @@ void MainWindowImpl::AddAnhang(QString pfad)
       anhang->setPfad(pfad);
   anhang->setID((int)time(NULL)+rand());
 
-  verticalLayout_Anhang -> addWidget(anhang);
-  list_Anhang.append(anhang);
+  if (anhang->getPfad() != "")
+  {
+    verticalLayout_Anhang -> addWidget(anhang);
+    list_Anhang.append(anhang);
 
-  connect(anhang, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_anhangClose(int) ));
-  connect(anhang, SIGNAL( sig_Aenderung() ), this, SLOT( slot_anhangAenderung() ));
+    connect(anhang, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_anhangClose(int) ));
+    connect(anhang, SIGNAL( sig_Aenderung() ), this, SLOT( slot_anhangAenderung() ));
+  }
 }
 
 void MainWindowImpl::slot_anhangClose(int id)

@@ -27,8 +27,9 @@ MyWebView::MyWebView(QWidget* parent) :
 
 void MyWebView::setTextSizeMultiplier(qreal factor)
 {
+    Q_UNUSED(factor)
     // Zoom Faktor wird bei printToPdf() nicht übernommen
-    page()->setZoomFactor(factor);
+    //page()->setZoomFactor(factor);
 }
 
 void MyWebView::print(QPrinter* printer)

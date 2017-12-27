@@ -169,14 +169,14 @@
             <item>
              <widget class="QPushButton" name="pushButton_vergessen">
               <property name="text">
-               <string>vergessen</string>
+               <string>Vergessen</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_alleVergessen">
               <property name="text">
-               <string notr="true">alle vergessen</string>
+               <string>Alle vergessen</string>
               </property>
              </widget>
             </item>
@@ -187,7 +187,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_SudNeu">
               <property name="text">
-               <string>neuen Sud anlegen</string>
+               <string>Neuen Sud anlegen</string>
               </property>
              </widget>
             </item>
@@ -8986,7 +8986,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_schaum_5">
                       <property name="text">
-                       <string>mäßge Haltbarkeit</string>
+                       <string>mäßige Haltbarkeit</string>
                       </property>
                      </widget>
                     </item>
@@ -11506,12 +11506,12 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Menge (Kg)</string>
+                <string>Menge (kg)</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Preis/Kg</string>
+                <string>Preis/kg</string>
                </property>
               </column>
               <column>
@@ -11616,7 +11616,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Preis/Kg</string>
+                <string>Preis/kg</string>
                </property>
               </column>
               <column>

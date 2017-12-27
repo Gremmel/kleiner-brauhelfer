@@ -71,7 +71,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
@@ -149,7 +149,7 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
@@ -227,7 +227,7 @@
          <item>
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
@@ -305,7 +305,7 @@
          <item>
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
@@ -383,7 +383,7 @@
          <item>
           <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
@@ -461,7 +461,7 @@
          <item>
           <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>Kg</string>
+            <string>kg</string>
            </property>
           </widget>
          </item>
