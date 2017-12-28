@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=kleiner-brauhelfer
+Comment=Ein Programm zum berechnen und verwalten von Biersuden
+Exec=/usr/local/bin/kleiner-brauhelfer/kleiner-brauhelfer
+Icon=/usr/share/pixmaps/kleiner-brauhelfer.svg
+Terminal=false
+Type=Application
+Categories=Qt;KDE;Science;Utility;
+StartupNotify=false
+X-KDE-StartupNotify=false

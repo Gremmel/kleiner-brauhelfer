@@ -1,0 +1,8 @@
+Package: kleiner-brauhelfer
+Version: 1.4.4.0-0
+Section: misc
+Architecture: i386 / amd64
+Maintainer: Gremmel <kleiner-brauhelfer@soseies.de>
+Homepage: http://www.joerum.de/kleiner-brauhelfer
+Description: Ein Programm zum berechnen und verwalten von Biersuden
+  Der kleine-brauhelfer ist ein Hilfsprogramm für Hobbybauer zum Erstellen und Verwalten von Biersuden.

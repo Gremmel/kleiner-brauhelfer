@@ -32,4 +32,17 @@ In the Inno Setup Compiler edit the definitions
 #define MyAppOutFileName "kb_setup_qt_v1_4_4_0"
 ```
 ## Debian
+Run the deploy script
+```
+chmod +x ./deployment/debian/deploy.sh
+./deployment/debian/deploy.sh <path_to_kleiner-brauhelfer_executable> <path_to_qt_bin>
+Example:
+./deployment/debian/deploy.sh ./build/bin/kleiner-brauhelfer /opt/Qt/5.3/gcc_64/bin/
+```
+In nano edit the version and architecture and save file
+```
+Version: 1.4.4.0
+Architecture: i386 / amd64
+```
 ## OSX
+todo
