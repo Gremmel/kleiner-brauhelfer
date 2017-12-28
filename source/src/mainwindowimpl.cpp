@@ -733,7 +733,6 @@ void MainWindowImpl::loadSprache(const QString &rLanguage)
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
     switchTranslator(m_translator, QString(m_langPath+"/kb_%1.qm").arg(rLanguage));
-    switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
     switchTranslator(m_translatorQt, QString(m_langPath+"/qt_%1.qm").arg(rLanguage));
   }
 }

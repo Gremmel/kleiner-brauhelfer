@@ -32,6 +32,7 @@ SET PATH=%QT_DIR%;%PATH%
 
 ECHO - Run windeployqt
 windeployqt "%~dp0%DEPLOY_DIR%\%EXE_FILE%"
+MOVE /Y "%~dp0%DEPLOY_DIR%\*.qm" "%~dp0%DEPLOY_DIR%\languages"
 
 ECHO - Copy additional DLLs
 XCOPY "%QT_DIR%\libgcc_s_dw2-1.dll" "%~dp0%DEPLOY_DIR%" /Y

@@ -6,7 +6,7 @@
 #define MyAppPublisher "Gremmelsoft"
 #define MyAppURL "http://www.joerum.de/kleiner-brauhelfer"
 #define MyAppExeName "kleiner-brauhelfer.exe"
-#define MyAppOutFileName "kb_setup_qt_v1_4_4_0"
+#define MyAppOutFileName "kb_setup_v1_4_4_0"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
