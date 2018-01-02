@@ -12489,7 +12489,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_help">
        <attribute name="title">
         <string>Anleitung</string>
        </attribute>

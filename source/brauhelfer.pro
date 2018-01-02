@@ -117,6 +117,9 @@ SOURCES = src/mainwindowimpl.cpp \
  src/dialogdatum.cpp \
  src/mywebview.cpp \
  src/mytablewidget.cpp \
- src/mytablewidgetitemnumeric.cpp
+ src/mytablewidgetitemnumeric.cpp \
+ src/mainwindowimpl_sudinfo.cpp \
+ src/mainwindowimpl_spickzettel.cpp \
+ src/mainwindowimpl_zusammenfassung.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc res/sonstiges.qrc

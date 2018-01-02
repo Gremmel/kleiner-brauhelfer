@@ -221,14 +221,6 @@
 
 #define ERR_DB_ROHSTOFFLISTEN_KOPIE 300
 
-#define TAB_REZEPT 1
-#define TAB_GAERVERLAUF 4
-#define TAB_ZUSAMMENFASSUNG 5
-
-#define TAB_Malz 0
-#define TAB_Hopfen 1
-#define TAB_WeitereZutaten 2
-
 #define BeerXMLVersion "1"
 
 #endif
