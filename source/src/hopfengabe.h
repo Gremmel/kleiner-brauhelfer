@@ -65,7 +65,7 @@ public:
 
 private slots:
   void on_pushButton_del_clicked();
-	void on_fadeout_fertig();
+    void slot_fadeout_fertig();
 
 	void on_dsb_Menge_valueChanged(double arg1);
 

@@ -89,7 +89,7 @@ void AnhangWidget::on_pushButton_close_clicked()
   close();
 }
 
-void AnhangWidget::on_lineEdit_editingFinished()
+void AnhangWidget::on_lineEdit_Pfad_editingFinished()
 {
   emit sig_Aenderung();
 }

@@ -14,7 +14,6 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   farbe = 0;
   zugabestatus = 0;
   typ = -1;
-  animationPos = new QPropertyAnimation(this, "pos");
   dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
 }
 
@@ -596,12 +595,12 @@ void ErweiterteZutatImpl::on_pushButton_del_clicked()
     faderWidget->close();
 
   faderWidget = new FaderWidget(this);
-  connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(on_fadeout_fertig()));
+  connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(slot_fadeout_fertig()));
   animationAktiv = true;
   faderWidget->start();
 }
 
-void ErweiterteZutatImpl::on_fadeout_fertig()
+void ErweiterteZutatImpl::slot_fadeout_fertig()
 {
   emit sig_vorClose(ID);
   close();

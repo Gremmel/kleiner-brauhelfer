@@ -344,6 +344,7 @@ private slots:
   void on_pushButton_WeitereZutatenKopie_clicked();
   void on_pushButton_WeitereZutatenNeu_clicked();
   void on_TabWidget_Zutaten_currentChanged(int index);
+  void on_TabWidget_RezeptErgebnisse_currentChanged(int index);
   void on_tableWidget_Sudauswahl_itemSelectionChanged();
   void on_tableWidget_Brauuebersicht_cellDoubleClicked(int row, int column);
   void on_tableWidget_Sudauswahl_cellDoubleClicked(int row, int column);
@@ -390,8 +391,6 @@ private slots:
     void on_pushButton_BrauuebersichtRefresh_clicked();
   void on_comboBox_AuswahlL1_currentIndexChanged(int index);
   void on_comboBox_AuswahlL2_currentIndexChanged(int index);
-  void on_spinBox_KostenWasserStrom_valueChanged(double );
-  void on_spinBox_KostenWasserStrom_editingFinished();
   void on_pushButton_SpickzettelPDF_clicked();
   void on_pushButton_SpickzettelDrucken_clicked();
   void slot_pushButton_SudKopie();
@@ -437,11 +436,11 @@ private slots:
   void slot_pushButton_HefeDel();
   void HefeNeueZeile();
   void slot_spinBoxValueChanged(double d);
-  void slot_tableSpinBoxValueChanged(const QString&);
+  void slot_tableSpinBoxValueChanged(double value);
   void slot_EwzAenderungRohstoffe();
   void on_pushButton_NeueRast_clicked();
-  void on_pushButton_RastNachOben(int id);
-  void on_pushButton_RastNachUnten(int id);
+  void slot_pushButton_RastNachOben(int id);
+  void slot_pushButton_RastNachUnten(int id);
   void on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1);
   void on_spinBox_SWKochende_valueChanged(double arg1);
   void on_spinBox_WuerzemengeKochende_valueChanged(double arg1);

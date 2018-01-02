@@ -44,7 +44,6 @@ private:
   bool BierWurdeAbgefuellt;
   QPointer<FaderWidget> faderWidget;
   bool animationAktiv;
-  QPropertyAnimation *animationPos;
   QPoint pVon, pNach;
   int z;
   bool NativStyle;
@@ -109,7 +108,7 @@ private slots:
   void on_comboBox_Zugabezeitpunkt_currentIndexChanged(int index);
   void on_comboBox_Zutat_currentIndexChanged(QString );
   void on_pushButton_del_clicked();
-  void on_fadeout_fertig();
+  void slot_fadeout_fertig();
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
 
   void on_comboBox_entnahme_currentIndexChanged(int index);

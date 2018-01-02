@@ -284,12 +284,12 @@ void hopfengabe::on_pushButton_del_clicked()
 		faderWidget->close();
 
 	faderWidget = new FaderWidget(this);
-	connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(on_fadeout_fertig()));
+    connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(slot_fadeout_fertig()));
 	animationAktiv = true;
 	faderWidget->start();
 }
 
-void hopfengabe::on_fadeout_fertig()
+void hopfengabe::slot_fadeout_fertig()
 {
 	emit sig_vorClose(ID);
 	close();

@@ -99,7 +99,7 @@ void Rastwidget::on_close()
 	close();
 }
 
-void Rastwidget::on_animation_fertig()
+void Rastwidget::slot_animation_fertig()
 {
 	animationAktiv = false;
 }
@@ -125,10 +125,10 @@ void Rastwidget::moveEvent(QMoveEvent *event)
 			animation->setStartValue(event->oldPos());
 		}
 		animation->setEndValue(event->pos());
-		connect(animation, SIGNAL(finished()), this, SLOT(on_animation_fertig()));
+        connect(animation, SIGNAL(finished()), this, SLOT(slot_animation_fertig()));
 		if (!animationAus){
 			animationAktiv = true;
-			animation->start();
+            animation->start(QAbstractAnimation::DeleteWhenStopped);
 		}
 	}
 
@@ -155,9 +155,9 @@ void Rastwidget::on_pushButton_close_clicked()
 	animation->setStartValue(this->pos());
 	animation->setEndValue(QPoint(-250,this->pos().y()));
 	connect(animation, SIGNAL(finished()), this, SLOT(on_close()));
-	connect(animation, SIGNAL(finished()), this, SLOT(on_animation_fertig()));
+    connect(animation, SIGNAL(finished()), this, SLOT(slot_animation_fertig()));
 	animationAktiv = true;
-	animation->start();
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 
