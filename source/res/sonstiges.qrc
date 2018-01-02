@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/db">
-        <file>vorlage.sqlite</file>
-        <file>rohstofflisten.sqlite</file>
-    </qresource>
-</RCC>

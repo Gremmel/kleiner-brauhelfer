@@ -1105,14 +1105,11 @@ void MainWindowImpl::slot_pushButton_MalzNeuVorlage()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewMalzauswahl();
-  grvDia.exec();
-
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Malz->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Malz_Bezeichnung_Merker;
     Malz_Bezeichnung_Merker = "";
-    tableWidget_Malz->setSortingEnabled(false);
     MalzNeueZeile();
     //Neuen Eintrag mit den entsprechenden Werten füllen
     int row = tableWidget_Malz -> rowCount();
@@ -1228,11 +1225,8 @@ void MainWindowImpl::on_pushButton_HopfenNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewHopfenauswahl();
-  grvDia.exec();
-
-  tableWidget_Hopfen->setSortingEnabled(false);
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Hopfen->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Hopfen_Bezeichnung_Merker;
     Hopfen_Bezeichnung_Merker = "";
@@ -1252,19 +1246,16 @@ void MainWindowImpl::on_pushButton_HopfenNeuVorlage_clicked()
     newItem = tableWidget_Hopfen -> item(row-1,7);
     newItem->setText(grvDia.m_Eigenschaften);
     Hopfen_Bezeichnung_Merker = s;
+    tableWidget_Hopfen->setSortingEnabled(true);
   }
-  tableWidget_Hopfen->setSortingEnabled(true);
 }
 
 void MainWindowImpl::on_pushButton_HefeNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewHefeauswahl();
-  grvDia.exec();
-  tableWidget_Hefe->setSortingEnabled(false);
-
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Hefe->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Hefe_Bezeichnung_Merker;
     Hefe_Bezeichnung_Merker = "";
@@ -1300,8 +1291,8 @@ void MainWindowImpl::on_pushButton_HefeNeuVorlage_clicked()
     newItem->setText(grvDia.m_EVG);
 
     Hefe_Bezeichnung_Merker = s;
+    tableWidget_Hefe->setSortingEnabled(true);
   }
-  tableWidget_Hefe->setSortingEnabled(true);
 }
 
 void MainWindowImpl::HefeNeueZeile()

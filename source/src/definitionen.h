@@ -53,11 +53,8 @@
 #define URL_ANLEITUNG "http://www.joerum.de/kleiner-brauhelfer/doku.php"
 
 //Datenbankvorlage
-#define DB_VORLAGE	":/db/vorlage.sqlite"
+#define DB_VORLAGE	":/data/vorlage.sqlite"
 
-//Datenbank mir Rohstoffvorlagen
-#define DB_ROHSTOFFVORLAGE  ":/db/rohstofflisten.sqlite"
-#define DB_ROHSTOFFLISTEN  "rohstofflisten.sqlite"
 //Userdatenbankname
 #ifdef DEBUG
   #define DB_USER_NAME	"kb_daten_test.sqlite"
@@ -157,11 +154,6 @@
 #define Hefe_Trocken 1
 #define Hefe_Fluessig 2
 
-//Rohstoffart Rohstoffvorlagen
-#define R_Malz 1
-#define R_Hopfen 2
-#define R_Hefe 3
-
 //Animationsstop für die Rasten (Anzahl Rasten)
 #define RAST_ANIMATION_STOP 5
 
@@ -212,7 +204,6 @@
 #define ERR_SQL_DB_UPDATE_V19_V20 132
 #define ERR_SQL_DB_UPDATE_V20_V21 133
 #define ERR_SQL_DB_UPDATE_V21_V22 134
-
 
 #define ERR_VERSION_SUD_V1 200
 #define ERR_VERSION_UNBEKANNT 201

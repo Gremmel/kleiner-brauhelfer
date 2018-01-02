@@ -82,7 +82,8 @@ HEADERS = src/mainwindowimpl.h \
  src/dialogdatum.h \
  src/mywebview.h \
  src/mytablewidget.h \
- src/mytablewidgetitemnumeric.h
+ src/mytablewidgetitemnumeric.h \
+ src/mydsvtablemodel.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -120,6 +121,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mytablewidgetitemnumeric.cpp \
  src/mainwindowimpl_sudinfo.cpp \
  src/mainwindowimpl_spickzettel.cpp \
- src/mainwindowimpl_zusammenfassung.cpp
+ src/mainwindowimpl_zusammenfassung.cpp \
+ src/mydsvtablemodel.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
-RESOURCES += res/grafiken.qrc res/sonstiges.qrc
+RESOURCES += res/grafiken.qrc data/data.qrc
