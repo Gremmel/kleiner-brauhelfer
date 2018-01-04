@@ -215,7 +215,7 @@ void GetRohstoffVorlage::on_btn_Remove_clicked()
 
 void GetRohstoffVorlage::on_btn_Import_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Rohstoffliste importieren"),
+    QString fileName = QFileDialog::getOpenFileName(this, trUtf8("Rohstoffliste importieren"),
                                                     QDir::currentPath() + "/" + getFileName(false),
                                                     "CSV (*.csv)");
     if (!fileName.isEmpty())
@@ -231,7 +231,7 @@ void GetRohstoffVorlage::on_btn_Import_clicked()
 
 void GetRohstoffVorlage::on_btn_Export_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Rohstoffliste exportieren"),
+    QString fileName = QFileDialog::getSaveFileName(this, trUtf8("Rohstoffliste exportieren"),
                                                     QDir::currentPath() + "/" + getFileName(false),
                                                     "CSV (*.csv)");
     if (!fileName.isEmpty())

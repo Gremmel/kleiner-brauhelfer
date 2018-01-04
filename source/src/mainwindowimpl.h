@@ -600,6 +600,7 @@ private slots:
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
   void on_checkBox_zumischen_clicked();
+  void on_pushButton_CalcEinmaischeTemp_clicked();
 };
 #endif
 

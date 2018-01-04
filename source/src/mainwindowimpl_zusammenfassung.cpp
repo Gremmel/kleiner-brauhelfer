@@ -111,7 +111,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p class='value'>" + QString::number(spinBox_AlkoholVol -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("%Vol") + "</p>";
+  s += "<p>" + trUtf8("%vol") + "</p>";
   s += "</td>";
   s += "</tr>";
   //Bittere

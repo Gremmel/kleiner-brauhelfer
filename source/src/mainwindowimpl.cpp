@@ -34,6 +34,7 @@
 #include "dialogberverdampfung.h"
 #include "brauanlage.h"
 #include "dialoginfo.h"
+#include "dialogeinmaischetemp.h"
 #include "mytablewidgetitemnumeric.h"
 //
 MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
@@ -94,7 +95,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   ZutatenTypListe.append(trUtf8("Sonstiges"));
 
   //Liste für Hopfentypen
-  HopfenTypListe.append(trUtf8(""));
+  HopfenTypListe.append("");
   HopfenTypListe.append(trUtf8("Aroma"));
   HopfenTypListe.append(trUtf8("Bitter"));
   HopfenTypListe.append(trUtf8("Universal"));
@@ -114,9 +115,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   HefeSedListe.append(trUtf8("hoch"));
   HefeSedListe.append(trUtf8("mittel"));
   HefeSedListe.append(trUtf8("niedrig"));
-
-  label_waOder -> setVisible(false);
-  frame_Sauermalz -> setVisible(false);
 
   //Überprüfen ob ergebnisse in der Datenbank neu berechnet werden müssen
   if (CheckDBNeuBerechnen()){
@@ -187,6 +185,10 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   splitter_Schnellgaerverlauf -> setSizes(sizes);
   splitter_Hauptgaerverlauf -> setSizes(sizes);
   splitter_Nachgaerverlauf -> setSizes(sizes);
+
+  splitter_Sudauswahl->setSizes(QList<int>() << INT_MAX << 0);
+  splitter_Sudauswahl->setStretchFactor(0, 1);
+  splitter_Sudauswahl->setStretchFactor(1, 0);
 
   //Diagrammfarben setzen
   SetDiagrammFarben();
@@ -4358,6 +4360,7 @@ void MainWindowImpl::SetStatusGebraut(bool status)
 
   spinBox_EinmaischenTemp -> setReadOnly(status);
   spinBox_EinmaischenTemp -> setButtonSymbols(bs);
+  pushButton_CalcEinmaischeTemp->setDisabled(status);
 
   spinBox_Gesammtkochdauer -> setReadOnly(status);
   spinBox_Gesammtkochdauer -> setButtonSymbols(bs);
@@ -5672,7 +5675,7 @@ void MainWindowImpl::updateRecentFileActions()
   int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
   for (int i = 0; i < numRecentFiles; ++i) {
-    QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+    QString text = QString("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
     recentFileActs[i] -> setText(text);
     recentFileActs[i] -> setData(strippedID(files[i]));
     recentFileActs[i] -> setVisible(true);
@@ -10001,6 +10004,10 @@ void MainWindowImpl::BerWasserwerte()
   //Nachguss
   SpinBox_waMilchsaeureNG_ml -> setValue(RA_Reduzierung * 0.033333333
                                          * doubleSpinBox_WNachguss -> value());
+
+  widget_MilchsauereHG->setVisible(SpinBox_waMilchsaeureHG_ml->value() > 0.0);
+  widget_MilchsauereNG->setVisible(SpinBox_waMilchsaeureNG_ml->value() > 0.0);
+  widget_SauermalzHG->setVisible(false);
 }
 
 
@@ -13204,4 +13211,16 @@ void MainWindowImpl::on_checkBox_zumischen_clicked()
     spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
     spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
   }
+}
+
+void MainWindowImpl::on_pushButton_CalcEinmaischeTemp_clicked()
+{
+    DialogEinmaischeTemp* dlg = new DialogEinmaischeTemp(doubleSpinBox_S_Gesammt->value(),
+                                                         18.0,
+                                                         doubleSpinBox_WHauptguss->value(),
+                                                         list_Rasten.count() > 0 ? list_Rasten[0]->getRastTemp() : 57.0,
+                                                         this);
+    if (dlg->exec() == QDialog::Accepted)
+      spinBox_EinmaischenTemp->setValue(dlg->value());
+    delete dlg;
 }
