@@ -15,6 +15,8 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   zugabestatus = 0;
   typ = -1;
   dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
+  ergWidget = new doubleEditLineImpl(this);
+  ergWidget->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
@@ -163,6 +165,7 @@ void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 {
   BierWurdeGebraut = value;
   setUIStatus();
+  ergWidget->setRestVisible(!value);
 }
 
 void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
@@ -383,12 +386,14 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       if (einheit == EWZ_Einheit_Kg){
         label_Mengeneinheit -> setText("g/L");
         ergWidget -> label_Einheit -> setText("kg");
+        ergWidget -> label_Einheit2 -> setText("kg");
         ergWidget -> spinBox_Wert -> setDecimals(3);
       }
       //Gramm
       else if (einheit == EWZ_Einheit_g){
         label_Mengeneinheit -> setText("g/L");
         ergWidget -> label_Einheit -> setText("g");
+        ergWidget -> label_Einheit2 -> setText("g");
         ergWidget -> spinBox_Wert -> setDecimals(0);
       }
     }
@@ -399,6 +404,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       label_Icon -> setPixmap(pixmapTyp);
       label_Mengeneinheit -> setText("g/L");
       ergWidget -> label_Einheit -> setText("g");
+      ergWidget -> label_Einheit2 -> setText("g");
       ergWidget -> spinBox_Wert -> setDecimals(1);
       //Einheit auf gramm festlegen
       einheit = 1;

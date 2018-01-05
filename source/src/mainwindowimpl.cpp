@@ -449,30 +449,24 @@ void MainWindowImpl::closeEvent(QCloseEvent *evt)
 
 void MainWindowImpl::changeEvent(QEvent* event)
 {
-  if(0 != event)
-  {
-    // this event is send if a translator is loaded
-    if (event->type() == QEvent::LanguageChange) {
-      //qDebug() << "LanguageChange";
-      Gestartet = false;
-      retranslateUi(this);
-      retranslateMenus();
-      Gestartet = true;
+    if(event)
+    {
+        switch (event->type())
+        {
+        case QEvent::LanguageChange:
+            Gestartet = false;
+            retranslateUi(this);
+            retranslateMenus();
+            Gestartet = true;
+            break;
+        case QEvent::LocaleChange:
+            loadSprache(QLocale::system().name());
+            break;
+        default:
+            break;
+        }
     }
-    // this event is send, if the system, language changes
-    else if (event->type() == QEvent::LocaleChange) {
-      //qDebug() << "LocaleChange";
-      QString locale = QLocale::system().name();
-      locale.truncate(locale.lastIndexOf('_'));
-      loadSprache(locale);
-    }
-  }
-
-  QMainWindow::changeEvent(event);
-}
-
-void MainWindowImpl::showEvent ( QShowEvent *)
-{
+    QMainWindow::changeEvent(event);
 }
 
 int MainWindowImpl::getBrauanlagenIDRezept()
@@ -764,31 +758,27 @@ double MainWindowImpl::getSudpfanneMaxNutzvolumen()
   return double(qRound((Grundflaeche * getSudpfanneMaxFuellhoehe() / 100) *100)) / 100;
 }
 
-void switchTranslator(QTranslator& translator, const QString& filename)
+void MainWindowImpl::switchTranslator(QTranslator& translator, const QString& filename)
 {
-  // remove the old translator
-  qApp->removeTranslator(&translator);
-
-  // load the new translator
-  //qDebug() << "vor install translator " << filename;
-  if(translator.load(filename)) {
-    //qDebug() << "install translator " << filename;
-    qApp->installTranslator(&translator);
-  }
+    qApp->removeTranslator(&translator);
+    if(translator.load(filename))
+        qApp->installTranslator(&translator);
 }
 
 void MainWindowImpl::loadSprache(const QString &rLanguage)
 {
-  //qDebug() << "m_currLang: " << m_currLang;
-  //qDebug() << "rLanguage: " << rLanguage;
-  if(m_currLang != rLanguage)
-  {
-    m_currLang = rLanguage;
-    QLocale locale = QLocale(m_currLang);
-    QLocale::setDefault(locale);
-    switchTranslator(m_translator, QString(m_langPath+"/kb_%1.qm").arg(rLanguage));
-    switchTranslator(m_translatorQt, QString(m_langPath+"/qt_%1.qm").arg(rLanguage));
-  }
+    if(m_currLang != rLanguage)
+    {
+        m_currLang = rLanguage;
+        QLocale locale = QLocale(m_currLang);
+        QLocale::setDefault(locale);
+        tabWidged->setLocale(locale);
+        tabWidged->setVisible(false);
+        tabWidged->setVisible(true);
+        QString langPath = QApplication::applicationDirPath().append("/languages");
+        switchTranslator(m_translator, QString(langPath+"/kb_%1.qm").arg(m_currLang));
+        switchTranslator(m_translatorQt, QString(langPath+"/qt_%1.qm").arg(m_currLang));
+    }
 }
 
 void MainWindowImpl::LeseMaxAnzahlSterne()
@@ -874,10 +864,6 @@ void MainWindowImpl::setAenderung(bool value)
     Aenderung = value;
     setFensterTitel();
   }
-}
-
-void MainWindowImpl::resizeEvent(QResizeEvent *)
-{
 }
 
 void MainWindowImpl::LeseAusruestungDB()
@@ -2582,16 +2568,6 @@ void MainWindowImpl::LeseKonfig()
   keinInternet = settings.value("keinInternet").toBool();
   settings.endGroup();
 
-  //Sprache
-  settings.beginGroup("Sprache");
-  str = settings.value("sprachauswahl").toString();
-  if (str == "") {
-    settings.setValue("sprachauswahl", QLocale::system().name());
-    str = QLocale::system().name();
-  }
-  sprachauswahl = str;
-  settings.endGroup();
-
   //Einstellungen Sonstiges
   settings.beginGroup("sonstiges");
   checkBox_MerklisteMengen->setChecked(settings.value("MerklisteMengenEinbeziehen", false).toBool());
@@ -2601,7 +2577,6 @@ void MainWindowImpl::LeseKonfig()
 
 void MainWindowImpl::createActions()
 {
-
   saveAct = new QAction("", this);
   saveAct->setShortcuts(QKeySequence::Save);
   connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
@@ -2661,13 +2636,16 @@ void MainWindowImpl::ErstelleSprachMenu()
   //QString defaultLocale = QLocale::system().name();       // e.g. "de_DE"
   //defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
   //srachauswahl aus configdatei
-  QString defaultLocale = sprachauswahl;
   //qDebug() << "defaultLocale" << defaultLocale;
 
-  m_langPath = QApplication::applicationDirPath();
-  m_langPath.append("/languages");
-  QDir dir(m_langPath);
+  QString langPath = QApplication::applicationDirPath().append("/languages");
+  QDir dir(langPath);
   QStringList fileNames = dir.entryList(QStringList("kb_*.qm"));
+
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  settings.beginGroup("Sprache");
+  QString sprachauswahl = settings.value("sprachauswahl", QLocale::system().name()).toString();
+  settings.endGroup();
 
   for (int i = 0; i < fileNames.size(); ++i)
   {
@@ -2678,7 +2656,7 @@ void MainWindowImpl::ErstelleSprachMenu()
     locale.remove(0, locale.indexOf('_') + 1);   // "de"
 
     QString lang = QLocale::languageToString(QLocale(locale).language());
-    QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+    QIcon ico(QString("%1/%2.png").arg(langPath).arg(locale));
 
     QAction *action = new QAction(ico, lang, this);
     action->setCheckable(true);
@@ -2688,12 +2666,12 @@ void MainWindowImpl::ErstelleSprachMenu()
     langGroup->addAction(action);
 
     // set default translators and language checked
-    if (defaultLocale == locale)
+    if (sprachauswahl == locale)
     {
       action->setChecked(true);
     }
   }
-  loadSprache(defaultLocale);
+  loadSprache(sprachauswahl);
 }
 
 void MainWindowImpl::createMenus()
@@ -3400,11 +3378,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
           ewz -> setAttribute(Qt::WA_DeleteOnClose);
           ewz -> setStyleDunkel(StyleDunkel);
-          //Ergebnisswidget ersetellen
-          doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
-          berEwz -> setAttribute(Qt::WA_DeleteOnClose);
 
-          ewz -> ergWidget = berEwz;
           ewz -> setBierWurdeGebraut(BierWurdeGebraut);
           ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           //Funktionen verknüpfen das das objekt die Daten holen kann
@@ -3438,7 +3412,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
           //Ergebnisswidget dem Layout zuordnen
-          verticalLayout_BerWeitereZutaten -> addWidget(berEwz);
+          verticalLayout_BerWeitereZutaten -> addWidget(ewz->ergWidget);
           verticalLayout_WeitereZutaten -> addWidget(ewz);
           list_EwZutat.append(ewz);
           ewz -> setID((int)time(NULL)+rand());
@@ -4849,6 +4823,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     if (!gefunden){
       ist = 0;
     }
+    list_Malzgaben[i] -> ergWidget->setRest(ist - soll);
     //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
     if (soll > ist){
       QString sf;
@@ -4962,6 +4937,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
         ist = spinBox->value();
       }
     }
+    list_Hopfengaben[i] -> ergWidget->setRest(ist - soll);
     //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
     if (soll > ist){
       QString sf = QString::number(soll - ist) + trUtf8(" g zu wenig Hopfen vorhanden");
@@ -5112,6 +5088,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
           ist = spinBox->value();
         }
       }
+      list_EwZutat[i] -> ergWidget->setRest(ist - soll);
       //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
       if (soll > ist){
         QString sf = QString::number(soll - ist) + trUtf8(" g zu wenig Hopfen vorhanden");
@@ -5192,6 +5169,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
       }
       if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
         soll = soll / 1000;
+      list_EwZutat[i] -> ergWidget->setRest(ist - soll);
       //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
       if (soll > ist){
         QString sf;
@@ -5789,15 +5767,8 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
   hopfengabe* hopfen = new hopfengabe(this);
   hopfen -> setStyleDunkel(StyleDunkel);
   hopfen -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berHopfen = new doubleEditLineImpl(this);
-  berHopfen -> setAttribute(Qt::WA_DeleteOnClose);
-  berHopfen -> setVisible(false);
-  berHopfen -> spinBox_Wert->setDecimals(2);
-  berHopfen -> label_Einheit->setText("g");
 
   //Zutatenliste füllen
-  hopfen -> ergWidget = berHopfen;
   hopfen -> setBierWurdeGebraut(BierWurdeGebraut);
   hopfen -> setHopfenListe(HopfenListe);
 
@@ -5820,8 +5791,7 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
   hopfen->setErgMenge(erg_Menge);
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerHopfengaben -> addWidget(berHopfen);
-
+  verticalLayout_BerHopfengaben -> addWidget(hopfen->ergWidget);
 }
 
 
@@ -7210,19 +7180,11 @@ void MainWindowImpl::on_pushButton_SudLadenBUebersicht_clicked()
 
 void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge, double Farbe)
 {
-
   //Malz hinzufügen
   //Zutatenobjekt hinzufügen
   malzgabe* malz = new malzgabe(this);
   malz -> setStyleDunkel(StyleDunkel);
   malz -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berMalz = new doubleEditLineImpl(this);
-  berMalz -> setAttribute(Qt::WA_DeleteOnClose);
-  berMalz -> setVisible(false);
-
-  malz -> ergWidget = berMalz;
-  malz -> ergWidget->label_Einheit->setText("kg");
 
   connect(malz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_malzClose(int) ));
   connect(malz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_MalzAenderung() ));
@@ -7242,7 +7204,7 @@ void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge,
   list_Malzgaben.append(malz);
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerMalzgaben -> addWidget(berMalz);
+  verticalLayout_BerMalzgaben -> addWidget(malz->ergWidget);
 }
 
 
@@ -7681,8 +7643,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       else if (tage > 0){
         int w = tageReifung / 7;
-        QString text = QString::number(w+1) + ". " + trUtf8("Woche");
-        newItem11 -> setText(text + trUtf8(", noch") + " " + QString::number(tage) + " "  + trUtf8("Tage"));
+        newItem11 -> setText(trUtf8("%1. Woche").arg(w+1) + ", " + trUtf8("noch %1 Tage").arg(tage));
         newItem11 -> setTextColor(QColor::fromRgb(0,0,0));
         if (StyleDunkel)
           newItem11 -> setBackground(QColor::fromRgb(FARBE_BierReift_DARK));
@@ -7691,7 +7652,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       else {
         int w = tageReifung / 7;
-        newItem11 -> setText(QString::number(w+1) + ". " + trUtf8("Woche"));
+        newItem11 -> setText(trUtf8("%1. Woche").arg(w+1));
         newItem11 -> setTextColor(QColor::fromRgb(0,0,0));
         if (StyleDunkel)
           newItem11 -> setBackground(QColor::fromRgb(FARBE_BierFertig_DARK));
@@ -10382,11 +10343,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
   ewz -> setStyleDunkel(StyleDunkel);
   ewz -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
-  berEwz -> setAttribute(Qt::WA_DeleteOnClose);
 
-  ewz -> ergWidget = berEwz;
   ewz -> setBierWurdeGebraut(false);
   ewz -> setBierWurdeAbgefuellt(false);
   connect(ewz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_ewzClose(int) ));
@@ -10409,7 +10366,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   ewz -> setID((int)time(NULL)+rand());
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerWeitereZutaten -> addWidget(berEwz);
+  verticalLayout_BerWeitereZutaten -> addWidget(ewz->ergWidget);
 
   setAenderung(true);
 }

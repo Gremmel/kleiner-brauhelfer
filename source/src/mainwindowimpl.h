@@ -27,9 +27,7 @@ class MainWindowImpl : public QMainWindow, public Ui::MainWindow
 Q_OBJECT
 protected:
   void closeEvent(QCloseEvent *event);
-	void changeEvent(QEvent*);
-  void resizeEvent(QResizeEvent * event);
-  void showEvent ( QShowEvent * event );
+  void changeEvent(QEvent *event);
 private:
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
@@ -87,12 +85,11 @@ private:
   double getSudpfanneMaxNutzvolumen();
 
   //Ladet die Sprache
+  void switchTranslator(QTranslator& translator, const QString& filename);
   void loadSprache(const QString& rLanguage);
-	QString sprachauswahl;
 	QTranslator m_translator;   /*< contains the translations for this application */
 	QTranslator m_translatorQt; /*< contains the translations for qt */
 	QString m_currLang;     /*< contains the currently loaded language */
-	QString m_langPath;     /*< Path of language files. This is always fixed to /languages. */
   double highGravityFaktor;
   bool keinInternet;
   int MaxAnzahlSterne;

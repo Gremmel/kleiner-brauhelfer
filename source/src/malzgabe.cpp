@@ -12,6 +12,11 @@ malzgabe::malzgabe(QWidget *parent) :
   prozentOK = false;
   ui->dsb_Menge->setValue(10);
 
+  ergWidget = new doubleEditLineImpl(this);
+  ergWidget->setAttribute(Qt::WA_DeleteOnClose);
+  ergWidget->setVisible(false);
+  ergWidget->label_Einheit->setText("kg");
+  ergWidget->label_Einheit2->setText("kg");
 }
 
 malzgabe::~malzgabe()
@@ -65,7 +70,7 @@ void malzgabe::setMalzListeFarbe()
 void malzgabe::setFehlProzent(double value)
 {
   fehlProzent = value;
-  ui->pushButton_KorrekturMenge->setText(QString::number(value));
+  ui->pushButton_KorrekturMenge->setText(QLocale().toString(value));
   if (value == 0){
     ui->pushButton_KorrekturMenge->setVisible(false);
     ergWidget->setVisible(true);
@@ -102,6 +107,7 @@ void malzgabe::setBierWurdeGebraut(bool value)
   BierWurdeGebraut = value;
   if (value)
     setFehlProzent(0);
+  ergWidget->setRestVisible(!value);
 }
 
 double malzgabe::getFarbe() const
@@ -252,7 +258,7 @@ void malzgabe::on_dsb_Menge_valueChanged(double )
 
 void malzgabe::on_pushButton_KorrekturMenge_clicked()
 {
-  ui->dsb_Menge->setValue(ui->dsb_Menge->value()+ui->pushButton_KorrekturMenge->text().toDouble());
+  ui->dsb_Menge->setValue(ui->dsb_Menge->value()+QLocale().toDouble(ui->pushButton_KorrekturMenge->text()));
 }
 
 
