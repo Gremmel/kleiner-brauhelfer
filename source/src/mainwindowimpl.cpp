@@ -68,12 +68,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   pushButton_SudVerbraucht -> setDisabled(true);
   pushButton_SudAbgefuellt -> setDisabled(true);
 
-  pushButton_MalzKopie -> setDisabled(true);
-  pushButton_MalzDel -> setDisabled(true);
-
-  pushButton_HopfenKopie -> setDisabled(true);
-  pushButton_HopfenDel -> setDisabled(true);
-
   //Windowicon setzten
   appIcon.addFile(":/global/logo.svg",QSize(64,64));
   setWindowIcon(appIcon);
@@ -162,10 +156,10 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   // tableWidget_Hefe
   tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
   tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Interactive);
-  tableWidget_Hefe->horizontalHeader()->resizeSection(5, 200);
-  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Interactive);
-  tableWidget_Hefe->horizontalHeader()->resizeSection(10, 200);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Interactive);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(4, 200);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Interactive);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(9, 200);
   tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(14, QHeaderView::Fixed);
   tableWidget_Hefe->horizontalHeader()->resizeSection(14, 100);
   tableWidget_Hefe->horizontalHeader()->setMinimumSectionSize(100);
@@ -198,26 +192,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
 
   radioButton_FilterAlle -> setChecked(true);
 
-
   connect(graphicsView_bewStar, SIGNAL( sig_AnzahlStarChanged(int) ), this, SLOT( slot_GraphicsView_AnzahlSterneChanged(int) ));
-  //verbinde Button Korrektur Prozent mit Fuktonen
-
-  //verbinde Button Neuer Eintrag Malz aus Vorlage mit Funktion;
-  connect(pushButton_MalzNeuVorlage, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzNeuVorlage() ));
-  //verbinde Button Eintrag Löschen Malz mit Funktion;
-  connect(pushButton_MalzDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_MalzKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzKopie() ));
-
-  //verbinde Button Eintrag Löschen Hopfen mit Funktion;
-  connect(pushButton_HopfenDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HopfenDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_HopfenKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HopfenKopie() ));
-
-  //verbinde Button Eintrag Löschen Hefe mit Funktion;
-  connect(pushButton_HefeDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HefeDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_HefeKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HefeKopie() ));
 
   //verbinde Button Neuer Eintrag Geräte mit Funktion;
   connect(pushButton_GeraeteNeu, SIGNAL( clicked() ), this, SLOT( slot_pushButton_GeraeteNeu() ));
@@ -1089,7 +1064,7 @@ void MainWindowImpl::MalzNeueZeile()
 
 }
 
-void MainWindowImpl::slot_pushButton_MalzNeuVorlage()
+void MainWindowImpl::on_pushButton_MalzNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewMalzauswahl();
@@ -2160,7 +2135,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 }
 
 
-void MainWindowImpl::slot_pushButton_MalzDel()
+void MainWindowImpl::on_pushButton_MalzDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -2255,7 +2230,7 @@ void MainWindowImpl::slot_pushButton_MalzDel()
   }
 }
 
-void MainWindowImpl::slot_pushButton_HopfenDel()
+void MainWindowImpl::on_pushButton_HopfenDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -2403,7 +2378,7 @@ void MainWindowImpl::slot_pushButton_HopfenDel()
   }
 }
 
-void MainWindowImpl::slot_pushButton_HefeDel()
+void MainWindowImpl::on_pushButton_HefeDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -5852,7 +5827,7 @@ void MainWindowImpl::slot_tabWidgetChanged(int)
 }
 
 
-void MainWindowImpl::slot_pushButton_MalzKopie()
+void MainWindowImpl::on_pushButton_MalzKopie_clicked()
 {
   int i = tableWidget_Malz -> currentRow();
 
@@ -5943,7 +5918,7 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
 }
 
 
-void MainWindowImpl::slot_pushButton_HopfenKopie()
+void MainWindowImpl::on_pushButton_HopfenKopie_clicked()
 {
   int i = tableWidget_Hopfen -> currentRow();
 
@@ -6034,7 +6009,7 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
 }
 
 
-void MainWindowImpl::slot_pushButton_HefeKopie()
+void MainWindowImpl::on_pushButton_HefeKopie_clicked()
 {
   int i = tableWidget_Hefe -> currentRow();
   tableWidget_Hefe->setSortingEnabled(false);
@@ -10145,7 +10120,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   QDoubleSpinBox* dsbAusbeute=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,4);
   QDoubleSpinBox* dsbEBC=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,5);
   QDoubleSpinBox* dsbPreis=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,6);
-  QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text());
+  QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text() + trUtf8(" Kopie"));
   QTableWidgetItem *newItem7 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,7) -> text());
   QTableWidgetItem *newItem10 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,10) -> text());
 
@@ -12354,64 +12329,59 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
 
 void MainWindowImpl::on_tableWidget_Malz_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Malz -> selectedItems().count() == 4) {
-    //Alle Buttons enablen
-    pushButton_MalzKopie -> setDisabled(false);
-    pushButton_MalzDel -> setDisabled(false);
-  }
-  else {
-    pushButton_MalzKopie -> setDisabled(true);
-    pushButton_MalzDel -> setDisabled(true);
-  }
-
+    if (tableWidget_Malz->selectedItems().count() > 0)
+    {
+        pushButton_MalzKopie->setEnabled(true);
+        pushButton_MalzDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_MalzKopie->setEnabled(false);
+        pushButton_MalzDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_Hopfen_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hopfen -> selectedItems().count() == 4) {
-    //Alle Buttons enablen
-    pushButton_HopfenKopie -> setDisabled(false);
-    pushButton_HopfenDel -> setDisabled(false);
-  }
-  else {
-    pushButton_HopfenKopie -> setDisabled(true);
-    pushButton_HopfenDel -> setDisabled(true);
-  }
+    if (tableWidget_Hopfen->selectedItems().count() > 0)
+    {
+        pushButton_HopfenKopie->setEnabled(true);
+        pushButton_HopfenDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_HopfenKopie->setEnabled(false);
+        pushButton_HopfenDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_Hefe_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hefe -> selectedItems().count() == 7) {
-    //Alle Buttons enablen
-    pushButton_HefeKopie -> setDisabled(false);
-    pushButton_HefeDel -> setDisabled(false);
-  }
-  else {
-    pushButton_HefeKopie -> setDisabled(true);
-    pushButton_HefeDel -> setDisabled(true);
-  }
+    if (tableWidget_Hefe->selectedItems().count() > 0)
+    {
+        pushButton_HefeKopie->setEnabled(true);
+        pushButton_HefeDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_HefeKopie->setEnabled(false);
+        pushButton_HefeDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
-    //Alle Buttons enablen
-    pushButton_WeitereZutatenDel -> setDisabled(false);
-    pushButton_WeitereZutatenKopie -> setDisabled(false);
-  }
-  else {
-    pushButton_WeitereZutatenDel -> setDisabled(true);
-    pushButton_WeitereZutatenKopie -> setDisabled(true);
-  }
+    if (tableWidget_WeitereZutaten->selectedItems().count() > 0)
+    {
+        pushButton_WeitereZutatenDel->setEnabled(true);
+        pushButton_WeitereZutatenKopie->setEnabled(true);
+    }
+    else
+    {
+        pushButton_WeitereZutatenDel->setEnabled(false);
+        pushButton_WeitereZutatenKopie->setEnabled(false);
+    }
 }
-
-
 
 void MainWindowImpl::on_spinBox_Menge_valueChanged(double arg1)
 {

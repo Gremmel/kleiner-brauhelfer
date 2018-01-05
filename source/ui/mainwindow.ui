@@ -11683,6 +11683,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_MalzKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11690,6 +11693,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_MalzDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11798,6 +11804,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HopfenKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11805,6 +11814,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HopfenDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11933,6 +11945,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HefeKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11940,6 +11955,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HefeDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -12041,6 +12059,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -12048,6 +12069,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
