@@ -24,7 +24,68 @@
 //
 class MainWindowImpl : public QMainWindow, public Ui::MainWindow
 {
-Q_OBJECT
+    Q_OBJECT
+
+    enum TableMalzCol
+    {
+        TableMalzColName,
+        TableMalzColMenge,
+        TableMalzColFarbe,
+        TableMalzColMaxSchuettung,
+        TableMalzColAnwendung,
+        TableMalzColBemerkung,
+        TableMalzColPreis,
+        TableMalzColEinlagerung,
+        TableMalzColMindesthalbat,
+        TableMalzColLink
+    };
+    enum TableHopfenCol
+    {
+        TableHopfenColName,
+        TableHopfenColMenge,
+        TableHopfenColAlpha,
+        TableHopfenColPellets,
+        TableHopfenColTyp,
+        TableHopfenColEigenschaften,
+        TableHopfenColBemerkung,
+        TableHopfenColPreis,
+        TableHopfenColEinlagerung,
+        TableHopfenColMindesthalbat,
+        TableHopfenColLink
+    };
+    enum TableHefeCol
+    {
+        TableHefeColName,
+        TableHefeColMenge,
+        TableHefeColWuerzemenge,
+        TableHefeColVerpackungsmenge,
+        TableHefeColTypUgOg,
+        TableHefeColTypTrFlg,
+        TableHefeColTemperatur,
+        TableHefeColEigenschaften,
+        TableHefeColSedimentation,
+        TableHefeColEVG,
+        TableHefeColBemerkung,
+        TableHefeColPreis,
+        TableHefeColEinlagerung,
+        TableHefeColMindesthalbat,
+        TableHefeColLink
+    };
+    enum TableWZutatCol
+    {
+        TableWZutatColName,
+        TableWZutatColMenge,
+        TableWZutatColEinheit,
+        TableWZutatColTyp,
+        TableWZutatColAusbeute,
+        TableWZutatColFarbe,
+        TableWZutatColBemerkung,
+        TableWZutatColPreis,
+        TableWZutatColEinlagerung,
+        TableWZutatColMindesthalbat,
+        TableWZutatColLink
+    };
+
 protected:
   void closeEvent(QCloseEvent *event);
   void changeEvent(QEvent *event);
@@ -436,6 +497,7 @@ private slots:
                              const QDate& einlagerung, const QDate& haltbar, const QString& link);
   void on_pushButton_WeitereZutatenNeuVorlage_clicked();
   void slot_spinBoxValueChanged(double d);
+  void slot_RohstoffNonZeroValueChanged(double menge);
   void slot_RohstoffMengeValueChanged(double menge);
   void slot_RohstoffHaltbarValueChanged(const QDate &date);
   void slot_RohstoffFarbeValueChanged(double ebc);

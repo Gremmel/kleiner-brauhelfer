@@ -382,8 +382,8 @@ void MainWindowImpl::ErstelleSpickzettel()
     //Würzemenge auslesen
     for (int i=0; i < AnzahlHefeEintraege; i++){
       //wenn Eintrag übereinstimmt
-      if (tableWidget_Hefe -> item(i,0) -> text() == HefeName){
-        verpMenge = tableWidget_Hefe -> item(i,5) -> text();
+      if (tableWidget_Hefe -> item(i,TableHefeColName) -> text() == HefeName){
+        verpMenge = tableWidget_Hefe -> item(i,TableHefeColVerpackungsmenge) -> text();
       }
     }
   }
