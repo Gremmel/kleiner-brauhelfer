@@ -44,5 +44,11 @@ In nano edit the version and architecture and save file
 Version: 1.4.4.0
 Architecture: i386 / amd64
 ```
-## OSX
-todo
+## macOS
+Run the deploy script
+```
+chmod +x ./deployment/macOS/deploy.sh
+./deployment/macOS/deploy.sh <path_to_kleiner-brauhelfer_bundle> <path_to_qt_bin>
+Example:
+./deployment/macOS/deploy.sh ./build/bin/kleiner-brauhelfer.app /opt/Qt/5.10.0/clang_64/bin
+```
