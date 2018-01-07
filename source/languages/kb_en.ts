@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.0" language="en_US">
 <context>
     <name>AnhangWidget</name>
     <message>
@@ -223,17 +223,17 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="264"/>
         <source>Schnellgärverlauf Linie Stammwürze</source>
-        <translation>Fast fermentation sample - OG Line</translation>
+        <translation>Progress of fast fermentation sample - OG Line</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="317"/>
         <source>Schnellgärverlauf Linie Alkoholgehalt</source>
-        <translation>Fast fermentation sample - ABV line</translation>
+        <translation>Progress of fast fermentation sample - ABV line</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="370"/>
         <source>Schnellgärverlauf Linie Temperatur</source>
-        <translation>Fast fermentation sample - Temperature line</translation>
+        <translation>Progress of fast fermentation sample - Temperature line</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="430"/>
@@ -438,7 +438,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1720"/>
         <source>Speisemenge gesamt</source>
-        <translation>Total amount of unfermented wort</translation>
+        <translation>Total amount of unfermented wort (dessert)</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1727"/>
@@ -453,7 +453,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1765"/>
         <source>Speisemenge pro 0,5 Liter Flasche</source>
-        <translation>Unfermented wort per 0,5 litre bottle</translation>
+        <translation>Dessert per 0,5 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1772"/>
@@ -468,7 +468,7 @@
     <message>
         <location filename="../ui/einstellungen.ui" line="1810"/>
         <source>Speisemenge pro 0,33 Liter Flasche</source>
-        <translation>Unfermented wort per 0,33 litre bottle</translation>
+        <translation>Dessert per 0,33 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/einstellungen.ui" line="1817"/>
@@ -1560,7 +1560,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../ui/mainwindow.ui" line="1730"/>
         <location filename="../ui/mainwindow.ui" line="11602"/>
         <source>Malz</source>
-        <translation>Grist</translation>
+        <translation>Malts</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1813"/>
@@ -1736,7 +1736,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="3467"/>
         <source>nach dem Kochen / vor dem Hopfenseihen</source>
-        <translation>After boil /before hop filtering</translation>
+        <translation>After boil / Before hop filtering</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="3493"/>
@@ -1787,7 +1787,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="3893"/>
         <source>Verschneidung</source>
-        <translation>Blending</translation>
+        <translation>Dilution</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="3916"/>
@@ -1877,12 +1877,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/mainwindow.ui" line="4027"/>
         <source>Datum Anstellen</source>
-        <translation>pitching date</translation>
+        <translation>Pitching date</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="4096"/>
         <source>abgefüllte Speisemenge</source>
-        <translation>abgefüllte Speisemenge</translation>
+        <translation>Extracted amount of unfermented wort (for dessert)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="4170"/>
@@ -1986,7 +1986,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="5151"/>
         <source>Ausbeute von diesem Sud bei der Durchschnittsanzeige (Ausrüstung) nicht mit einbeziehen </source>
-        <translation>Exclude brewhouse efficiency from average calculations (in brewing eqipment) </translation>
+        <translation>Exclude this beer for calculating the average brewhouse efficiency (in brewing eqipment) </translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="5213"/>
@@ -2099,7 +2099,7 @@ This action can only be undone by editing the beer file with an editor.</transla
         <location filename="../ui/mainwindow.ui" line="6867"/>
         <source>Grünschlauchzeitpunkt</source>
         <translatorcomment>Green bottling time</translatorcomment>
-        <translation>Grünschlauchzeitpunkt</translation>
+        <translation>Green bottling time</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="6983"/>
@@ -2114,7 +2114,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7105"/>
         <source>Speisemenge gesamt</source>
-        <translation>Total amount of unfermented wort</translation>
+        <translation>Total amount of unfermented wort (dessert)</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7200"/>
@@ -2129,7 +2129,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7393"/>
         <source>Speisemenge pro 0,5 Liter Flasche</source>
-        <translation>Unfermented wort per 0,5 litre bottle</translation>
+        <translation>Dessert per 0,5 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7488"/>
@@ -2144,7 +2144,7 @@ This action can only be undone by editing the beer file with an editor.</transla
     <message>
         <location filename="../ui/mainwindow.ui" line="7681"/>
         <source>Speisemenge pro 0,33 Liter Flasche</source>
-        <translation>Unfermented wort per 0,33 litre bottle</translation>
+        <translation>Dessert per 0,33 litre bottle</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="7776"/>
@@ -4121,7 +4121,7 @@ SQL Befehl:
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="712"/>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="807"/>
         <source> Liter Wasser auf </source>
-        <translation> Heat litres of water to </translation>
+        <translation> litres of water to be heated to </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="713"/>
@@ -4169,7 +4169,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="804"/>
         <source>Nachguss vorbereiten: </source>
-        <translation>Prepare sparking water: Heat up to: </translation>
+        <translation>Prepare sparking water: </translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="807"/>
@@ -4179,12 +4179,12 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="814"/>
         <source>Nach etwa 10 - 20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.</source>
-        <translation>Wait for approximately 10 to 20 minutes before starting to drain off wort. Return the work to the lauter tun until it becomes clear.</translation>
+        <translation>Wait for approximately 10 to 20 minutes before starting to drain off wort. Return the wort to the lauter tun until it becomes clear.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="824"/>
         <source>Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!!), bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.</source>
-        <translation>Drain ff wort slowly (Grains shall not run dry). Before grains turn run dry, add sparking water (in steps to about 2-3 litres) over a float.</translation>
+        <translation>Drain off wort slowly (grist shall not run dry). Before grist gets dry, add sparking water (in steps to about 2-3 litres) over a float.</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="834"/>
@@ -4222,7 +4222,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="862"/>
         <source>Würze zum Kochen bringen</source>
-        <translation>Brong wort to boil</translation>
+        <translation>Bring wort to boil</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="885"/>
@@ -4252,7 +4252,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="959"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge vor dem Hopfenseihen) eintragen</source>
-        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;Brew and Fermentation Data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="966"/>
@@ -4293,7 +4293,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1007"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge nach dem Hopfenseihen) eintragen</source>
-        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;Brew and Fermentation Data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1014"/>
@@ -4304,7 +4304,7 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1017"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze nach dem Hopfenseihen) eintragen</source>
-        <translation>Meassure original gravity and enter value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
+        <translation>Meassure original gravity and enter value into the field &quot;Wort amount after hop filtering&quot;, in the tab &quot;Brew and Fermentation Data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1024"/>
@@ -4319,12 +4319,12 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1035"/>
         <source>Speise abfüllen</source>
-        <translation>Bottle unfermented wort</translation>
+        <translation>Bottle unfermented wort for dessert</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1038"/>
         <source> Liter Speise abfüllen</source>
-        <translation> Litres of unfermented wort for bottling</translation>
+        <translation> Litres of unfermented wort (dessert) for bottling</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1046"/>
@@ -4339,12 +4339,12 @@ SQL Befehl:
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1059"/>
         <source>Die Würzemenge ermitteln und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Würzemenge beim Anstellen) eintragen</source>
-        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
+        <translation>Determine amount of wort and enter the value into the field &quot;Wort amount before hop filtering&quot;, in the tab &quot;Brew and Fermentation Data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1069"/>
         <source>Die Stammwürze messen und im Tab (Brau &amp; Gärdaten) in das Eingabefeld (Stammwürze beim Anstellen) eintragen</source>
-        <translation>Meassure original gravity and enter value into the field &quot;Wort amount at pitching&quot;, in the tab &quot;brew and fermentation data&quot;</translation>
+        <translation>Meassure original gravity and enter value into the field &quot;Wort amount at pitching&quot;, in the tab &quot;Brew and Fermentation Data&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="1076"/>
