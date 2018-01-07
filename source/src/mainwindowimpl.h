@@ -29,6 +29,7 @@ protected:
   void closeEvent(QCloseEvent *event);
   void changeEvent(QEvent *event);
 private:
+  void initUi();
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
   //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
@@ -94,7 +95,6 @@ private:
   bool keinInternet;
   int MaxAnzahlSterne;
   void LeseMaxAnzahlSterne();
-  void LeseStyleEinstellung();
 	void ErstelleSprachMenu();
   int NeuBerechnen;
   //Dialog zum Anzeigen der Messages
@@ -126,12 +126,6 @@ private:
   int getBewertungsIndex();
   //Diese Liste enhält alle Bewertungen
   QList<Bewertung *> list_Bewertung;
-  QStringList ZutatenTypListe;
-  QStringList EinheitenListe;
-  QStringList HopfenTypListe;
-  QStringList HefeTypOGUGListe;
-  QStringList HefeTypTrFlListe;
-  QStringList HefeSedListe;
   QList<Rastwidget *> list_Rasten;
   QList<AnhangWidget *> list_Anhang;
   //Liste Auswählbare Erweiterte Zutaten
@@ -150,6 +144,7 @@ private:
   void BerVolumenMaischen();
   void BerEmpfehlungFaktorHauptguss();
   void BerEmpfehlungHefeEinheiten();
+  void setHefeAuswahlListeFarbe();
   void BerAusruestung();
   void DBErgebnisseNeuBerechnen();
   bool CheckDBNeuBerechnen();
@@ -422,15 +417,31 @@ private slots:
   void slot_spinBoxValueChanged(int i);
   void save();
   void on_pushButton_MalzDel_clicked();
-  void MalzNeueZeile();
+  void MalzNeueZeile(const QString& name, double ebc, double schuettung, double menge, double preis,
+                     const QString& bemerkung, const QString& anwendung,
+                     const QDate& einlagerung, const QDate& haltbar, const QString& link);
   void on_pushButton_MalzNeuVorlage_clicked();
   void on_pushButton_HopfenDel_clicked();
-  void HopfenNeueZeile();
+  void HopfenNeueZeile(const QString& name, double alpha, double menge, double preis, bool pellets,
+                       const QString& bemerkung, int typ, const QString& eigenschaft,
+                       const QDate& einlagerung, const QDate& haltbar, const QString& link);
   void on_pushButton_HefeDel_clicked();
-  void HefeNeueZeile();
+  void HefeNeueZeile(const QString& name, double menge, double wuerzemenge, double preis,
+                     const QString& bemerkung, const QString& verpackung, int typ1, int typ2,
+                     const QString& temperatur, const QString& eigenschaft,
+                     int sedimentation, const QString &evg,
+                     const QDate& einlagerung, const QDate& haltbar, const QString& link);
+  void WeitereZutatNeueZeile(const QString& name, double menge, int einheit, int typ,
+                             double ausbeute, double ebc, double preis, const QString& bemerkung,
+                             const QDate& einlagerung, const QDate& haltbar, const QString& link);
+  void on_pushButton_WeitereZutatenNeuVorlage_clicked();
   void slot_spinBoxValueChanged(double d);
-  void slot_tableSpinBoxValueChanged(double value);
-  void slot_EwzAenderungRohstoffe();
+  void slot_RohstoffMengeValueChanged(double menge);
+  void slot_RohstoffHaltbarValueChanged(const QDate &date);
+  void slot_RohstoffFarbeValueChanged(double ebc);
+  void slot_tableSyncValueChanged(double value);
+  void slot_tableSyncValueChanged(const QString &value);
+  void slot_tableSyncValueChanged(const QDate &date);
   void on_pushButton_NeueRast_clicked();
   void slot_pushButton_RastNachOben(int id);
   void slot_pushButton_RastNachUnten(int id);
@@ -577,7 +588,6 @@ private slots:
   void on_pushButton_alleVergessen_clicked();
   void on_checkBox_MerklisteMengen_clicked();
   void on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1);
-  void on_listWidget_Brauanlagen_currentRowChanged(int currentRow);
   void on_dspinBox_KostenAusruestung_valueChanged(double arg1);
   void on_pushButton_MalzNeu_clicked();
   void on_pushButton_HopfenNeu_clicked();
@@ -598,6 +608,7 @@ private slots:
   void on_pushButton_GaerungEwzEntnehmen_clicked();
   void on_checkBox_zumischen_clicked();
   void on_pushButton_CalcEinmaischeTemp_clicked();
+  void on_spinBox_AnzahlHefeEinheiten_valueChanged(int);
 };
 #endif
 

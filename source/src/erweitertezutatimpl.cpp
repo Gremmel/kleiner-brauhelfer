@@ -19,11 +19,6 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   ergWidget->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
-{
-  on_comboBox_Zutat_currentIndexChanged(comboBox_Zutat -> currentText());
-}
-
 void ErweiterteZutatImpl::setUIStatus()
 {
   QAbstractSpinBox::ButtonSymbols bs;
