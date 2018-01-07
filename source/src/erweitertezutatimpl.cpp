@@ -14,8 +14,9 @@ ErweiterteZutatImpl::ErweiterteZutatImpl( QWidget * parent, Qt::WindowFlags f)
   farbe = 0;
   zugabestatus = 0;
   typ = -1;
-  animationPos = new QPropertyAnimation(this, "pos");
   dateEdit_zugabezeitpunkt_von->setDate(QDate::currentDate());
+  ergWidget = new doubleEditLineImpl(this);
+  ergWidget->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ErweiterteZutatImpl::WerteNeuAusRohstoffeHolen()
@@ -164,6 +165,7 @@ void ErweiterteZutatImpl::setBierWurdeGebraut(bool value)
 {
   BierWurdeGebraut = value;
   setUIStatus();
+  ergWidget->setRestVisible(!value);
 }
 
 void ErweiterteZutatImpl::setZugabezeitpunkt(QDate datum_von, QDate datum_bis)
@@ -216,6 +218,44 @@ void ErweiterteZutatImpl::setEwListe(QStringList value)
   ewListe = value;
 }
 
+void ErweiterteZutatImpl::setEwListeFarbe()
+{
+  double menge = 0;
+  double rest = 0;
+  QString name;
+  int ttyp = -1;
+  menge = erg_Menge;
+//  if (einheit == EWZ_Einheit_Kg)
+//    menge = menge + 1000;
+  for (int i=0; i < comboBox_Zutat->count(); i++) {
+    name = comboBox_Zutat->itemText(i);
+    ttyp = sig_getEwzTyp(name);
+    if (ttyp == -1)
+      rest = sig_getHopfenMenge(name);
+    else
+      rest = sig_getEwzMenge(name);
+    //Hintergrund einfärben wenn von dieser Zutat nicht mehr da ist
+    if (rest == 0) {
+      if (StyleDunkel)
+        comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL),Qt::TextColorRole);
+      else
+        comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_HELL),Qt::TextColorRole);
+    }
+    else if (rest < menge) {
+      if (StyleDunkel)
+        comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_DUNKEL),Qt::TextColorRole);
+      else
+        comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_HELL),Qt::TextColorRole);
+    }
+    else {
+      if (StyleDunkel)
+        comboBox_Zutat->setItemData(i,QColor(Qt::white),Qt::TextColorRole);
+      else
+        comboBox_Zutat->setItemData(i,QColor(40,40,40),Qt::TextColorRole);
+    }
+  }
+}
+
 
 void ErweiterteZutatImpl::setHopfenListe(QStringList value)
 {
@@ -241,6 +281,11 @@ void ErweiterteZutatImpl::ErstelleAuswahlliste()
     }
   }
 
+}
+
+void ErweiterteZutatImpl::setStyleDunkel(bool value)
+{
+  StyleDunkel = value;
 }
 
 bool ErweiterteZutatImpl::getBierWurdeAbgefuellt() const
@@ -340,13 +385,15 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       //Kilogramm
       if (einheit == EWZ_Einheit_Kg){
         label_Mengeneinheit -> setText("g/L");
-        ergWidget -> label_Einheit -> setText("Kg");
+        ergWidget -> label_Einheit -> setText("kg");
+        ergWidget -> label_Einheit2 -> setText("kg");
         ergWidget -> spinBox_Wert -> setDecimals(3);
       }
       //Gramm
       else if (einheit == EWZ_Einheit_g){
         label_Mengeneinheit -> setText("g/L");
         ergWidget -> label_Einheit -> setText("g");
+        ergWidget -> label_Einheit2 -> setText("g");
         ergWidget -> spinBox_Wert -> setDecimals(0);
       }
     }
@@ -357,6 +404,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       label_Icon -> setPixmap(pixmapTyp);
       label_Mengeneinheit -> setText("g/L");
       ergWidget -> label_Einheit -> setText("g");
+      ergWidget -> label_Einheit2 -> setText("g");
       ergWidget -> spinBox_Wert -> setDecimals(1);
       //Einheit auf gramm festlegen
       einheit = 1;
@@ -457,6 +505,7 @@ void ErweiterteZutatImpl::setErg_Menge(double value)
   else if (einheit == 1){
   }
   ergWidget -> spinBox_Wert -> setValue(value);
+  setEwListeFarbe();
 }
 
 
@@ -552,12 +601,12 @@ void ErweiterteZutatImpl::on_pushButton_del_clicked()
     faderWidget->close();
 
   faderWidget = new FaderWidget(this);
-  connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(on_fadeout_fertig()));
+  connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(slot_fadeout_fertig()));
   animationAktiv = true;
   faderWidget->start();
 }
 
-void ErweiterteZutatImpl::on_fadeout_fertig()
+void ErweiterteZutatImpl::slot_fadeout_fertig()
 {
   emit sig_vorClose(ID);
   close();
@@ -586,7 +635,7 @@ void ErweiterteZutatImpl::setFarbe(double value)
 
 double ErweiterteZutatImpl::getErg_Kosten()
 {
-  //Menge in Gramm Preis ist in Kg
+  //Menge in Gramm Preis ist in kg
   return erg_Menge * preis/1000;
 }
 

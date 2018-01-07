@@ -13,7 +13,6 @@ private:
 	void BerAlles();
 	QBerechnungen Berechnungen;
 public:
-	bool b_OK;
 	Dialog_Berechne_IBUImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
 private slots:
 	void on_spinBox_Nachisomerisierung_valueChanged(int );

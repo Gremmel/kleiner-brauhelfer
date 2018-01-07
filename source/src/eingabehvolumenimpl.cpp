@@ -1,55 +1,34 @@
 #include "eingabehvolumenimpl.h"
 #include <qmath.h>
 #include "berechnungen.h"
-//
-EingabeHVolumenImpl::EingabeHVolumenImpl( QWidget * parent, Qt::WindowFlags f) 
+
+EingabeHVolumenImpl::EingabeHVolumenImpl(double durchmesser, double hoehe, QWidget * parent, Qt::WindowFlags f)
 	: QDialog(parent, f)
 {
 	setupUi(this);
-	abgebrochen = true;
-}
-//
+    Durchmesser = durchmesser;
+    Hoehe = hoehe;
 
-
-void EingabeHVolumenImpl::setHoehe(double value)
-{
-	Hoehe = value;
-	spinBox_VonOben -> setMaximum(Hoehe);
-	spinBox_VonUnten -> setMaximum(Hoehe);
-
-	double Grundflaeche;
-	Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
-	spinBox_Liter -> setMaximum(Grundflaeche * (Hoehe / 100 ) / 10); 
-}
-
-void EingabeHVolumenImpl::setDurchmesser(double value)
-{
-	Durchmesser = value;
-	double Grundflaeche;
-	Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
-	spinBox_Liter -> setMaximum(Grundflaeche * (Hoehe / 100 ) / 10); 
+    double Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
+    spinBox_Liter -> setMaximum(Grundflaeche * (Hoehe / 100 ) / 10);
+    spinBox_VonOben -> setMaximum(Hoehe);
+    spinBox_VonUnten -> setMaximum(Hoehe);
 }
 
 void EingabeHVolumenImpl::on_buttonBox_accepted()
 {
-	abgebrochen = false;
 	accept();
-	hide();
 }
 
 void EingabeHVolumenImpl::on_buttonBox_rejected()
 {
-	abgebrochen = true;
-	rejected();
-	hide();
+    reject();
 }
 
 void EingabeHVolumenImpl::on_spinBox_VonOben_valueChanged(double )
 {
 	if (spinBox_VonOben -> hasFocus()){
-		double Grundflaeche;
-		
-		Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
+        double Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
 		spinBox_Liter -> setValue(Grundflaeche * (Hoehe - spinBox_VonOben -> value()) / 1000 ); 
 		spinBox_VonUnten -> setValue(Hoehe - spinBox_VonOben -> value());
 		BerLiter20Grad();
@@ -59,9 +38,7 @@ void EingabeHVolumenImpl::on_spinBox_VonOben_valueChanged(double )
 void EingabeHVolumenImpl::on_spinBox_VonUnten_valueChanged(double )
 {
 	if (spinBox_VonUnten -> hasFocus()){
-		double Grundflaeche;
-		
-		Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
+        double Grundflaeche = pow(Durchmesser/2, 2) * M_PI ;
 		spinBox_Liter -> setValue(Grundflaeche * (spinBox_VonUnten -> value()) / 1000 ); 
 		spinBox_VonOben -> setValue(Hoehe - spinBox_VonUnten -> value());
 		BerLiter20Grad();
@@ -95,7 +72,6 @@ void EingabeHVolumenImpl::BerLiter20Grad()
 			spinBox_Liter -> value()));
 }
 
-
 void EingabeHVolumenImpl::setLiter(double Liter)
 {
 	spinBox_Liter20Grad -> setValue(Liter);
@@ -106,15 +82,12 @@ void EingabeHVolumenImpl::setLiter(double Liter)
 	spinBox_VonOben -> setValue(Hoehe - spinBox_VonUnten -> value());
 }
 
-
 void EingabeHVolumenImpl::setVisibleVonOben(bool value)
 {
 	widget_VonOben -> setVisible(value);
 }
 
-
 void EingabeHVolumenImpl::setVisibleVonUnten(bool value)
 {
 	widget_VonUnten -> setVisible(value);
 }
-

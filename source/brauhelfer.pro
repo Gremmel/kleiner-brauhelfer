@@ -2,10 +2,27 @@ QT = gui \
  core \
  svg \
  sql \
- webkitwidgets \
  network \
  printsupport \
  xml
+
+equals(QT_MAJOR_VERSION, 5)
+{
+  greaterThan(QT_MINOR_VERSION, 4){
+    QT +=  webenginewidgets
+  } else {
+    QT += webkitwidgets
+  }
+}
+
+TEMPLATE = app
+TARGET = kleiner-brauhelfer
+VERSION = 1.4.4.0
+VERSION_INT = 1040400
+DEFINES += TARGET=\\\"$$TARGET\\\" VERSION=\\\"$$VERSION\\\" VERSION_INT=$$VERSION_INT
+
+win32:RC_ICONS += res/logo.ico
+
 CONFIG += qt warn_on
 DESTDIR = bin
 OBJECTS_DIR = build
@@ -29,7 +46,8 @@ FORMS = ui/mainwindow.ui \
  ui/dialogberverdampfung.ui \
  ui/dialoginfo.ui \
  ui/anhangwidget.ui \
- ui/dialogdatum.ui
+ ui/dialogdatum.ui \
+ ui/dialogeinmaischetemp.ui
 HEADERS = src/mainwindowimpl.h \
  src/berechnungen.h \
  src/korrektswimpl.h \
@@ -61,9 +79,13 @@ HEADERS = src/mainwindowimpl.h \
  src/dialogberverdampfung.h \
  src/brauanlage.h \
  src/dialoginfo.h \
- src/infotexts.h \
  src/anhangwidget.h \
- src/dialogdatum.h
+ src/dialogdatum.h \
+ src/mywebview.h \
+ src/mytablewidget.h \
+ src/mytablewidgetitemnumeric.h \
+ src/mydsvtablemodel.h \
+ src/dialogeinmaischetemp.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -95,7 +117,14 @@ SOURCES = src/mainwindowimpl.cpp \
  src/brauanlage.cpp \
  src/dialoginfo.cpp \
  src/anhangwidget.cpp \
- src/dialogdatum.cpp
-TRANSLATIONS += languages/kb_de.ts languages/kb_pt.ts languages/kb_pl.ts languages/kb_de_CH.ts
-RESOURCES += res/grafiken.qrc res/sonstiges.qrc
-TEMPLATE = app
+ src/dialogdatum.cpp \
+ src/mywebview.cpp \
+ src/mytablewidget.cpp \
+ src/mytablewidgetitemnumeric.cpp \
+ src/mainwindowimpl_sudinfo.cpp \
+ src/mainwindowimpl_spickzettel.cpp \
+ src/mainwindowimpl_zusammenfassung.cpp \
+ src/mydsvtablemodel.cpp \
+ src/dialogeinmaischetemp.cpp
+TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
+RESOURCES += res/grafiken.qrc data/data.qrc

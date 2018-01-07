@@ -8,8 +8,9 @@ class doubleEditLineImpl : public QWidget, public Ui::Form
 {
 Q_OBJECT
 public:
-	doubleEditLineImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
-private slots:
+    doubleEditLineImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
+    void setRest(double rest);
+    void setRestVisible(bool visible);
 };
 #endif
 

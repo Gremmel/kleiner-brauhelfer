@@ -36,9 +36,9 @@ private:
 	double SollStammwuerze; 
 	//Prozentuale ausbeute Malz (%)
 	double Sudhausausbeute;
-	//Praktisch genutzter Extraktgehalt (g/Kg)
+    //Praktisch genutzter Extraktgehalt (g/kg)
 	double EffektiverExtraktgehalt;
-	//Gesammte Schüttung (Kg)
+    //Gesammte Schüttung (kg)
 	double GesammtSchuettung;
 
 public:

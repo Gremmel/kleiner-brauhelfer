@@ -23,6 +23,7 @@ public:
   QString getFullPfad() const;
   void setPfad(const QString pfad);
   void setBasisPfad(const QString basis);
+  void openDialog();
 
 signals:
 	void sig_vorClose(int ID);
@@ -30,7 +31,7 @@ signals:
 
 private slots:
 	void on_pushButton_close_clicked();
-	void on_lineEdit_editingFinished();
+    void on_lineEdit_Pfad_editingFinished();
 	void on_pushButton_Browse_clicked();
 	void on_checkBox_Relativ_clicked();
 

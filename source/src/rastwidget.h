@@ -33,7 +33,7 @@ public:
 
 private slots:
   void on_close();
-  void on_animation_fertig();
+  void slot_animation_fertig();
   void on_pushButton_NachOben_clicked();
   void on_pushButton_NachUnten_clicked();
   void on_pushButton_close_clicked();

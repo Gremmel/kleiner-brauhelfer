@@ -25,6 +25,8 @@ signals:
   double sig_getEwzPreisHopfen(QString zutat);
   void sig_Aenderung();
   void sig_zugeben(QString zutat, int typ, double menge);
+  double sig_getHopfenMenge(QString name);
+  double sig_getEwzMenge(QString name);
 
 private:
   double farbe;
@@ -42,12 +44,12 @@ private:
   bool BierWurdeAbgefuellt;
   QPointer<FaderWidget> faderWidget;
   bool animationAktiv;
-  QPropertyAnimation *animationPos;
   QPoint pVon, pNach;
   int z;
   bool NativStyle;
   int zugabestatus;
   QDateTime Zugabezeitpunkt_bis;
+  bool StyleDunkel;
 
 public:
   double getErg_Kosten();
@@ -61,6 +63,7 @@ public:
   void setName(QString Name);
   void setErg_Menge(double value);
   double getErg_Menge();
+  //Menge in gramm
   double erg_Menge;
   QString getBemerkung();
   int getZeitpunkt();
@@ -72,6 +75,7 @@ public:
   QString getName();
   void setHopfenListe(QStringList value);
   void setEwListe(QStringList value);
+  void setEwListeFarbe();
   void setID(int value);
   int getID();
   doubleEditLineImpl* ergWidget;
@@ -96,13 +100,15 @@ public:
   bool getBierWurdeAbgefuellt() const;
   void setBierWurdeAbgefuellt(bool value);
 
+  void setStyleDunkel(bool value);
+
 private slots:
   void on_textEdit_Komentar_textChanged();
   void on_dsb_Menge_valueChanged(double );
   void on_comboBox_Zugabezeitpunkt_currentIndexChanged(int index);
   void on_comboBox_Zutat_currentIndexChanged(QString );
   void on_pushButton_del_clicked();
-  void on_fadeout_fertig();
+  void slot_fadeout_fertig();
   void on_dateEdit_zugabezeitpunkt_von_dateChanged(const QDate &date);
 
   void on_comboBox_entnahme_currentIndexChanged(int index);

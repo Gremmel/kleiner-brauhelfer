@@ -2,14 +2,6 @@
 #define GETROHSTOFFVORLAGE_H
 
 #include "ui_getrohstoffvorlage.h"
-#include "QSqlQueryModel"
-#include "QSettings"
-#include "QDir"
-#include "QFile"
-
-#include "definitionen.h"
-#include "errormessage.h"
-
 #include <QDialog>
 
 namespace Ui {
@@ -21,14 +13,13 @@ class GetRohstoffVorlage : public QDialog
 	Q_OBJECT
 	
 public:
-	explicit GetRohstoffVorlage(QWidget *parent = 0);
+    explicit GetRohstoffVorlage(QWidget *parent = 0);
 	~GetRohstoffVorlage();
-	void ViewMalzauswahl();
-	void ViewHopfenauswahl();
-	void ViewHefeauswahl();
-	bool b_ok;
+    void ViewMalzauswahl();
+    void ViewHopfenauswahl();
+    void ViewHefeauswahl();
 	QString m_Beschreibung;
-	QString m_Verpackungsmenge;
+    QString m_Verpackungsmenge;
 	QString m_Temperatur;
 	int m_Typ;
 	int m_TypOGUG;
@@ -43,12 +34,20 @@ public:
 	int Rohstoffart;
 	
 private slots:
+    void slot_save();
 	void on_buttonBox_accepted();
-
 	void on_buttonBox_rejected();
+    void on_btn_Add_clicked();
+    void on_btn_Remove_clicked();
+    void on_btn_Import_clicked();
+    void on_btn_Export_clicked();
+    void on_btn_Restore_clicked();
 
 private:
-	QSqlDatabase dbr;
+    QString getFileName(bool withPath) const;
+    void viewImpl(int art);
+
+private:
 	Ui::GetRohstoffVorlage *ui;
 };
 

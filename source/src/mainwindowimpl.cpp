@@ -21,11 +21,11 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QDesktopServices>
+#include <QTemporaryFile>
 
 #include <qmath.h>
 #include "errormessage.h"
 #include "definitionen.h"
-#include "infotexts.h"
 #include "einstellungsdialogimpl.h"
 #include "getrohstoffvorlage.h"
 #include "rohstoffaustauschen.h"
@@ -34,6 +34,8 @@
 #include "dialogberverdampfung.h"
 #include "brauanlage.h"
 #include "dialoginfo.h"
+#include "dialogeinmaischetemp.h"
+#include "mytablewidgetitemnumeric.h"
 //
 MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   : QMainWindow(parent, f)
@@ -66,12 +68,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   pushButton_SudVerbraucht -> setDisabled(true);
   pushButton_SudAbgefuellt -> setDisabled(true);
 
-  pushButton_MalzKopie -> setDisabled(true);
-  pushButton_MalzDel -> setDisabled(true);
-
-  pushButton_HopfenKopie -> setDisabled(true);
-  pushButton_HopfenDel -> setDisabled(true);
-
   //Windowicon setzten
   appIcon.addFile(":/global/logo.svg",QSize(64,64));
   setWindowIcon(appIcon);
@@ -79,7 +75,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //String Listen füllen
 
   //Liste für Einheiten
-  EinheitenListe.append(trUtf8("Kg"));
+  EinheitenListe.append(trUtf8("kg"));
   EinheitenListe.append(trUtf8("g"));
   //EinheitenListe.append(trUtf8("L"));
   //EinheitenListe.append(trUtf8("ml"));
@@ -93,7 +89,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   ZutatenTypListe.append(trUtf8("Sonstiges"));
 
   //Liste für Hopfentypen
-  HopfenTypListe.append(trUtf8(""));
+  HopfenTypListe.append("");
   HopfenTypListe.append(trUtf8("Aroma"));
   HopfenTypListe.append(trUtf8("Bitter"));
   HopfenTypListe.append(trUtf8("Universal"));
@@ -114,16 +110,68 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   HefeSedListe.append(trUtf8("mittel"));
   HefeSedListe.append(trUtf8("niedrig"));
 
-  label_waOder -> setVisible(false);
-  frame_Sauermalz -> setVisible(false);
-
   //Überprüfen ob ergebnisse in der Datenbank neu berechnet werden müssen
   if (CheckDBNeuBerechnen()){
     DBErgebnisseNeuBerechnen();
   }
 
-  //Sortierreihenfolge der Sudauswahl auf Braudatum setzten
-  tableWidget_Sudauswahl -> sortByColumn(2,Qt::DescendingOrder);
+  // tableWidget_Sudauswahl
+  tableWidget_Sudauswahl->setColumnHidden(0, true);
+  tableWidget_Sudauswahl->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+  tableWidget_Sudauswahl->horizontalHeader()->resizeSection(2, 150);
+  tableWidget_Sudauswahl->horizontalHeader()->resizeSection(3, 150);
+  tableWidget_Sudauswahl->horizontalHeader()->resizeSection(4, 150);
+  tableWidget_Sudauswahl->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+  tableWidget_Sudauswahl->sortByColumn(2, Qt::DescendingOrder);
+
+  // tableWidget_Brauuebersicht
+  tableWidget_Brauuebersicht->setColumnHidden(0, true);
+  tableWidget_Brauuebersicht->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  tableWidget_Brauuebersicht->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+  tableWidget_Brauuebersicht->horizontalHeader()->setMinimumSectionSize(100);
+  tableWidget_Brauuebersicht->sortByColumn(2, Qt::DescendingOrder);
+
+  // tableWidget_Malz
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Interactive);
+  tableWidget_Malz->horizontalHeader()->resizeSection(5, 200);
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Interactive);
+  tableWidget_Malz->horizontalHeader()->resizeSection(6, 200);
+  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Fixed);
+  tableWidget_Malz->horizontalHeader()->resizeSection(9, 100);
+  tableWidget_Malz->horizontalHeader()->setMinimumSectionSize(100);
+
+  // tableWidget_Hopfen
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Interactive);
+  tableWidget_Hopfen->horizontalHeader()->resizeSection(5, 200);
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Interactive);
+  tableWidget_Hopfen->horizontalHeader()->resizeSection(7, 200);
+  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
+  tableWidget_Hopfen->horizontalHeader()->resizeSection(10, 100);
+  tableWidget_Hopfen->horizontalHeader()->setMinimumSectionSize(100);
+
+  // tableWidget_Hefe
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Interactive);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(4, 200);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Interactive);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(9, 200);
+  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(14, QHeaderView::Fixed);
+  tableWidget_Hefe->horizontalHeader()->resizeSection(14, 100);
+  tableWidget_Hefe->horizontalHeader()->setMinimumSectionSize(100);
+
+  //tableWidget_WeitereZutaten
+  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Interactive);
+  tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(7, 200);
+  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
+  tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(10, 100);
+  tableWidget_WeitereZutaten->horizontalHeader()->setMinimumSectionSize(100);
 
   QList<int> sizes = splitter_Schnellgaerverlauf -> sizes();
   sizes.first() = 1;
@@ -131,6 +179,10 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   splitter_Schnellgaerverlauf -> setSizes(sizes);
   splitter_Hauptgaerverlauf -> setSizes(sizes);
   splitter_Nachgaerverlauf -> setSizes(sizes);
+
+  splitter_Sudauswahl->setSizes(QList<int>() << INT_MAX << 0);
+  splitter_Sudauswahl->setStretchFactor(0, 1);
+  splitter_Sudauswahl->setStretchFactor(1, 0);
 
   //Diagrammfarben setzen
   SetDiagrammFarben();
@@ -140,26 +192,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
 
   radioButton_FilterAlle -> setChecked(true);
 
-
   connect(graphicsView_bewStar, SIGNAL( sig_AnzahlStarChanged(int) ), this, SLOT( slot_GraphicsView_AnzahlSterneChanged(int) ));
-  //verbinde Button Korrektur Prozent mit Fuktonen
-
-  //verbinde Button Neuer Eintrag Malz aus Vorlage mit Funktion;
-  connect(pushButton_MalzNeuVorlage, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzNeuVorlage() ));
-  //verbinde Button Eintrag Löschen Malz mit Funktion;
-  connect(pushButton_MalzDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_MalzKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_MalzKopie() ));
-
-  //verbinde Button Eintrag Löschen Hopfen mit Funktion;
-  connect(pushButton_HopfenDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HopfenDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_HopfenKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HopfenKopie() ));
-
-  //verbinde Button Eintrag Löschen Hefe mit Funktion;
-  connect(pushButton_HefeDel, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HefeDel() ));
-  //verbinde Button Kopie mit Funktion;
-  connect(pushButton_HefeKopie, SIGNAL( clicked() ), this, SLOT( slot_pushButton_HefeKopie() ));
 
   //verbinde Button Neuer Eintrag Geräte mit Funktion;
   connect(pushButton_GeraeteNeu, SIGNAL( clicked() ), this, SLOT( slot_pushButton_GeraeteNeu() ));
@@ -276,12 +309,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //SpinBox Stammwürze nach Kochende mit SpinBox Stammwüzre vor dem Hopfenseihen verbinden
   connect(spinBox_SWKochende, SIGNAL( valueChanged(double) ), spinBox_SWVorHopfenseihen, SLOT( setValue(double) ));
 
-  // links extern weiterleiten
-  webView_Info->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(webView_Info, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
-  webView_Zusammenfassung->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(webView_Zusammenfassung, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
-
   //SpinBox Stammwürze vor dem Hopfenseigen ausblenden da nicht mehr benötigt
   label_116 -> hide();
   spinBox_SWVorHopfenseihen -> hide();
@@ -291,10 +318,11 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   on_tableWidget_WeitereZutaten_itemSelectionChanged();
   on_tableWidget_Hefe_itemSelectionChanged();
 
+  LeseKonfig();
+
   createActions();
   createMenus();
-
-  LeseKonfig();
+  retranslateMenus();
 
   //Überprüfen ob Messages angezeigt werden sollen
   if (!keinInternet)
@@ -336,21 +364,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   BerAlles();
   //Seite Spickzettel erstellen
   ErstelleTabSpickzettel();
-
-  // Spaltenbreite von "Link"
-  tableWidget_Malz->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Fixed);
-  tableWidget_Malz->horizontalHeader()->resizeSection(9, 120);
-  tableWidget_Hopfen->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
-  tableWidget_Hopfen->horizontalHeader()->resizeSection(10, 120);
-  tableWidget_Hefe->horizontalHeader()->setSectionResizeMode(14, QHeaderView::Fixed);
-  tableWidget_Hefe->horizontalHeader()->resizeSection(14, 120);
-  tableWidget_WeitereZutaten->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Fixed);
-  tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(10, 120);
-
-  //Fenster Maximieren wenn es zuletzt Maximiert war
-  if (maximiertStarten)
-    this->showMaximized();
-
 }
 
 void MainWindowImpl::on_MsgCheckFertig(int count)
@@ -386,42 +399,49 @@ void MainWindowImpl::on_MsgCheckFertig(int count)
     }
   }
 }
-//
-void MainWindowImpl::closeEvent(QCloseEvent *)
+
+void MainWindowImpl::closeEvent(QCloseEvent *evt)
 {
-  //bei Änderung frage nach speichern
-  if (Aenderung){
-    if (AbfrageSpeichern()){
+    bool close = true;
+    if (Aenderung)
+        close = AbfrageSpeichern();
+    else
+        close = QMessageBox::question(this, APP_NAME,
+                                      trUtf8("Anwendung schliessen?"),
+                                      QMessageBox::Cancel | QMessageBox::Yes,
+                                      QMessageBox::Yes) == QMessageBox::Yes;
+
+    if (close)
+    {
+        SchreibeKonfig();
+        evt->accept();
     }
-  }
-  SchreibeKonfig();
+    else
+    {
+        evt->ignore();
+    }
 }
 
 void MainWindowImpl::changeEvent(QEvent* event)
 {
-  if(0 != event)
-  {
-    // this event is send if a translator is loaded
-    if (event->type() == QEvent::LanguageChange) {
-      //qDebug() << "LanguageChange";
-      Gestartet = false;
-      retranslateUi(this);
-      Gestartet = true;
+    if(event)
+    {
+        switch (event->type())
+        {
+        case QEvent::LanguageChange:
+            Gestartet = false;
+            retranslateUi(this);
+            retranslateMenus();
+            Gestartet = true;
+            break;
+        case QEvent::LocaleChange:
+            loadSprache(QLocale::system().name());
+            break;
+        default:
+            break;
+        }
     }
-    // this event is send, if the system, language changes
-    else if (event->type() == QEvent::LocaleChange) {
-      //qDebug() << "LocaleChange";
-      QString locale = QLocale::system().name();
-      locale.truncate(locale.lastIndexOf('_'));
-      loadSprache(locale);
-    }
-  }
-
-  QMainWindow::changeEvent(event);
-}
-
-void MainWindowImpl::showEvent ( QShowEvent *)
-{
+    QMainWindow::changeEvent(event);
 }
 
 int MainWindowImpl::getBrauanlagenIDRezept()
@@ -713,32 +733,27 @@ double MainWindowImpl::getSudpfanneMaxNutzvolumen()
   return double(qRound((Grundflaeche * getSudpfanneMaxFuellhoehe() / 100) *100)) / 100;
 }
 
-void switchTranslator(QTranslator& translator, const QString& filename)
+void MainWindowImpl::switchTranslator(QTranslator& translator, const QString& filename)
 {
-  // remove the old translator
-  qApp->removeTranslator(&translator);
-
-  // load the new translator
-  //qDebug() << "vor install translator " << filename;
-  if(translator.load(filename)) {
-    //qDebug() << "install translator " << filename;
-    qApp->installTranslator(&translator);
-  }
+    qApp->removeTranslator(&translator);
+    if(translator.load(filename))
+        qApp->installTranslator(&translator);
 }
 
 void MainWindowImpl::loadSprache(const QString &rLanguage)
 {
-  qDebug() << "m_currLang: " << m_currLang;
-  qDebug() << "rLanguage: " << rLanguage;
-  if(m_currLang != rLanguage)
-  {
-    m_currLang = rLanguage;
-    QLocale locale = QLocale(m_currLang);
-    QLocale::setDefault(locale);
-    QString languageName = QLocale::languageToString(locale.language());
-    switchTranslator(m_translator, QString(m_langPath+"/kb_%1.qm").arg(rLanguage));
-    switchTranslator(m_translatorQt, QString(m_langPath+"/qt_%1.qm").arg(rLanguage));
-  }
+    if(m_currLang != rLanguage)
+    {
+        m_currLang = rLanguage;
+        QLocale locale = QLocale(m_currLang);
+        QLocale::setDefault(locale);
+        tabWidged->setLocale(locale);
+        tabWidged->setVisible(false);
+        tabWidged->setVisible(true);
+        QString langPath = QApplication::applicationDirPath().append("/languages");
+        switchTranslator(m_translator, QString(langPath+"/kb_%1.qm").arg(m_currLang));
+        switchTranslator(m_translatorQt, QString(langPath+"/qt_%1.qm").arg(m_currLang));
+    }
 }
 
 void MainWindowImpl::LeseMaxAnzahlSterne()
@@ -824,10 +839,6 @@ void MainWindowImpl::setAenderung(bool value)
     Aenderung = value;
     setFensterTitel();
   }
-}
-
-void MainWindowImpl::resizeEvent(QResizeEvent *)
-{
 }
 
 void MainWindowImpl::LeseAusruestungDB()
@@ -983,6 +994,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxFarbe -> setDecimals(1);
   connect(spinBoxFarbe, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 1, spinBoxFarbe);
+  tableWidget_Malz -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxFarbe->value()));
+  spinBoxFarbe->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 1))));
+  connect(spinBoxFarbe, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Maximaler Schüttungsanteil
   MyDoubleSpinBox *spinBoxMaxSchuettung = new MyDoubleSpinBox();
@@ -992,6 +1006,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxMaxSchuettung -> setValue(100);
   connect(spinBoxMaxSchuettung, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 2, spinBoxMaxSchuettung);
+  tableWidget_Malz -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMaxSchuettung->value()));
+  spinBoxMaxSchuettung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 2))));
+  connect(spinBoxMaxSchuettung, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Menge
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1001,6 +1018,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxMenge -> setSingleStep(0.1);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 3, spinBoxMenge);
+  tableWidget_Malz -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 3))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1010,6 +1030,9 @@ void MainWindowImpl::MalzNeueZeile()
   spinBoxPreis -> setSingleStep(0.1);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Malz -> setCellWidget(i, 4, spinBoxPreis);
+  tableWidget_Malz -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 4))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Datum Eingelagert
   QDateEdit * deEinlagerung = new QDateEdit(QDate::currentDate());
@@ -1017,6 +1040,8 @@ void MainWindowImpl::MalzNeueZeile()
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Malz -> setCellWidget(i, 7, deEinlagerung);
+  tableWidget_Malz -> setItem(i, 7, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 7))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1024,6 +1049,8 @@ void MainWindowImpl::MalzNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Malz -> setCellWidget(i, 8, deMhd);
+  tableWidget_Malz -> setItem(i, 8, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 8))));
 
   //Link
   QTableWidgetItem *newItem4 = new QTableWidgetItem("");
@@ -1037,18 +1064,15 @@ void MainWindowImpl::MalzNeueZeile()
 
 }
 
-void MainWindowImpl::slot_pushButton_MalzNeuVorlage()
+void MainWindowImpl::on_pushButton_MalzNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewMalzauswahl();
-  grvDia.exec();
-
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Malz->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Malz_Bezeichnung_Merker;
     Malz_Bezeichnung_Merker = "";
-    tableWidget_Malz->setSortingEnabled(false);
     MalzNeueZeile();
     //Neuen Eintrag mit den entsprechenden Werten füllen
     int row = tableWidget_Malz -> rowCount();
@@ -1096,6 +1120,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxAlpha -> setSingleStep(0.1);
   connect(spinBoxAlpha, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 1, spinBoxAlpha);
+  tableWidget_Hopfen -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxAlpha->value()));
+  spinBoxAlpha->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 1))));
+  connect(spinBoxAlpha, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Menge
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1105,6 +1132,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxMenge -> setSingleStep(10);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 2, spinBoxMenge);
+  tableWidget_Hopfen -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 2))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1114,6 +1144,9 @@ void MainWindowImpl::HopfenNeueZeile()
   spinBoxPreis -> setSingleStep(1);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hopfen -> setCellWidget(i, 3, spinBoxPreis);
+  tableWidget_Hopfen -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 3))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Combobox Typ
   MyComboBox *comboBoxTyp = new MyComboBox();
@@ -1127,6 +1160,8 @@ void MainWindowImpl::HopfenNeueZeile()
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hopfen -> setCellWidget(i, 8, deEinlagerung);
+  tableWidget_Hopfen -> setItem(i, 8, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 8))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1134,6 +1169,8 @@ void MainWindowImpl::HopfenNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
+  tableWidget_Hopfen -> setItem(i, 9, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 9))));
 
   //Link
   QTableWidgetItem *newItemLink = new QTableWidgetItem("");
@@ -1151,11 +1188,8 @@ void MainWindowImpl::on_pushButton_HopfenNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewHopfenauswahl();
-  grvDia.exec();
-
-  tableWidget_Hopfen->setSortingEnabled(false);
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Hopfen->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Hopfen_Bezeichnung_Merker;
     Hopfen_Bezeichnung_Merker = "";
@@ -1175,19 +1209,16 @@ void MainWindowImpl::on_pushButton_HopfenNeuVorlage_clicked()
     newItem = tableWidget_Hopfen -> item(row-1,7);
     newItem->setText(grvDia.m_Eigenschaften);
     Hopfen_Bezeichnung_Merker = s;
+    tableWidget_Hopfen->setSortingEnabled(true);
   }
-  tableWidget_Hopfen->setSortingEnabled(true);
 }
 
 void MainWindowImpl::on_pushButton_HefeNeuVorlage_clicked()
 {
   GetRohstoffVorlage grvDia;
   grvDia.ViewHefeauswahl();
-  grvDia.exec();
-  tableWidget_Hefe->setSortingEnabled(false);
-
-  //Wenn Rohstoff übernommen werden soll
-  if (grvDia.b_ok) {
+  if (grvDia.exec() == QDialog::Accepted) {
+    tableWidget_Hefe->setSortingEnabled(false);
     //Bezeichnungsmerker löschen da sonst Einträge in den Suden geändert werden
     QString s = Hefe_Bezeichnung_Merker;
     Hefe_Bezeichnung_Merker = "";
@@ -1223,8 +1254,8 @@ void MainWindowImpl::on_pushButton_HefeNeuVorlage_clicked()
     newItem->setText(grvDia.m_EVG);
 
     Hefe_Bezeichnung_Merker = s;
+    tableWidget_Hefe->setSortingEnabled(true);
   }
-  tableWidget_Hefe->setSortingEnabled(true);
 }
 
 void MainWindowImpl::HefeNeueZeile()
@@ -1254,6 +1285,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxMenge -> setValue(0);
   connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 1, spinBoxMenge);
+  tableWidget_Hefe -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+  spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 1))));
+  connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Würzemenge
   MyDoubleSpinBox *spinBoxWuerzemenge = new MyDoubleSpinBox();
@@ -1264,6 +1298,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxWuerzemenge -> setValue(0);
   connect(spinBoxWuerzemenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 2, spinBoxWuerzemenge);
+  tableWidget_Hefe -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxWuerzemenge->value()));
+  spinBoxWuerzemenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 2))));
+  connect(spinBoxWuerzemenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Preis
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1274,6 +1311,9 @@ void MainWindowImpl::HefeNeueZeile()
   spinBoxPreis -> setValue(0);
   connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
   tableWidget_Hefe -> setCellWidget(i, 3, spinBoxPreis);
+  tableWidget_Hefe -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+  spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 3))));
+  connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
   //Bemerkung
   tableWidget_Hefe -> setItem(i, 4, newItem4);
@@ -1308,13 +1348,14 @@ void MainWindowImpl::HefeNeueZeile()
   //Endvergärungsgrad
   tableWidget_Hefe -> setItem(i, 11, newItem11);
 
-
   //Datum Eingelagert
   QDateEdit * deEinlagerung = new QDateEdit(QDate::currentDate());
   deEinlagerung->setDisplayFormat("dd.MM.yyyy");
   deEinlagerung->setCalendarPopup(true);
   connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 12, deEinlagerung);
+  tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+  deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
   //Mindesthaltbarkeitsdatum
   QDateEdit * deMhd = new QDateEdit(QDate::currentDate());
@@ -1322,6 +1363,8 @@ void MainWindowImpl::HefeNeueZeile()
   deMhd->setCalendarPopup(true);
   connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
   tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+  tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+  deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
   //Link
   QTableWidgetItem *newItemLink = new QTableWidgetItem("");
@@ -1332,10 +1375,7 @@ void MainWindowImpl::HefeNeueZeile()
   AenderungRohstofftabelle = true;
 
   Hefe_Bezeichnung_Merker = s;
-
 }
-
-
 
 void MainWindowImpl::SchreibeRohstoffeDB()
 {
@@ -1569,14 +1609,12 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_Malz -> clearContents();
     tableWidget_Malz -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem2 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       tableWidget_Malz -> setRowCount(tableWidget_Malz -> rowCount()+1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 0, newItem1);
+      tableWidget_Malz -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
+
       //Farbe
       MyDoubleSpinBox *spinBoxFarbe = new MyDoubleSpinBox();
       spinBoxFarbe -> setMinimum(0);
@@ -1586,6 +1624,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxFarbe -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxFarbe, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 1, spinBoxFarbe);
+      tableWidget_Malz -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxFarbe->value()));
+      spinBoxFarbe->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 1))));
+      connect(spinBoxFarbe, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Maximaler Schüttungsanteil
       MyDoubleSpinBox *spinBoxMaxSchuettung = new MyDoubleSpinBox();
@@ -1596,6 +1637,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMaxSchuettung -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMaxSchuettung, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 2, spinBoxMaxSchuettung);
+      tableWidget_Malz -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMaxSchuettung->value()));
+      spinBoxMaxSchuettung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 2))));
+      connect(spinBoxMaxSchuettung, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1607,6 +1651,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 3, spinBoxMenge);
+      tableWidget_Malz -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 3))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1618,16 +1665,17 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Malz -> setCellWidget(i, 4, spinBoxPreis);
+      tableWidget_Malz -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 4))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem2 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 5, newItem2);
+      tableWidget_Malz -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Anwendung
       FeldNr = query.record().indexOf("Anwendung");
-      newItem3 -> setText(query.value(FeldNr).toString());
-      tableWidget_Malz -> setItem(i, 6, newItem3);
+      tableWidget_Malz -> setItem(i, 6, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1637,6 +1685,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Malz -> setCellWidget(i, 7, deEinlagerung);
+      tableWidget_Malz -> setItem(i, 7, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 7))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1646,6 +1696,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Malz -> setCellWidget(i, 8, deMhd);
+      tableWidget_Malz -> setItem(i, 8, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Malz->item(i, 8))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1655,7 +1707,6 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       i++;
     }
-    tableWidget_Malz -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
 
   //Sollte noch eine Zeile selectiert sein selection löschen
@@ -1676,16 +1727,11 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_Hopfen -> clearContents();
     tableWidget_Hopfen -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
-      QTableWidgetItem *newItem6 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
       tableWidget_Hopfen -> setRowCount(tableWidget_Hopfen -> rowCount()+1);
 
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 0, newItem1);
+      tableWidget_Hopfen -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Alpha
       MyDoubleSpinBox *spinBoxAlpha = new MyDoubleSpinBox();
@@ -1697,6 +1743,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxAlpha -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxAlpha, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 1, spinBoxAlpha);
+      tableWidget_Hopfen -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxAlpha->value()));
+      spinBoxAlpha->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 1))));
+      connect(spinBoxAlpha, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1708,6 +1757,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 2, spinBoxMenge);
+      tableWidget_Hopfen -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 2))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1719,8 +1771,12 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hopfen -> setCellWidget(i, 3, spinBoxPreis);
+      tableWidget_Hopfen -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 3))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Pellets
+      QTableWidgetItem *newItem5 = new QTableWidgetItem(trUtf8("Pellets"));
       FeldNr = query.record().indexOf("Pellets");
       bool b = query.value(FeldNr).toBool();
       if (b)
@@ -1729,10 +1785,10 @@ void MainWindowImpl::LeseRohstoffeDB()
         newItem5 -> setCheckState(Qt::Unchecked);
       newItem5 -> setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
       tableWidget_Hopfen -> setItem(i, 4, newItem5);
+
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem6 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 5, newItem6);
+      tableWidget_Hopfen -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Typ
       MyComboBox *comboBoxTyp = new MyComboBox();
@@ -1744,8 +1800,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Eigenschaften
       FeldNr = query.record().indexOf("Eigenschaften");
-      newItem7 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hopfen -> setItem(i, 7, newItem7);
+      tableWidget_Hopfen -> setItem(i, 7, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1755,6 +1810,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hopfen -> setCellWidget(i, 8, deEinlagerung);
+      tableWidget_Hopfen -> setItem(i, 8, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 8))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1764,6 +1821,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hopfen -> setCellWidget(i, 9, deMhd);
+      tableWidget_Hopfen -> setItem(i, 9, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hopfen->item(i, 9))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1773,7 +1832,6 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       i++;
     }
-    tableWidget_Hopfen -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
 
   //Hefe Einlesen
@@ -1789,18 +1847,12 @@ void MainWindowImpl::LeseRohstoffeDB()
     int i=0;
     tableWidget_Hefe -> clearContents();
     tableWidget_Hefe -> setRowCount(0);
-    while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem8 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem9 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem11 = new QTableWidgetItem("");
+    while (query.next()){      
       tableWidget_Hefe -> setRowCount(tableWidget_Hefe -> rowCount()+1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 0, newItem1);
+      tableWidget_Hefe -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1812,6 +1864,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxMenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 1, spinBoxMenge);
+      tableWidget_Hefe -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 1))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Benötigte einheiten wird nicht mehr gebraucht
       //			FeldNr = query.record().indexOf("Einheiten");
@@ -1829,6 +1884,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxWuerzemenge -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxWuerzemenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 2, spinBoxWuerzemenge);
+      tableWidget_Hefe -> setItem(i, 2, new MyTableWidgetItemNumeric(spinBoxWuerzemenge->value()));
+      spinBoxWuerzemenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 2))));
+      connect(spinBoxWuerzemenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -1840,16 +1898,17 @@ void MainWindowImpl::LeseRohstoffeDB()
       spinBoxPreis -> setValue(query.value(FeldNr).toReal());
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       tableWidget_Hefe -> setCellWidget(i, 3, spinBoxPreis);
+      tableWidget_Hefe -> setItem(i, 3, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 3))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem4 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 4, newItem4);
+      tableWidget_Hefe -> setItem(i, 4, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Verpackungsmenge
       FeldNr = query.record().indexOf("Verpackungsmenge");
-      newItem5 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 5, newItem5);
+      tableWidget_Hefe -> setItem(i, 5, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Typ Obergärig Untergärig
       MyComboBox *comboBoxTypOGUG = new MyComboBox();
@@ -1869,13 +1928,11 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Temperaturbereich
       FeldNr = query.record().indexOf("Temperatur");
-      newItem8 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 8, newItem8);
+      tableWidget_Hefe -> setItem(i, 8, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Eigenschaften
       FeldNr = query.record().indexOf("Eigenschaften");
-      newItem9 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 9, newItem9);
+      tableWidget_Hefe -> setItem(i, 9, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Combobox Sedimentation
       MyComboBox *comboBoxSED = new MyComboBox();
@@ -1887,8 +1944,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       //Endvergärungsgrad
       FeldNr = query.record().indexOf("EVG");
-      newItem11 -> setText(query.value(FeldNr).toString());
-      tableWidget_Hefe -> setItem(i, 11, newItem11);
+      tableWidget_Hefe -> setItem(i, 11, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -1898,6 +1954,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hefe -> setCellWidget(i, 12, deEinlagerung);
+      tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -1907,6 +1965,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_Hefe -> setCellWidget(i, 13, deMhd);
+      tableWidget_Hefe -> setItem(i, 12, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_Hefe->item(i, 12))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -1917,7 +1977,6 @@ void MainWindowImpl::LeseRohstoffeDB()
       //Nächste Beschreibung aus Datei lesen
       i++;
     }
-    tableWidget_Hefe -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
 
   //Weitere Zutaten einlesen
@@ -1934,13 +1993,11 @@ void MainWindowImpl::LeseRohstoffeDB()
     tableWidget_WeitereZutaten -> clearContents();
     tableWidget_WeitereZutaten -> setRowCount(0);
     while (query.next()){
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
       tableWidget_WeitereZutaten -> setRowCount(tableWidget_WeitereZutaten -> rowCount() +1);
+
       //Beschreibung
       FeldNr = query.record().indexOf("Beschreibung");
-      newItem1 -> setText(query.value(FeldNr).toString());
-      tableWidget_WeitereZutaten -> setItem(i, 0, newItem1);
+      tableWidget_WeitereZutaten -> setItem(i, 0, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Menge
       MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
@@ -1951,6 +2008,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxMenge, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 1, spinBoxMenge);
+      tableWidget_WeitereZutaten -> setItem(i, 1, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
+      spinBoxMenge->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 1))));
+      connect(spinBoxMenge, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Combobox Einheiten
       MyComboBox *comboBoxEinheiten = new MyComboBox();
@@ -1981,6 +2041,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxAusbeute, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxAusbeute, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 4, spinBoxAusbeute);
+      tableWidget_WeitereZutaten -> setItem(i, 4, new MyTableWidgetItemNumeric(spinBoxAusbeute->value()));
+      spinBoxAusbeute->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 4))));
+      connect(spinBoxAusbeute, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //EBC
       MyDoubleSpinBox *spinBoxEBC = new MyDoubleSpinBox();
@@ -1993,6 +2056,9 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxEBC, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxEBC, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 5, spinBoxEBC);
+      tableWidget_WeitereZutaten -> setItem(i, 5, new MyTableWidgetItemNumeric(spinBoxEBC->value()));
+      spinBoxEBC->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 5))));
+      connect(spinBoxEBC, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Preis
       MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
@@ -2004,11 +2070,13 @@ void MainWindowImpl::LeseRohstoffeDB()
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_spinBoxValueChanged(double) ));
       connect(spinBoxPreis, SIGNAL( valueChanged(double) ), this, SLOT( slot_EwzAenderungRohstoffe() ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 6, spinBoxPreis);
+      tableWidget_WeitereZutaten -> setItem(i, 6, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
+      spinBoxPreis->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 6))));
+      connect(spinBoxPreis, SIGNAL(valueChanged(double)), this, SLOT(slot_tableSpinBoxValueChanged(double)));
 
       //Bemerkung
       FeldNr = query.record().indexOf("Bemerkung");
-      newItem7 -> setText(query.value(FeldNr).toString());
-      tableWidget_WeitereZutaten -> setItem(i, 7, newItem7);
+      tableWidget_WeitereZutaten -> setItem(i, 7, new QTableWidgetItem(query.value(FeldNr).toString()));
 
       //Datum Eingelagert
       QDateEdit * deEinlagerung = new QDateEdit();
@@ -2018,6 +2086,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deEinlagerung -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deEinlagerung, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 8, deEinlagerung);
+      tableWidget_WeitereZutaten -> setItem(i, 8, new MyTableWidgetItemNumeric(deEinlagerung->date().toJulianDay()));
+      deEinlagerung->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 8))));
 
       //Mindesthaltbarkeitsdatum
       QDateEdit * deMhd = new QDateEdit();
@@ -2027,6 +2097,8 @@ void MainWindowImpl::LeseRohstoffeDB()
       deMhd -> setDate(QDate::fromString(query.value(FeldNr).toString(),Qt::ISODate));
       connect(deMhd, SIGNAL( dateChanged(QDate) ), this, SLOT( slot_dateChanged(QDate) ));
       tableWidget_WeitereZutaten -> setCellWidget(i, 9, deMhd);
+      tableWidget_WeitereZutaten -> setItem(i, 9, new MyTableWidgetItemNumeric(deMhd->date().toJulianDay()));
+      deMhd->setProperty("TableWidgetItem", QVariant::fromValue(static_cast<void*>(tableWidget_WeitereZutaten->item(i, 9))));
 
       //Link
       FeldNr = query.record().indexOf("Link");
@@ -2036,7 +2108,6 @@ void MainWindowImpl::LeseRohstoffeDB()
 
       i++;
     }
-    tableWidget_WeitereZutaten -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
 
 
@@ -2064,7 +2135,7 @@ void MainWindowImpl::LeseRohstoffeDB()
 }
 
 
-void MainWindowImpl::slot_pushButton_MalzDel()
+void MainWindowImpl::on_pushButton_MalzDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -2159,7 +2230,7 @@ void MainWindowImpl::slot_pushButton_MalzDel()
   }
 }
 
-void MainWindowImpl::slot_pushButton_HopfenDel()
+void MainWindowImpl::on_pushButton_HopfenDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -2307,7 +2378,7 @@ void MainWindowImpl::slot_pushButton_HopfenDel()
   }
 }
 
-void MainWindowImpl::slot_pushButton_HefeDel()
+void MainWindowImpl::on_pushButton_HefeDel_clicked()
 {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -2399,12 +2470,7 @@ void MainWindowImpl::SchreibeKonfig()
 
   //Position und Abmessung des Fensters speichern
   settings.beginGroup("MainWindow");
-  settings.setValue("istMaximiert", this->isMaximized());
-  //Neue Position nur Speichern wenn Anwendung nicht Maximiert ist
-  if (!this->isMaximized()) {
-    settings.setValue("size", size());
-    settings.setValue("pos", pos());
-  }
+  settings.setValue("geometry", saveGeometry());
   settings.endGroup();
 
   //Letzten Geladenen Datensatz merken
@@ -2443,9 +2509,7 @@ void MainWindowImpl::LeseKonfig()
 
   //Position und Abmessungen wiederherstellen
   settings.beginGroup("MainWindow");
-  resize(settings.value("size", QSize(600, 400)).toSize());
-  move(settings.value("pos", QPoint(200, 200)).toPoint());
-  maximiertStarten = settings.value("istMaximiert", false).toBool();
+  restoreGeometry(settings.value("geometry").toByteArray());
   settings.endGroup();
 
   //Letzten Geladenen Datensatz auslesen
@@ -2479,31 +2543,17 @@ void MainWindowImpl::LeseKonfig()
   keinInternet = settings.value("keinInternet").toBool();
   settings.endGroup();
 
-  //Sprache
-  settings.beginGroup("Sprache");
-  str = settings.value("sprachauswahl").toString();
-  if (str == "") {
-    settings.setValue("sprachauswahl","de");
-    str = "de";
-  }
-  sprachauswahl = str;
-  qDebug() << "sprachauswahl" << sprachauswahl;
-  settings.endGroup();
-
   //Einstellungen Sonstiges
   settings.beginGroup("sonstiges");
-  checkBox_MerklisteMengen->setChecked(settings.value("MerklisteMengenEinbeziehen").toBool());
+  checkBox_MerklisteMengen->setChecked(settings.value("MerklisteMengenEinbeziehen", false).toBool());
   settings.endGroup();
-
 }
 
 
 void MainWindowImpl::createActions()
 {
-
-  saveAct = new QAction(trUtf8("&Speichern"), this);
+  saveAct = new QAction("", this);
   saveAct->setShortcuts(QKeySequence::Save);
-  saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
   connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
   for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -2513,52 +2563,44 @@ void MainWindowImpl::createActions()
   }
 
   //Aktionen in Menü Extras
-  einstellungen = new QAction(trUtf8("&Einstellungen"), this);
+  einstellungen = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  einstellungen -> setStatusTip(trUtf8("Öffnet einen Dialog mit Einstellungen"));
   connect(einstellungen, SIGNAL(triggered()), this, SLOT(slot_einstellungen()));
 
   //Assistent zum übernehmen von einem rezept
-  schuettungProzent = new QAction(trUtf8("&Rezeptübernahme Schüttung"), this);
+  schuettungProzent = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  schuettungProzent -> setStatusTip(trUtf8("Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
   connect(schuettungProzent, SIGNAL(triggered()), this, SLOT(slot_schuettungProzent()));
 
   //Assistent zum berechnen de IBU Wertes eines Rezeptes
-  berIBU = new QAction(trUtf8("&Rezeptübernahme Bittere"), this);
+  berIBU = new QAction("", this);
   //einstellungen->setShortcuts(QKeySequence::Save);
-  berIBU -> setStatusTip(trUtf8("Öffnet einen Dialog zur Berechnung der Bittere"));
   connect(berIBU, SIGNAL(triggered()), this, SLOT(slot_berIBU()));
 
   //Hebt die Eingabesperre von einen als gebraut/Abgefüllt markierten Sud auf
-  EntsperreEingabefelder = new QAction(trUtf8("&Entsperre Eingabefelder"), this);
-  EntsperreEingabefelder -> setStatusTip(trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
+  EntsperreEingabefelder = new QAction("", this);
   connect(EntsperreEingabefelder, SIGNAL(triggered()), this, SLOT(slot_EntsperreEingabefelder()));
 
   //Setzt das Bit BierGebraut zurück
-  ResetBierGebraut = new QAction(trUtf8("\"Bier &gebraut\" zurücksetzten"), this);
-  ResetBierGebraut -> setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
+  ResetBierGebraut = new QAction("", this);
   connect(ResetBierGebraut, SIGNAL(triggered()), this, SLOT(slot_ResetBierWurdeGebraut()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetAbgefuellt = new QAction(trUtf8("\"Bier &abgefüllt\" zurücksetzten"), this);
-  ResetAbgefuellt -> setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
+  ResetAbgefuellt = new QAction("", this);
   connect(ResetAbgefuellt, SIGNAL(triggered()), this, SLOT(slot_ResetAbgefuellt()));
 
   //Setzt das Bit Abgefuellt zurück
-  ResetVerbraucht = new QAction(trUtf8("\"Bier &verbraucht\" zurücksetzten"), this);
-  ResetVerbraucht -> setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
+  ResetVerbraucht = new QAction("", this);
   connect(ResetVerbraucht, SIGNAL(triggered()), this, SLOT(slot_ResetBierVerbraucht()));
 
   //Setzt den Zugabestatus der Weiteren Zutaten zurück
-  ResetZugabestatus = new QAction(trUtf8("&Reset Zugabestatus WZutaten"), this);
-  ResetZugabestatus -> setStatusTip(trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+  ResetZugabestatus = new QAction("", this);
   connect(ResetZugabestatus, SIGNAL(triggered()), this, SLOT(slot_ResetWZZugabestatus()));
 }
 
 void MainWindowImpl::ErstelleSprachMenu()
 {
-  sprachMenu = menuBar()->addMenu(trUtf8("&Sprache"));
+  sprachMenu = menuBar()->addMenu("");
   QActionGroup* langGroup = new QActionGroup(sprachMenu);
   langGroup->setExclusive(true);
 
@@ -2569,13 +2611,16 @@ void MainWindowImpl::ErstelleSprachMenu()
   //QString defaultLocale = QLocale::system().name();       // e.g. "de_DE"
   //defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
   //srachauswahl aus configdatei
-  QString defaultLocale = sprachauswahl;
-  qDebug() << "defaultLocale" << defaultLocale;
+  //qDebug() << "defaultLocale" << defaultLocale;
 
-  m_langPath = QApplication::applicationDirPath();
-  m_langPath.append("/languages");
-  QDir dir(m_langPath);
+  QString langPath = QApplication::applicationDirPath().append("/languages");
+  QDir dir(langPath);
   QStringList fileNames = dir.entryList(QStringList("kb_*.qm"));
+
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  settings.beginGroup("Sprache");
+  QString sprachauswahl = settings.value("sprachauswahl", QLocale::system().name()).toString();
+  settings.endGroup();
 
   for (int i = 0; i < fileNames.size(); ++i)
   {
@@ -2586,7 +2631,7 @@ void MainWindowImpl::ErstelleSprachMenu()
     locale.remove(0, locale.indexOf('_') + 1);   // "de"
 
     QString lang = QLocale::languageToString(QLocale(locale).language());
-    QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+    QIcon ico(QString("%1/%2.png").arg(langPath).arg(locale));
 
     QAction *action = new QAction(ico, lang, this);
     action->setCheckable(true);
@@ -2596,18 +2641,18 @@ void MainWindowImpl::ErstelleSprachMenu()
     langGroup->addAction(action);
 
     // set default translators and language checked
-    if (defaultLocale == locale)
+    if (sprachauswahl == locale)
     {
       action->setChecked(true);
     }
   }
-  loadSprache(defaultLocale);
+  loadSprache(sprachauswahl);
 }
 
 void MainWindowImpl::createMenus()
 {
   //Menü geladener Sud
-  geladenerSudMenu = menuBar()->addMenu(trUtf8("&geladener Sud"));
+  geladenerSudMenu = menuBar()->addMenu("");
   geladenerSudMenu->addAction(saveAct);
   separatorAct = geladenerSudMenu->addSeparator();
   geladenerSudMenu->addAction(schuettungProzent);
@@ -2622,11 +2667,38 @@ void MainWindowImpl::createMenus()
     geladenerSudMenu->addAction(recentFileActs[i]);
 
   //Menü Extras
-  extrasMenu = menuBar()->addMenu(trUtf8("&Extras"));
+  extrasMenu = menuBar()->addMenu("");
   extrasMenu->addAction(einstellungen);
 
   //Sprachauswahl Menü
   ErstelleSprachMenu();
+}
+
+void MainWindowImpl::retranslateMenus()
+{
+    geladenerSudMenu->setTitle(trUtf8("&Geladener Sud"));
+    saveAct->setText(trUtf8("&Speichern"));
+    saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
+    schuettungProzent->setText(trUtf8("&Rezeptübernahme Schüttung"));
+    schuettungProzent->setStatusTip(trUtf8("Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
+    berIBU->setText(trUtf8("&Rezeptübernahme Bittere"));
+    berIBU -> setStatusTip(trUtf8("Öffnet einen Dialog zur Berechnung der Bittere"));
+    EntsperreEingabefelder->setText(trUtf8("&Entsperre Eingabefelder"));
+    EntsperreEingabefelder->setStatusTip(trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
+    ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzten"));
+    ResetBierGebraut->setStatusTip(trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der Datenbank zurück"));
+    ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzten"));
+    ResetAbgefuellt->setStatusTip(trUtf8("Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
+    ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzten"));
+    ResetVerbraucht->setStatusTip(trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der Datenbank zurück"));
+    ResetZugabestatus->setText(trUtf8("&Reset Zugabestatus WZutaten"));
+    ResetZugabestatus->setStatusTip(trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+
+    extrasMenu->setTitle(trUtf8("&Extras"));
+    einstellungen->setText(trUtf8("&Einstellungen"));
+    einstellungen->setStatusTip(trUtf8("Öffnet einen Dialog mit Einstellungen"));
+
+    sprachMenu->setTitle(trUtf8("&Sprache"));
 }
 
 void MainWindowImpl::save()
@@ -3191,8 +3263,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
             }
             connect(rast, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_rastClose(int) ));
             connect(rast, SIGNAL( sig_aenderung(int) ), this, SLOT( slot_rastAenderung(int) ));
-            connect(rast, SIGNAL( sig_nachOben(int) ), this, SLOT( on_pushButton_RastNachOben(int) ));
-            connect(rast, SIGNAL( sig_nachUnten(int) ), this, SLOT( on_pushButton_RastNachUnten(int) ));
+            connect(rast, SIGNAL( sig_nachOben(int) ), this, SLOT( slot_pushButton_RastNachOben(int) ));
+            connect(rast, SIGNAL( sig_nachUnten(int) ), this, SLOT( slot_pushButton_RastNachUnten(int) ));
           }
           i++;
         }
@@ -3280,11 +3352,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           //Zutatenobjekt hinzufügen
           ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
           ewz -> setAttribute(Qt::WA_DeleteOnClose);
-          //Ergebnisswidget ersetellen
-          doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
-          berEwz -> setAttribute(Qt::WA_DeleteOnClose);
+          ewz -> setStyleDunkel(StyleDunkel);
 
-          ewz -> ergWidget = berEwz;
           ewz -> setBierWurdeGebraut(BierWurdeGebraut);
           ewz -> setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
           //Funktionen verknüpfen das das objekt die Daten holen kann
@@ -3296,6 +3365,8 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_getEwzPreis(QString) ), this, SLOT( slot_getEwzPreis(QString) ));
           connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
           connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
+          connect(ewz, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
+          connect(ewz, SIGNAL( sig_getEwzMenge(QString) ), this, SLOT( slot_EwzGetMenge(QString) ));
           if (BierWurdeGebraut) {
             //Da Bier schon gebraut wurde die daten aus der Datenbank benutzten und nicht aus den Rohstoffdaten
             //da der Rohstoff unter umständen nicht mehr existiert oder verändert wurde
@@ -3316,7 +3387,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
           connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
 
           //Ergebnisswidget dem Layout zuordnen
-          verticalLayout_BerWeitereZutaten -> addWidget(berEwz);
+          verticalLayout_BerWeitereZutaten -> addWidget(ewz->ergWidget);
           verticalLayout_WeitereZutaten -> addWidget(ewz);
           list_EwZutat.append(ewz);
           ewz -> setID((int)time(NULL)+rand());
@@ -3470,10 +3541,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
       // Anhang Abfragen
       LeseAnhangDB();
 
-      //Tabs enablen
-      tab_Rezept -> setDisabled(false);
-      tab_Braudaten -> setDisabled(false);
-
       //Gespeichertes Tab wiederherstellen
       //FeldNr = query_sud.record().indexOf("AktivTab");
       //tabWidged -> setCurrentIndex(query_sud.value(FeldNr).toInt());
@@ -3483,15 +3550,15 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
       if (aktivateTab) {
         // Wenn Bier Abgefüllt wurde Zusammenfassung anzeigen
         if (BierWurdeAbgefuellt) {
-          tabWidged -> setCurrentIndex(TAB_ZUSAMMENFASSUNG);
+          tabWidged -> setCurrentWidget(tab_Spickzettel);
         }
         //Wenn Bier gebraut wurde aber noch nicht abgefüllt ist den Gärverlauf anzeigen
         else if (BierWurdeGebraut) {
-          tabWidged -> setCurrentIndex(TAB_GAERVERLAUF);
+          tabWidged -> setCurrentWidget(tab_Gaerverlauf);
         }
         //Bei einem noch nicht gebrauten Sud wird das Rezept eingeblendet
         else {
-          tabWidged -> setCurrentIndex(TAB_REZEPT);
+          tabWidged -> setCurrentWidget(tab_Rezept);
         }
       }
 
@@ -3661,8 +3728,17 @@ void MainWindowImpl::BerAlles()
 }
 
 
-void MainWindowImpl::slot_dateChanged(QDate)
+void MainWindowImpl::slot_dateChanged(QDate date)
 {
+    // synchronize with table widget item for sorting
+    QVariant prop = QObject::sender()->property("TableWidgetItem");
+    if (prop.isValid())
+    {
+      QTableWidgetItem* item = static_cast<QTableWidgetItem*>(prop.value<void*>());
+      item->setText(QString::number(date.toJulianDay()));
+    }
+
+
   if (Gestartet) {
     setAenderung(true);
   }
@@ -3678,12 +3754,22 @@ void MainWindowImpl::slot_AenderungAusruestung(int )
   AenderungAusruestung = true;
 }
 
-
 void MainWindowImpl::slot_spinBoxValueChanged(double )
 {
   if (Gestartet) {
     BerAlles();
     setAenderung(true);
+  }
+}
+
+void MainWindowImpl::slot_tableSpinBoxValueChanged(double value)
+{
+  // synchronize with table widget item for sorting
+  QVariant prop = QObject::sender()->property("TableWidgetItem");
+  if (prop.isValid())
+  {
+    MyTableWidgetItemNumeric* item = static_cast<MyTableWidgetItemNumeric*>(prop.value<void*>());
+    item->setValue(value);
   }
 }
 
@@ -3780,22 +3866,22 @@ void MainWindowImpl::BerHopfen()
   }
 
   //Alpha Prozent von den Hopfenauswahlen holen (und Pellets)
-  double Alphaprozent[list_Hopfengaben.count()];
+  double *Alphaprozent = new double[list_Hopfengaben.count()];
   QString s;
   //Pellets
-  bool Pellets[list_Hopfengaben.count()];
+  bool *Pellets = new bool[list_Hopfengaben.count()];
   //Vorderwürzehopfung
-  bool vwh[list_Hopfengaben.count()];
+  bool *vwh = new bool[list_Hopfengaben.count()];
   //Kochzeiten
-  int Kochzeiten[list_Hopfengaben.count()];
+  int *Kochzeiten = new int[list_Hopfengaben.count()];
   //Mengen
-  double MengenProzent[list_Hopfengaben.count()];
+  double *MengenProzent = new double[list_Hopfengaben.count()];
   //Ausbeute der einzelnen Hopfengaben
-  double Ausbeute[list_Hopfengaben.count()];
+  double *Ausbeute = new double[list_Hopfengaben.count()];
   //Berechnung anschmeissen
-  double HopfenMengen[list_Hopfengaben.count()];
+  double *HopfenMengen = new double[list_Hopfengaben.count()];
   //IBU Anteil der einzelnen Gaben
-  double IBUAnteil[list_Hopfengaben.count()];
+  double *IBUAnteil = new double[list_Hopfengaben.count()];
   //Berechnung nach IBUProzent
   bool berIBUProzent;
   if (comboBox_BerechnungsArtHopfen->currentIndex() == 0)
@@ -3862,1190 +3948,16 @@ void MainWindowImpl::BerHopfen()
     list_Hopfengaben[i]->setAusbeute(Ausbeute[i]);
     list_Hopfengaben[i]->setErgMenge(HopfenMengen[i]);
   }
+  delete [] Alphaprozent;
+  delete [] Pellets;
+  delete [] vwh;
+  delete [] Kochzeiten;
+  delete [] MengenProzent;
+  delete [] Ausbeute;
+  delete [] HopfenMengen;
+  delete [] IBUAnteil;
 }
 
-
-void MainWindowImpl::ErstelleSpickzettelV2()
-{
-  //Überschrift vom Tab setzten
-  tabWidged -> setTabText(5,trUtf8("Spickzettel"));
-  // Seitenkopf
-  QString seite, kopf, ende, style;
-  QString s = "";
-
-  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-  style = "<style type='text/css'>";
-  //Style für Überschrift H1
-  style += "p.h1{color:black;font-size:20pt;padding:0px;margin:0px;}";
-  //Style für P
-  style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
-  //Style für Variable
-  style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
-  //Style für div Kommentar
-  style += ".koment{}";
-  style += "</style>";
-  kopf += style;
-  kopf += "</head><body align='center' style=' font-family:Ubuntu,Arial; font-size:10pt;font-style:normal;background-color:#fff;'>";
-  seite = kopf;
-
-  //Seiteninhalt
-  //Name
-  s += "<p class='h1'><b>" + lineEdit_Sudname -> text() + "</b></p>";
-
-  seite += s;
-  //Seitenende
-  ende = "</body></html>";
-  seite += ende;
-
-  //textEdit -> setPlainText(seite);
-
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
-  webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
-}
-
-
-void MainWindowImpl::ErstelleSpickzettel()
-{
-  //Überschrift vom Tab setzten
-  tabWidged -> setTabText(5,trUtf8("Spickzettel"));
-  // Seitenkopf
-  QString seite, kopf, ende, style;
-
-  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-  style = "<style type='text/css'>";
-  //Style für P
-  style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
-  //Style für Variable
-  style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
-  //Style für div Kommentar
-  style += ".koment{}";
-  //Style für ul
-  style += "ul{color:black;font-size:10pt;}";
-  //Style für Überschrift h1
-  style += "p.h1{color:black;font-size:12pt;}";
-  //Style für Überschrift h2
-  style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
-  style += "p.version{color:#999999;font-size:11pt;margin-top:5px;}";
-  //Style für Div Box ohne Rahmen
-  style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
-  //Style für Div Box mit Rahmen
-  style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;}";
-  //Style für Hinweis
-  style += ".hinweis{color:#d47209;}";
-  //Style für Tabelle
-  style += "td{padding:2px;margin:0px;}";
-  style += "td.r{padding:2px;margin:0px;border-bottom-color:#dddddd;border-bottom-style:solid;border-width:1px;}";
-  //Style für Hinweis Wert in Brau und Gärdaten eintragen
-  style += "td.we{background-color: #eba328;}";
-  style += "tr{padding:0px;margin:0px;}";
-  style += "</style>";
-  kopf += style;
-  kopf += "</head><body align='center' style=' font-family:Ubuntu,Arial; font-size:10pt;font-style:normal;background-color:#fff;'>";
-  seite = kopf;
-
-  QString s = "";
-
-  //Tabelle für Bild und Zutaten
-  s += "<div class='' width='99%' style='' align='center'>";
-
-  s += "<table width='50%' summary='testtabelle' border='0' cellspacing='5'>";
-  s += "<tr >";
-  s += "<td valign='middle' style=''>";
-  //Solldaten des Rezeptes
-  s += "<div class='rm' style='margin-top:10px;margin-bottom:5px;' align='center'>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Name
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p class='h1'><b>" + lineEdit_Sudname -> text() + "</b></p>";
-  s += "</td>";
-  s += "</tr>";
-  //Menge
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Menge") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_Menge -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Stammwürze
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Stammwürze") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_SW -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("°P") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //High Gravity Faktor
-  if (spinBox_High_Gravity->value() > 0) {
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + trUtf8("High Gravity Faktor") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("%") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Bittere
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Bittere") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_IBU -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("IBU") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Nachisomerisierungs-zeit
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Nachisomerisierungs-Zeit") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_NachisomerisierungsZeit -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("min") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Farbe
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Farbe") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_EBC -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("EBC") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //CO2 Gehalt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_CO2 -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("g/Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Brauanlage
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Brauanlage") + "</p>";
-  s += "</td>";
-  s += "<td colspan=2 align='right'>";
-  s += "<p class='value'>" + comboBox_AuswahlBrauanlage->currentText() + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</table>";
-
-  s += "<table width='90%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='bottom' style=''>";
-  //Schüttung
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Malzgaben
-  double fehlprozent = 0;
-  if (list_Malzgaben.count()>0) {
-    fehlprozent = list_Malzgaben[0]->getFehlProzent();
-  }
-  if (fehlprozent == 0) {
-    for (int i=0; i < list_Malzgaben.count(); i++){
-      s += "<tr style=''>";
-      s += "<td>";
-      s += "<p>" + list_Malzgaben[i]->getName() + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("Kg") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("%") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("EBC") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
-  else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
-  }
-  //Gesamt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Gesamt") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Kg") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-
-
-  s += "<td valign='top' style=''>";
-  //bild mit entsprechender Bierfarbe
-  QColor farbe;
-  farbe = Berechnungen.GetFarbwert(doubleSpinBox_EBC -> value());
-  s += "<div class='' style='background-color:" + farbe.name() + ";width:210px;height:210px;margin:0px;padding:0px;'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_420x420.png' alt='Bierfarbe' width='210px' height='210px' border=0>";
-  s += "</div>";
-  s += "</td>";
-  s += "<td valign='top' style=''>";
-  //Hopfen
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Hopfengaben
-  fehlprozent = 0;
-  if (list_Hopfengaben.count()>0) {
-    fehlprozent = list_Hopfengaben[0]->getFehlProzent();
-  }
-  if (fehlprozent == 0) {
-    for (int i=0; i < list_Hopfengaben.count(); i++){
-      s += "<tr style=''>";
-      s += "<td>";
-      if (list_Hopfengaben[i]->getVWH())
-        s += "<p>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-      else
-        s += "<p>" + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("g") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("min") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
-  else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfenhaben konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
-  }
-  //Hopfengaben in den Weiteren Zutaten
-  for (int i=0; i < list_EwZutat.count(); i++){
-    //Nur Hopfengaben
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Hopfen){
-      s += "<tr style=''>";
-      s += "<td>";
-      s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("g") + "</p>";
-      s += "</td>";
-      s += "<td align='right' colspan='2'>";
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-        s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-      else
-        s += "<p class='value'>" + trUtf8("Anstellen") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</table>";
-
-  s += "<table width='70%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='top' style=''>";
-  //Wasser
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/wasser_100x107.png' alt='Hefe' width='50px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Hauptguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Hauptguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WHauptguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "<tr>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureHG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Nachguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Nachguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WNachguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureNG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Gesammt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + label_37 -> text() + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_W_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  //Hefe
-  s += "<td valign='top' style=''>";
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hefe_50.png' alt='Hefe' width='50px' border=0>";
-  s += "<p>" + comboBox_AuswahlHefe -> currentText() + "</p>";
-  QString sEinheiten;
-  sEinheiten = trUtf8("Anzahl Einheiten:") + " <span class='value'>" + QString::number(spinBox_AnzahlHefeEinheiten->value()) +"</span>";
-  //Verpackungsgrösse aus den Rohstoffdaten auslesen
-  int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
-  QString HefeName = comboBox_AuswahlHefe -> currentText();
-  QString verpMenge;
-  if (HefeName != ""){
-    //Würzemenge auslesen
-    for (int i=0; i < AnzahlHefeEintraege; i++){
-      //wenn Eintrag übereinstimmt
-      if (tableWidget_Hefe -> item(i,0) -> text() == HefeName){
-        verpMenge = tableWidget_Hefe -> item(i,5) -> text();
-      }
-    }
-  }
-  if (!verpMenge.isEmpty()) {
-    sEinheiten += trUtf8(" zu ") + verpMenge;
-  }
-  s += "<p>" + sEinheiten +"</p>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-
-  s += "</table>";
-  //s += "</div>";
-  //s += "</div>";
-
-  //Tabelle Weitere Zutaten
-  s += "<table width='80%' summary='testtabelle' border='0' cellspacing='5'>";
-  s += "<tr >";
-
-  //Honig
-  bool HonigVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Honig){
-      HonigVorhanden = true;
-    }
-  }
-  if (HonigVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_0_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Honig){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochbeginn") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Zucker
-  bool ZuckerVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Zucker){
-      ZuckerVorhanden = true;
-    }
-  }
-  if (ZuckerVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_1_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Zucker){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochbeginn") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Gewürz
-  bool GewuerzVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Gewuerz){
-      GewuerzVorhanden = true;
-    }
-  }
-  if (GewuerzVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_2_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Gewuerz){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Frucht
-  bool FruchtVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Frucht){
-      FruchtVorhanden = true;
-    }
-  }
-  if (FruchtVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_3_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Frucht){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Sonstiges
-  bool SonstigesVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Sonstiges){
-      SonstigesVorhanden = true;
-    }
-  }
-  if (SonstigesVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_4_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Sonstiges){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  s += "</tr >";
-  s += "</table>";
-
-  //s += "<div class='r' width='99%' style='' align='center'>";
-  //Kommentar
-  if (textEdit_Kommentar -> toPlainText() != "") {
-    s += "<div class='rm' style='margin-top:10px;width:90%'>";
-    s += textEdit_Kommentar -> toHtml();
-    s += "</div>";
-  }
-
-
-  //Geräte und Zubehör
-  //-------------------------------------------------------------
-  QSqlQuery query;
-
-  int id = getBrauanlagenIDRezept();
-  QString sql = "SELECT Bezeichnung FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
-  if (!query.exec(sql)) {
-    // Fehlermeldung Datenbankabfrage
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
-  }
-  else {
-    int zaehler = 0;
-    if (query.first()) {
-      s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-      s += "<p><b>";
-      s += trUtf8("benötigte Gerätschaften");
-      s += "</b></p>";
-      s += "<table cellspacing=0 border=0><tbody>";
-      if (zaehler == 0)
-        s += "<tr>";
-      s += "<td align=center><p>";
-      s += query.value(0).toString();
-      s += "</p></td>";
-      if (zaehler == 2)
-        s += "</tr>";
-      zaehler ++;
-      if (zaehler == 3)
-        zaehler = 0;
-      while (query.next()){
-        if (zaehler == 0)
-          s += "<tr>";
-        s += "<td align=center><p>";
-        s += query.value(0).toString();
-        s += "</p></td>";
-        if (zaehler == 2)
-          s += "</tr>";
-        zaehler ++;
-        if (zaehler == 3)
-          zaehler = 0;
-      }
-      if (zaehler != 0)
-        s += "</tr>";
-      s += "</tbody></table>";
-      s += "</div>";
-    }
-  }
-
-  //Brauablauf
-  //-------------------------------------------------------------
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Maischen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
-
-  //Einmaischen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Einmaischen: ");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += GetWertString(doubleSpinBox_WHauptguss -> value()) + trUtf8(" Liter Wasser auf ");
-  s += GetWertString(spinBox_EinmaischenTemp -> value()) + trUtf8("°C erhitzen und Malzschüttung zugeben ");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Rasten in Spickzettel eintragen
-  for (int i=0; i < list_Rasten.count(); i++){
-    s += "<tr>";
-    s += "<td class='r' align=center><p>";
-    s += list_Rasten[i]->getRastName();
-    s += "</p></td>";
-    s += "<td class='r' align=center><p>";
-    s += trUtf8("Maische auf ");
-    s += GetWertString(list_Rasten[i]->getRastTemp()) + trUtf8("°C erhitzen und ");
-    s += GetWertString(list_Rasten[i]->getRastDauer()) + trUtf8(" min Rast einlegen.");
-    s += "</p></td>";
-    s += "</tr>";
-  }
-
-  //Weitere Zutaten beim Maischen
-  bool MaischenVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen){
-      MaischenVorhanden = true;
-    }
-  }
-  if (MaischenVorhanden) {
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen){
-        s += "<tr>";
-        s += "<td class='r' align=center><p>";
-        s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_"
-            + QString::number(list_EwZutat[i] -> getTyp()) + "_50.png' alt='Honig' width='30px' border=0>";
-        s += "</p></td>";
-        s += "<td class='r' align=center><p>";
-        s += list_EwZutat[i] -> getName() + " ";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</span>";
-        else
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
-        else
-          s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
-        s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
-        s += "</tr>";
-      }
-    }
-  }
-
-
-  //Läutereimer
-  //s += "<tr>";
-  //s += "<td align=center colspan=2><p>";
-  //s += trUtf8("Wärend der Rast Läutereimer herichten");
-  //s += "</p></td>";
-  //s += "</tr>";
-
-  //Jodprobe
-  //s += "<tr>";
-  //s += "<td align=center><p>";
-  //s += trUtf8("Jodprobe");
-  //s += "</p></td>";
-  //s += "<td align=center><p>";
-  //s += trUtf8("Überprüfen ob Jodprobe ohne verfärbung ist, ansonsten rast etwas verlängern");
-  //s += "</p></td>";
-  //s += "</tr>";
-
-  s += "</tbody></table>";
-  s += "</div>";
-
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Läutern");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
-
-  //Maische in den Läutereimer
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Läutern vorbereiten");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Maische in den Läutereimer schöpfen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Nachguss erhitzen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Nachguss vorbereiten: ");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += GetWertString(doubleSpinBox_WNachguss -> value()) + trUtf8(" Liter Wasser auf ") + GetWertString(78) + trUtf8("°C erhitzen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Vorderwürze Klarlaufen lassen
-  s += "<tr>";
-  s += "<td class='r' align=center colspan=2><p>";
-  s += trUtf8("Nach etwa 10 - 20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Läutern
-  s += "<tr>";
-  s += "<td class='' align=center><p>";
-  s += trUtf8("Läutern");
-  s += "</p></td>";
-  s += "<td class='' align=center><p>";
-  s += trUtf8("Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!!), bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.");
-  s += "</p></td>";
-  s += "</tr>";
-
-
-  s += "</tbody></table>";
-  s += "</div>";
-
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Würze kochen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
-
-  //Vorderwürzehopfung
-  for (int i=0; i < list_Hopfengaben.count(); i++){
-    if (list_Hopfengaben[i]->getVWH()){
-      s += "<tr>";
-      s += "<td class='r' align=center><p>";
-      s += trUtf8("Vorderwürzehopfung: ");
-      s += "</p></td>";
-      s += "<td class='r' align=center><p>";
-      if ((spinBox_Gesammtkochdauer -> value() - list_Hopfengaben[i]->getKochzeit()) > 0){
-        s += trUtf8("Nach ") + GetWertString(spinBox_Gesammtkochdauer -> value()
-                                             - list_Hopfengaben[i]->getKochzeit()) + trUtf8(" min ");
-      }
-      s += GetWertString(list_Hopfengaben[i]->getErgMenge()) + trUtf8("g ");
-      s += list_Hopfengaben[i]->getName() + trUtf8(" Hopfen vorlegen");
-      s += "</p></td>";
-      s += "</tr>";
-    }
-  }
-
-  //Würze zum Kochen bringen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Würze zum Kochen bringen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Gesammtkochdauer
-  int kd = 0;
-  //kleinste Kochzeit
-  int kkd = spinBox_Gesammtkochdauer -> value();
-
-  //Hopfengaben nach Kochdauer absteigend sortieren
-  for (int i=0; i < list_Hopfengaben.count(); i++){
-    for (int o=0; o < list_Hopfengaben.count()-1; o++){
-      kd = list_Hopfengaben[o]->getKochzeit();
-      if (kd < list_Hopfengaben[o+1]->getKochzeit()) {
-        list_Hopfengaben.move(o,o+1);
-      }
-    }
-  }
-  kd = spinBox_Gesammtkochdauer -> value();
-  for (int i=0; i < list_Hopfengaben.count(); i++){
-    if (!list_Hopfengaben[i]->getVWH()){
-      s += "<tr>";
-      s += "<td class='r' align=center><p>";
-      s += QString::number(i+1) + trUtf8(". Hopfengabe: ");
-      s += "</p></td>";
-      s += "<td class='r' align=center><p>";
-      if ((spinBox_Gesammtkochdauer -> value() - list_Hopfengaben[i]->getKochzeit()) > 0){
-        if (i == 0) {
-          kd -= list_Hopfengaben[i]->getKochzeit();
-        }
-        else {
-          kd = list_Hopfengaben[i-1]->getKochzeit() - list_Hopfengaben[i]->getKochzeit();
-        }
-        s += trUtf8("Nach ") + QString::number(kd) + trUtf8(" min ");
-      }
-      s += GetWertString(list_Hopfengaben[i]->getErgMenge()) + trUtf8("g ");
-      s += list_Hopfengaben[i]->getName() + trUtf8(" Hopfen untermischen");
-      s += "</p></td>";
-      s += "</tr>";
-      if (kkd > list_Hopfengaben[i]->getKochzeit()) {
-        kkd = list_Hopfengaben[i]->getKochzeit();
-      }
-    }
-  }
-  kd = spinBox_Gesammtkochdauer -> value() - kkd;
-
-  //Fertigkochen
-  if (spinBox_Gesammtkochdauer -> value() - kd > 0) {
-    s += "<tr>";
-    s += "<td class='r' align=center><p>";
-    s += trUtf8("Kochen");
-    s += "</p></td>";
-    s += "<td class='r' align=center><p>";
-    s += trUtf8("Noch ") + GetWertString(spinBox_Gesammtkochdauer -> value() - kd) + trUtf8("min weiter kochen");;
-    s += "</p></td>";
-    s += "</tr>";
-  }
-
-  //Weitere Zutaten beim Kochen
-  bool KochenVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn){
-      KochenVorhanden = true;
-    }
-  }
-  if (KochenVorhanden) {
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn){
-        s += "<tr>";
-        s += "<td class='r' align=center><p>";
-        s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_"
-            + QString::number(list_EwZutat[i] -> getTyp()) + "_50.png' alt='Honig' width='30px' border=0>";
-        s += "</p></td>";
-        s += "<td class='r' align=center><p>";
-        s += list_EwZutat[i] -> getName() + " ";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</span>";
-        else
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
-        else
-          s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
-        s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
-        s += "</tr>";
-      }
-    }
-  }
-
-  //Menge Eintragen Würzemenge zur Berechnung der Sudhausausbeute
-  s += "<tr>";
-  s += "<td class='we' align=center><p>";
-  s += trUtf8("Würzemenge eintragen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würzemenge ermitteln und im Tab (Brau & Gärdaten) in das Eingabefeld (Würzemenge vor dem Hopfenseihen) eintragen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Whirlpool
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Whirlpool");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Kocher abschalten, wenn thermische Bewegung abgeflaut ist einen Whirlpool erzeugen");
-  s += "</p></td>";
-  s += "</tr>";
-  //Warten bis Trubkegel gebildet wurde
-  s += "<tr>";
-  s += "<td class='' align=center><p>";
-  //s += trUtf8("");
-  s += "</p></td>";
-  s += "<td class='' align=center><p>";
-  s += trUtf8("ca. 15 min warten bis sich Trubkegel gebildet hat");
-  s += "</p></td>";
-  s += "</tr>";
-
-  s += "</tbody></table>";
-  s += "</div>";
-
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Abseihen / Anstellen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
-
-  //Hopfenseihen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Hopfenseihen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würze durch einen Filter in den Gärbehälter abfüllen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Würzemenge nach Kochende Eintragen
-  s += "<tr>";
-  s += "<td class='we' align=center><p>";
-  s += trUtf8("Würzemenge Eintragen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würzemenge ermitteln und im Tab (Brau & Gärdaten) in das Eingabefeld (Würzemenge nach dem Hopfenseihen) eintragen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Stammwürze nach Kochende Eintragen
-  s += "<tr>";
-  s += "<td class='we' align=center><p>";
-  s += trUtf8("Stammwürze Eintragen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Stammwürze messen und im Tab (Brau & Gärdaten) in das Eingabefeld (Stammwürze nach dem Hopfenseihen) eintragen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Verdünnen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Verdünnen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Wenn gewünscht die Würze mit der berechneten Menge Wasser auf Sollstammwürze verdünnen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Speise abfüllen
-  if (spinBox_Speisemenge -> value() > 0.04){
-    s += "<tr>";
-    s += "<td class='r' align=center><p>";
-    s += trUtf8("Speise abfüllen");
-    s += "</p></td>";
-    s += "<td class='r' align=center><p>";
-    s += QString::number(spinBox_Speisemenge -> value()) + trUtf8(" Liter Speise abfüllen");
-    s += "</p></td>";
-    s += "</tr>";
-  }
-
-  //Abkühlen
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Abkühlen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würze auf Anstelltemperatur bringen.");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Würzemenge beim Anstellen Eintragen
-  s += "<tr>";
-  s += "<td class='we' align=center><p>";
-  s += trUtf8("Würzemenge Eintragen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würzemenge ermitteln und im Tab (Brau & Gärdaten) in das Eingabefeld (Würzemenge beim Anstellen) eintragen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Stammwürze beim Anstellen Eintragen
-  s += "<tr>";
-  s += "<td class='we' align=center><p>";
-  s += trUtf8("Stammwürze Eintragen");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Stammwürze messen und im Tab (Brau & Gärdaten) in das Eingabefeld (Stammwürze beim Anstellen) eintragen");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //Hefe zugeben
-  s += "<tr>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Hefe zugeben");
-  s += "</p></td>";
-  s += "<td class='r' align=center><p>";
-  s += trUtf8("Die Würze mit dem Rührer gut durchlüften und die Hefe unterrühren.");
-  s += "</p></td>";
-  s += "</tr>";
-
-  //feddich
-  s += "<tr>";
-  s += "<td class='' align=center colspan=2><p>";
-  s += trUtf8("Sud als gebraut markieren, zurücklehnen und ein Bier genießen (am besten ein Selbstgebrautes)");
-  s += "</p></td>";
-  s += "</tr>";
-
-  s += "</tbody></table>";
-  s += "</div>";
-
-  //Weitere Zutaten bei der Gärung
-  bool GaerungVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung){
-      GaerungVorhanden = true;
-    }
-  }
-  if (GaerungVorhanden) {
-    s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-    s += "<p><b>";
-    s += trUtf8("Bei der Gärung");
-    s += "</b></p>";
-    s += "<table cellspacing=0 border=0 width='90%'><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung){
-        s += "<tr>";
-        s += "<td class='r' align=center><p>";
-        s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_"
-            + QString::number(list_EwZutat[i] -> getTyp()) + "_50.png' alt='Honig' width='30px' border=0>";
-        s += "</p></td>";
-        s += "<td class='r' align=center><p>";
-        s += list_EwZutat[i] -> getName() + " ";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</span>";
-        else
-          s += "<span class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</span>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<span>" + trUtf8(" Kg") + "</span>";
-        else
-          s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
-        s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
-        s += "</tr>";
-      }
-    }
-    s += "</tbody></table>";
-    s += "</div>";
-  }
-
-  s += "<div><p class='version'>"APP_NAME" v";
-  s += VERSION;
-  s += "</p></div>";
-
-  seite += s;
-  //Seitenende
-  ende = "</body></html>";
-  seite += ende;
-
-  //textEdit -> setPlainText(seite);
-
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
-  webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
-
-}
 
 
 void MainWindowImpl::ErstelleTabSpickzettel()
@@ -5057,30 +3969,6 @@ void MainWindowImpl::ErstelleTabSpickzettel()
     ErstelleSpickzettel();
   }
 }
-
-
-void MainWindowImpl::LeseGeraeteliste()
-{
-  QSettings daten("Geraete",QSettings::IniFormat);
-
-  daten.beginGroup("Geraete");
-  QString s;
-  int i=0;
-  s = daten.value("G" + QString::number(i+1)).toString();
-  while (s != ""){
-    QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-    tableWidget_Geraete -> setRowCount(tableWidget_Geraete -> rowCount()+1);
-    //Beschreibung
-    newItem1 -> setText(s);
-    tableWidget_Geraete -> setItem(i, 0, newItem1);
-    //Nächste Beschreibung aus Datei lesen
-    i++;
-    s = daten.value("G" + QString::number(i+1)).toString();
-  }
-  daten.endGroup();
-  tableWidget_Geraete -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
-}
-
 
 void MainWindowImpl::LeseGeraetelisteDB(int id)
 {
@@ -5108,7 +3996,6 @@ void MainWindowImpl::LeseGeraetelisteDB(int id)
       //Nächste Beschreibung aus Datei lesen
       i++;
     }
-    tableWidget_Geraete -> horizontalHeader() -> setSectionResizeMode(QHeaderView::ResizeToContents);
   }
   fuelleGeraeteliste = false;
 }
@@ -5219,6 +4106,9 @@ void MainWindowImpl::BerBraudaten()
                                                                        spinBox_SWJungbier -> value(), spinBox_JungbiermengeAbfuellen -> value() , spinBox_Speisemenge -> value(),
                                                                        checkBox_Spunden -> isChecked()));
 
+  // Abgefuellte Biermenge
+  spinBox_BiermengeAbfuellen -> setValue(spinBox_JungbiermengeAbfuellen -> value() + spinBox_SpeisemengeGesammt -> value() / 1000);
+
   //Erforderliche Zuckergabe gesammt
   spinBox_HaushaltszuckerGesammt -> setValue(Berechnungen.GetHaushaltszuckerGesammt());
 
@@ -5323,10 +4213,10 @@ void MainWindowImpl::slot_print()
   }
 
   webView_Zusammenfassung->setTextSizeMultiplier(zoom);
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setColorMode(QPrinter::Color);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setColorMode(QPrinter::Color);
 
-  QPrintDialog *dialog = new QPrintDialog(&printer, this);
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setWindowTitle("Print");
   //if (webView_Zusammenfassung->hasSelection())
   //	dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
@@ -5335,7 +4225,7 @@ void MainWindowImpl::slot_print()
     return;
   }
   //Drucken
-  webView_Zusammenfassung->print(&printer);
+  webView_Zusammenfassung->print(printer);
   webView_Zusammenfassung->setTextSizeMultiplier(1);
 
 }
@@ -5419,6 +4309,7 @@ void MainWindowImpl::SetStatusGebraut(bool status)
 
   spinBox_EinmaischenTemp -> setReadOnly(status);
   spinBox_EinmaischenTemp -> setButtonSymbols(bs);
+  pushButton_CalcEinmaischeTemp->setDisabled(status);
 
   spinBox_Gesammtkochdauer -> setReadOnly(status);
   spinBox_Gesammtkochdauer -> setButtonSymbols(bs);
@@ -5509,7 +4400,7 @@ void MainWindowImpl::SetStatusGebraut(bool status)
 
   //Tab Gärdaten ausblenden
   tab_Gaerverlauf->setEnabled(status);
-  tabWidged->setTabEnabled(4,status);
+  tabWidged->setTabEnabled(tabWidged->indexOf(tab_Gaerverlauf), status);
 }
 
 
@@ -5724,8 +4615,8 @@ void MainWindowImpl::slot_pushButton_SudAbgefuellt()
       //msgBox.setDefaultButton(QMessageBox::Save);
 
       msgBox.exec();
-      tabWidged -> setCurrentIndex(TAB_REZEPT);
-      TabWidget_Zutaten -> setCurrentIndex(TAB_WeitereZutaten);
+      tabWidged -> setCurrentWidget(tab_Rezept);
+      TabWidget_Zutaten -> setCurrentWidget(tab_WeitereZutaten);
     }
     //Bier kann als Abgefüllt markiert werden
     else {
@@ -5797,8 +4688,7 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
 
   //Tab Bewertung ausblenden
   tab_Bewertung->setEnabled(status);
-  tabWidged->setTabEnabled(6,status);
-
+  tabWidged->setTabEnabled(tabWidged->indexOf(tab_Bewertung), status);
 }
 
 void MainWindowImpl::SetDisabledVerbraucht(bool status)
@@ -5908,10 +4798,11 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     if (!gefunden){
       ist = 0;
     }
+    list_Malzgaben[i] -> ergWidget->setRest(ist - soll);
     //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
     if (soll > ist){
       QString sf;
-      sf = QString::number(soll - ist) + trUtf8(" Kg zu wenig vorhanden");
+      sf = QString::number(soll - ist) + trUtf8(" kg zu wenig vorhanden");
       list_Malzgaben[i] -> ergWidget -> setToolTip(sf);
       list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(true);
       list_Malzgaben[i] -> ergWidget -> icon_warnung -> setVisible(false);
@@ -5929,7 +4820,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
         list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(false);
       }
       else {
-        list_Malzgaben[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "Kg");
+        list_Malzgaben[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "kg");
         list_Malzgaben[i] -> ergWidget -> icon_achtung -> setVisible(false);
         list_Malzgaben[i] -> ergWidget -> icon_warnung -> setVisible(false);
       }
@@ -5955,7 +4846,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
     }
     //überprüfen ob in den Weiterten zutaten der Gleiche Hopfen verwendet wird
     for (int o=0; o < list_EwZutat.count(); o++){
-      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == 100)) {
+      if ((list_EwZutat[o] -> getName() ==  s) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
         soll += list_EwZutat[o] -> getErg_Menge();
       }
     }
@@ -6021,6 +4912,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
         ist = spinBox->value();
       }
     }
+    list_Hopfengaben[i] -> ergWidget->setRest(ist - soll);
     //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
     if (soll > ist){
       QString sf = QString::number(soll - ist) + trUtf8(" g zu wenig Hopfen vorhanden");
@@ -6171,6 +5063,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
           ist = spinBox->value();
         }
       }
+      list_EwZutat[i] -> ergWidget->setRest(ist - soll);
       //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
       if (soll > ist){
         QString sf = QString::number(soll - ist) + trUtf8(" g zu wenig Hopfen vorhanden");
@@ -6251,11 +5144,12 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
       }
       if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
         soll = soll / 1000;
+      list_EwZutat[i] -> ergWidget->setRest(ist - soll);
       //Anzeige Einfärben wenn Rohstoff nicht vorrätig wäre
       if (soll > ist){
         QString sf;
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg){
-          sf = QString::number(soll - ist) + trUtf8(" Kg zu wenig vorhanden");
+          sf = QString::number(soll - ist) + trUtf8(" kg zu wenig vorhanden");
         }
         else{
           sf = QString::number(soll - ist) + trUtf8(" g zu wenig vorhanden");
@@ -6265,7 +5159,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden()
       }
       else {
         if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg){
-          list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "Kg");
+          list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "kg");
         }
         else {
           list_EwZutat[i] -> ergWidget -> setToolTip(trUtf8("Rest ") + QString::number(ist - soll) + "g");
@@ -6377,10 +5271,14 @@ void MainWindowImpl::openRecentFile()
   if (action){
     if (Aenderung){
       if (AbfrageSpeichern()){
+          AktuelleSudID = action -> data().toInt();
+          LadeSudDB(true);
       }
     }
-    AktuelleSudID = action -> data().toInt();
-    LadeSudDB(true);
+    else {
+        AktuelleSudID = action -> data().toInt();
+        LadeSudDB(true);
+    }
   }
 }
 
@@ -6730,7 +5628,7 @@ void MainWindowImpl::updateRecentFileActions()
   int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
   for (int i = 0; i < numRecentFiles; ++i) {
-    QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+    QString text = QString("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
     recentFileActs[i] -> setText(text);
     recentFileActs[i] -> setData(strippedID(files[i]));
     recentFileActs[i] -> setVisible(true);
@@ -6806,24 +5704,25 @@ void MainWindowImpl::slot_TableWidget_cellChanged(int , int )
 bool MainWindowImpl::AbfrageSpeichern()
 {
   QMessageBox msgBox;
-  msgBox.setWindowTitle(trUtf8("Speichern?"));
+  msgBox.setWindowTitle(APP_NAME);
   msgBox.setText(trUtf8("Die Daten wurden verändert."));
   msgBox.setInformativeText(trUtf8("Sollen die Änderungen gespeichert werden?"));
   msgBox.setIcon(QMessageBox::Question);
-  //msgBox.setDefaultButton(QMessageBox::Save);
-  QPushButton *SpeichernButton = msgBox.addButton(trUtf8("Speichern"), QMessageBox::ActionRole);
-  msgBox.addButton(trUtf8("Verwerfen"), QMessageBox::ActionRole);
+  msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+  int ret = msgBox.exec();
 
-  msgBox.exec();
-
+  // abbrechen
+  if (ret == QMessageBox::Cancel) {
+      return false;
+  }
   //Änderungen speichern
-  if (msgBox.clickedButton() == SpeichernButton){
+  else if (ret == QMessageBox::Save) {
     save();
     setAenderung(false);
     return true;
   }
   //Änderungen nicht speichern
-  else{
+  else {
     //für den fall das sich die Rohstoffe geändert haben müssen sie neu geladen werden
     // in der Zeit des neu einlesens der Rohstoffe merker gestartet zurücksetzten
     // das hat den effekt das bei einer änderung an den Tabellen nicht neu berechnet wird
@@ -6831,9 +5730,8 @@ bool MainWindowImpl::AbfrageSpeichern()
     Gestartet = false;
     DatenEinlesenDB();
     Gestartet = true;
-    return false;
+    return true;
   }
-
 }
 
 
@@ -6842,21 +5740,16 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
   //Hopfen hinzufügen
   //Zutatenobjekt hinzufügen
   hopfengabe* hopfen = new hopfengabe(this);
+  hopfen -> setStyleDunkel(StyleDunkel);
   hopfen -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berHopfen = new doubleEditLineImpl(this);
-  berHopfen -> setAttribute(Qt::WA_DeleteOnClose);
-  berHopfen -> setVisible(false);
-  berHopfen -> spinBox_Wert->setDecimals(2);
-  berHopfen -> label_Einheit->setText("g");
 
   //Zutatenliste füllen
-  hopfen -> ergWidget = berHopfen;
   hopfen -> setBierWurdeGebraut(BierWurdeGebraut);
   hopfen -> setHopfenListe(HopfenListe);
 
   connect(hopfen, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_hopfenClose(int) ));
   connect(hopfen, SIGNAL( sig_Aenderung() ), this, SLOT( slot_HopfenAenderung() ));
+  connect(hopfen, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
 
   verticalLayout_Hopfengaben -> addWidget(hopfen);
   list_Hopfengaben.append(hopfen);
@@ -6873,8 +5766,7 @@ void MainWindowImpl::AddHopfengabe(bool vwh, QString Name, int Zeit, double Meng
   hopfen->setErgMenge(erg_Menge);
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerHopfengaben -> addWidget(berHopfen);
-
+  verticalLayout_BerHopfengaben -> addWidget(hopfen->ergWidget);
 }
 
 
@@ -6935,7 +5827,7 @@ void MainWindowImpl::slot_tabWidgetChanged(int)
 }
 
 
-void MainWindowImpl::slot_pushButton_MalzKopie()
+void MainWindowImpl::on_pushButton_MalzKopie_clicked()
 {
   int i = tableWidget_Malz -> currentRow();
 
@@ -7026,7 +5918,7 @@ void MainWindowImpl::slot_pushButton_MalzKopie()
 }
 
 
-void MainWindowImpl::slot_pushButton_HopfenKopie()
+void MainWindowImpl::on_pushButton_HopfenKopie_clicked()
 {
   int i = tableWidget_Hopfen -> currentRow();
 
@@ -7117,7 +6009,7 @@ void MainWindowImpl::slot_pushButton_HopfenKopie()
 }
 
 
-void MainWindowImpl::slot_pushButton_HefeKopie()
+void MainWindowImpl::on_pushButton_HefeKopie_clicked()
 {
   int i = tableWidget_Hefe -> currentRow();
   tableWidget_Hefe->setSortingEnabled(false);
@@ -7290,18 +6182,18 @@ void MainWindowImpl::slot_makePdf()
   }
 
   //printer einstellungen
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setOutputFormat(QPrinter::PdfFormat);
-  printer.setColorMode(QPrinter::Color);
-  printer.setResolution(1200);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setColorMode(QPrinter::Color);
+  printer->setResolution(1200);
   QFileDialog fd(this);
 
   //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
   QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/" + lineEdit_Sudname->text()+".pdf", trUtf8("Suddateien (*.pdf)"),0);
   if (!fileName.isEmpty()) {
-    printer.setOutputFileName(fileName);
+    printer->setOutputFileName(fileName);
     //pdf speichern
-    webView_Zusammenfassung -> print(&printer);
+    webView_Zusammenfassung -> print(printer);
 
     //Pfad abspeichern
     QFileInfo fi(fileName);
@@ -7354,8 +6246,8 @@ void MainWindowImpl::BerFarbe(double cEBC)
   paletteF.setColor(QPalette::Base , Qt::red);
   QColor Bierfarbe;
   if (cEBC == 0){
-    double schuettung[list_Malzgaben.count() + list_EwZutat.count()];
-    double farbe[list_Malzgaben.count() + list_EwZutat.count()];
+    double *schuettung = new double[list_Malzgaben.count() + list_EwZutat.count()];
+    double *farbe = new double[list_Malzgaben.count() + list_EwZutat.count()];
     QString s;
     int gefunden = 0;
     for (int z = 0; z < list_Malzgaben.count(); z++){
@@ -7399,6 +6291,8 @@ void MainWindowImpl::BerFarbe(double cEBC)
       EBC = Berechnungen.getEBC();
     }
     doubleSpinBox_EBC -> setValue(EBC);
+    delete [] schuettung;
+    delete [] farbe;
   }
   else {
     Bierfarbe = Berechnungen.GetFarbwert(cEBC);
@@ -7553,13 +6447,9 @@ void MainWindowImpl::FuelleSudauswahl()
       }
       i++;
     }
-    tableWidget_Sudauswahl -> horizontalHeader() -> setSectionResizeMode(QHeaderView::Interactive);
-    tableWidget_Sudauswahl -> horizontalHeader() -> resizeSection(1,400);
-    tableWidget_Sudauswahl -> horizontalHeader() -> setStretchLastSection(true);
   }
   tableWidget_Sudauswahl -> setSortingEnabled(true);
   tableWidget_Sudauswahl -> setCurrentCell(SelZeile,0);
-  tableWidget_Sudauswahl -> setColumnHidden(0, true);
 }
 
 //Legt einen Neuen Sud mit Defaultwerten an
@@ -8033,7 +6923,8 @@ void MainWindowImpl::slot_pushButton_SudKopie()
       sql += "'Bemerkung', ";
       sql += "'erg_Menge', ";
       sql += "'Ausbeute', ";
-      sql += "'Farbe' ";
+      sql += "'Farbe', ";
+      sql += "'Zugabedauer' ";
       sql += ")Values(";
       sql += "'" + SudIDNeu + "',";
       sql += "'" + name.replace("'","''") + "',";
@@ -8044,7 +6935,36 @@ void MainWindowImpl::slot_pushButton_SudKopie()
       sql += "'" + query_WeitereZutaten.value(7).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(8).toString().replace("'","''") + "',";
       sql += "'" + query_WeitereZutaten.value(9).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "'";
+      sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "',";
+      sql += "'" + query_WeitereZutaten.value(15).toString().replace("'","''") + "'";
+      sql += ");";
+      if (!query.exec(sql)) {
+        // Fehlermeldung Datenbankabfrage
+        ErrorMessage *errorMessage = new ErrorMessage();
+        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+                                    + trUtf8("\nSQL Befehl:\n") + sql);
+      }
+    }
+
+    //Anhänge Kopieren
+    QSqlQuery query_anhang;
+    sql = "SELECT * FROM Anhang WHERE SudID=" + SudIDFrom + ";";
+    if (!query_anhang.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
+                                  + trUtf8("\nSQL Befehl:\n") + sql);
+    }
+    while (query_anhang.next()){
+      sql = "INSERT INTO Anhang ";
+      sql += "(";
+      sql += "'SudID',";
+      sql += "'Pfad'";
+      sql += ")Values(";
+      sql += "'" + SudIDNeu + "',";
+      sql += "'" + query_anhang.value(2).toString().replace("'","''") + "'";
       sql += ");";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
@@ -8193,49 +7113,57 @@ void MainWindowImpl::slot_pushButton_SudDel()
 
 void MainWindowImpl::slot_pushButton_SudLaden()
 {
-  if (Aenderung){
-    if (AbfrageSpeichern()){
+    int row = tableWidget_Sudauswahl->currentRow();
+    if (row >= 0)
+    {
+        bool load = false;
+        if (Aenderung)
+           load = AbfrageSpeichern();
+        else
+            load = true;
+
+        if (load)
+        {
+            pushButton_SudLaden->setEnabled(false);
+            AktuelleSudID = tableWidget_Sudauswahl->item(row, 0)->text().toInt();
+            LadeSudDB(true);
+            pushButton_SudLaden->setEnabled(true);
+        }
     }
-  }
-  pushButton_SudLaden -> setEnabled(false);
-  int row = tableWidget_Sudauswahl -> currentRow();
-  AktuelleSudID = tableWidget_Sudauswahl -> item(row,0) -> text().toInt();
-  LadeSudDB(true);
-  pushButton_SudLaden -> setEnabled(true);
 }
 
 void MainWindowImpl::on_pushButton_SudLadenBUebersicht_clicked()
 {
-  int row = tableWidget_Brauuebersicht -> currentRow();
-  if (row >= 0){
-    if (Aenderung){
-      if (AbfrageSpeichern()){
-      }
+    int row = tableWidget_Brauuebersicht->currentRow();
+    if (row >= 0)
+    {
+        bool load = false;
+        if (Aenderung)
+           load = AbfrageSpeichern();
+        else
+            load = true;
+
+        if (load)
+        {
+            pushButton_SudLadenBUebersicht->setEnabled(false);
+            AktuelleSudID = tableWidget_Brauuebersicht->item(row, 0)->text().toInt();
+            LadeSudDB(true);
+            pushButton_SudLadenBUebersicht->setEnabled(true);
+        }
     }
-    pushButton_SudLadenBUebersicht -> setEnabled(false);
-    AktuelleSudID = tableWidget_Brauuebersicht -> item(row,0) -> text().toInt();
-    LadeSudDB(true);
-    pushButton_SudLadenBUebersicht -> setEnabled(true);
-  }
 }
 
 void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge, double Farbe)
 {
-
   //Malz hinzufügen
   //Zutatenobjekt hinzufügen
   malzgabe* malz = new malzgabe(this);
+  malz -> setStyleDunkel(StyleDunkel);
   malz -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berMalz = new doubleEditLineImpl(this);
-  berMalz -> setAttribute(Qt::WA_DeleteOnClose);
-  berMalz -> setVisible(false);
-
-  malz -> ergWidget = berMalz;
-  malz -> ergWidget->label_Einheit->setText("kg");
 
   connect(malz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_malzClose(int) ));
   connect(malz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_MalzAenderung() ));
+  connect(malz, SIGNAL( sig_getMalzMenge(QString) ), this, SLOT( slot_MalzGetMenge(QString) ));
   //Zutatenliste füllen
   malz -> setBierWurdeGebraut(BierWurdeGebraut);
   malz -> setMalzListe(MalzListe);
@@ -8251,7 +7179,7 @@ void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge,
   list_Malzgaben.append(malz);
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerMalzgaben -> addWidget(berMalz);
+  verticalLayout_BerMalzgaben -> addWidget(malz->ergWidget);
 }
 
 
@@ -8577,16 +7505,6 @@ void MainWindowImpl::on_pushButton_SpickzettelPDF_clicked()
   slot_makePdf();
 }
 
-void MainWindowImpl::on_spinBox_KostenWasserStrom_editingFinished()
-{
-}
-
-
-void MainWindowImpl::on_spinBox_KostenWasserStrom_valueChanged(double )
-{
-  BerKosten();
-}
-
 void MainWindowImpl::FuelleBrauuebersicht()
 {
   //Daten abfragen
@@ -8597,12 +7515,6 @@ void MainWindowImpl::FuelleBrauuebersicht()
 
   if (SelZeile == -1)
     SelZeile = 0;
-
-  tableWidget_Brauuebersicht -> setColumnHidden(0, true);
-  tableWidget_Brauuebersicht -> horizontalHeader() -> setSectionResizeMode(QHeaderView::Interactive);
-  tableWidget_Brauuebersicht -> horizontalHeader() -> resizeSection(1,200);
-  tableWidget_Brauuebersicht -> horizontalHeader() -> resizeSection(4,140);
-  //tableWidget_Brauuebersicht -> horizontalHeader() -> setStretchLastSection(true);
 
   QString datumB, datumE;
   datumB = dateEdit_AuswahlVon -> date().toString(Qt::ISODate);
@@ -8627,15 +7539,15 @@ void MainWindowImpl::FuelleBrauuebersicht()
       QTableWidgetItem *newItem2 = new QTableWidgetItem("");
       QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem6 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem7 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem8 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem9 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem10 = new QTableWidgetItem("");
+      MyTableWidgetItemNumeric *newItem5 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem6 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem7 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem8 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem9 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem10 = new MyTableWidgetItemNumeric();
       QTableWidgetItem *newItem11 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem12 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem13 = new QTableWidgetItem("");
+      MyTableWidgetItemNumeric *newItem12 = new MyTableWidgetItemNumeric();
+      MyTableWidgetItemNumeric *newItem13 = new MyTableWidgetItemNumeric();
       tableWidget_Brauuebersicht -> setRowCount(tableWidget_Brauuebersicht -> rowCount()+1);
       //ID
       FeldNr = query.record().indexOf("ID");
@@ -8706,8 +7618,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       else if (tage > 0){
         int w = tageReifung / 7;
-        QString text = QString::number(w+1) + ". " + trUtf8("Woche");
-        newItem11 -> setText(text + trUtf8("\n noch") + " " + QString::number(tage) + " "  + trUtf8("Tage"));
+        newItem11 -> setText(trUtf8("%1. Woche").arg(w+1) + ", " + trUtf8("noch %1 Tage").arg(tage));
         newItem11 -> setTextColor(QColor::fromRgb(0,0,0));
         if (StyleDunkel)
           newItem11 -> setBackground(QColor::fromRgb(FARBE_BierReift_DARK));
@@ -8716,7 +7627,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       }
       else {
         int w = tageReifung / 7;
-        newItem11 -> setText(QString::number(w+1) + ". " + trUtf8("Woche"));
+        newItem11 -> setText(trUtf8("%1. Woche").arg(w+1));
         newItem11 -> setTextColor(QColor::fromRgb(0,0,0));
         if (StyleDunkel)
           newItem11 -> setBackground(QColor::fromRgb(FARBE_BierFertig_DARK));
@@ -8729,7 +7640,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double d = query.value(FeldNr).toDouble();
       d = qRound(d * 100);
       d = d / 100;
-      newItem5 -> setText(QString::number(d));
+      newItem5 -> setValue(d);
       tableWidget_Brauuebersicht -> setItem(i, 5, newItem5);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Menge")){
         newItem5 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8744,7 +7655,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double sw = query.value(FeldNr).toDouble();
       sw = qRound(sw * 100);
       sw = sw / 100;
-      newItem6 -> setText(QString::number(sw));
+      newItem6 -> setValue(sw);
       tableWidget_Brauuebersicht -> setItem(i, 6, newItem6);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Stammwürze")){
         newItem6 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8759,7 +7670,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double sha = query.value(FeldNr).toDouble();
       sha = qRound(sha * 100);
       sha = sha / 100;
-      newItem7 -> setText(QString::number(sha));
+      newItem7 -> setValue(sha);
       tableWidget_Brauuebersicht -> setItem(i, 7, newItem7);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Sudhausausbeute")){
         newItem7 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8774,7 +7685,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double msch = query.value(FeldNr).toDouble();
       msch = qRound(msch * 100);
       msch = msch / 100;
-      newItem8 -> setText(QString::number(msch));
+      newItem8 -> setValue(msch);
       tableWidget_Brauuebersicht -> setItem(i, 8, newItem8);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Menge Schüttung")){
         newItem8 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8789,7 +7700,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double kost = query.value(FeldNr).toDouble();
       kost = qRound(kost * 100);
       kost = kost / 100;
-      newItem9 -> setText(QString::number(kost));
+      newItem9 -> setValue(kost);
       tableWidget_Brauuebersicht -> setItem(i, 9, newItem9);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Kosten/Liter")){
         newItem9 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8804,7 +7715,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double abv = query.value(FeldNr).toDouble();
       abv = qRound(abv * 100);
       abv = abv / 100;
-      newItem10 -> setText(QString::number(abv));
+      newItem10 -> setValue(abv);
       tableWidget_Brauuebersicht -> setItem(i, 10, newItem10);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Alkohol")){
         newItem10 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8826,7 +7737,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       double svp = query.value(FeldNr).toDouble();
       double evg = qRound(Berechnungen.GetScheinbarerEVG(sw,svp)*100);
       evg = evg / 100;
-      newItem12 -> setText(QString::number(evg));
+      newItem12 -> setValue(evg);
       tableWidget_Brauuebersicht -> setItem(i, 11, newItem12);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Scheinbarer EVG")){
         newItem12 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8841,7 +7752,7 @@ void MainWindowImpl::FuelleBrauuebersicht()
       d = query.value(FeldNr).toDouble();
       d = qRound(d*100);
       d = d / 100;
-      newItem13 -> setText(QString::number(d));
+      newItem13 -> setValue(d);
       tableWidget_Brauuebersicht -> setItem(i, 12, newItem13);
       if (comboBox_AuswahlL1 -> currentText() == trUtf8("Effektive Ausbeute")){
         newItem13 -> setTextColor(QColor::fromRgb(0,0,0));
@@ -8866,6 +7777,8 @@ void MainWindowImpl::FuelleBrauuebersicht()
 
       i++;
     }
+    tableWidget_Brauuebersicht -> setSortingEnabled(true);
+
     //Diagramm füllen wenn 2 oder mehr Datensätze vorhanden sind
     if (i > 1){
       sql = abfrage + " ORDER BY Braudatum";
@@ -10258,12 +9171,11 @@ void MainWindowImpl::SetMaxAnzahlSterne()
 void MainWindowImpl::slot_einstellungen()
 {
   EinstellungsdialogImpl edia;
-  edia.exec();
-  if (edia.NeuerDBPfad) {
-    close();
-  }
-  //Farben für Diagramme neu einlesen
-  if (edia.B_OK){
+  if (edia.exec() == QDialog::Accepted) {
+    if (edia.NeuerDBPfad) {
+      close();
+    }
+    //Farben für Diagramme neu einlesen
     SetMaxAnzahlSterne();
     SetDiagrammFarben();
     FuelleBrauuebersicht();
@@ -10293,11 +9205,8 @@ void MainWindowImpl::slot_schuettungProzent()
     rdia.comboBox_S_6 -> addItem(tableWidget_Malz -> item(i,0) -> text() );
   }
 
-  //Dialog öffnen mit ansicht Schüttungsübernahme
-  rdia.exec();
-
   //Schüttung übernehmen
-  if (rdia.b_OK  && !BierWurdeGebraut){
+  if (rdia.exec() == QDialog::Accepted  && !BierWurdeGebraut){
     //Erstmal Zutatenlsite leeren
     for (int i=0; i < list_Malzgaben.count(); i++){
       list_Malzgaben[i] -> close();
@@ -10330,13 +9239,10 @@ void MainWindowImpl::slot_schuettungProzent()
 void MainWindowImpl::slot_berIBU()
 {
   Dialog_Berechne_IBUImpl rdia;
-  //Dialog öffnen mit ansicht Berechnung Bittere
-  rdia.exec();
   //IBU Wert übernehmen
-  if (rdia.b_OK  && !BierWurdeGebraut){
+  if (rdia.exec() == QDialog::Accepted  && !BierWurdeGebraut){
     spinBox_IBU -> setValue(qRound(rdia.doubleSpinBox_IBU -> value()));
   }
-
 }
 
 void MainWindowImpl::on_tableWidget_Schnellgaerverlauf_itemChanged(QTableWidgetItem* )
@@ -10391,931 +9297,6 @@ void MainWindowImpl::on_tableWidget_Nachgaerverlauf_itemChanged(QTableWidgetItem
   }
 }
 
-void MainWindowImpl::ErstelleZusammenfassung()
-{
-  //Überschrift vom Tab setzten
-  tabWidged -> setTabText(5,trUtf8("Zusammenfassung"));
-  // Seitenkopf
-  QString seite, kopf, ende, style;
-
-  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-  style = "<style type='text/css'>";
-  //Style für P
-  style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
-  //Style für Variable
-  style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
-  //Style für div Kommentar
-  style += ".koment{}";
-  //Style für ul
-  style += "ul{color:black;font-size:10pt;}";
-  //Style für Überschrift h1
-  style += "p.h1{color:black;font-size:12pt;}";
-  //Style für Überschrift h2
-  style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
-  style += "p.version{color:#999999;font-size:11pt;margin-top:5px;}";
-  //Style für Kommentar
-  style += "p.kommentar{color:#555555;font-size:10pt;margin-bottom:5px;margin-left:5px;}";
-  //Style für Div Box ohne Rahmen
-  style += "p.zugegeben{color:#555555;font-size:10pt;margin-bottom:2px;margin-left:5px;}";
-  //Style für Div Box ohne Rahmen
-  style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
-  //Style für Div Box mit Rahmen
-  style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;}";
-  //Style für Tabelle
-  style += "td{padding:2px;margin:0px;font-size:10pt;}";
-  style += "td.r{padding:2px;margin:0px;border-bottom-color:#dddddd;border-bottom-style:solid;border-width:1px;}";
-  //Style für Hinweis Wert in Brau und Gärdaten eintragen
-  style += "td.we{background-color: #eba328;}";
-  style += "tr{padding:0px;margin:0px;}";
-  style += "</style>";
-  kopf += style;
-  kopf += "</head><body align='center' style='font-family:Ubuntu,Arial; font-size:10pt; font-style:normal;background-color:#fff;'>";
-  seite = kopf;
-
-  QString s = "";
-
-  //Tabelle für Bild und Zutaten
-  s += "<div class='' width='99%' style='' align='center'>";
-
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;width:60%;' align='center'>";
-  s += "<table style='width:99%;' cellspacing=0 border=0><tbody>";
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Name
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p class='h1'><b>" + lineEdit_Sudname -> text() + "</b></p>";
-  s += "</td>";
-  s += "</tr>";
-  //Menge
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Menge") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_WuerzemengeAnstellen -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Stammwürze
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Stammwürze") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_SWSollGesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("°P") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //High Gravity Faktor
-  if (spinBox_High_Gravity->value() > 0) {
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + trUtf8("High Gravity Faktor") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("%") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Alkoholgehalt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Alkoholgehalt") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_AlkoholVol -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("%Vol") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Bittere
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Bittere") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  //Bittere anhand der Ausschlagmenge Berechnen
-  double ibu = spinBox_IBU -> value()*highGravityFaktor;
-  ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_WuerzemengeAnstellen -> value() * ibu;
-  ibu = qRound(ibu*10);
-  ibu = ibu/10;
-  s += "<p class='value'>" + QString::number(ibu) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("IBU") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Farbe
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Farbe") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_EBC -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("EBC") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //CO2 Gehalt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  //Bei mehr als einem Eintrag im Nachgärverlauf wird der CO2 Gehalt aus dem
-  //Nachgärverlauf entnommen ansonsten der Teoretische
-  double d = doubleSpinBox_CO2 -> value();
-  QString sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID="
-      + QString::number(AktuelleSudID) + " ORDER BY Zeitstempel DESC;";
-  QSqlQuery queryN;
-  if (!queryN.exec(sqlN)) {
-    // Fehlermeldung Datenbankabfrage
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sqlN);
-  }
-  else {
-    if (queryN.first()){
-      int FeldNr = queryN.record().indexOf("Druck");
-      //Wert nur Übernehmen wenn der Druck größer 0 ist
-      //Ansonsten ist davon auszugehen das der Eintrag der automatisch angelegete ist
-      if (queryN.value(FeldNr).toDouble() > 0){
-        FeldNr = queryN.record().indexOf("CO2");
-        d = queryN.value(FeldNr).toDouble();
-      }
-    }
-  }
-  s += "<p class='value'>" + QString::number(d) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("g/Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  if (BierWurdeAbgefuellt){
-    //Scheinbarer Endvergärungsgrad
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + trUtf8("scheinbarer Endvergärungsgrad") + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p class='value'>" + QString::number(spinBox_SEVG -> value()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("%") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Effektive Sudhausausbeute
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("effektive Sudhausausbeute") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_AusbeuteEffektiv2 -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("%") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Brauanlage
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Brauanlage") + "</p>";
-  s += "</td>";
-  s += "<td colspan=2 align='right'>";
-  s += "<p class='value'>" + comboBox_AuswahlBrauanlage->currentText() + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Kosten pro Liter
-  //s += "<tr style=''>";
-  //s += "<td>";
-  //s += "<p>" + trUtf8("Kosten") + "</p>";
-  //s += "</td>";
-  //s += "<td>";
-  //s += "<p class='value'>" + QString::number(spinBox_Preis -> value()) + "</p>";
-  //s += "</td>";
-  //s += "<td>";
-  //s += "<p>" + trUtf8("€/Liter") + "</p>";
-  //s += "</td>";
-  //s += "</tr>";
-  s += "</tbody></table>";
-  s += "</td>";
-  //Datumsangaben
-  s += "<td style='vertical-align:top;' align=right>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Braudatum
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Braudatum") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + dateEdit_Braudatum -> date().toString("dd.MM.yyyy") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Abfülldatum
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Abfülldatum") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + dateEdit_Abfuelldatum -> date().toString("dd.MM.yyyy") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Datum der Angepeilten Reifezeit
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Angepeiltes Reifezeitende") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  //Start der Reifung ermitteln indem das letzte Datum vom
-  //Nachgärverlauf benutzt wird
-  sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID="
-      + QString::number(AktuelleSudID) + " ORDER BY Zeitstempel DESC;";
-  QDate date = dateEdit_Abfuelldatum -> date();
-  if (!queryN.exec(sqlN)) {
-    // Fehlermeldung Datenbankabfrage
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sqlN);
-  }
-  else {
-    if (queryN.first()){
-      int FeldNr = queryN.record().indexOf("Zeitstempel");
-      date = QDate::fromString(queryN.value(FeldNr).toString(),Qt::ISODate);
-    }
-  }
-  date = date.addDays(spinBox_Reifezeit -> value() * 7);
-  s += "<p class='value'>" + date.toString("dd.MM.yyyy") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Beste Bewertung
-  int bew=0;
-  QString bewtext="";
-  if (list_Bewertung.count() > 0){
-    for (int i=0; i<list_Bewertung.count(); i++){
-      int b = list_Bewertung[i]->getSterne();
-      if (b > bew){
-        bew = b;
-        bewtext = QString::number(list_Bewertung[i]->getWoche())+". Woche ";
-      }
-    }
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + trUtf8("Beste Bewertung") + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p class='value'>" + bewtext + "</p>";
-    s += "</td>";
-    s += "</tr>";
-    s += "<tr style=''>";
-    s += "<td colspan=2>";
-    s += "<div class='bew' style='' align='center'>";
-    for (int i = 0; i<bew; i++){
-      s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_24.png' width='24' border=0>";
-    }
-    for (int i = bew; i<MaxAnzahlSterne; i++){
-      s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_gr_24.png' width='24' border=0>";
-    }
-    s += "</div>";
-    s += "</td>";
-    s += "</tr>";
-  }
-
-  s += "</tbody></table>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-
-  s += "<table width='90%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='bottom' style=''>";
-  //Schüttung
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Malzgaben
-  for (int i=0; i < list_Malzgaben.count(); i++){
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + list_Malzgaben[i]->getName() + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("Kg") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("%") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("EBC") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Gesamt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Gesamt") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Kg") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "<td valign='top' style=''>";
-  //bild mit entsprechender Bierfarbe
-  QColor farbe;
-  farbe = Berechnungen.GetFarbwert(doubleSpinBox_EBC -> value());
-  s += "<div class='' style='background-color:" + farbe.name() + ";width:210px;height:210px;margin:0px;padding:0px;'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_420x420.png' alt='Bierfarbe' width='210px' height='210px' border=0>";
-  s += "</div>";
-  s += "</td>";
-  s += "<td valign='top' style=''>";
-  //Hopfen
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Hopfengaben
-  for (int i=0; i < list_Hopfengaben.count(); i++){
-    s += "<tr style=''>";
-    s += "<td>";
-    if (list_Hopfengaben[i]->getVWH())
-      s += "<p>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-    else
-      s += "<p>" + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("g") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("min") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Hopfengaben in den Weiteren Zutaten
-  for (int i=0; i < list_EwZutat.count(); i++){
-    //Nur Hopfengaben
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Hopfen){
-      s += "<tr style=''>";
-      s += "<td>";
-      s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("g") + "</p>";
-      s += "</td>";
-      s += "<td align='right' colspan='2'>";
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-        s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-      else
-        s += "<p class='value'>" + trUtf8("Anstellen") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-      //Zugabezeitpunkt
-      if (list_EwZutat[i]->getZugabestatus() > EWZ_Zugabestatus_nichtZugegeben) {
-        s += "<tr style=''>";
-        s += "<td colspan='5'>";
-        s += "<p class='zugegeben'>Zugegeben am "+ list_EwZutat[i]->getZugabezeitpunkt_von().toString("dd.MM.yyyy")+"</p>";
-        //wenn entnahme
-        if (list_EwZutat[i]->getEntnahmeindex() == EWZ_Entnahmeindex_MitEntnahme) {
-          //wenn entnommen
-          if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Entnommen) {
-            s += "<p class='kommentar'>"+ trUtf8("Entnommen am ")+ list_EwZutat[i]->getZugabezeitpunkt_bis().toString("dd.MM.yyyy")
-                + " (" + trUtf8("Tage: ") +
-                QString::number(list_EwZutat[i]->getDauerMinuten()/1440)+")</p>";
-            //wenn entnahme
-          }
-        }
-        s += "</td>";
-        s += "</tr>";
-      }
-      //wenn ein Kommentar vorhanden ist eine Zeile für den Komentar einfügen
-      if (list_EwZutat[i]->getBemerkung() != "") {
-        s += "<tr style=''>";
-        s += "<td colspan='5'>";
-        s += "<p class='kommentar'>"+ list_EwZutat[i]->getBemerkung().replace("\n","<br>")+"</p>";
-        s += "</td>";
-        s += "</tr>";
-      }
-    }
-  }
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</table>";
-
-
-
-
-  s += "<table width='70%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='top' style=''>";
-  //Wasser
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/wasser_100x107.png' alt='Hefe' width='50px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Hauptguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Hauptguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WHauptguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "<tr>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureHG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Nachguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Nachguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WNachguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureNG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Gesammt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + label_37 -> text() + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_W_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  //Hefe
-  s += "<td valign='top' style=''>";
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hefe_50.png' alt='Hefe' width='50px' border=0>";
-  s += "<p>" + comboBox_AuswahlHefe -> currentText() + "</p>";
-  QString sEinheiten;
-  sEinheiten = trUtf8("Anzahl Einheiten:") + " <span class='value'>" + QString::number(spinBox_AnzahlHefeEinheiten->value()) +"</span>";
-  //Verpackungsgrösse aus den Rohstoffdaten auslesen
-  int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
-  QString HefeName = comboBox_AuswahlHefe -> currentText();
-  QString verpMenge;
-  if (HefeName != ""){
-    //Würzemenge auslesen
-    for (int i=0; i < AnzahlHefeEintraege; i++){
-      //wenn Eintrag übereinstimmt
-      if (tableWidget_Hefe -> item(i,0) -> text() == HefeName){
-        verpMenge = tableWidget_Hefe -> item(i,5) -> text();
-      }
-    }
-  }
-  if (!verpMenge.isEmpty()) {
-    sEinheiten += trUtf8(" zu ") + verpMenge;
-  }
-  s += "<p>" + sEinheiten +"</p>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-
-  s += "</table>";
-
-
-  //Tabelle Weitere Zutaten
-  s += "<table width='80%' summary='testtabelle' border='0' cellspacing='5'>";
-  s += "<tr >";
-
-  //Honig
-  bool HonigVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Honig){
-      HonigVorhanden = true;
-    }
-  }
-  if (HonigVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_0_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Honig){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochbeginn") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-        //Wenn vorhanden Kommentar anzeigen
-        if (list_EwZutat[i] -> getBemerkung() != ""){
-          s += "<tr>";
-          s += "<td colspan='4'>";
-          s += "<p class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-        }
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Zucker
-  bool ZuckerVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Zucker){
-      ZuckerVorhanden = true;
-    }
-  }
-  if (ZuckerVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_1_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Zucker){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochbeginn") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-        //Wenn vorhanden Kommentar anzeigen
-        if (list_EwZutat[i] -> getBemerkung() != ""){
-          s += "<tr>";
-          s += "<td colspan='4'>";
-          s += "<p class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-        }
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Gewürz
-  bool GewuerzVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Gewuerz){
-      GewuerzVorhanden = true;
-    }
-  }
-  if (GewuerzVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_2_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Gewuerz){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-        //Wenn vorhanden Kommentar anzeigen
-        if (list_EwZutat[i] -> getBemerkung() != ""){
-          s += "<tr>";
-          s += "<td colspan='4'>";
-          s += "<p class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-        }
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Frucht
-  bool FruchtVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Frucht){
-      FruchtVorhanden = true;
-    }
-  }
-  if (FruchtVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_3_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Frucht){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-        //Wenn vorhanden Kommentar anzeigen
-        if (list_EwZutat[i] -> getBemerkung() != ""){
-          s += "<tr>";
-          s += "<td colspan='4'>";
-          s += "<p class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-        }
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  //Sonstiges
-  bool SonstigesVorhanden = false;
-  for (int i=0; i < list_EwZutat.count(); i++){
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Sonstiges){
-      SonstigesVorhanden = true;
-    }
-  }
-  if (SonstigesVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_4_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
-    for (int i=0; i < list_EwZutat.count(); i++){
-      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Sonstiges){
-        s += "<tr style=''>";
-        s += "<td>";
-        s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-        s += "</td>";
-        s += "<td align='right'>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge() / 1000) + "</p>";
-        else
-          s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-        s += "</td>";
-        s += "<td>";
-        if (list_EwZutat[i] -> getEinheit() == EWZ_Einheit_Kg)
-          s += "<p>" + trUtf8("Kg") + "</p>";
-        else
-          s += "<p>" + trUtf8("g") + "</p>";
-        s += "</td>";
-        s += "<td align='right' colspan='2'>";
-        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-          s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
-        else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
-          s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
-        s += "</td>";
-        s += "</tr>";
-        //Wenn vorhanden Kommentar anzeigen
-        if (list_EwZutat[i] -> getBemerkung() != ""){
-          s += "<tr>";
-          s += "<td colspan='4'>";
-          s += "<p class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-        }
-      }
-    }
-    s += "</table>";
-    s += "</div>";
-    s += "</td>";
-  }
-
-  s += "</tr >";
-  s += "</table>";
-
-  //Kommentar
-  if (textEdit_Kommentar -> toPlainText() != ""){
-    s += "<div class='rm' style='margin:10px;width:80%;'>";
-    s += textEdit_Kommentar -> toHtml();
-    s += "</div>";
-  }
-
-
-  //Maischen
-  s += "<div div class='rm' style='width:80%;'>";
-  s += "<p class='h2'>" + trUtf8("Maischen:") + "</p>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Einmaischen
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Einmaischen bei") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value'>" + QString::number(spinBox_EinmaischenTemp -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("°C") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Rasten in Zusammenfassung eintragen
-  for (int i=0; i<list_Rasten.count();i++){
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + list_Rasten[i]->getRastName() + trUtf8(" bei ") + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p class='value'>" + QString::number(list_Rasten[i]->getRastTemp()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("°C") + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p class='value'>" + QString::number(list_Rasten[i]->getRastDauer()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("min") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  s += "</tbody></table>";
-  s += "</div>";
-  //Bewertungen
-  //asdf
-
-  //Gärverlauf
-  //FuelleGaerverlauf();
-  //widget_DiaSchnellgaerverlauf -> BildSpeichern("svg");
-  //s += "<div div class='r' style='width:99%;float:left;margin-top:10px;'>";
-  //s += "<p class='h2'>" + trUtf8("Gärverlauf:") + "</p>";
-  //s += "<p>" + trUtf8("Schnellvergärprobe:") + "</p>";
-  //s += "<img src='svg.png' style='width:98%'>";
-  //s += "</div>";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  s += "";
-  //s += QUrl::fromLocalFile(QCoreApplication::applicationDirPath()).toString();
-
-  //Anhänge
-  if (list_Anhang.count() > 0) {
-    s += "</br>";
-    s += "<div div class='rm' style='width:80%;'>";
-    s += "<p class='h2'>" + trUtf8("Anhänge:") + "</p>";
-    for (int i=0; i<list_Anhang.count();i++){
-      if (AnhangWidget::isImage(list_Anhang[i]->getPfad()))
-        s += "<img style=\"max-width:80%;\" src=\"file:///" + list_Anhang[i]->getFullPfad() + "\"></br>";
-      else
-        s += "<a href=\"file:///" + list_Anhang[i]->getFullPfad() + "\" target=\"_blank\">" + list_Anhang[i]->getPfad() + "</a></br>";
-    }
-    s += "</div>";
-  }
-
-  s += "<div><p class='version'>"APP_NAME" v";
-  s += VERSION;
-  s += "</p></div>";
-
-  seite += s;
-  //Seitenende
-  ende = "</body></html>";
-  seite += ende;
-
-  webView_Zusammenfassung -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Zusammenfassung -> setRenderHint(QPainter::HighQualityAntialiasing, true);
-
-  webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
-  //webView_Zusammenfassung -> reload();
-}
 
 
 void MainWindowImpl::on_pushButton_SudVerbraucht_clicked()
@@ -11537,13 +9518,10 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen()
 
 void MainWindowImpl::on_pushButton_EingabeHMengeVHopfenseihen_clicked()
 {
-  EingabeHVolumenImpl dia;
-  dia.setHoehe(getSudpfanneHoehe());
-  dia.setDurchmesser(getSudpfanneDurchmesser());
+  EingabeHVolumenImpl dia(getSudpfanneDurchmesser(), getSudpfanneHoehe());
   dia.setLiter(spinBox_WuerzemengeVorHopfenseihen -> value());
   dia.setWindowTitle(trUtf8("Eingabehilfe für Volumen Sudpfanne"));
-  dia.exec();
-  if (!dia.abgebrochen){
+  if (dia.exec() == QDialog::Accepted){
     spinBox_WuerzemengeVorHopfenseihen -> setValue(dia.spinBox_Liter20Grad -> value());
   }
 }
@@ -11567,13 +9545,12 @@ void MainWindowImpl::BerAusruestung()
 
 void MainWindowImpl::on_pushButton_EingabeHMengeNHopfenseihen_clicked()
 {
-  EingabeHVolumenImpl dia;
+  EingabeHVolumenImpl dia(getSudpfanneDurchmesser(), getSudpfanneHoehe());
   dia.setLiter(spinBox_WuerzemengeKochende -> value());
   dia.setWindowTitle(trUtf8("Eingabehilfe für Volumen nach dem Hopfenseihen"));
   dia.setVisibleVonOben(false);
   dia.setVisibleVonUnten(false);
-  dia.exec();
-  if (!dia.abgebrochen){
+  if (dia.exec() == QDialog::Accepted){
     spinBox_WuerzemengeKochende -> setValue(dia.spinBox_Liter20Grad -> value());
   }
 }
@@ -11765,10 +9742,19 @@ void MainWindowImpl::on_pushButton_SudImport_clicked()
   if (p == "") {
     p = QDir::homePath();
   }
-  s = QFileDialog::getOpenFileName(this, trUtf8("Suddatei öffnen"), p, trUtf8("Sud Export Dateien (*.xsud)"),0);
+  s = QFileDialog::getOpenFileName(this, trUtf8("Suddatei öffnen"), p, trUtf8("Sud Export Dateien (*.xsud);; Maische Malz und Mehr (*.json)"),0);
   if (!s.isEmpty()) {
     QFileInfo fileinfo(s);
     settings.setValue("recentExportPath",fileinfo.path());
+    // Überprüfen ob eine gültige JSON Datei vorliegt
+    QTemporaryFile file;
+    if (s.endsWith(".json")) {
+        if (file.open()) {
+            QString tmpFile = file.fileName();
+            Export.convertJSON(s,tmpFile);
+            s = tmpFile;
+        }
+    }
     //Überprüfen ob eine gültige xml Datei vorliegt
     int r = Export.IfXmlOK(s);
     //Datei konnte nicht geöffnet werden
@@ -11954,6 +9940,10 @@ void MainWindowImpl::BerWasserwerte()
   //Nachguss
   SpinBox_waMilchsaeureNG_ml -> setValue(RA_Reduzierung * 0.033333333
                                          * doubleSpinBox_WNachguss -> value());
+
+  widget_MilchsauereHG->setVisible(SpinBox_waMilchsaeureHG_ml->value() > 0.0);
+  widget_MilchsauereNG->setVisible(SpinBox_waMilchsaeureNG_ml->value() > 0.0);
+  widget_SauermalzHG->setVisible(false);
 }
 
 
@@ -12009,1134 +9999,17 @@ void MainWindowImpl::on_tableWidget_Sudauswahl_itemSelectionChanged()
     pushButton_merken->setDisabled(true);
     pushButton_vergessen->setDisabled(true);
   }
-}
-
-void MainWindowImpl::ErstelleSudInfo()
-{
-
-  // Seitenkopf
-  QString seite, kopf, ende, style, s, SudnameFehler;
-  int NeuBerechnen = 0;
-
-  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-  if (StyleDunkel){
-    style = "<style type='text/css'>";
-    //Style für P
-    style += "p{color:#fff;font-size:10pt;padding:0px;margin:0px;}";
-    //Style für Variable
-    style += "p.value{color:#eee;margin-left:5px;margin-right:5px;}";
-    //Style für div Kommentar
-    style += ".koment{}";
-    //Style für ul
-    style += "ul{color:#fff;font-size:10pt;}";
-    //Style für Überschrift h1
-    style += "p.h1{color:#fff;font-size:12pt;}";
-    //Style für Überschrift h2
-    style += "p.h2{color:#fff;font-size:11pt;margin-bottom:5px;}";
-    //Style für Div Box bewertung
-    style += "div.bew{border:0px solid #fff; border-radius: 5px; padding:0px;background-color:#222222;}";
-    //Style für Div Box ohne Rahmen
-    style += "div.r{border:0px solid #444444; border-radius: 10px; padding:5px;background-color:#444444;}";
-    //Style für Div Box mit Rahmen
-    style += "div.rm{border:2px solid #444444; border-radius: 10px; padding:5px;background-color:#222222;font-size:12pt;}";
-    //Style für Div Box mit Rahmen für Hinweis
-    style += "div.rmh{border:2px solid #ff0000; border-radius: 10px; padding:5px;background-color:#222222;font-size:12pt;}";
-    //Style für Tabelle
-    style += "td{padding:2px;margin:0px;font-size:10pt;}";
-    style += "td.r{padding:2px;margin:0px;border-bottom-color:#aaaaaa;border-bottom-style:solid;border-width:1px;}";
-    style += "tr{padding:0px;margin:0px;}";
-    style += "body{font-family:Ubuntu,Arial; font-size:10pt; font-style:normal; background-color:#222222; color:#fff;}";
-    style += "</style>";
-  }
-  else {
-    style = "<style type='text/css'>";
-    //Style für P
-    style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
-    //Style für Variable
-    style += "p.value{color:blue;margin-left:5px;margin-right:5px;}";
-    //Style für div Kommentar
-    style += ".koment{}";
-    //Style für ul
-    style += "ul{color:black;font-size:10pt;}";
-    //Style für Überschrift h1
-    style += "p.h1{color:black;font-size:12pt;}";
-    //Style für Überschrift h2
-    style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
-    //Style für Div Box bewertung
-    style += "div.bew{border:0px solid #fff; border-radius: 5px; padding:0px;background-color:#fff;}";
-    //Style für Div Box ohne Rahmen
-    style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
-    //Style für Div Box mit Rahmen
-    style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;font-size:12pt;}";
-    //Style für Div Box mit Rahmen für Hinweis
-    style += "div.rmh{border:2px solid #ff0000; border-radius: 10px; padding:5px;background-color:#ffffff;font-size:12pt;}";
-    //Style für Tabelle
-    style += "td{padding:2px;margin:0px;font-size:10pt;}";
-    style += "td.r{padding:2px;margin:0px;border-bottom-color:#aaaaaa;border-bottom-style:solid;border-width:1px;}";
-    style += "tr{padding:0px;margin:0px;}";
-    style += "body{font-family:Ubuntu,Arial; font-size:10pt; font-style:normal; background-color:#fff;}";
-    style += "</style>";
-  }
-  kopf += style;
-  kopf += "</head><body>";
-  seite = kopf;
-
-  //Liste der SudIds
-  QList<int> ListSudID;
-
-  //Bei einer Singleauswahl Datensatz abfragen und Eckdaten anzeigen
-  QList<QTableWidgetItem *> sList;
-  sList = tableWidget_Sudauswahl -> selectedItems();
-
-  if (sList.count() == 4 || sList.count() == 5) {
-
-    //Sud ID ermitteln
-    int row = sList.first() -> row();
-    int SudID = tableWidget_Sudauswahl -> item(row,0) -> text().toInt();
-    ListSudID.append(SudID);
-
-    //Datensatz abfragen
-    QSqlQuery query_sud;
-    int FeldNr;
-    QString sql = "SELECT * FROM Sud WHERE ID=" + QString::number(SudID) + ";";
-    if (!query_sud.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    else {
-      if (query_sud.first()) {
-        //Wem Sud neu Berechnet werden muss Hinweis anzeigen das dieser Sud erst geladen und gespeichert werden muss
-        //da die Berechneten werte nicht mehr stimmen
-        FeldNr = query_sud.record().indexOf("NeuBerechnen");
-        if (query_sud.value(FeldNr).toBool()){
-          NeuBerechnen = SudID;
-          FeldNr = query_sud.record().indexOf("Sudname");
-          SudnameFehler = query_sud.value(FeldNr).toString();
-        }
-        else {
-          //Überschrift
-          FeldNr = query_sud.record().indexOf("Sudname");
-          seite += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + query_sud.value(FeldNr).toString() + "</b></p></div>";
-
-          //bild mit entsprechender Bierfarbe
-          QColor farbe;
-          FeldNr = query_sud.record().indexOf("erg_Farbe");
-          farbe = Berechnungen.GetFarbwert(query_sud.value(FeldNr).toDouble());
-          FeldNr = query_sud.record().indexOf("Bewertung");
-          int bewertung = query_sud.value(FeldNr).toInt();
-
-          //Solldaten des Rezeptes
-          s += "<div class='rm' style='margin-top:10px;margin-bottom:5px;' align='center'>";
-          //Bewertung
-          if (bewertung > 0){
-            if (bewertung > MaxAnzahlSterne)
-              bewertung = MaxAnzahlSterne;
-            s += "<div class='bew' style='' align='center'>";
-            for (int i = 0; i<bewertung; i++){
-              s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_24.png' width='24' border=0>";
-            }
-            for (int i = bewertung; i<MaxAnzahlSterne; i++){
-              if (StyleDunkel)
-                s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_gr_dark_24.png' width='24' border=0>";
-              else
-                s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_gr_24.png' width='24' border=0>";
-            }
-            s += "</div>";
-          }
-          s += "<table cellspacing=0 border=0><tbody>";
-          //Menge
-          FeldNr = query_sud.record().indexOf("Menge");
-          s += "<tr style=''>";
-          s += "<td rowspan=5>";
-          s += "<div class='r' style='background-color:" + farbe.name() +
-              ";width:100px;height:100px;margin:0px;padding:0px;'>";
-          if (StyleDunkel)
-            s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_dark_200x200.png' alt='Bierfarbe' width='100' height='100' border=0>";
-          else
-            s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_200x200.png' alt='Bierfarbe' width='100' height='100' border=0>";
-          s += "</div>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("Menge") + "</p>";
-          s += "</td>";
-          s += "<td align='right'>";
-          s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</p>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("Liter") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-          //Stammwürze
-          FeldNr = query_sud.record().indexOf("SW");
-          s += "<tr style=''>";
-          s += "<td>";
-          s += "<p>" + trUtf8("Stammwürze") + "</p>";
-          s += "</td>";
-          s += "<td align='right'>";
-          s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("°P") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-          //Bittere
-          FeldNr = query_sud.record().indexOf("IBU");
-          s += "<tr style=''>";
-          s += "<td>";
-          s += "<p>" + trUtf8("Bittere") + "</p>";
-          s += "</td>";
-          s += "<td align='right'>";
-          s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</p>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("IBU") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-          //Farbe
-          FeldNr = query_sud.record().indexOf("erg_Farbe");
-          s += "<tr style=''>";
-          s += "<td>";
-          s += "<p>" + trUtf8("Farbe") + "</p>";
-          s += "</td>";
-          s += "<td align='right'>";
-          s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("EBC") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-          //CO2 Gehalt
-          FeldNr = query_sud.record().indexOf("CO2");
-          s += "<tr style=''>";
-          s += "<td>";
-          s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
-          s += "</td>";
-          s += "<td align='right'>";
-          s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-          s += "</td>";
-          s += "<td>";
-          s += "<p>" + trUtf8("g/Liter") + "</p>";
-          s += "</td>";
-          s += "</tr>";
-          s += "</tbody></table>";
-          s += "</div>";
-        }
-      }
-    }
-  }
-  else {
-    //Überschrift Auswahl
-    //s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Auswahl") + "</b></p></div>";
-    //s += "<div class='rm' style='margin-bottom:10px;'>";
-    QList<int> row_merker;
-    //Bei Mehrfachauswahl alle Sudnamen anzeigen
-    for (int i = 0; i < sList.size(); ++i) {
-      //Sud ID ermitteln
-      int row = sList.at(i) -> row();
-      //wenn sich die zeile ändert
-      if (row_merker.indexOf(row) == -1){
-        row_merker.append(row);
-        int SudID = tableWidget_Sudauswahl -> item(row,0) -> text().toInt();
-        ListSudID.append(SudID);
-        //Datensatz abfragen
-        QSqlQuery query_sud;
-        QString sql = "SELECT Sudname,NeuBerechnen FROM Sud WHERE ID=" + QString::number(SudID) + ";";
-        if (!query_sud.exec(sql)) {
-          // Fehlermeldung Datenbankabfrage
-          ErrorMessage *errorMessage = new ErrorMessage();
-          errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                      CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
-        }
-        else {
-          if (query_sud.first()) {
-            //Wenn Sud neu Berechnet werden muss Hinweis anzeigen das dieser Sud erst geladen und gespeichert werden muss
-            //da die Berechneten werte nicht mehr stimmen
-            int FeldNr = query_sud.record().indexOf("NeuBerechnen");
-            if (query_sud.value(FeldNr).toBool()){
-              NeuBerechnen = SudID;
-              FeldNr = query_sud.record().indexOf("Sudname");
-              SudnameFehler = query_sud.value(FeldNr).toString();
-            }
-          }
-        }
-      }
-    }
-    //s += "</div>";
-  }
-
-  if (NeuBerechnen > 0){
-    //Meldung ausgeben das der Sud zum Neu Berechnen geladen werden muss.
-    seite += "<div class='rmh' style='margin-bottom:10px;' align='center'>";
-    seite += trUtf8("Bei dem Sud >") + SudnameFehler + trUtf8("< wurde ein Rohstoff verändert und die Berechneten Werte stimmen nun nicht mehr. Zum neu Berechnen bitte den Sud Laden und wieder Speichern.");
-    seite += "</div>";
-  }
-  else {
-    //Benötigte Rohstoffe mit Vorhandenen verechnen
-
-    //Alle Malzeinträge abrfuen
-    QList<Rohstoff> ListMalz;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      //Schüttung Abfragen
-      QSqlQuery query_Malz;
-      QString sql = "SELECT * FROM Malzschuettung WHERE SudID=" + QString::number(ListSudID.at(sid)) + ";";
-      if (!query_Malz.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_Malz.next()){
-          int FeldNr_Name = query_Malz.record().indexOf("Name");
-          int FeldNr_ID = query_Malz.record().indexOf("ID");
-          int FeldNr_ergMenge = query_Malz.record().indexOf("erg_Menge");
-
-          Rohstoff eMalz;
-          eMalz.ID = query_Malz.value(FeldNr_ID).toInt();
-          eMalz.Menge = query_Malz.value(FeldNr_ergMenge).toDouble();
-          eMalz.Name = query_Malz.value(FeldNr_Name).toString();
-
-          if (eMalz.Name != ""){
-            //Überprüfen ob Rohstoff schon einmal vorhanden ist
-            bool b=false;
-            for (int i = 0; i < ListMalz.size(); ++i){
-              //wenn Eintrag schon vorhanden ist die Menge adieren
-              if (eMalz.Name == ListMalz.at(i).Name){
-                b = true;
-                eMalz.Menge += ListMalz.at(i).Menge;
-                ListMalz.replace(i,eMalz);
-              }
-            }
-            //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-            if (!b)
-              ListMalz.append(eMalz);
-          }
-        }
-      }
-    }
-
-    //Alle Hopfeneinträge abrfuen
-    QList<Rohstoff> ListHopfen;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      //Hopfen Abfragen
-      QSqlQuery query_Hopfen;
-      QString sql = "SELECT * FROM Hopfengaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + ";";
-      if (!query_Hopfen.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_Hopfen.next()){
-          int FeldNr_Name = query_Hopfen.record().indexOf("Name");
-          int FeldNr_ID = query_Hopfen.record().indexOf("ID");
-          int FeldNr_ergMenge = query_Hopfen.record().indexOf("erg_Menge");
-          int FeldNrAktiv = query_Hopfen.record().indexOf("Aktiv");
-
-
-          Rohstoff eHopfen;
-          eHopfen.ID = query_Hopfen.value(FeldNr_ID).toInt();
-          eHopfen.Menge = query_Hopfen.value(FeldNr_ergMenge).toDouble();
-          eHopfen.Name = query_Hopfen.value(FeldNr_Name).toString();
-
-          if (query_Hopfen.value(FeldNrAktiv).toBool()){
-            //Überprüfen ob Rohstoff schon einmal vorhanden ist
-            bool b=false;
-            for (int i = 0; i < ListHopfen.size(); ++i){
-              //wenn Eintrag schon vorhanden ist die Menge adieren
-              if (eHopfen.Name == ListHopfen.at(i).Name){
-                b = true;
-                eHopfen.Menge += ListHopfen.at(i).Menge;
-                ListHopfen.replace(i,eHopfen);
-              }
-            }
-            //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-            if (!b)
-              ListHopfen.append(eHopfen);
-          }
-        }
-      }
-      //Alle Hopfengaben aus den Weiteren Zutaten abfragen
-      sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=100;";
-      if (!query_Hopfen.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_Hopfen.next()){
-          int FeldNr_Name = query_Hopfen.record().indexOf("Name");
-          int FeldNr_ID = query_Hopfen.record().indexOf("ID");
-          int FeldNr_ergMenge = query_Hopfen.record().indexOf("erg_Menge");
-
-
-          Rohstoff eHopfen;
-          eHopfen.ID = query_Hopfen.value(FeldNr_ID).toInt();
-          eHopfen.Menge = query_Hopfen.value(FeldNr_ergMenge).toDouble();
-          eHopfen.Name = query_Hopfen.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListHopfen.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eHopfen.Name == ListHopfen.at(i).Name){
-              b = true;
-              eHopfen.Menge += ListHopfen.at(i).Menge;
-              ListHopfen.replace(i,eHopfen);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListHopfen.append(eHopfen);
-        }
-      }
-    }
-
-    //Alle Hefe einträge abrfuen
-    QList<Rohstoff> ListHefe;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      //Hefe Abfragen
-      QSqlQuery query_Hefe;
-      QString sql = "SELECT AuswahlHefe,HefeAnzahlEinheiten FROM Sud WHERE ID=" + QString::number(ListSudID.at(sid)) + ";";
-      if (!query_Hefe.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hefe.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_Hefe.next()){
-          int FeldNr_Name = query_Hefe.record().indexOf("AuswahlHefe");
-
-          Rohstoff eHefe;
-          eHefe.ID = 1;
-          eHefe.Name = query_Hefe.value(FeldNr_Name).toString();
-
-          int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
-          if (eHefe.Name != ""){
-            //zur verfügungstehende Malzmenge
-            for (int i=0; i < AnzahlHefeEintraege; i++){
-              //wenn Eintrag übereinstimmt
-              if (tableWidget_Hefe -> item(i,0) -> text() == eHefe.Name){
-                QSpinBox *spinBox = (QSpinBox*)tableWidget_Hefe -> cellWidget(i,1);
-                eHefe.MengeIst = spinBox->value();
-                //benötigte Hefemenge
-                FeldNr_Name = query_Hefe.record().indexOf("HefeAnzahlEinheiten");
-                eHefe.Menge = query_Hefe.value(FeldNr_Name).toInt();
-              }
-            }
-          }
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListHefe.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eHefe.Name == ListHefe.at(i).Name){
-              b = true;
-              eHefe.Menge += ListHefe.at(i).Menge;
-              ListHefe.replace(i,eHefe);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b){
-            if (eHefe.Name != "")
-              ListHefe.append(eHefe);
-          }
-        }
-      }
-    }
-
-    //Honig
-    QList<Rohstoff> ListWeitereZutatenHonig;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=0;";
-      QSqlQuery query_weitereZutaten;
-      if (!query_weitereZutaten.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_weitereZutaten.next()){
-          int FeldNr_Name = query_weitereZutaten.record().indexOf("Name");
-          int FeldNr_ID = query_weitereZutaten.record().indexOf("ID");
-          int FeldNr_ergMenge = query_weitereZutaten.record().indexOf("erg_Menge");
-
-          Rohstoff eWeitereZutat;
-          eWeitereZutat.ID = query_weitereZutaten.value(FeldNr_ID).toInt();
-          eWeitereZutat.Menge = query_weitereZutaten.value(FeldNr_ergMenge).toDouble();
-          eWeitereZutat.Name = query_weitereZutaten.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListWeitereZutatenHonig.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eWeitereZutat.Name == ListWeitereZutatenHonig.at(i).Name){
-              b = true;
-              eWeitereZutat.Menge += ListWeitereZutatenHonig.at(i).Menge;
-              ListWeitereZutatenHonig.replace(i,eWeitereZutat);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListWeitereZutatenHonig.append(eWeitereZutat);
-        }
-      }
-    }
-
-    //Zucker
-    QList<Rohstoff> ListWeitereZutatenZucker;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=1;";
-      QSqlQuery query_weitereZutaten;
-      if (!query_weitereZutaten.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_weitereZutaten.next()){
-          int FeldNr_Name = query_weitereZutaten.record().indexOf("Name");
-          int FeldNr_ID = query_weitereZutaten.record().indexOf("ID");
-          int FeldNr_ergMenge = query_weitereZutaten.record().indexOf("erg_Menge");
-
-
-          Rohstoff eWeitereZutat;
-          eWeitereZutat.ID = query_weitereZutaten.value(FeldNr_ID).toInt();
-          eWeitereZutat.Menge = query_weitereZutaten.value(FeldNr_ergMenge).toDouble();
-          eWeitereZutat.Name = query_weitereZutaten.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListWeitereZutatenZucker.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eWeitereZutat.Name == ListWeitereZutatenZucker.at(i).Name){
-              b = true;
-              eWeitereZutat.Menge += ListWeitereZutatenZucker.at(i).Menge;
-              ListWeitereZutatenZucker.replace(i,eWeitereZutat);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListWeitereZutatenZucker.append(eWeitereZutat);
-        }
-      }
-    }
-
-    //Gewuerz
-    QList<Rohstoff> ListWeitereZutatenGewuerz;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=2;";
-      QSqlQuery query_weitereZutaten;
-      if (!query_weitereZutaten.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_weitereZutaten.next()){
-          int FeldNr_Name = query_weitereZutaten.record().indexOf("Name");
-          int FeldNr_ID = query_weitereZutaten.record().indexOf("ID");
-          int FeldNr_ergMenge = query_weitereZutaten.record().indexOf("erg_Menge");
-
-
-          Rohstoff eWeitereZutat;
-          eWeitereZutat.ID = query_weitereZutaten.value(FeldNr_ID).toInt();
-          eWeitereZutat.Menge = query_weitereZutaten.value(FeldNr_ergMenge).toDouble();
-          eWeitereZutat.Name = query_weitereZutaten.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListWeitereZutatenGewuerz.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eWeitereZutat.Name == ListWeitereZutatenGewuerz.at(i).Name){
-              b = true;
-              eWeitereZutat.Menge += ListWeitereZutatenGewuerz.at(i).Menge;
-              ListWeitereZutatenGewuerz.replace(i,eWeitereZutat);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListWeitereZutatenGewuerz.append(eWeitereZutat);
-        }
-      }
-    }
-
-
-    //Frucht
-    QList<Rohstoff> ListWeitereZutatenFrucht;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=3;";
-      QSqlQuery query_weitereZutaten;
-      if (!query_weitereZutaten.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_weitereZutaten.next()){
-          int FeldNr_Name = query_weitereZutaten.record().indexOf("Name");
-          int FeldNr_ID = query_weitereZutaten.record().indexOf("ID");
-          int FeldNr_ergMenge = query_weitereZutaten.record().indexOf("erg_Menge");
-
-
-          Rohstoff eWeitereZutat;
-          eWeitereZutat.ID = query_weitereZutaten.value(FeldNr_ID).toInt();
-          eWeitereZutat.Menge = query_weitereZutaten.value(FeldNr_ergMenge).toDouble();
-          eWeitereZutat.Name = query_weitereZutaten.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListWeitereZutatenFrucht.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eWeitereZutat.Name == ListWeitereZutatenFrucht.at(i).Name){
-              b = true;
-              eWeitereZutat.Menge += ListWeitereZutatenFrucht.at(i).Menge;
-              ListWeitereZutatenFrucht.replace(i,eWeitereZutat);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListWeitereZutatenFrucht.append(eWeitereZutat);
-        }
-      }
-    }
-
-
-    //Sonstiges
-    QList<Rohstoff> ListWeitereZutatenSonstiges;
-    for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=4;";
-      QSqlQuery query_weitereZutaten;
-      if (!query_weitereZutaten.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-      else {
-        while (query_weitereZutaten.next()){
-          int FeldNr_Name = query_weitereZutaten.record().indexOf("Name");
-          int FeldNr_ID = query_weitereZutaten.record().indexOf("ID");
-          int FeldNr_ergMenge = query_weitereZutaten.record().indexOf("erg_Menge");
-
-
-          Rohstoff eWeitereZutat;
-          eWeitereZutat.ID = query_weitereZutaten.value(FeldNr_ID).toInt();
-          eWeitereZutat.Menge = query_weitereZutaten.value(FeldNr_ergMenge).toDouble();
-          eWeitereZutat.Name = query_weitereZutaten.value(FeldNr_Name).toString();
-          //Überprüfen ob Rohstoff schon einmal vorhanden ist
-          bool b=false;
-          for (int i = 0; i < ListWeitereZutatenSonstiges.size(); ++i){
-            //wenn Eintrag schon vorhanden ist die Menge adieren
-            if (eWeitereZutat.Name == ListWeitereZutatenSonstiges.at(i).Name){
-              b = true;
-              eWeitereZutat.Menge += ListWeitereZutatenSonstiges.at(i).Menge;
-              ListWeitereZutatenSonstiges.replace(i,eWeitereZutat);
-            }
-          }
-          //wenn Rohstoff noch nicht vorhanden ist Eintrag der Liste hinzufügen
-          if (!b)
-            ListWeitereZutatenSonstiges.append(eWeitereZutat);
-        }
-      }
-    }
-
-    //Überschrift Benötigte Rohstoffe
-    s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("benötigte Rohstoffe") + "</b></p></div>";
-
-    //Malz Mengen anzeigen
-    //Bild für getreide anzeigen
-    s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0></div>";
-    s += "<div align='center' style='font-size:12pt;'>";
-    s += "<table border=0 cellspacing=0 >";
-    s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt (kg)") + "</td><td align='center'>" + trUtf8("übrig (kg)") + "</td>";
-    for (int i = 0; i < ListMalz.size(); ++i){
-      double ist = 0;
-      //Vorhandene Menge von diesem Malz
-      bool gefunden = false;
-      for (int o=0; o < tableWidget_Malz -> rowCount(); o++){
-        //wenn Eintrag übereinstimmt
-        if (tableWidget_Malz -> item(o,0) -> text() == ListMalz.at(i).Name){
-          QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,3);
-          ist = dsbMenge ->value();
-          gefunden = true;
-        }
-      }
-      double rest = ist - ListMalz.at(i).Menge;
-      s += "<tr valign='middle'>";
-      if (rest < 0){
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-      }
-      else {
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-      }
-      //Rohstoff ist aufgeführt
-      if (gefunden){
-        s += "<td align='left'>" + ListMalz.at(i).Name + "</td>";
-      }
-      //Rohstoff ist nicht vorhanden
-      else {
-        s += "<td align='left' style='color: grey;'>" + ListMalz.at(i).Name + "</td>";
-      }
-      s += "<td align='center'>" + QString::number(ListMalz.at(i).Menge) + "</td>";
-      if (rest < 0)
-        s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-      else
-        s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-      s += "</tr>";
-    }
-    s += "</table>";
-    s += "</div>";
-
-
-    //Hopfen Mengen anzeigen
-    //Bild für Hopfen anzeigen
-    s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0></div>";
-    s += "<div align='center' style='font-size:12pt;'>";
-    s += "<table border=0 cellspacing=0 >";
-    s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt (g)") + "</td><td align='center'>" + trUtf8("übrig (g)") + "</td>";
-    for (int i = 0; i < ListHopfen.size(); ++i){
-      double ist = 0;
-      bool gefunden = false;
-      //Vorhandene Menge von diesem Hopfen
-      for (int o=0; o < tableWidget_Hopfen -> rowCount(); o++){
-        //wenn Eintrag übereinstimmt
-        if (tableWidget_Hopfen -> item(o,0) -> text() == ListHopfen.at(i).Name){
-          QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,2);
-          ist = spinBox->value();
-          gefunden = true;
-        }
-      }
-      double rest = ist - ListHopfen.at(i).Menge;
-      s += "<tr valign='middle'>";
-      if (rest < 0)
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-      else
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-      //Rohstoff ist aufgeführt
-      if (gefunden){
-        s += "<td align='left'>" + ListHopfen.at(i).Name + "</td>";
-      }
-      //Rohstoff ist nicht vorhanden
-      else {
-        s += "<td align='left' style='color: grey;'>" + ListHopfen.at(i).Name + "</td>";
-      }
-      s += "<td align='center'>" + QString::number(ListHopfen.at(i).Menge) + "</td>";
-      if (rest < 0)
-        s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-      else
-        s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-      s += "</tr>";
-    }
-    s += "</table>";
-    s += "</div>";
-
-
-    //Hefe Mengen anzeigen
-    //Bild für Hefe anzeigen
-    s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/hefe_50.png' alt='Hefe' width='50px' border=0></div>";
-    s += "<div align='center' style='font-size:12pt;'>";
-    s += "<table border=0 cellspacing=0 >";
-    s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-    for (int i = 0; i < ListHefe.size(); ++i){
-      double ist;
-      bool gefunden = false;
-      int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
-      for (int o=0; o < AnzahlHefeEintraege; o++){
-        //wenn Eintrag übereinstimmt
-        if (tableWidget_Hefe -> item(o,0) -> text() == ListHefe.at(i).Name){
-          gefunden = true;
-        }
-      }
-      //Vorhandene Menge von diesem Hopfen
-      ist = ListHefe.at(i).MengeIst;
-      double rest = ist - ListHefe.at(i).Menge;
-      s += "<tr valign='middle'>";
-      if (rest < 0)
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-      else
-        s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-      //Rohstoff ist aufgeführt
-      if (gefunden){
-        s += "<td align='left'>" + ListHefe.at(i).Name + "</td>";
-      }
-      //Rohstoff ist nicht vorhanden
-      else {
-        s += "<td align='left' style='color: grey;'>" + ListHefe.at(i).Name + "</td>";
-      }
-      s += "<td align='center'>" + QString::number(ListHefe.at(i).Menge) + "</td>";
-      if (rest < 0)
-        s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-      else
-        s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-      s += "</tr>";
-    }
-    s += "</table>";
-    s += "</div>";
-
-    //WeitereZutaten Honig Mengen anzeigen
-    //Bild für Honig anzeigen
-    if (ListWeitereZutatenHonig.count() > 0){
-      int Einheit=0;
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_0_50.png' alt='Honig' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListWeitereZutatenHonig.size(); ++i){
-        double ist=0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Honig
-        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenHonig.at(i).Name){
-            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-            ist = dsbMenge -> value();
-            QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
-            Einheit = comboEinheit -> currentIndex();
-            if (Einheit == EWZ_Einheit_Kg){
-              ist = ist * 1000;
-            }
-            gefunden = true;
-          }
-        }
-        double rest = ist - ListWeitereZutatenHonig.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
-        }
-        if (Einheit == EWZ_Einheit_Kg){
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge / 1000) + " kg</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-        }
-        else {
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge) + " g</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
-        }
-
-        s += "</tr>";
-      }
-      s += "</table>";
-      s += "</div>";
-    }
-    //WeitereZutaten Zucker Mengen anzeigen
-    //Bild für Zucker anzeigen
-    if (ListWeitereZutatenZucker.count() > 0){
-      int Einheit=0;
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_1_50.png' alt='Honig' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListWeitereZutatenZucker.size(); ++i){
-        double ist=0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Honig
-        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenZucker.at(i).Name){
-            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-            ist = dsbMenge -> value();
-            QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
-            Einheit = comboEinheit -> currentIndex();
-            if (Einheit == 0){
-              ist = ist * 1000;
-            }
-            gefunden = true;
-          }
-        }
-        double rest = ist - ListWeitereZutatenZucker.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
-        }
-        if (Einheit == 0){
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge / 1000) + " kg</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-        }
-        else {
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge) + " g</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
-        }
-
-        s += "</tr>";
-      }
-      s += "</table>";
-      s += "</div>";
-    }
-    //WeitereZutaten Gewuerz Mengen anzeigen
-    //Bild für Gewuerz anzeigen
-    if (ListWeitereZutatenGewuerz.count() > 0){
-      int Einheit=0;
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_2_50.png' alt='Honig' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListWeitereZutatenGewuerz.size(); ++i){
-        double ist=0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Honig
-        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenGewuerz.at(i).Name){
-            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-            ist = dsbMenge -> value();
-            QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
-            Einheit = comboEinheit -> currentIndex();
-            if (Einheit == 0){
-              ist = ist * 1000;
-            }
-            gefunden = true;
-          }
-        }
-        double rest = ist - ListWeitereZutatenGewuerz.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
-        }
-        if (Einheit == 0){
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge / 1000) + " kg</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-        }
-        else {
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge) + " g</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
-        }
-
-        s += "</tr>";
-      }
-      s += "</table>";
-      s += "</div>";
-    }
-    //WeitereZutaten Frucht Mengen anzeigen
-    //Bild für Frucht anzeigen
-    if (ListWeitereZutatenFrucht.count() > 0){
-      int Einheit=0;
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_3_50.png' alt='Honig' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListWeitereZutatenFrucht.size(); ++i){
-        double ist=0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Honig
-        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenFrucht.at(i).Name){
-            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-            ist = dsbMenge -> value();
-            QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
-            Einheit = comboEinheit -> currentIndex();
-            if (Einheit == 0){
-              ist = ist * 1000;
-            }
-            gefunden = true;
-          }
-        }
-        double rest = ist - ListWeitereZutatenFrucht.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
-        }
-        if (Einheit == 0){
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge / 1000) + " kg</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-        }
-        else {
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge) + " g</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
-        }
-
-        s += "</tr>";
-      }
-      s += "</table>";
-      s += "</div>";
-    }
-    //WeitereZutaten Sonstiges Mengen anzeigen
-    //Bild für Sonstiges anzeigen
-    if (ListWeitereZutatenSonstiges.count() > 0){
-      int Einheit=0;
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_4_50.png' alt='Honig' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListWeitereZutatenSonstiges.size(); ++i){
-        double ist=0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Honig
-        for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenSonstiges.at(i).Name){
-            QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
-            ist = dsbMenge -> value();
-            QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
-            Einheit = comboEinheit -> currentIndex();
-            if (Einheit == 0){
-              ist = ist * 1000;
-            }
-            gefunden = true;
-          }
-        }
-        double rest = ist - ListWeitereZutatenSonstiges.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
-        }
-        if (Einheit == 0){
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge / 1000) + " kg</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
-        }
-        else {
-          s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge) + " g</td>";
-          if (rest < 0)
-            s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
-          else
-            s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
-        }
-
-        s += "</tr>";
-      }
-      s += "</table>";
-      s += "</div>";
-    }
-  }
-
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
-  settings.beginGroup("DB");
-  QDir dbpfad = QDir(settings.value("DB_Pfad").toString());
-  settings.endGroup();
-  bool kopzeile = false;
-  for (int sid = 0; sid < ListSudID.size(); ++sid){
-    QString sql = "SELECT * FROM Anhang WHERE SudID=" + QString::number(ListSudID.at(sid));
-    QSqlQuery query_anhang;
-    if (!query_anhang.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    else {
-      while (query_anhang.next()){
-        if (!kopzeile) {
-          s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Anhänge") + "</b></p></div>";
-          kopzeile = true;
-        }
-        int FeldNr = query_anhang.record().indexOf("Pfad");
-        QString pfad = query_anhang.value(FeldNr).toString();
-        if (QDir::isRelativePath(pfad))
-          pfad = dbpfad.filePath(pfad);
-        if (AnhangWidget::isImage(pfad))
-          s += "<img style=\"max-width:" + QString::number(webView_Info->width() - 10) + "px;\" src=\"file:///" + pfad + "\"></br>";
-        else
-          s += "<a href=\"file:///" + pfad + "\" target=\"_blank\">" + pfad + "</a></br>";
-      }
-    }
-  }
-
-  seite += s;
-  //Seitenende
-  ende = "</body></html>";
-  seite += ende;
-
-  webView_Info -> setRenderHint(QPainter::TextAntialiasing, true);
-  webView_Info -> setRenderHint(QPainter::SmoothPixmapTransform, true);
-  webView_Info -> setRenderHint(QPainter::HighQualityAntialiasing, true);
-  webView_Info -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
-}
-
-void MainWindowImpl::slot_urlClicked(const QUrl &url)
-{
-  QDesktopServices::openUrl(url);
+  tableWidget_Sudauswahl->setFocus();
 }
 
 void MainWindowImpl::on_TabWidget_Zutaten_currentChanged(int index)
 {
-  TabWidget_RezeptErgebnisse -> setCurrentIndex(index);
+    TabWidget_RezeptErgebnisse->setCurrentIndex(index);
+}
+
+void MainWindowImpl::on_TabWidget_RezeptErgebnisse_currentChanged(int index)
+{
+    TabWidget_Zutaten->setCurrentIndex(index);
 }
 
 void MainWindowImpl::on_pushButton_WeitereZutatenNeu_clicked()
@@ -13247,7 +10120,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
   QDoubleSpinBox* dsbAusbeute=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,4);
   QDoubleSpinBox* dsbEBC=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,5);
   QDoubleSpinBox* dsbPreis=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,6);
-  QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text());
+  QTableWidgetItem *newItem1 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,0) -> text() + trUtf8(" Kopie"));
   QTableWidgetItem *newItem7 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,7) -> text());
   QTableWidgetItem *newItem10 = new QTableWidgetItem(tableWidget_WeitereZutaten -> item(i,10) -> text());
 
@@ -13443,12 +10316,9 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
 {
   //Zutatenobjekt hinzufügen
   ErweiterteZutatImpl* ewz = new ErweiterteZutatImpl(this);
+  ewz -> setStyleDunkel(StyleDunkel);
   ewz -> setAttribute(Qt::WA_DeleteOnClose);
-  //Ergebnisswidget ersetellen
-  doubleEditLineImpl* berEwz = new doubleEditLineImpl(this);
-  berEwz -> setAttribute(Qt::WA_DeleteOnClose);
 
-  ewz -> ergWidget = berEwz;
   ewz -> setBierWurdeGebraut(false);
   ewz -> setBierWurdeAbgefuellt(false);
   connect(ewz, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_ewzClose(int) ));
@@ -13460,6 +10330,8 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   connect(ewz, SIGNAL( sig_getEwzPreisHopfen(QString) ), this, SLOT( slot_getEwzPreisHopfen(QString) ));
   connect(ewz, SIGNAL( sig_Aenderung() ), this, SLOT( slot_EwzAenderung() ));
   connect(ewz, SIGNAL( sig_zugeben(QString, int, double) ), this, SLOT( slot_EwzZugegeben(QString, int, double) ));
+  connect(ewz, SIGNAL( sig_getHopfenMenge(QString) ), this, SLOT( slot_HopfenGetMenge(QString) ));
+  connect(ewz, SIGNAL( sig_getEwzMenge(QString) ), this, SLOT( slot_EwzGetMenge(QString) ));
   //Zutatenliste füllen
   ewz -> setEwListe(ewzListe);
   ewz -> setHopfenListe(HopfenListe);
@@ -13469,7 +10341,7 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked()
   ewz -> setID((int)time(NULL)+rand());
 
   //Ergebnisswidget dem Layout zuordnen
-  verticalLayout_BerWeitereZutaten -> addWidget(berEwz);
+  verticalLayout_BerWeitereZutaten -> addWidget(ewz->ergWidget);
 
   setAenderung(true);
 }
@@ -13789,6 +10661,95 @@ void MainWindowImpl::slot_HopfenAenderung()
   }
 }
 
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_MalzGetMenge(QString name)
+{
+  double rest = 0;
+  for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
+    if (tableWidget_Malz -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Malz -> cellWidget(i,3);
+      rest = spinBoxMenge -> value();
+    }
+  }
+  //Alle verwendeten Malzgaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  if (rest > 0) {
+    for (int i=0; i < list_Malzgaben.count(); i++){
+      if (list_Malzgaben[i] -> getName() == name)
+        verwendet  += list_Malzgaben[i] -> getErgMenge();
+    }
+  }
+  return rest - verwendet;
+}
+
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_EwzGetMenge(QString name)
+{
+  double rest = 0;
+  int Einheit=0;
+  for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
+    if (tableWidget_WeitereZutaten -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(i,1);
+      rest = spinBoxMenge -> value();
+      QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(i,2);
+      Einheit = comboEinheit -> currentIndex();
+      if (Einheit == EWZ_Einheit_Kg){
+        rest = rest * 1000;
+      }
+    }
+  }
+  //Nun überprüfen ob die zutat in den weiteren Zutaten noch einmal vorkommt
+  double verwendet = 0;
+  for (int o=0; o < list_EwZutat.count(); o++){
+    if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() != EWZ_Typ_Hopfen)) {
+      verwendet += list_EwZutat[o] -> getErg_Menge();
+    }
+  }
+  return rest - verwendet;
+}
+
+//Gibt die noch vorhandene Restmenge zurück
+double MainWindowImpl::slot_HopfenGetMenge(QString name)
+{
+  double rest = 0;
+  for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
+    if (tableWidget_Hopfen -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(i,2);
+      rest = spinBoxMenge -> value();
+    }
+  }
+  //Alle verwendeten Hopfengaben mit dem gleichen Namen abfragen
+  double verwendet = 0;
+  //Bei den Hopfengaben
+  if (rest > 0) {
+    for (int i=0; i < list_Hopfengaben.count(); i++){
+      if (list_Hopfengaben[i] -> getName() == name)
+        verwendet += list_Hopfengaben[i] -> getErgMenge();
+    }
+    //Bei den Weiteren Zutaten
+    for (int o=0; o < list_EwZutat.count(); o++){
+      if ((list_EwZutat[o] -> getName() ==  name) && (list_EwZutat[o] -> getTyp() == EWZ_Typ_Hopfen)) {
+        verwendet += list_EwZutat[o] -> getErg_Menge();
+      }
+    }
+  }
+  rest = rest - verwendet;
+  if (rest < 0)
+    rest = 0;
+  return rest;
+}
+
+double MainWindowImpl::slot_HefeGetMenge(QString name)
+{
+  for (int i=0; i < tableWidget_Hefe -> rowCount(); i++){
+    if (tableWidget_Hefe -> item(i,0) -> text() == name){
+      QDoubleSpinBox *spinBoxMenge =(QDoubleSpinBox*)tableWidget_Hefe -> cellWidget(i,1);
+      return spinBoxMenge -> value();
+    }
+  }
+  return -1;
+}
+
 
 void MainWindowImpl::BerWeitereZutaten()
 {
@@ -13900,11 +10861,11 @@ void MainWindowImpl::on_pushButton_NeueRast_clicked()
   }
   connect(rast, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_rastClose(int) ));
   connect(rast, SIGNAL( sig_aenderung(int) ), this, SLOT( slot_rastAenderung(int) ));
-  connect(rast, SIGNAL( sig_nachOben(int) ), this, SLOT( on_pushButton_RastNachOben(int) ));
-  connect(rast, SIGNAL( sig_nachUnten(int) ), this, SLOT( on_pushButton_RastNachUnten(int) ));
+  connect(rast, SIGNAL( sig_nachOben(int) ), this, SLOT( slot_pushButton_RastNachOben(int) ));
+  connect(rast, SIGNAL( sig_nachUnten(int) ), this, SLOT( slot_pushButton_RastNachUnten(int) ));
 }
 
-void MainWindowImpl::on_pushButton_RastNachOben(int id)
+void MainWindowImpl::slot_pushButton_RastNachOben(int id)
 {
   //Es darf nicht das erste Widget sein
   if (id != list_Rasten[0]->getID()){
@@ -13926,7 +10887,7 @@ void MainWindowImpl::on_pushButton_RastNachOben(int id)
   }
 }
 
-void MainWindowImpl::on_pushButton_RastNachUnten(int id)
+void MainWindowImpl::slot_pushButton_RastNachUnten(int id)
 {
   //Es darf nicht das letzte Widget sein
   if (id != list_Rasten[list_Rasten.count()-1]->getID()){
@@ -13957,17 +10918,38 @@ void MainWindowImpl::on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1)
 
 void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1)
 {
-  spinBox_SWAnstellen -> setValue(arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(arg1);
+  }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1)
 {
-  spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
 }
 
-void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double arg1)
+void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double )
 {
-  spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - arg1);
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
 }
 
 void MainWindowImpl::on_spinBox_SW_valueChanged(double arg1)
@@ -15054,7 +12036,7 @@ void MainWindowImpl::on_tableWidget_Malz_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Malz->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Malzeintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Malzeintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Malz->rowCount();
           }
@@ -15121,7 +12103,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Hopfen->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Hopfeneintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Hopfeneintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Hopfen->rowCount();
           }
@@ -15196,7 +12178,7 @@ void MainWindowImpl::on_tableWidget_Hefe_cellChanged(int row, int column)
         if (i != row){
           if (tableWidget_Hefe->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Hefeeintrag ist doppelt: " << newItem->text();
+            //qDebug() << "Hefeeintrag ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_Hefe->rowCount();
           }
@@ -15250,7 +12232,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellChanged(int row, int colu
         if (i != row){
           if (tableWidget_WeitereZutaten->item(i,0)->text() == newItem->text()){
             doppelt = true;
-            qDebug() << "Eintrag in den Weiteren Zutaten ist doppelt: " << newItem->text();
+            //qDebug() << "Eintrag in den Weiteren Zutaten ist doppelt: " << newItem->text();
             newItem->setText(newItem->text()+"_");
             i = tableWidget_WeitereZutaten->rowCount();
           }
@@ -15306,7 +12288,8 @@ void MainWindowImpl::on_tableWidget_Malz_currentCellChanged(int currentRow, int 
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Malz -> item(currentRow,currentColumn);
-    Malz_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Malz_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15316,7 +12299,8 @@ void MainWindowImpl::on_tableWidget_Hopfen_currentCellChanged(int currentRow, in
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Hopfen -> item(currentRow,currentColumn);
-    Hopfen_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Hopfen_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15327,7 +12311,8 @@ void MainWindowImpl::on_tableWidget_Hefe_currentCellChanged(int currentRow, int 
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_Hefe -> item(currentRow,currentColumn);
-    Hefe_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        Hefe_Bezeichnung_Merker = newItem->text();
   }
 }
 
@@ -15337,70 +12322,66 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_currentCellChanged(int curren
   //und Sude angepasst werden müssen
   if (currentColumn == 0) {
     QTableWidgetItem *newItem = tableWidget_WeitereZutaten -> item(currentRow,currentColumn);
-    WZutaten_Bezeichnung_Merker = newItem->text();
+    if (newItem)
+        WZutaten_Bezeichnung_Merker = newItem->text();
   }
 }
 
 void MainWindowImpl::on_tableWidget_Malz_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Malz -> selectedItems().count() == 4) {
-    //Alle Buttons enablen
-    pushButton_MalzKopie -> setDisabled(false);
-    pushButton_MalzDel -> setDisabled(false);
-  }
-  else {
-    pushButton_MalzKopie -> setDisabled(true);
-    pushButton_MalzDel -> setDisabled(true);
-  }
-
+    if (tableWidget_Malz->selectedItems().count() > 0)
+    {
+        pushButton_MalzKopie->setEnabled(true);
+        pushButton_MalzDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_MalzKopie->setEnabled(false);
+        pushButton_MalzDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_Hopfen_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hopfen -> selectedItems().count() == 4) {
-    //Alle Buttons enablen
-    pushButton_HopfenKopie -> setDisabled(false);
-    pushButton_HopfenDel -> setDisabled(false);
-  }
-  else {
-    pushButton_HopfenKopie -> setDisabled(true);
-    pushButton_HopfenDel -> setDisabled(true);
-  }
+    if (tableWidget_Hopfen->selectedItems().count() > 0)
+    {
+        pushButton_HopfenKopie->setEnabled(true);
+        pushButton_HopfenDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_HopfenKopie->setEnabled(false);
+        pushButton_HopfenDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_Hefe_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  //qDebug() << "count: " << tableWidget_Hopfen -> selectedItems().count();
-  if (tableWidget_Hefe -> selectedItems().count() == 7) {
-    //Alle Buttons enablen
-    pushButton_HefeKopie -> setDisabled(false);
-    pushButton_HefeDel -> setDisabled(false);
-  }
-  else {
-    pushButton_HefeKopie -> setDisabled(true);
-    pushButton_HefeDel -> setDisabled(true);
-  }
+    if (tableWidget_Hefe->selectedItems().count() > 0)
+    {
+        pushButton_HefeKopie->setEnabled(true);
+        pushButton_HefeDel->setEnabled(true);
+    }
+    else
+    {
+        pushButton_HefeKopie->setEnabled(false);
+        pushButton_HefeDel->setEnabled(false);
+    }
 }
 
 void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 {
-  //Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_WeitereZutaten -> selectedItems().count() == 3) {
-    //Alle Buttons enablen
-    pushButton_WeitereZutatenDel -> setDisabled(false);
-    pushButton_WeitereZutatenKopie -> setDisabled(false);
-  }
-  else {
-    pushButton_WeitereZutatenDel -> setDisabled(true);
-    pushButton_WeitereZutatenKopie -> setDisabled(true);
-  }
+    if (tableWidget_WeitereZutaten->selectedItems().count() > 0)
+    {
+        pushButton_WeitereZutatenDel->setEnabled(true);
+        pushButton_WeitereZutatenKopie->setEnabled(true);
+    }
+    else
+    {
+        pushButton_WeitereZutatenDel->setEnabled(false);
+        pushButton_WeitereZutatenKopie->setEnabled(false);
+    }
 }
-
-
 
 void MainWindowImpl::on_spinBox_Menge_valueChanged(double arg1)
 {
@@ -15419,31 +12400,29 @@ void MainWindowImpl::on_comboBox_BerechnungsArtHopfen_currentIndexChanged(int )
 
 void MainWindowImpl::on_tabWidged_currentChanged(int index)
 {
+  Q_UNUSED(index)
+
+  QWidget* currentTab = tabWidged->currentWidget();
 
   //Brauübersicht
-  if (index == 7){
+  if (currentTab == tab_Brauuebersicht){
     FuelleBrauuebersicht();
   }
   //Ausrüstung
-  else if (index == 8){
+  else if (currentTab == tab_Ausruestung){
     BerEffektiveAusbeuteMittel();
   }
   //Gärverlauf
-  else if (index == 4){
+  else if (currentTab == tab_Gaerverlauf){
     FuelleGaerverlauf();
   }
-  //Zusammenfassung
-  if (index == 5){
-    //Seite Spickzettel erstellen
-    ErstelleTabSpickzettel();
-  }
-  //Spickzettel
-  if (index == 5){
+  //Zusammenfassung / Spickzettel
+  else if (currentTab == tab_Spickzettel){
     //Seite Spickzettel erstellen
     ErstelleTabSpickzettel();
   }
   //Brau && Gärdaten
-  else if (index == 3){
+  else if (currentTab == tab_Gaerverlauf){
     //Datum setzten
     if (!BierWurdeGebraut){
       dateEdit_Braudatum -> setDate(QDate::currentDate());
@@ -15455,9 +12434,10 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index)
     }
   }
   //Anleitung
-  else if (index == 10){
-    if (!keinInternet)
+  else if (currentTab == tab_help){
+    if (!keinInternet) {
       webView_Anleitung -> setUrl(QUrl(URL_ANLEITUNG));
+    }
   }
 }
 
@@ -15488,8 +12468,7 @@ void MainWindowImpl::on_pushButton_EingabeHVerdampfungsziffer_clicked()
   bver.setHoehe(spinBox_SudpfanneHoehe->value());
   bver.setMenge1(doubleSpinBox_VolumenPfannevoll->value());
   bver.setMenge2(Berechnungen.BerVolumenWasser(20,99,spinBox_WuerzemengeKochende->value()));
-  bver.exec();
-  if (!bver.abgebrochen) {
+  if (bver.exec() == QDialog::Accepted) {
     doubleSpinBox_Verdampfung->setValue(bver.getVerdampfungsziffer());
   }
 }
@@ -15502,17 +12481,17 @@ void MainWindowImpl::on_pushButton_SudinfoDrucken_clicked()
     ErstelleSudInfo();
   }
 
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setColorMode(QPrinter::Color);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setColorMode(QPrinter::Color);
 
-  QPrintDialog *dialog = new QPrintDialog(&printer, this);
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setWindowTitle("Print");
   if (dialog->exec() != QDialog::Accepted){
     //webView_Info->setZoomFactor(1);
   }
   else {
     //Drucken
-    webView_Info->print(&printer);
+    webView_Info->print(printer);
     webView_Info->setTextSizeMultiplier(1);
   }
 
@@ -15540,18 +12519,18 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
   }
 
   //printer einstellungen
-  QPrinter printer(QPrinter::HighResolution);
-  printer.setOutputFormat(QPrinter::PdfFormat);
-  printer.setColorMode(QPrinter::Color);
-  printer.setResolution(1200);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setColorMode(QPrinter::Color);
+  printer->setResolution(1200);
   QFileDialog fd(this);
 
   //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
   QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/Rohstoffliste.pdf", trUtf8("Suddateien (*.pdf)"),0);
   if (!fileName.isEmpty()) {
-    printer.setOutputFileName(fileName);
+    printer->setOutputFileName(fileName);
     //pdf speichern
-    webView_Info -> print(&printer);
+    webView_Info -> print(printer);
 
     //Pfad abspeichern
     QFileInfo fi(fileName);
@@ -15565,7 +12544,7 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
         QStringList arguments;
         arguments << fileName;
         QProcess *myProcess = new QProcess();
-        qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
+        //qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
         myProcess->start(prog,arguments);
       }
     }
@@ -15813,7 +12792,7 @@ void MainWindowImpl::setButtonsTextMerken()
     while (query.next()) {
       anzahl++;
     }
-    QString text = trUtf8("alle vergessen");
+    QString text = trUtf8("Alle vergessen");
     text += " (" + QString::number(anzahl) + ")";
     pushButton_alleVergessen->setText(text);
   }
@@ -15890,12 +12869,6 @@ void MainWindowImpl::on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1)
 
 void MainWindowImpl::on_listWidget_Brauanlagen_currentRowChanged(int)
 {
-}
-
-
-void MainWindowImpl::on_pushButton_VerschneidungZumischen_clicked()
-{
-  spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() + spinBox_WasserVerschneidung->value()-spinBox_Speisemenge->value());
 }
 
 void MainWindowImpl::on_pushButton_MalzNeu_clicked()
@@ -15976,27 +12949,58 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellClicked(int row, int colu
 
 void MainWindowImpl::on_pushButton_CO2_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_CO2_TITLE, INFO_CO2_TEXT);
+  DialogInfo::Info(this, trUtf8("CO2 Gehalt"), trUtf8("<b>Typischer CO2 Gehalt in g/Liter:</b></br><table>\
+                                                      <tr><td>Lager, Pilsner </td><td>4,00 - 5,50</td></tr>\
+                                                      <tr><td>Weizenbier </td><td>6,50 - 9,00</td></tr>\
+                                                      <tr><td>Britische Ales </td><td>3,00 - 4,00</td></tr>\
+                                                      <tr><td>Porter Stout </td><td>3,40 - 4,50</td></tr>\
+                                                      <tr><td>Belgische Ales </td><td>3,80 - 4,80</td></tr>\
+                                                      <tr><td>Lambic </td><td>4,80 - 5,50</td></tr>\
+                                                      <tr><td>Frucht-Lambic </td><td>6,00 - 9,00</td></tr>\
+                                                      </table>"));
 }
 
 void MainWindowImpl::on_pushButton_IBU_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_IBU_TITLE, INFO_IBU_TEXT);
+  DialogInfo::Info(this, trUtf8("Bittere"), trUtf8("<b>Typische Bitterwerte in IBU:</b></br><table>\
+                                                   <tr><td>Weissbier </td><td>10-15</td></tr>\
+                                                   <tr><td>Märzen </td><td>18 - 28</td></tr>\
+                                                   <tr><td>Export </td><td>23 - 29</td></tr>\
+                                                   <tr><td>Kölsch </td><td>20 - 34</td></tr>\
+                                                   <tr><td>Stout </td><td>25 - 40</td></tr>\
+                                                   <tr><td>Altbier </td><td>28 - 40</td></tr>\
+                                                   <tr><td>Pils </td><td>20 - 50</td></tr>\
+                                                   <tr><td>IPA </td><td>&gt; 60</td></tr>\
+                                                   </table></br>\
+                                                   Neutrales Geschmacksempfinden bei IBU = 2*°P Stammwürze"));
 }
 
 void MainWindowImpl::on_pushButton_SW_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_SW_TITLE, INFO_SW_TEXT);
+  DialogInfo::Info(this, trUtf8("Stammwürze"), trUtf8("<b>Typische Stammwürze in °P:</b></br><table>\
+                                                      <tr><td>Bockbier </td><td>16–17,9</td></tr>\
+                                                      <tr><td>Doppelbock </td><td>&gt; 18</td></tr>\
+                                                      <tr><td>Exportbier </td><td>12–13,5</td></tr>\
+                                                      <tr><td>Altbier </td><td>11,9</td></tr>\
+                                                      <tr><td>Kölsch </td><td>11,3</td></tr>\
+                                                      <tr><td>Pilsener </td><td>11,3–12,3</td></tr>\
+                                                      <tr><td>Weizenbier </td><td>11–13</td></tr>\
+                                                      <tr><td>Helles </td><td>11–13</td></tr>\
+                                                      <tr><td>Berliner Weisse </td><td>7–8</td></tr>\
+                                                      </table>"));
 }
 
 void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked()
 {
-  DialogInfo::Info(this, INFO_HIGHGRAVITY_TITLE, INFO_HIGHGRAVITY_TEXT);
+  DialogInfo::Info(this, trUtf8("High Gravity Faktor"), trUtf8("Mit High Gravity kann die Ausschlagmenge \
+                                                               erhöht werden (wenn die Sudpfanne an ihre Grenze kommt) indem stärker \
+                                                               eingebraut wird und dann vor der Hefezugabe wieder auf die gewünschte \
+                                                               Stammwürze verdünnt wird."));
 }
 
 void MainWindowImpl::on_pushButton_NeuerAnhang_clicked()
 {
-  AddAnhang("");
+  AddAnhang(NULL);
   setAenderung(true);
 }
 
@@ -16011,14 +13015,20 @@ void MainWindowImpl::AddAnhang(QString pfad)
   AnhangWidget* anhang = new AnhangWidget(scrollArea_7);
   anhang -> setAttribute(Qt::WA_DeleteOnClose);
   anhang->setBasisPfad(dbpfad);
-  anhang->setPfad(pfad);
+  if (pfad == NULL)
+      anhang->openDialog();
+  else
+      anhang->setPfad(pfad);
   anhang->setID((int)time(NULL)+rand());
 
-  verticalLayout_Anhang -> addWidget(anhang);
-  list_Anhang.append(anhang);
+  if (anhang->getPfad() != "")
+  {
+    verticalLayout_Anhang -> addWidget(anhang);
+    list_Anhang.append(anhang);
 
-  connect(anhang, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_anhangClose(int) ));
-  connect(anhang, SIGNAL( sig_Aenderung() ), this, SLOT( slot_anhangAenderung() ));
+    connect(anhang, SIGNAL( sig_vorClose(int) ), this, SLOT( slot_anhangClose(int) ));
+    connect(anhang, SIGNAL( sig_Aenderung() ), this, SLOT( slot_anhangAenderung() ));
+  }
 }
 
 void MainWindowImpl::slot_anhangClose(int id)
@@ -16116,4 +13126,28 @@ void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked()
       i = list_EwZutat.count();
     }
   }
+}
+
+void MainWindowImpl::on_checkBox_zumischen_clicked()
+{
+  if (checkBox_zumischen->isChecked()) {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
+    spinBox_SWAnstellen->setValue(spinBox_SW->value());
+  }
+  else {
+    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
+    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+  }
+}
+
+void MainWindowImpl::on_pushButton_CalcEinmaischeTemp_clicked()
+{
+    DialogEinmaischeTemp* dlg = new DialogEinmaischeTemp(doubleSpinBox_S_Gesammt->value(),
+                                                         18.0,
+                                                         doubleSpinBox_WHauptguss->value(),
+                                                         list_Rasten.count() > 0 ? list_Rasten[0]->getRastTemp() : 57.0,
+                                                         this);
+    if (dlg->exec() == QDialog::Accepted)
+      spinBox_EinmaischenTemp->setValue(dlg->value());
+    delete dlg;
 }

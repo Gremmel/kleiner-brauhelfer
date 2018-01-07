@@ -30,6 +30,7 @@ public:
 	int IfXmlOK(QString cDateiname);
 	int ExportSudXML(int SudNr, QString Dateiname);
 	int ExportBeerXML(int SudNr, QString Dateiname);
+    void convertJSON(QString json, QString xsud);
 	QExport();
 	
 };

@@ -1,12 +1,9 @@
-
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-//#define DEBUG true
+// comment this line for release build
+#define DEBUG true
 
-//Version
-#define VERSION "1.4.3.3"
-#define VERSION_INT 1040303
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
@@ -56,11 +53,8 @@
 #define URL_ANLEITUNG "http://www.joerum.de/kleiner-brauhelfer/doku.php"
 
 //Datenbankvorlage
-#define DB_VORLAGE	":/db/vorlage.sqlite"
+#define DB_VORLAGE	":/data/vorlage.sqlite"
 
-//Datenbank mir Rohstoffvorlagen
-#define DB_ROHSTOFFVORLAGE  ":/db/rohstofflisten.sqlite"
-#define DB_ROHSTOFFLISTEN  "rohstofflisten.sqlite"
 //Userdatenbankname
 #ifdef DEBUG
   #define DB_USER_NAME	"kb_daten_test.sqlite"
@@ -76,6 +70,13 @@
 #define MAX_HOPFENGABEN 7
 
 //Farben
+
+//Farbe für Comboauswahl Text nichts mehr auf Lager
+#define FARBE_COMBO_ROHSTOFF_EMPTY_HELL 180,0,0
+#define FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL 220,0,0
+//Farbe für Comboauswahl Text nicht genug auf Lager ist
+#define FARBE_COMBO_ROHSTOFF_LOW_HELL 219,137,9
+#define FARBE_COMBO_ROHSTOFF_LOW_DUNKEL 255,186,0
 
 //Farbe für Highlighted Text Style Auswahl
 #define FARBE_STYLE_HIGHLIGHT 0,85,255
@@ -153,11 +154,6 @@
 #define Hefe_Trocken 1
 #define Hefe_Fluessig 2
 
-//Rohstoffart Rohstoffvorlagen
-#define R_Malz 1
-#define R_Hopfen 2
-#define R_Hefe 3
-
 //Animationsstop für die Rasten (Anzahl Rasten)
 #define RAST_ANIMATION_STOP 5
 
@@ -209,21 +205,12 @@
 #define ERR_SQL_DB_UPDATE_V20_V21 133
 #define ERR_SQL_DB_UPDATE_V21_V22 134
 
-
 #define ERR_VERSION_SUD_V1 200
 #define ERR_VERSION_UNBEKANNT 201
 #define ERR_XML_OPEN 202
 #define ERR_XML_PARSEN 203
 
 #define ERR_DB_ROHSTOFFLISTEN_KOPIE 300
-
-#define TAB_REZEPT 1
-#define TAB_GAERVERLAUF 4
-#define TAB_ZUSAMMENFASSUNG 5
-
-#define TAB_Malz 0
-#define TAB_Hopfen 1
-#define TAB_WeitereZutaten 2
 
 #define BeerXMLVersion "1"
 

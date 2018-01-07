@@ -66,6 +66,19 @@ void AnhangWidget::setBasisPfad(const QString basis)
   dir.setPath(basis);
 }
 
+void AnhangWidget::openDialog()
+{
+  QString fileName = QFileDialog::getOpenFileName(this, trUtf8("Anhang auswählen"), getFullPfad());
+  if (!fileName.isEmpty())
+  {
+    if (ui->checkBox_Relativ->isChecked())
+      setPfad(dir.relativeFilePath(fileName));
+    else
+      setPfad(fileName);
+    emit sig_Aenderung();
+  }
+}
+
 void AnhangWidget::closeEvent(QCloseEvent *)
 {
   emit sig_vorClose(ID);
@@ -76,22 +89,14 @@ void AnhangWidget::on_pushButton_close_clicked()
   close();
 }
 
-void AnhangWidget::on_lineEdit_editingFinished()
+void AnhangWidget::on_lineEdit_Pfad_editingFinished()
 {
   emit sig_Aenderung();
 }
 
 void AnhangWidget::on_pushButton_Browse_clicked()
 {
-  QString fileName = QFileDialog::getOpenFileName(this, trUtf8("Bild auswählen"), getFullPfad());
-  if (!fileName.isEmpty())
-  {
-      if (ui->checkBox_Relativ->isChecked())
-        setPfad(dir.relativeFilePath(fileName));
-      else
-        setPfad(fileName);
-      emit sig_Aenderung();
-  }
+  openDialog();
 }
 
 void AnhangWidget::on_checkBox_Relativ_clicked()

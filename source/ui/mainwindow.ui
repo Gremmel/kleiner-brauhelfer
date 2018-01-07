@@ -27,7 +27,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>8</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -35,253 +35,281 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_265">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_247">
-          <item>
-           <layout class="QHBoxLayout" name="layFilter">
+         <widget class="QSplitter" name="splitter_Sudauswahl">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="childrenCollapsible">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QVBoxLayout" name="verticalLayout_247">
             <item>
-             <widget class="QRadioButton" name="radioButton_FilterAlle">
-              <property name="text">
-               <string>a&amp;lle anzeigen</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="layFilter">
+              <item>
+               <widget class="QRadioButton" name="radioButton_FilterAlle">
+                <property name="text">
+                 <string>a&amp;lle anzeigen</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_FilterNichtGebraut">
+                <property name="text">
+                 <string>&amp;nicht gebraut</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_FilterGebrautNichtAbgefuellt">
+                <property name="text">
+                 <string>gebraut &amp;&amp; nicht abgefüllt</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_Abgefuellt">
+                <property name="text">
+                 <string>abgefüllt</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_nichtVerbraucht">
+                <property name="text">
+                 <string>ni&amp;cht verbraucht</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_Merkliste">
+                <property name="text">
+                 <string>&amp;Merkliste</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_FilterNichtGebraut">
-              <property name="text">
-               <string>&amp;nicht gebraut</string>
+             <widget class="MyTableWidget" name="tableWidget_Sudauswahl">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_FilterGebrautNichtAbgefuellt">
-              <property name="text">
-               <string>gebraut &amp;&amp; nicht abgefüllt</string>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_Abgefuellt">
-              <property name="text">
-               <string>abgefüllt</string>
+              <property name="sortingEnabled">
+               <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_nichtVerbraucht">
-              <property name="text">
-               <string>ni&amp;cht verbraucht</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_Merkliste">
-              <property name="text">
-               <string>&amp;Merkliste</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QTableWidget" name="tableWidget_Sudauswahl">
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
-            </property>
-            <property name="sortingEnabled">
-             <bool>true</bool>
-            </property>
-            <column>
-             <property name="text">
-              <string>ID</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Braudatum</string>
-             </property>
-             <property name="textAlignment">
-              <set>AlignCenter</set>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>erstellt</string>
-             </property>
-             <property name="textAlignment">
-              <set>AlignCenter</set>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>zuletzt gespeichert</string>
-             </property>
-             <property name="textAlignment">
-              <set>AlignCenter</set>
-             </property>
-            </column>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wCheckBox_MerklisteMenge" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_264">
-             <property name="leftMargin">
-              <number>5</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QCheckBox" name="checkBox_MerklisteMengen">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
+              <column>
                <property name="text">
-                <string>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</string>
+                <string>ID</string>
                </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_21">
-            <item>
-             <widget class="QPushButton" name="pushButton_merken">
-              <property name="text">
-               <string>Merken</string>
-              </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Sudname</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Braudatum</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Erstellt</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Gespeichert</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </column>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_vergessen">
-              <property name="text">
-               <string>vergessen</string>
-              </property>
+             <widget class="QWidget" name="wCheckBox_MerklisteMenge" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_264">
+               <property name="leftMargin">
+                <number>5</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="checkBox_MerklisteMengen">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="text">
+                  <string>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_alleVergessen">
-              <property name="text">
-               <string notr="true">alle vergessen</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_21">
+              <item>
+               <widget class="QPushButton" name="pushButton_merken">
+                <property name="text">
+                 <string>Merken</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_vergessen">
+                <property name="text">
+                 <string>Vergessen</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_alleVergessen">
+                <property name="text">
+                 <string>Alle vergessen</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QPushButton" name="pushButton_SudNeu">
+                <property name="text">
+                 <string>Neuen Sud anlegen</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SudKopie">
+                <property name="text">
+                 <string>Sud kopieren</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SudDel">
+                <property name="text">
+                 <string>Sud löschen</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_82">
+              <item>
+               <widget class="QPushButton" name="pushButton_SudImport">
+                <property name="text">
+                 <string>Sud importieren</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SudExport">
+                <property name="text">
+                 <string>Sud exportieren</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SudLaden">
+                <property name="text">
+                 <string>Sud laden</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_9">
+          </widget>
+          <widget class="QWidget" name="layoutWidget2">
+           <layout class="QVBoxLayout" name="verticalLayout_35" stretch="1,0">
             <item>
-             <widget class="QPushButton" name="pushButton_SudNeu">
-              <property name="text">
-               <string>neuen Sud anlegen</string>
+             <widget class="QFrame" name="frame">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_132">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="MyWebView" name="webView_Info" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>400</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="url" stdset="0">
+                  <url>
+                   <string>about:blank</string>
+                  </url>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_SudKopie">
-              <property name="text">
-               <string>Sud kopieren</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_SudDel">
-              <property name="text">
-               <string>Sud löschen</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_82">
-            <item>
-             <widget class="QPushButton" name="pushButton_SudImport">
-              <property name="text">
-               <string>Sud importieren</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_SudExport">
-              <property name="text">
-               <string>Sud exportieren</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_SudLaden">
-              <property name="text">
-               <string>Sud laden</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_35">
-          <item>
-           <widget class="QWebView" name="webView_Info" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>400</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="url" stdset="0">
-             <url>
-              <string>about:blank</string>
-             </url>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_87">
-            <item>
-             <widget class="QPushButton" name="pushButton_SudinfoDrucken">
-              <property name="text">
-               <string>Drucken</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_SudinfoPDF">
-              <property name="text">
-               <string>PDF speichern</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_87">
+              <item>
+               <widget class="QPushButton" name="pushButton_SudinfoDrucken">
+                <property name="text">
+                 <string>Drucken</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_SudinfoPDF">
+                <property name="text">
+                 <string>PDF speichern</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
-          </item>
-         </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -303,15 +331,15 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>866</width>
-             <height>856</height>
+             <width>872</width>
+             <height>897</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_34" stretch="0,0,0,1">
               <property name="spacing">
-               <number>3</number>
+               <number>6</number>
               </property>
               <item>
                <widget class="QGroupBox" name="groupBox_Allgemein">
@@ -363,9 +391,6 @@
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_14">
-                   <property name="sizeConstraint">
-                    <enum>QLayout::SetDefaultConstraint</enum>
-                   </property>
                    <item>
                     <widget class="QLabel" name="label_5">
                      <property name="text">
@@ -839,6 +864,171 @@
                   </layout>
                  </item>
                  <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_32">
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="text">
+                      <string>Faktor für Hauptguss</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_66">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_FaktorEmpfehlung">
+                     <property name="text">
+                      <string>Empfehlung</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_FaktorHGEmpfehlung">
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                     <property name="buttonSymbols">
+                      <enum>QAbstractSpinBox::NoButtons</enum>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>3.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>4.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_FaktorHG">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Schüttungsmenge * Faktor</string>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>10.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>0.100000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>3.500000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="widget_3" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_134">
+                   <item>
+                    <widget class="QLabel" name="label_149">
+                     <property name="text">
+                      <string>Gewünschte Restalkalität</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_99">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="SpinBox_waSollRestalkalitaet_dh">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <double>9999.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_150">
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>°dH</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_97">
                    <item>
                     <widget class="QLabel" name="label_80">
@@ -998,12 +1188,37 @@
                     <widget class="QLabel" name="label_22">
                      <property name="minimumSize">
                       <size>
-                       <width>25</width>
+                       <width>35</width>
                        <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>35</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
                       <string>°C</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_CalcEinmaischeTemp">
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
                      </property>
                     </widget>
                    </item>
@@ -1037,7 +1252,7 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>380</width>
+                      <width>408</width>
                       <height>125</height>
                      </rect>
                     </property>
@@ -1102,7 +1317,7 @@
                  <item>
                   <widget class="QPushButton" name="pushButton_NeueRast">
                    <property name="text">
-                    <string>neue Rast einfügen</string>
+                    <string>Rast hinzufügen</string>
                    </property>
                   </widget>
                  </item>
@@ -1181,13 +1396,13 @@
                     <widget class="QLabel" name="label_32">
                      <property name="minimumSize">
                       <size>
-                       <width>25</width>
+                       <width>50</width>
                        <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>25</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -1267,13 +1482,13 @@ p, li { white-space: pre-wrap; }
                     <widget class="QLabel" name="label_103">
                      <property name="minimumSize">
                       <size>
-                       <width>25</width>
+                       <width>50</width>
                        <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>25</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
@@ -1487,7 +1702,7 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QPushButton" name="pushButton_NeuerAnhang">
                        <property name="text">
-                        <string>neuen Anhang einfügen</string>
+                        <string>Anhang hinzufügen</string>
                        </property>
                       </widget>
                      </item>
@@ -1540,8 +1755,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>419</width>
-                       <height>564</height>
+                       <width>402</width>
+                       <height>700</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1587,7 +1802,7 @@ p, li { white-space: pre-wrap; }
                   <item>
                    <widget class="QPushButton" name="pushButton_MalzHinzufuegen">
                     <property name="text">
-                     <string>Malz Hinzufügen</string>
+                     <string>Malz hinzufügen</string>
                     </property>
                    </widget>
                   </item>
@@ -1680,7 +1895,7 @@ p, li { white-space: pre-wrap; }
                   <item>
                    <widget class="QPushButton" name="pushButton_HopfenHinzufuegen">
                     <property name="text">
-                     <string>Hopfen Hinzufügen</string>
+                     <string>Hopfen hinzufügen</string>
                     </property>
                    </widget>
                   </item>
@@ -1743,7 +1958,7 @@ p, li { white-space: pre-wrap; }
                     <item>
                      <widget class="QPushButton" name="pushButton_EWZ_Hinzufuegen">
                       <property name="text">
-                       <string>Zutat hinzufügen</string>
+                       <string>Weitere Zutat hinzufügen</string>
                       </property>
                      </widget>
                     </item>
@@ -1751,93 +1966,6 @@ p, li { white-space: pre-wrap; }
                   </item>
                  </layout>
                 </widget>
-               </widget>
-              </item>
-              <item>
-               <widget class="QGroupBox" name="groupBox_5">
-                <property name="title">
-                 <string>Wasser</string>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_11">
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_32">
-                   <item>
-                    <widget class="QLabel" name="label_23">
-                     <property name="text">
-                      <string>Faktor für Hauptguss</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_66">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="doubleSpinBox_FaktorHG">
-                     <property name="minimumSize">
-                      <size>
-                       <width>53</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="toolTip">
-                      <string>Schüttungsmenge * Faktor</string>
-                     </property>
-                     <property name="decimals">
-                      <number>1</number>
-                     </property>
-                     <property name="minimum">
-                      <double>1.000000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>10.000000000000000</double>
-                     </property>
-                     <property name="singleStep">
-                      <double>0.100000000000000</double>
-                     </property>
-                     <property name="value">
-                      <double>3.500000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_FaktorEmpfehlung">
-                     <property name="text">
-                      <string>Empfehlung</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="doubleSpinBox_FaktorHGEmpfehlung">
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                     <property name="buttonSymbols">
-                      <enum>QAbstractSpinBox::NoButtons</enum>
-                     </property>
-                     <property name="decimals">
-                      <number>1</number>
-                     </property>
-                     <property name="minimum">
-                      <double>3.000000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>4.000000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
                </widget>
               </item>
               <item>
@@ -1849,7 +1977,7 @@ p, li { white-space: pre-wrap; }
                  </sizepolicy>
                 </property>
                 <property name="title">
-                 <string>Hefeauswahl</string>
+                 <string>Hefe</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_13">
                  <item>
@@ -1975,9 +2103,6 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_32" stretch="0,5,0,2">
-          <property name="spacing">
-           <number>0</number>
-          </property>
           <item>
            <widget class="QGroupBox" name="groupBox_BerWasser">
             <property name="sizePolicy">
@@ -1996,9 +2121,6 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QWidget" name="widget_S_Gesammt_2" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_31">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2100,9 +2222,6 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QWidget" name="widget_S1_2" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_34">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2189,11 +2308,266 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QWidget" name="widget_S1_3" native="true">
-               <layout class="QHBoxLayout" name="horizontalLayout_38">
+              <widget class="QWidget" name="widget_MilchsauereHG" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_135">
                 <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="leftMargin">
                  <number>0</number>
                 </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_18">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_151">
+                  <property name="text">
+                   <string>Milchsäure 80%</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_100">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="SpinBox_waMilchsaeureHG_ml">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="maximum">
+                   <double>9999.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_152">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>ml</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_SauermalzHG" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_136">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_153">
+                  <property name="text">
+                   <string>Sauermalz</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_101">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="SpinBox_waSauermalz_g">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="decimals">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <double>9999.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_154">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>g</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="SpinBox_waSauermalz_pr">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="maximum">
+                   <double>9999.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_158">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>%</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_S1_3" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_38">
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2280,6 +2654,110 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
+              <widget class="QWidget" name="widget_MilchsauereNG" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_137">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_19">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>10</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_156">
+                  <property name="text">
+                   <string>Milchsäure 80%</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_102">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="SpinBox_waMilchsaeureNG_ml">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="buttonSymbols">
+                   <enum>QAbstractSpinBox::NoButtons</enum>
+                  </property>
+                  <property name="maximum">
+                   <double>9999.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_157">
+                  <property name="minimumSize">
+                   <size>
+                    <width>35</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>35</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>ml</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
               <widget class="Line" name="line_3">
                <property name="maximumSize">
                 <size>
@@ -2295,9 +2773,6 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QWidget" name="widget_S1_4" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_56">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2386,9 +2861,6 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QWidget" name="widget_S1_5" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_106">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -2505,8 +2977,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>344</width>
-               <height>477</height>
+               <width>347</width>
+               <height>464</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -2556,7 +3028,7 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <widget class="QWidget" name="tab_RezeptErgebnisseMalz">
                  <attribute name="title">
-                  <string>ber. Malz</string>
+                  <string>Ber. Malz</string>
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_17">
                   <item>
@@ -2565,6 +3037,18 @@ p, li { white-space: pre-wrap; }
                      <string>Mengen Malzgaben</string>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_20">
+                     <property name="leftMargin">
+                      <number>4</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>4</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>4</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>4</number>
+                     </property>
                      <item>
                       <layout class="QVBoxLayout" name="verticalLayout_BerMalzgaben"/>
                      </item>
@@ -2578,9 +3062,6 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QWidget" name="widget_S_Gesammt_3" native="true">
                        <layout class="QHBoxLayout" name="horizontalLayout_37">
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
                         <property name="leftMargin">
                          <number>0</number>
                         </property>
@@ -2646,6 +3127,18 @@ p, li { white-space: pre-wrap; }
                         </item>
                         <item>
                          <widget class="QLabel" name="label_64">
+                          <property name="minimumSize">
+                           <size>
+                            <width>35</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>35</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
                           <property name="text">
                            <string>kg</string>
                           </property>
@@ -2677,7 +3170,7 @@ p, li { white-space: pre-wrap; }
                 </widget>
                 <widget class="QWidget" name="tab_RezeptErgebnisseHopfen">
                  <attribute name="title">
-                  <string>ber. Hopfen</string>
+                  <string>Ber. Hopfen</string>
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_18">
                   <item>
@@ -2727,7 +3220,7 @@ p, li { white-space: pre-wrap; }
                   </sizepolicy>
                  </property>
                  <attribute name="title">
-                  <string>ber. WZ</string>
+                  <string>Ber. weitere Zutaten</string>
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_83">
                   <item>
@@ -2871,399 +3364,6 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_Wasser">
-       <attribute name="title">
-        <string>Wasser</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_75">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_138">
-          <item>
-           <widget class="QGroupBox" name="groupBox_26">
-            <property name="title">
-             <string/>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_74">
-             <item>
-              <widget class="QFrame" name="frame_8">
-               <layout class="QVBoxLayout" name="verticalLayout_67">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_134">
-                  <item>
-                   <widget class="QLabel" name="label_149">
-                    <property name="text">
-                     <string>gewünschte Restalkalität</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_99">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QDoubleSpinBox" name="SpinBox_waSollRestalkalitaet_dh">
-                    <property name="minimumSize">
-                     <size>
-                      <width>70</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>70</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="decimals">
-                     <number>1</number>
-                    </property>
-                    <property name="maximum">
-                     <double>9999.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_150">
-                    <property name="text">
-                     <string>°dH</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_73">
-            <item>
-             <widget class="QGroupBox" name="groupBox_24">
-              <property name="title">
-               <string>Hauptguss</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_70">
-               <item>
-                <widget class="QFrame" name="frame_9">
-                 <layout class="QVBoxLayout" name="verticalLayout_68">
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_135">
-                    <item>
-                     <widget class="QLabel" name="label_151">
-                      <property name="text">
-                       <string>Milchsäure 80%</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_100">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="SpinBox_waMilchsaeureHG_ml">
-                      <property name="minimumSize">
-                       <size>
-                        <width>70</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="buttonSymbols">
-                       <enum>QAbstractSpinBox::NoButtons</enum>
-                      </property>
-                      <property name="maximum">
-                       <double>9999.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_152">
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>ml</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_waOder">
-                 <property name="text">
-                  <string>oder</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QFrame" name="frame_Sauermalz">
-                 <layout class="QVBoxLayout" name="verticalLayout_69">
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_136">
-                    <item>
-                     <widget class="QLabel" name="label_153">
-                      <property name="text">
-                       <string>Sauermalz</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_101">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="SpinBox_waSauermalz_g">
-                      <property name="minimumSize">
-                       <size>
-                        <width>70</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="buttonSymbols">
-                       <enum>QAbstractSpinBox::NoButtons</enum>
-                      </property>
-                      <property name="decimals">
-                       <number>0</number>
-                      </property>
-                      <property name="maximum">
-                       <double>9999.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_154">
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>g</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="SpinBox_waSauermalz_pr">
-                      <property name="minimumSize">
-                       <size>
-                        <width>70</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="buttonSymbols">
-                       <enum>QAbstractSpinBox::NoButtons</enum>
-                      </property>
-                      <property name="maximum">
-                       <double>9999.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_158">
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>%</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_25">
-              <property name="title">
-               <string>Nachguss</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_71">
-               <item>
-                <widget class="QFrame" name="frame_11">
-                 <layout class="QVBoxLayout" name="verticalLayout_72">
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_137">
-                    <item>
-                     <widget class="QLabel" name="label_156">
-                      <property name="text">
-                       <string>Milchsäure 80%</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_102">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="SpinBox_waMilchsaeureNG_ml">
-                      <property name="minimumSize">
-                       <size>
-                        <width>70</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                      <property name="buttonSymbols">
-                       <enum>QAbstractSpinBox::NoButtons</enum>
-                      </property>
-                      <property name="maximum">
-                       <double>9999.000000000000000</double>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_157">
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>ml</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_6">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>568</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="tab_Braudaten">
        <attribute name="title">
         <string>Brau &amp;&amp; Gärdaten</string>
@@ -3285,8 +3385,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1219</width>
-             <height>856</height>
+             <width>1227</width>
+             <height>897</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -3884,10 +3984,7 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_VerschneidungZumischen">
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Überträgt die Würzemenge nach dem Hopfenseihen + Verschneidung in die Würzemenge beim Anstellen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
+                    <widget class="QCheckBox" name="checkBox_zumischen">
                      <property name="text">
                       <string>zumischen</string>
                      </property>
@@ -4359,6 +4456,101 @@ p, li { white-space: pre-wrap; }
                    </item>
                    <item>
                     <widget class="QLabel" name="label_82">
+                     <property name="minimumSize">
+                      <size>
+                       <width>100</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>103</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Liter</string>
+                     </property>
+                     <property name="margin">
+                      <number>2</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_68">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_84">
+                     <property name="text">
+                      <string>Biermenge beim Abfüllen</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_123">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="spinBox_BiermengeAbfuellen">
+                     <property name="minimumSize">
+                      <size>
+                       <width>67</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>67</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="frame">
+                      <bool>true</bool>
+                     </property>
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                     <property name="buttonSymbols">
+                      <enum>QAbstractSpinBox::NoButtons</enum>
+                     </property>
+                     <property name="accelerated">
+                      <bool>false</bool>
+                     </property>
+                     <property name="keyboardTracking">
+                      <bool>true</bool>
+                     </property>
+                     <property name="decimals">
+                      <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>0.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>9999.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>0.100000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>20.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_85">
                      <property name="minimumSize">
                       <size>
                        <width>100</width>
@@ -7794,8 +7986,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>847</width>
-             <height>300</height>
+             <width>726</width>
+             <height>265</height>
             </rect>
            </property>
            <attribute name="label">
@@ -7851,7 +8043,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_44">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Schnellgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Schnellgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -7989,8 +8181,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1219</width>
-             <height>763</height>
+             <width>1227</width>
+             <height>816</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8031,7 +8223,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_46">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Hauptgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Hauptgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -8290,8 +8482,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>715</width>
-             <height>300</height>
+             <width>615</width>
+             <height>265</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8332,7 +8524,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_48">
                 <item>
-                 <widget class="QTableWidget" name="tableWidget_Nachgaerverlauf">
+                 <widget class="MyTableWidget" name="tableWidget_Nachgaerverlauf">
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
@@ -8454,20 +8646,41 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
        <attribute name="title">
         <string>Spickzettel</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_21">
+       <layout class="QVBoxLayout" name="verticalLayout_21" stretch="1,0">
         <item>
-         <widget class="QWebView" name="webView_Zusammenfassung" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QFrame" name="frame_9">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="url" stdset="0">
-           <url>
-            <string>about:blank</string>
-           </url>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_67">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="MyWebView" name="webView_Zusammenfassung" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="url" stdset="0">
+              <url>
+               <string>about:blank</string>
+              </url>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
@@ -8510,8 +8723,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>342</width>
-               <height>815</height>
+               <width>345</width>
+               <height>862</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -8894,7 +9107,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_schaum_5">
                       <property name="text">
-                       <string>mäßge Haltbarkeit</string>
+                       <string>mäßige Haltbarkeit</string>
                       </property>
                      </widget>
                     </item>
@@ -9766,7 +9979,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Name</string>
+                <string>Sudname</string>
                </property>
               </column>
               <column>
@@ -9973,7 +10186,10 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_55">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Geraete">
+             <widget class="MyTableWidget" name="tableWidget_Geraete">
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
               <column>
                <property name="text">
                 <string>Geräteliste</string>
@@ -11378,8 +11594,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1219</width>
-             <height>701</height>
+             <width>1227</width>
+             <height>762</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11387,7 +11603,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Malz">
+             <widget class="MyTableWidget" name="tableWidget_Malz">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11414,12 +11630,12 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Menge (Kg)</string>
+                <string>Menge (kg)</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Preis/Kg</string>
+                <string>Preis/kg</string>
                </property>
               </column>
               <column>
@@ -11467,6 +11683,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_MalzKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11474,6 +11693,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_MalzDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11488,8 +11710,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>484</width>
-             <height>146</height>
+             <width>400</width>
+             <height>120</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11497,7 +11719,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Hopfen">
+             <widget class="MyTableWidget" name="tableWidget_Hopfen">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11524,7 +11746,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Preis/Kg</string>
+                <string>Preis/kg</string>
                </property>
               </column>
               <column>
@@ -11582,6 +11804,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HopfenKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11589,6 +11814,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HopfenDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11603,8 +11831,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>484</width>
-             <height>146</height>
+             <width>400</width>
+             <height>120</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11612,7 +11840,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QTableWidget" name="tableWidget_Hefe">
+             <widget class="MyTableWidget" name="tableWidget_Hefe">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11717,6 +11945,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HefeKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11724,6 +11955,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HefeDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11738,16 +11972,16 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>319</width>
-             <height>146</height>
+             <width>262</width>
+             <height>120</height>
             </rect>
            </property>
            <attribute name="label">
-            <string>weitere Zutaten</string>
+            <string>Weitere Zutaten</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_79">
             <item>
-             <widget class="QTableWidget" name="tableWidget_WeitereZutaten">
+             <widget class="MyTableWidget" name="tableWidget_WeitereZutaten">
               <property name="selectionMode">
                <enum>QAbstractItemView::SingleSelection</enum>
               </property>
@@ -11825,6 +12059,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenKopie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>kopiere Eintrag</string>
                 </property>
@@ -11832,6 +12069,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenDel">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>lösche Eintrag</string>
                 </property>
@@ -11846,8 +12086,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>607</width>
-             <height>363</height>
+             <width>531</width>
+             <height>316</height>
             </rect>
            </property>
            <attribute name="label">
@@ -12397,13 +12637,34 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_help">
        <attribute name="title">
         <string>Anleitung</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_58">
         <item>
-         <widget class="QWebView" name="webView_Anleitung" native="true"/>
+         <widget class="QFrame" name="frame_8">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="MyWebView" name="webView_Anleitung" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -12421,7 +12682,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:12pt; font-weight:600;&quot;&gt;kleiner-brauhelfer&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -12461,11 +12722,10 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1269</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -12474,9 +12734,9 @@ p, li { white-space: pre-wrap; }
    <header>./src/mycombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>QWebView</class>
+   <class>MyWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header>./src/mywebview.h</header>
   </customwidget>
   <customwidget>
    <class>StarView</class>
@@ -12493,6 +12753,11 @@ p, li { white-space: pre-wrap; }
    <extends>QWidget</extends>
    <header>./src/mydiagrammview.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>./src/mytablewidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -12635,7 +12900,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>doubleSpinBox_Nachgaertemp</tabstop>
   <tabstop>pushButton_AddNachgaerMessung</tabstop>
   <tabstop>pushButton_DelNachgaerMessung</tabstop>
-  <tabstop>webView_Zusammenfassung</tabstop>
   <tabstop>pushButton_SpickzettelDrucken</tabstop>
   <tabstop>pushButton_SpickzettelPDF</tabstop>
   <tabstop>scrollArea_4</tabstop>
@@ -12790,7 +13054,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>SpinBox_wwCalciumhaerte_dh</tabstop>
   <tabstop>SpinBox_wwMagnesiumhaerte_dh</tabstop>
   <tabstop>SpinBox_wwRestalkalitaet_dh</tabstop>
-  <tabstop>webView_Anleitung</tabstop>
   <tabstop>textEdit</tabstop>
   <tabstop>tableWidget_Schnellgaerverlauf</tabstop>
   <tabstop>tableWidget_Malz</tabstop>

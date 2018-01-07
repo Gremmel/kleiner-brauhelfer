@@ -27,12 +27,8 @@ class MainWindowImpl : public QMainWindow, public Ui::MainWindow
 Q_OBJECT
 protected:
   void closeEvent(QCloseEvent *event);
-	void changeEvent(QEvent*);
-  void resizeEvent(QResizeEvent * event);
-  void showEvent ( QShowEvent * event );
+  void changeEvent(QEvent *event);
 private:
-  //die Anwendung am ende der init Funktion Maximiert starten
-  bool maximiertStarten;
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
   //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
@@ -89,12 +85,11 @@ private:
   double getSudpfanneMaxNutzvolumen();
 
   //Ladet die Sprache
+  void switchTranslator(QTranslator& translator, const QString& filename);
   void loadSprache(const QString& rLanguage);
-	QString sprachauswahl;
 	QTranslator m_translator;   /*< contains the translations for this application */
 	QTranslator m_translatorQt; /*< contains the translations for qt */
 	QString m_currLang;     /*< contains the currently loaded language */
-	QString m_langPath;     /*< Path of language files. This is always fixed to /languages. */
   double highGravityFaktor;
   bool keinInternet;
   int MaxAnzahlSterne;
@@ -224,9 +219,7 @@ private:
   bool BierWurdeGebraut;
   bool BierWurdeAbgefuellt;
   bool BierWurdeVerbraucht;
-  void LeseGeraeteliste();
   void ErstelleSpickzettel();
-  void ErstelleSpickzettelV2();
   void ErstelleTabSpickzettel();
   void BerHopfen();
   void BerWasser();
@@ -235,6 +228,7 @@ private:
   void FuelleRezeptComboAuswahlen();
   void createMenus();
   void createActions();
+  void retranslateMenus();
   void LeseKonfig();
   void SchreibeKonfig();
   void LeseRohstoffe();
@@ -323,6 +317,10 @@ private slots:
   void slot_EwzAenderung();
   void slot_MalzAenderung();
   void slot_HopfenAenderung();
+  double slot_MalzGetMenge(QString name);
+  double slot_EwzGetMenge(QString name);
+  double slot_HopfenGetMenge(QString name);
+  double slot_HefeGetMenge(QString name);
   int slot_getEwzEinheit(QString zutat);
   int slot_getEwzTyp(QString zutat);
   void slot_ewzClose(int id);
@@ -339,6 +337,7 @@ private slots:
   void on_pushButton_WeitereZutatenKopie_clicked();
   void on_pushButton_WeitereZutatenNeu_clicked();
   void on_TabWidget_Zutaten_currentChanged(int index);
+  void on_TabWidget_RezeptErgebnisse_currentChanged(int index);
   void on_tableWidget_Sudauswahl_itemSelectionChanged();
   void on_tableWidget_Brauuebersicht_cellDoubleClicked(int row, int column);
   void on_tableWidget_Sudauswahl_cellDoubleClicked(int row, int column);
@@ -385,8 +384,6 @@ private slots:
     void on_pushButton_BrauuebersichtRefresh_clicked();
   void on_comboBox_AuswahlL1_currentIndexChanged(int index);
   void on_comboBox_AuswahlL2_currentIndexChanged(int index);
-  void on_spinBox_KostenWasserStrom_valueChanged(double );
-  void on_spinBox_KostenWasserStrom_editingFinished();
   void on_pushButton_SpickzettelPDF_clicked();
   void on_pushButton_SpickzettelDrucken_clicked();
   void slot_pushButton_SudKopie();
@@ -396,9 +393,9 @@ private slots:
   int slot_pushButton_SudNeu();
   void slot_lineEdit_editingFinished();
   void slot_makePdf();
-  void slot_pushButton_HefeKopie();
-  void slot_pushButton_HopfenKopie();
-  void slot_pushButton_MalzKopie();
+  void on_pushButton_HefeKopie_clicked();
+  void on_pushButton_HopfenKopie_clicked();
+  void on_pushButton_MalzKopie_clicked();
   void slot_tabWidgetChanged(int);
   void slot_spinBoxspinBox_ZeitGabe_1Changed(int value);
   void slot_spinBoxspinBox_ZeitGabe_2Changed(int value);
@@ -424,18 +421,19 @@ private slots:
   void slot_ComboBoxIndexChanged(int i);
   void slot_spinBoxValueChanged(int i);
   void save();
-  void slot_pushButton_MalzDel();
+  void on_pushButton_MalzDel_clicked();
   void MalzNeueZeile();
-  void slot_pushButton_MalzNeuVorlage();
-  void slot_pushButton_HopfenDel();
+  void on_pushButton_MalzNeuVorlage_clicked();
+  void on_pushButton_HopfenDel_clicked();
   void HopfenNeueZeile();
-  void slot_pushButton_HefeDel();
+  void on_pushButton_HefeDel_clicked();
   void HefeNeueZeile();
   void slot_spinBoxValueChanged(double d);
+  void slot_tableSpinBoxValueChanged(double value);
   void slot_EwzAenderungRohstoffe();
   void on_pushButton_NeueRast_clicked();
-  void on_pushButton_RastNachOben(int id);
-  void on_pushButton_RastNachUnten(int id);
+  void slot_pushButton_RastNachOben(int id);
+  void slot_pushButton_RastNachUnten(int id);
   void on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1);
   void on_spinBox_SWKochende_valueChanged(double arg1);
   void on_spinBox_WuerzemengeKochende_valueChanged(double arg1);
@@ -581,7 +579,6 @@ private slots:
   void on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1);
   void on_listWidget_Brauanlagen_currentRowChanged(int currentRow);
   void on_dspinBox_KostenAusruestung_valueChanged(double arg1);
-  void on_pushButton_VerschneidungZumischen_clicked();
   void on_pushButton_MalzNeu_clicked();
   void on_pushButton_HopfenNeu_clicked();
   void on_pushButton_HefeNeu_clicked();
@@ -596,10 +593,11 @@ private slots:
   void on_pushButton_SW_Info_clicked();
   void on_pushButton_High_Gravity_Info_clicked();
   void on_pushButton_NeuerAnhang_clicked();
-  void slot_urlClicked(const QUrl &url);
   void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
+  void on_checkBox_zumischen_clicked();
+  void on_pushButton_CalcEinmaischeTemp_clicked();
 };
 #endif
 

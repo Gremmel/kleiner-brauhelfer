@@ -15,6 +15,13 @@ hopfengabe::hopfengabe(QWidget *parent) :
 	prozentOK = false;
 	ui->dsb_Menge->setValue(10);
 	ui->dsb_MengeGramm->setMinimum(0);
+
+    ergWidget = new doubleEditLineImpl(this);
+    ergWidget->setAttribute(Qt::WA_DeleteOnClose);
+    ergWidget->setVisible(false);
+    ergWidget->spinBox_Wert->setDecimals(2);
+    ergWidget->label_Einheit->setText("g");
+    ergWidget->label_Einheit2->setText("g");
 }
 
 hopfengabe::~hopfengabe()
@@ -47,6 +54,7 @@ void hopfengabe::setBierWurdeGebraut(bool value)
 	BierWurdeGebraut = value;
 	if (value)
 		setFehlProzent(0);
+    ergWidget->setRestVisible(!value);
 }
 
 void hopfengabe::setVWH(bool value)
@@ -76,7 +84,7 @@ void hopfengabe::setMinKochzeit(int value)
 void hopfengabe::setFehlProzent(double value)
 {
   fehlProzent = value;
-	ui->pushButton_KorrekturMenge->setText(QString::number(value));
+    ui->pushButton_KorrekturMenge->setText(QLocale().toString(value));
 	if (value == 0){
 		ui->pushButton_KorrekturMenge->setVisible(false);
 		ergWidget->setVisible(true);
@@ -171,7 +179,7 @@ void hopfengabe::setErgMenge(double value)
 		s += trUtf8("  (Pellets) ");
 	else
 		s += trUtf8("  (Dolden) ");
-	s += QString::number(Alpha)+" % Alpha";
+    s += QLocale().toString(Alpha)+" % Alpha";
 	ergWidget->label_Beschreibung->setText(s);
 
 	if (ui->checkBox_vwh->isChecked()){
@@ -181,6 +189,9 @@ void hopfengabe::setErgMenge(double value)
 	else {
 		ui->spinBox_Kochdauer->setReadOnly(false);
 	}
+  //Setzte Farbwerte der Liste entsprchend der vorhandenen Mengen
+  setHopfenListeFarbe();
+
 }
 
 double hopfengabe::getErgMenge()
@@ -281,12 +292,12 @@ void hopfengabe::on_pushButton_del_clicked()
 		faderWidget->close();
 
 	faderWidget = new FaderWidget(this);
-	connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(on_fadeout_fertig()));
+    connect(faderWidget, SIGNAL(sig_fertig()), this, SLOT(slot_fadeout_fertig()));
 	animationAktiv = true;
 	faderWidget->start();
 }
 
-void hopfengabe::on_fadeout_fertig()
+void hopfengabe::slot_fadeout_fertig()
 {
 	emit sig_vorClose(ID);
 	close();
@@ -306,13 +317,45 @@ void hopfengabe::ErstelleAuswahlliste()
 				ui->comboBox_Zutat -> setCurrentIndex(i);
 			}
 		}
-	}
+  }
+}
+
+void hopfengabe::setHopfenListeFarbe()
+{
+  double menge = 0;
+  for (int i=0; i < ui->comboBox_Zutat->count(); i++) {
+    menge = sig_getHopfenMenge(ui->comboBox_Zutat->itemText(i));
+    //Hintergund einfärben wenn von dieser Zutat nicht mehr da ist
+    if (menge == 0) {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_DUNKEL),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_EMPTY_HELL),Qt::TextColorRole);
+    }
+    else if (menge < ui->dsb_MengeGramm->value()) {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_DUNKEL),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor::fromRgb(FARBE_COMBO_ROHSTOFF_LOW_HELL),Qt::TextColorRole);
+    }
+    else {
+      if (StyleDunkel)
+        ui->comboBox_Zutat->setItemData(i,QColor(Qt::white),Qt::TextColorRole);
+      else
+        ui->comboBox_Zutat->setItemData(i,QColor(40,40,40),Qt::TextColorRole);
+    }
+  }
+}
+
+void hopfengabe::setStyleDunkel(bool value)
+{
+  StyleDunkel = value;
 }
 
 void hopfengabe::closeEvent(QCloseEvent *)
 {
-	emit sig_Aenderung();
-	ergWidget -> close();
+  emit sig_Aenderung();
+  ergWidget -> close();
 }
 
 void hopfengabe::on_dsb_Menge_valueChanged(double )
@@ -342,7 +385,7 @@ void hopfengabe::setAusbeute(double value)
 
 void hopfengabe::on_pushButton_KorrekturMenge_clicked()
 {
-	ui->dsb_Menge->setValue(ui->dsb_Menge->value()+ui->pushButton_KorrekturMenge->text().toDouble());
+    ui->dsb_Menge->setValue(ui->dsb_Menge->value()+QLocale().toDouble(ui->pushButton_KorrekturMenge->text()));
 }
 
 void hopfengabe::on_comboBox_Zutat_currentIndexChanged(const QString &)
