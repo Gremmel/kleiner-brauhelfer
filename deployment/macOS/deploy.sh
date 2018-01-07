@@ -93,7 +93,7 @@ echo "* Creating self-contained bundle..."
 
 echo "* Creating ZIP-archive for distribution..."
 DIR="$(dirname ${BUNDLE})"
-ZIPVERSION=echo "$VERSION" | sed "s/\\./_/g"
+ZIPVERSION=`echo "${VERSION}" | tr '.' '_'`
 ZIP="kb_macos_v${ZIPVERSION}.zip"
 pushd "${DIR}" || exit 1
 zip -r -o "${ZIP}" `basename ${BUNDLE}` || exit 1
