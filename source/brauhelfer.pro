@@ -22,6 +22,7 @@ VERSION_INT = 1040401
 DEFINES += TARGET=\\\"$$TARGET\\\" VERSION=\\\"$$VERSION\\\" VERSION_INT=$$VERSION_INT
 
 win32:RC_ICONS += res/logo.ico
+macx:ICON = res/AppIcon.icns
 
 CONFIG += qt warn_on
 DESTDIR = bin
