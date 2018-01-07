@@ -54,6 +54,9 @@ echo "* Patching '${PLIST}'..."
 # Set bundle identifier instead of usieng default of 'yourcompany.com'
 /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier 'com.github.gremmel.kleiner-brauhelfer'" ${PLIST}
 
+# Add finder icon
+/usr/libexec/PlistBuddy -c "Set :CFBundleIconFile 'AppIcon'" ${PLIST}
+
 # Add information for Finder
 /usr/libexec/PlistBuddy -c "Delete :CFBundleDisplayName" ${PLIST}
 /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string 'kleiner-brauhelfer'" ${PLIST} || exit 1
