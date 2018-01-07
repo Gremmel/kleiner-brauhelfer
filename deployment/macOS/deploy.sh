@@ -16,7 +16,7 @@ BUNDLE="$1"
 QT_DIR="$2"
 
 # Path to the sources directory
-SOURCES="${BASE_DIR}/../../sources"
+SOURCES="${BASE_DIR}/../../source"
 
 # Path to the .pro-file
 PRO="${SOURCES}/brauhelfer.pro"
@@ -30,8 +30,8 @@ RESOURCES="${BASE_DIR}"
 ###
 
 echo "* Extracting version numbers from .pro file:"
-VERSION=grep "${PRO}" -e "^ *VERSION *=" | tr -d '[:space:]' | cut -d= -f2 || exit 1
-VERSION_INT=grep "${PRO}" -e "^ *VERSION_INT *=" | tr -d '[:space:]' | cut -d= -f2 || exit 1
+VERSION=`grep "${PRO}" -e "^ *VERSION *=" | tr -d '[:space:]' | cut -d= -f2` || exit 1
+VERSION_INT=`grep "${PRO}" -e "^ *VERSION_INT *=" | tr -d '[:space:]' | cut -d= -f2` || exit 1
 echo "  - Version: '${VERSION}'"
 echo "  - Internal version: '${VERSION_INT}'"
 
