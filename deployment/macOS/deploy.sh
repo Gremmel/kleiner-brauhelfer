@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ "$#" -ne 2 ] || ! [ -f "$1" ] || ! [ -d "$2" ]; then
+if [ "$#" -ne 2 ] || ! [ -d "$1" ] || ! [ -d "$2" ]; then
   echo "Usage: $0 <path_to_kleiner-brauhelfer_bundle> <path_to_qt_bin>" >&2
-  echo "Example: $0 ./source/bin/kleiner-brauhelfer.app /opt/Qt/5.10.0/clang_64/bin" >&2
+  echo "Example: $0 ./bin/kleiner-brauhelfer.app /opt/Qt/5.10.0/clang_64/bin" >&2
   exit 1
 fi
 
@@ -19,7 +19,7 @@ QT_DIR="$2"
 SOURCES="${BASE_DIR}/../../sources"
 
 # Path to the .pro-file
-PRO="${BASE_DIR}/../../brauhelfer.pro"
+PRO="${SOURCES}/brauhelfer.pro"
 
 # Path to the deployment resources
 RESOURCES="${BASE_DIR}"
