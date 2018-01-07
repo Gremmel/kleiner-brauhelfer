@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 2 ] || ! [ -f "$1" ] || ! [ -d "$2" ]; then
   echo "Usage: $0 <path_to_kleiner-brauhelfer_bundle> <path_to_qt_bin>" >&2
-  echo "Example: $0 ./build/bin/kleiner-brauhelfer.app /opt/Qt/5.10.0/clang_64/bin" >&2
+  echo "Example: $0 ./source/bin/kleiner-brauhelfer.app /opt/Qt/5.10.0/clang_64/bin" >&2
   exit 1
 fi
 
