@@ -4,5 +4,6 @@
         <file>Malz.csv</file>
         <file>Hopfen.csv</file>
         <file>Hefe.csv</file>
+        <file>WeitereZutaten.csv</file>
     </qresource>
 </RCC>

@@ -12,6 +12,7 @@
 #define R_Malz 1
 #define R_Hopfen 2
 #define R_Hefe 3
+#define R_WZutaten 4
 
 GetRohstoffVorlage::GetRohstoffVorlage(QWidget *parent) :
 	QDialog(parent),
@@ -38,6 +39,9 @@ QString GetRohstoffVorlage::getFileName(bool withPath) const
         break;
     case R_Hefe:
         fileName = "Hefe.csv";
+        break;
+    case R_WZutaten:
+        fileName = "WeitereZutaten.csv";
         break;
     }
     if (withPath)
@@ -66,6 +70,9 @@ void GetRohstoffVorlage::viewImpl(int art)
         break;
     case R_Hefe:
         dbPath = ":/data/Hefe.csv";
+        break;
+    case R_WZutaten:
+        dbPath = ":/data/WeitereZutaten.csv";
         break;
     }
 
@@ -103,13 +110,19 @@ void GetRohstoffVorlage::ViewHefeauswahl()
     viewImpl(R_Hefe);
 }
 
+void GetRohstoffVorlage::ViewWeitereZutatenauswahl()
+{
+    viewImpl(R_WZutaten);
+}
+
 void GetRohstoffVorlage::on_buttonBox_accepted()
 {
 	//Aktuell ausgewählte Zeile
 	int row = ui->tableView->currentIndex().row();
 	//Wenn eine Zeile ausgewählt ist werte aus der Tabelle in die Entsprechenden Variablen auslesen
 	if (row >= 0){
-		if (Rohstoffart == R_Malz){
+        if (Rohstoffart == R_Malz)
+        {
 			//Beschreibung
             QModelIndex index = ui->tableView->model()->index(row,0);
 			m_Beschreibung = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
@@ -123,7 +136,8 @@ void GetRohstoffVorlage::on_buttonBox_accepted()
             index = ui->tableView->model()->index(row,3);
 			m_Eigenschaften = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
 		}
-		else if (Rohstoffart == R_Hopfen){
+        else if (Rohstoffart == R_Hopfen)
+        {
 			//Beschreibung
             QModelIndex index = ui->tableView->model()->index(row,0);
 			m_Beschreibung = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
@@ -142,7 +156,8 @@ void GetRohstoffVorlage::on_buttonBox_accepted()
             index = ui->tableView->model()->index(row,3);
 			m_Eigenschaften = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
 		}
-		else if (Rohstoffart == R_Hefe){
+        else if (Rohstoffart == R_Hefe)
+        {
 			//Wuerzemenge
             QModelIndex index = ui->tableView->model()->index(row,4);
 			m_Wuerzemenge = ui->tableView->model()->data(index, Qt::DisplayRole).toReal();
@@ -184,10 +199,33 @@ void GetRohstoffVorlage::on_buttonBox_accepted()
             index = ui->tableView->model()->index(row,8);
 			m_EVG = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
 		}
+        else if (Rohstoffart == R_WZutaten)
+        {
+            //Beschreibung
+            QModelIndex index = ui->tableView->model()->index(row,0);
+            m_Beschreibung = ui->tableView->model()->data(index, Qt::DisplayRole).toString();
+            //Typ
+            index = ui->tableView->model()->index(row,1);
+            if (ui->tableView->model()->data(index, Qt::DisplayRole).toString() == "Honig")
+                m_Typ = 0;
+            else if (ui->tableView->model()->data(index, Qt::DisplayRole).toString() == "Zucker")
+                m_Typ = 1;
+            else if (ui->tableView->model()->data(index, Qt::DisplayRole).toString() == "Gewürz")
+                m_Typ = 2;
+            else if (ui->tableView->model()->data(index, Qt::DisplayRole).toString() == "Frucht")
+                m_Typ = 3;
+            else if (ui->tableView->model()->data(index, Qt::DisplayRole).toString() == "Sonstiges")
+                m_Typ = 4;
+            //Ausbeute
+            index = ui->tableView->model()->index(row,2);
+            m_Ausbeute = ui->tableView->model()->data(index, Qt::DisplayRole).toReal();
+            //Farbe
+            index = ui->tableView->model()->index(row,3);
+            m_Farbe = ui->tableView->model()->data(index, Qt::DisplayRole).toReal();
+        }
 	}
     accept();
 }
-
 
 void GetRohstoffVorlage::slot_save()
 {

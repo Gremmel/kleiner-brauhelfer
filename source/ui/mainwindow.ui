@@ -51,6 +51,9 @@
                 <property name="text">
                  <string>a&amp;lle anzeigen</string>
                 </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
               <item>
@@ -1001,6 +1004,9 @@
                      </property>
                      <property name="decimals">
                       <number>1</number>
+                     </property>
+                     <property name="minimum">
+                      <double>-9999.000000000000000</double>
                      </property>
                      <property name="maximum">
                       <double>9999.000000000000000</double>
@@ -10173,6 +10179,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </item>
                <item>
                 <widget class="QPushButton" name="pushButton_loescheBrauanlage">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>lösche Brauanlage</string>
                  </property>
@@ -12018,7 +12027,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>EBC</string>
+                <string>Farbe (EBC)</string>
                </property>
               </column>
               <column>
@@ -12054,6 +12063,13 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                <widget class="QPushButton" name="pushButton_WeitereZutatenNeu">
                 <property name="text">
                  <string>neuer Eintrag</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_WeitereZutatenNeuVorlage">
+                <property name="text">
+                 <string>neuer Eintrag aus Vorlage</string>
                 </property>
                </widget>
               </item>

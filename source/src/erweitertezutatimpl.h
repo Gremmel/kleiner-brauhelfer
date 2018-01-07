@@ -80,7 +80,6 @@ public:
   int getID();
   doubleEditLineImpl* ergWidget;
   ErweiterteZutatImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
-  void WerteNeuAusRohstoffeHolen();
   void setUIStatus();
   void setBierWurdeGebraut(bool value);
   void setZugabezeitpunkt(QDate datum_von, QDate datum_bis);

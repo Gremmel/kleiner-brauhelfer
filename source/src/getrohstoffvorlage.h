@@ -18,6 +18,7 @@ public:
     void ViewMalzauswahl();
     void ViewHopfenauswahl();
     void ViewHefeauswahl();
+    void ViewWeitereZutatenauswahl();
 	QString m_Beschreibung;
     QString m_Verpackungsmenge;
 	QString m_Temperatur;
@@ -29,6 +30,7 @@ public:
 	double m_Alpha;
 	double m_Wuerzemenge;
 	double m_Farbe;
+    double m_Ausbeute;
 	int m_MaxProzent;
 	QString m_Eigenschaften;
 	int Rohstoffart;
