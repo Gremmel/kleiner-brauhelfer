@@ -99,7 +99,7 @@ DIR="$(dirname ${BUNDLE})"
 ZIPVERSION=`echo "${VERSION}" | tr '.' '_'`
 ZIP="kb_macos_v${ZIPVERSION}.zip"
 pushd "${DIR}" || exit 1
-zip -r -o "${ZIP}" `basename ${BUNDLE}` || exit 1
+zip -ry -o "${ZIP}" `basename ${BUNDLE}` || exit 1
 popd
 echo "  - Created archive: ${DIR}/${ZIP}"
 
