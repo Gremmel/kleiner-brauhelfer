@@ -24,6 +24,8 @@ PRO="${SOURCES}/brauhelfer.pro"
 # Path to the deployment resources
 RESOURCES="${BASE_DIR}"
 
+# Target path of language resources
+LANGUAGES="${BUNDLE}/Contents/MacOS/languages"
 
 ###
 ### Extract version numbers from .pro file
@@ -80,8 +82,18 @@ echo "* Patching '${PLIST}'..."
 echo "* Copying resource files..."
 cp "${RESOURCES}/InfoPlist.strings" "${BUNDLE}/Contents/Resources" || exit 1
 
-# TODO: duno how Qt on macOS does internationalization
-# cp "${SOURCES}/languages/*" "${BUNDLE}/Contents/Resources" || exit 1
+# remove not needed executable flags
+chmod 644 "${BUNDLE}/Contents/Resources/AppIcon.icns"
+chmod 644 "${BUNDLE}/Contents/Resources/InfoPlist.strings"
+
+# copy internationalization files
+mkdir -p ${LANGUAGES} || exit 1
+
+cp "${SOURCES}"/languages/*.qm "${LANGUAGES}" || exit 1
+cp "${SOURCES}"/languages/*.png "${LANGUAGES}" || exit 1
+cp "${QT_DIR}/../translations/qtbase_en.qm" "${LANGUAGES}/qt_en.qm" || exit 1
+cp "${QT_DIR}/../translations/qtbase_de.qm" "${LANGUAGES}/qt_de.qm" || exit 1
+cp "${QT_DIR}/../translations/qtbase_pl.qm" "${LANGUAGES}/qt_pl.qm" || exit 1
 
 ###
 ### Running QT deployment
@@ -99,7 +111,7 @@ DIR="$(dirname ${BUNDLE})"
 ZIPVERSION=`echo "${VERSION}" | tr '.' '_'`
 ZIP="kb_macos_v${ZIPVERSION}.zip"
 pushd "${DIR}" || exit 1
-zip -r -o "${ZIP}" `basename ${BUNDLE}` || exit 1
+zip -ry -o "${ZIP}" `basename ${BUNDLE}` || exit 1
 popd
 echo "  - Created archive: ${DIR}/${ZIP}"
 
