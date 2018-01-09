@@ -11624,12 +11624,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </property>
               <column>
                <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Menge (kg)</string>
+                <string>Beschreibung</string>
                </property>
               </column>
               <column>
@@ -11639,22 +11634,27 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Max. Anteil (%)</string>
+                <string>max. Schüttungsanteil</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Anwendung</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Bemerkung</string>
+                <string>Menge (kg)</string>
                </property>
               </column>
               <column>
                <property name="text">
                 <string>Preis/kg</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Bemerkungen</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Anwendung</string>
                </property>
               </column>
               <column>
@@ -11740,12 +11740,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </property>
               <column>
                <property name="text">
-                <string>Name</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Menge (g)</string>
+                <string>Beschreibung</string>
                </property>
               </column>
               <column>
@@ -11755,7 +11750,22 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
+                <string>Menge (g)</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Preis/kg</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
                 <string>Pellets</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Bemerkungen</string>
                </property>
               </column>
               <column>
@@ -11766,16 +11776,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <column>
                <property name="text">
                 <string>Eigenschaften</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Bemerkung</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Preis/kg</string>
                </property>
               </column>
               <column>
@@ -11861,7 +11861,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </property>
               <column>
                <property name="text">
-                <string>Name</string>
+                <string>Beschreibung</string>
                </property>
               </column>
               <column>
@@ -11871,7 +11871,17 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Würzemenge (L)</string>
+                <string>Würzemenge</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Preis</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Bemerkungen</string>
                </property>
               </column>
               <column>
@@ -11881,17 +11891,17 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>OG/UG</string>
+                <string>Typ I</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Typ</string>
+                <string>Typ II</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Temperaturbereich</string>
+                <string>Temperatur</string>
                </property>
               </column>
               <column>
@@ -11906,17 +11916,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Vergärungsgrad</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Bemerkung</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Preis</string>
+                <string>EVG</string>
                </property>
               </column>
               <column>
@@ -12002,7 +12002,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </property>
               <column>
                <property name="text">
-                <string>Name</string>
+                <string>Beschreibung</string>
                </property>
               </column>
               <column>
@@ -12022,7 +12022,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Ausbeute (%)</string>
+                <string>Ausbeute</string>
                </property>
               </column>
               <column>
@@ -12032,12 +12032,12 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Bemerkung</string>
+                <string>Preis</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Preis</string>
+                <string>Bemerkung</string>
                </property>
               </column>
               <column>

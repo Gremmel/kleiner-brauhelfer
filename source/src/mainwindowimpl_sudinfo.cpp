@@ -421,8 +421,8 @@ void MainWindowImpl::ErstelleSudInfo()
               //zur verfügungstehende Malzmenge
               for (int i=0; i < AnzahlHefeEintraege; i++){
                 //wenn Eintrag übereinstimmt
-                if (tableWidget_Hefe -> item(i,TableHefeColName) -> text() == eHefe.Name){
-                  QSpinBox *spinBox = (QSpinBox*)tableWidget_Hefe -> cellWidget(i,TableHefeColMenge);
+                if (tableWidget_Hefe -> item(i,0) -> text() == eHefe.Name){
+                  QSpinBox *spinBox = (QSpinBox*)tableWidget_Hefe -> cellWidget(i,1);
                   eHefe.MengeIst = spinBox->value();
                   //benötigte Hefemenge
                   FeldNr_Name = query_Hefe.record().indexOf("HefeAnzahlEinheiten");
@@ -665,8 +665,8 @@ void MainWindowImpl::ErstelleSudInfo()
         bool gefunden = false;
         for (int o=0; o < tableWidget_Malz -> rowCount(); o++){
           //wenn Eintrag übereinstimmt
-          if (tableWidget_Malz -> item(o, TableMalzColName) -> text() == ListMalz.at(i).Name){
-            QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,TableMalzColMenge);
+          if (tableWidget_Malz -> item(o,0) -> text() == ListMalz.at(i).Name){
+            QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,3);
             ist = dsbMenge ->value();
             gefunden = true;
           }
@@ -710,8 +710,8 @@ void MainWindowImpl::ErstelleSudInfo()
         //Vorhandene Menge von diesem Hopfen
         for (int o=0; o < tableWidget_Hopfen -> rowCount(); o++){
           //wenn Eintrag übereinstimmt
-          if (tableWidget_Hopfen -> item(o,TableHopfenColName) -> text() == ListHopfen.at(i).Name){
-            QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,TableHopfenColMenge);
+          if (tableWidget_Hopfen -> item(o,0) -> text() == ListHopfen.at(i).Name){
+            QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,2);
             ist = spinBox->value();
             gefunden = true;
           }
@@ -753,7 +753,7 @@ void MainWindowImpl::ErstelleSudInfo()
         int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
         for (int o=0; o < AnzahlHefeEintraege; o++){
           //wenn Eintrag übereinstimmt
-          if (tableWidget_Hefe -> item(o,TableHefeColName) -> text() == ListHefe.at(i).Name){
+          if (tableWidget_Hefe -> item(o,0) -> text() == ListHefe.at(i).Name){
             gefunden = true;
           }
         }
@@ -797,10 +797,10 @@ void MainWindowImpl::ErstelleSudInfo()
           //Vorhandene Menge von diesem Honig
           for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
             //wenn Eintrag übereinstimmt
-            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenHonig.at(i).Name){
-              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+            if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenHonig.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
               ist = dsbMenge -> value();
-              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
               Einheit = comboEinheit -> currentIndex();
               if (Einheit == EWZ_Einheit_Kg){
                 ist = ist * 1000;
@@ -856,10 +856,10 @@ void MainWindowImpl::ErstelleSudInfo()
           //Vorhandene Menge von diesem Honig
           for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
             //wenn Eintrag übereinstimmt
-            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenZucker.at(i).Name){
-              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+            if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenZucker.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
               ist = dsbMenge -> value();
-              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
               Einheit = comboEinheit -> currentIndex();
               if (Einheit == 0){
                 ist = ist * 1000;
@@ -915,10 +915,10 @@ void MainWindowImpl::ErstelleSudInfo()
           //Vorhandene Menge von diesem Honig
           for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
             //wenn Eintrag übereinstimmt
-            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenGewuerz.at(i).Name){
-              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+            if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenGewuerz.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
               ist = dsbMenge -> value();
-              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
               Einheit = comboEinheit -> currentIndex();
               if (Einheit == 0){
                 ist = ist * 1000;
@@ -974,10 +974,10 @@ void MainWindowImpl::ErstelleSudInfo()
           //Vorhandene Menge von diesem Honig
           for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
             //wenn Eintrag übereinstimmt
-            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenFrucht.at(i).Name){
-              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+            if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenFrucht.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
               ist = dsbMenge -> value();
-              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
               Einheit = comboEinheit -> currentIndex();
               if (Einheit == 0){
                 ist = ist * 1000;
@@ -1033,10 +1033,10 @@ void MainWindowImpl::ErstelleSudInfo()
           //Vorhandene Menge von diesem Honig
           for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
             //wenn Eintrag übereinstimmt
-            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenSonstiges.at(i).Name){
-              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+            if (tableWidget_WeitereZutaten -> item(o,0) -> text() == ListWeitereZutatenSonstiges.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,1);
               ist = dsbMenge -> value();
-              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,2);
               Einheit = comboEinheit -> currentIndex();
               if (Einheit == 0){
                 ist = ist * 1000;

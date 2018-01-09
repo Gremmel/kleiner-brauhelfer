@@ -1,4 +1,4 @@
-Name;OG/UG;Typ;Verpackungsmenge;Würzemenge (L);Temperaturbereich;Eigenschaften;Sedimentation;Vergärungsgrad
+Bezeichnung;Typ I;Typ II;Menge;Würzemenge;Temperatur;Eigenschaften;SED;EVG
 Brewferm BLANCHE;OG;trocken;12,0g;20;18 - 24°C;Weizenbierhefe;mittel;65 - 75%
 Brewferm LAGER;UG;trocken;12,0g;20;12 - 15°C;neutrale Vergärung, wenige oder ohne Bildung von Schwefelkomponenten ;hoch;75%
 Brewferm TOP;OG;trocken;6,0g;10;18 - 25°C;vgl. sauber vergärende Hefe, Hopfenbittere wird leicht betont, geringe Diacetylproduktion;mittel;68 -70%
