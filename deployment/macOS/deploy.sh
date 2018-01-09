@@ -24,6 +24,8 @@ PRO="${SOURCES}/brauhelfer.pro"
 # Path to the deployment resources
 RESOURCES="${BASE_DIR}"
 
+# Target path of language resources
+LANGUAGES="${BUNDLE}/Contents/MacOS/languages"
 
 ###
 ### Extract version numbers from .pro file
@@ -85,9 +87,13 @@ chmod 644 "${BUNDLE}/Contents/Resources/AppIcon.icns"
 chmod 644 "${BUNDLE}/Contents/Resources/InfoPlist.strings"
 
 # copy internationalization files
-mkdir -p "${BUNDLE}/Contents/MacOS/languages" || exit 1
-cp "${SOURCES}"/languages/*.qm "${BUNDLE}/Contents/MacOS/languages" || exit 1
-cp "${SOURCES}"/languages/*.png "${BUNDLE}/Contents/MacOS/languages" || exit 1
+mkdir -p ${LANGUAGES} || exit 1
+
+cp "${SOURCES}"/languages/*.qm "${LANGUAGES}" || exit 1
+cp "${SOURCES}"/languages/*.png "${LANGUAGES}" || exit 1
+cp "${QT_DIR}/../translations/qtbase_en.qm" "${LANGUAGES}/qt_en.qm" || exit 1
+cp "${QT_DIR}/../translations/qtbase_de.qm" "${LANGUAGES}/qt_de.qm" || exit 1
+cp "${QT_DIR}/../translations/qtbase_pl.qm" "${LANGUAGES}/qt_pl.qm" || exit 1
 
 ###
 ### Running QT deployment
