@@ -293,22 +293,11 @@
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_87">
-              <item>
-               <widget class="QPushButton" name="pushButton_SudinfoDrucken">
-                <property name="text">
-                 <string>Drucken</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_SudinfoPDF">
-                <property name="text">
-                 <string>PDF speichern</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QPushButton" name="pushButton_SudinfoPDF">
+              <property name="text">
+               <string>PDF speichern</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -8690,22 +8679,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_86">
-          <item>
-           <widget class="QPushButton" name="pushButton_SpickzettelDrucken">
-            <property name="text">
-             <string>Drucken</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_SpickzettelPDF">
-            <property name="text">
-             <string>PDF speichern</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QPushButton" name="pushButton_SpickzettelPDF">
+          <property name="text">
+           <string>PDF speichern</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

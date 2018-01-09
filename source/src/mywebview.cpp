@@ -3,60 +3,48 @@
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
 
-template<typename Arg, typename R, typename C>
-struct InvokeWrapper {
-    R *receiver;
-    void (C::*memberFun)(Arg);
-    void operator()(Arg result) {
-        (receiver->*memberFun)(result);
-    }
-};
+#include <QEventLoop>
 
-template<typename Arg, typename R, typename C>
-InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFun)(Arg))
-{
-    InvokeWrapper<Arg, R, C> wrapper = {receiver, memberFun};
-    return wrapper;
-}
-
-MyWebView::MyWebView(QWidget* parent) :
-    QWebEngineView(parent),
-    currentPrinter(nullptr)
+MyWebPage::MyWebPage(QObject* parent) : QWebEnginePage(parent)
 {
 }
 
-void MyWebView::setTextSizeMultiplier(qreal factor)
+bool MyWebPage::acceptNavigationRequest(const QUrl& url, QWebEnginePage::NavigationType type, bool isMainFrame)
 {
-    Q_UNUSED(factor)
-    // Zoom Faktor wird bei printToPdf() nicht übernommen
-    //page()->setZoomFactor(factor);
-}
-
-void MyWebView::print(QPrinter* printer)
-{
-    if (printer->outputFormat() == QPrinter::PdfFormat)
+    Q_UNUSED(isMainFrame)
+    if (type == QWebEnginePage::NavigationTypeLinkClicked)
     {
-        page()->printToPdf(printer->outputFileName());
-        delete printer;
-    }
-    else
-    {
-        if (currentPrinter == nullptr)
+        if (url.isLocalFile())
         {
-            currentPrinter = printer;
-            page()->print(printer, invoke(this, &MyWebView::slotHandlePagePrinted));
+            QDesktopServices::openUrl(url);
+            return false;
         }
     }
+    return true;
 }
 
-void MyWebView::slotHandlePagePrinted(bool result)
+MyWebView::MyWebView(QWidget* parent) : QWebEngineView(parent)
 {
-    Q_UNUSED(result);
-    delete currentPrinter;
-    currentPrinter = nullptr;
+    setContextMenuPolicy(Qt::NoContextMenu);
+    setPage(new MyWebPage());
+}
+
+MyWebView::~MyWebView()
+{
+    delete page();
+}
+
+void MyWebView::printToPdf(const QString& filePath)
+{
+    QEventLoop loop;
+    connect(page(), SIGNAL(pdfPrintingFinished(const QString&, bool)), &loop, SLOT(quit()));
+    page()->printToPdf(filePath, QPageLayout(QPageSize(QPageSize::A4), QPageLayout::Portrait, QMarginsF(20, 20, 20, 20)));
+    loop.exec();
 }
 
 #else
+
+#include <QPrinter>
 
 MyWebView::MyWebView(QWidget* parent) :
     QWebView(parent)
@@ -70,15 +58,23 @@ MyWebView::MyWebView(QWidget* parent) :
     connect(this, SIGNAL(linkClicked (const QUrl &)), this, SLOT(slot_urlClicked(const QUrl &)));
 }
 
-void MyWebView::print(QPrinter* printer)
+void MyWebView::printToPdf(const QString& filePath)
 {
+    QPrinter* printer = new QPrinter(QPrinter::HighResolution);
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setColorMode(QPrinter::Color);
+    printer->setResolution(1200);
+    printer->setOutputFileName(filePath);
     QWebView::print(printer);
     delete printer;
 }
 
 void MyWebView::slot_urlClicked(const QUrl &url)
 {
-    QDesktopServices::openUrl(url);
+    if (url.isLocalFile())
+        QDesktopServices::openUrl(url);
+    else
+        setUrl(url);
 }
 
 #endif

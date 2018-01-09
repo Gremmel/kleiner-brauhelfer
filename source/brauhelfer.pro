@@ -3,7 +3,6 @@ QT = gui \
  svg \
  sql \
  network \
- printsupport \
  xml
 
 equals(QT_MAJOR_VERSION, 5)
@@ -11,7 +10,7 @@ equals(QT_MAJOR_VERSION, 5)
   greaterThan(QT_MINOR_VERSION, 4){
     QT +=  webenginewidgets
   } else {
-    QT += webkitwidgets
+    QT += webkitwidgets printsupport
   }
 }
 

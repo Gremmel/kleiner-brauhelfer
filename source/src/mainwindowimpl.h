@@ -441,14 +441,12 @@ private slots:
   void on_comboBox_AuswahlL1_currentIndexChanged(int index);
   void on_comboBox_AuswahlL2_currentIndexChanged(int index);
   void on_pushButton_SpickzettelPDF_clicked();
-  void on_pushButton_SpickzettelDrucken_clicked();
   void slot_pushButton_SudKopie();
   void slot_FilterClicked(bool checked);
   void slot_pushButton_SudLaden();
   void slot_pushButton_SudDel();
   int slot_pushButton_SudNeu();
   void slot_lineEdit_editingFinished();
-  void slot_makePdf();
   void on_pushButton_HefeKopie_clicked();
   void on_pushButton_HopfenKopie_clicked();
   void on_pushButton_MalzKopie_clicked();
@@ -471,7 +469,6 @@ private slots:
   void slot_pushButton_AbfuelldatumHeute();
   void slot_pushButton_AnstelldatumHeute();
   void slot_pushButton_BraudatumHeute();
-  void slot_print();
   void slot_pushButton_GeraeteNeu();
   void slot_pushButton_GeraeteDel();
   void slot_ComboBoxIndexChanged(int i);
@@ -627,7 +624,6 @@ private slots:
 	//sprache wird umgeschalten
 	void slot_SpracheWechselt(QAction* action);
 	void on_pushButton_EingabeHVerdampfungsziffer_clicked();
-  void on_pushButton_SudinfoDrucken_clicked();
   void on_pushButton_SudinfoPDF_clicked();
   void on_pushButton_NeueBrauanlage_clicked();
   void on_pushButton_loescheBrauanlage_clicked();

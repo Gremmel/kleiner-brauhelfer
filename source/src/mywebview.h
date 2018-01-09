@@ -8,7 +8,16 @@
 // Since Qt5.5 use WebEngine
 
 #include <QWebEngineView>
-#include <QPrinter>
+#include <QWebEnginePage>
+
+class MyWebPage : public QWebEnginePage
+{
+    Q_OBJECT
+
+public:
+    MyWebPage(QObject* parent = Q_NULLPTR);
+    bool acceptNavigationRequest(const QUrl & url, QWebEnginePage::NavigationType type, bool) Q_DECL_OVERRIDE;
+};
 
 class MyWebView : public QWebEngineView
 {
@@ -16,16 +25,8 @@ class MyWebView : public QWebEngineView
 
 public:
     MyWebView(QWidget* parent = Q_NULLPTR);
-    void setTextSizeMultiplier(qreal factor);
-
-public slots:
-    void print(QPrinter* printer);
-
-private slots:
-    void slotHandlePagePrinted(bool result);
-
-private:
-    QPrinter* currentPrinter;
+    ~MyWebView();
+    void printToPdf(const QString& filePath);
 };
 
 #else
@@ -33,7 +34,6 @@ private:
 // Before Qt5.5 use WebKit
 
 #include <QWebView>
-#include <QPrinter>
 
 class MyWebView : public QWebView
 {
@@ -41,9 +41,7 @@ class MyWebView : public QWebView
 
 public:
     MyWebView(QWidget* parent = 0);
-
-public slots:
-    void print(QPrinter* printer);
+    void printToPdf(const QString& filePath);
 
 private slots:
     void slot_urlClicked(const QUrl &url);

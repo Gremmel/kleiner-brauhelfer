@@ -2,8 +2,6 @@
 #include <QSettings>
 #include <QString>
 #include <QTableWidgetItem>
-#include <QPrinter>
-#include <QPrintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSqlQuery>
@@ -14,12 +12,10 @@
 #include <QList>
 #include <QBrush>
 #include <time.h>
-#include <QPrintPreviewDialog>
 #include <QDebug>
 #include <QStyleFactory>
 #include <QUrl>
 #include <QFileInfo>
-#include <QProcess>
 #include <QDesktopServices>
 #include <QTemporaryFile>
 
@@ -3973,58 +3969,6 @@ void MainWindowImpl::BerBraudaten()
   spinBox_MengeSollNachKochende100grad->setValue(mengeKochende100grad);
 }
 
-
-void MainWindowImpl::slot_print()
-{
-  //allen nochmal durchrechnen
-  BerAlles();
-  //Zusammenfassung/Spickzettel neue erstellen
-  ErstelleTabSpickzettel();
-
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
-  settings.beginGroup("PDF");
-
-  //Zoomfaktor einlesen
-  double zoom;
-  QString s;
-  if (BierWurdeGebraut){
-    s = settings.value("zoomZusammenfassung").toString();
-    if (s == ""){
-      zoom = 1;
-      settings.setValue("zoomZusammenfassung",zoom);
-    }
-    else
-      zoom = s.toDouble();
-  }
-  else {
-    s = settings.value("zoomSpickzettel").toString();
-    if (s == ""){
-      zoom = 1;
-      settings.setValue("zoomSpickzettel",zoom);
-    }
-    else
-      zoom = s.toDouble();
-  }
-
-  webView_Zusammenfassung->setTextSizeMultiplier(zoom);
-  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
-  printer->setColorMode(QPrinter::Color);
-
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
-  dialog->setWindowTitle("Print");
-  //if (webView_Zusammenfassung->hasSelection())
-  //	dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
-  if (dialog->exec() != QDialog::Accepted){
-    webView_Zusammenfassung->setZoomFactor(1);
-    return;
-  }
-  //Drucken
-  webView_Zusammenfassung->print(printer);
-  webView_Zusammenfassung->setTextSizeMultiplier(1);
-
-}
-
-
 void MainWindowImpl::slot_pushButton_gebraut()
 {
   setAenderung(true);
@@ -5726,89 +5670,50 @@ void MainWindowImpl::on_pushButton_WeitereZutatenKopie_clicked()
     }
 }
 
-void MainWindowImpl::slot_makePdf()
+void MainWindowImpl::on_pushButton_SpickzettelPDF_clicked()
 {
-
   //allen nochmal durchrechnen
   BerAlles();
+
   //Zusammenfassung/Spickzettel neue erstellen
   ErstelleTabSpickzettel();
+
+  QString Sudname = lineEdit_Sudname->text();
+
+  // letzten Pfad einlesen
   QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
   settings.beginGroup("PDF");
+  QString p = settings.value("recentPDFPath", QDir::homePath()).toString();
 
-  //Zoomfaktor einlesen
-  double zoom;
-  QString s;
-  if (BierWurdeGebraut){
-    s = settings.value("zoomZusammenfassung").toString();
-    if (s == ""){
-      zoom = 1;
-      settings.setValue("zoomZusammenfassung",zoom);
-    }
-    else
-      zoom = s.toDouble();
-  }
-  else {
-    s = settings.value("zoomSpickzettel").toString();
-    if (s == ""){
-      zoom = 1;
-      settings.setValue("zoomSpickzettel",zoom);
-    }
-    else
-      zoom = s.toDouble();
-  }
-
-  webView_Zusammenfassung->setTextSizeMultiplier(zoom);
-  /*QPrintPreviewDialog dialog(this);
-  connect(&dialog, SIGNAL(paintRequested(QPrinter *)),
-                 webView_Zusammenfassung, SLOT(print(QPrinter *)));
-  dialog.exec();
-  */
-
-  //letzten Pfad einlesen
-  QString p;
-  p = settings.value("recentPDFPath").toString();
-  //wenn verzeichnis noch nicht gespeichert ist home verzeichnis nehmen
-  if (p == "") {
-    p = QDir::homePath();
-  }
-
-  //printer einstellungen
-  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
-  printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setColorMode(QPrinter::Color);
-  printer->setResolution(1200);
-  QFileDialog fd(this);
-
-  //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
-  QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/" + lineEdit_Sudname->text()+".pdf", trUtf8("Suddateien (*.pdf)"),0);
-  if (!fileName.isEmpty()) {
-    printer->setOutputFileName(fileName);
-    //pdf speichern
-    webView_Zusammenfassung -> print(printer);
-
-    //Pfad abspeichern
-    QFileInfo fi(fileName);
-    settings.setValue("recentPDFPath",fi.absolutePath());
-
-    //PDF Betrachter starten
-    if (settings.value("startPDFBetrachter").toBool()) {
-      QString prog = settings.value("PDFProg").toString();
-      QFileInfo fi(prog);
-      if (fi.exists()) {
-        QStringList arguments;
-        arguments << fileName;
-        QProcess *myProcess = new QProcess();
-        //qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
-        myProcess->start(prog,arguments);
+  QString fileName = QFileDialog::getSaveFileName(this, trUtf8("PDF speichern unter"), p + "/" + Sudname + ".pdf", "PDF (*.pdf)");
+  if (!fileName.isEmpty())
+  {
+      bool merker = StyleDunkel;
+      if (merker)
+      {
+          StyleDunkel = false;
+          ErstelleSudInfo();
       }
-    }
+
+      // pdf speichern
+      webView_Zusammenfassung->printToPdf(fileName);
+
+      if (merker)
+      {
+          StyleDunkel = merker;
+          ErstelleSudInfo();
+      }
+
+      // Pfad abspeichern
+      QFileInfo fi(fileName);
+      settings.setValue("recentPDFPath", fi.absolutePath());
+
+      // open PDF
+      QDesktopServices::openUrl(QUrl("file:///" + fileName));
   }
 
   settings.endGroup();
-  webView_Zusammenfassung->setTextSizeMultiplier(1);
 }
-
 
 void MainWindowImpl::LadeBild()
 {
@@ -7084,17 +6989,6 @@ void MainWindowImpl::BerKosten()
     spinBox_Preis -> setPalette(paletteF);
     spinBox_Preis -> setValue(0);
   }
-}
-
-
-void MainWindowImpl::on_pushButton_SpickzettelDrucken_clicked()
-{
-  slot_print();
-}
-
-void MainWindowImpl::on_pushButton_SpickzettelPDF_clicked()
-{
-  slot_makePdf();
 }
 
 void MainWindowImpl::FuelleBrauuebersicht()
@@ -11857,7 +11751,8 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index)
   //Anleitung
   else if (currentTab == tab_help){
     if (!keinInternet) {
-      webView_Anleitung -> setUrl(QUrl(URL_ANLEITUNG));
+      if (webView_Anleitung->url().isEmpty())
+        webView_Anleitung -> setUrl(QUrl(URL_ANLEITUNG));
     }
   }
 }
@@ -11894,88 +11789,49 @@ void MainWindowImpl::on_pushButton_EingabeHVerdampfungsziffer_clicked()
   }
 }
 
-void MainWindowImpl::on_pushButton_SudinfoDrucken_clicked()
-{
-  bool merker = StyleDunkel;
-  if (StyleDunkel) {
-    StyleDunkel = false;
-    ErstelleSudInfo();
-  }
-
-  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
-  printer->setColorMode(QPrinter::Color);
-
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
-  dialog->setWindowTitle("Print");
-  if (dialog->exec() != QDialog::Accepted){
-    //webView_Info->setZoomFactor(1);
-  }
-  else {
-    //Drucken
-    webView_Info->print(printer);
-    webView_Info->setTextSizeMultiplier(1);
-  }
-
-  if (merker) {
-    StyleDunkel = merker;
-    ErstelleSudInfo();
-  }
-}
-
 void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
 {
-  bool merker = StyleDunkel;
-  if (StyleDunkel) {
-    StyleDunkel = false;
-    ErstelleSudInfo();
-  }
+    QString defaultFileName;
+    if (tableWidget_Sudauswahl -> selectedItems().count() == 4 ||
+        tableWidget_Sudauswahl -> selectedItems().count() == 5)
+        defaultFileName = tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(), 1)->text() + "_Info.pdf";
+    else
+        defaultFileName =  trUtf8("Rohstoffe.pdf");
 
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
-  settings.beginGroup("PDF");
-  //letzten Pfad einlesen
-  QString p;
-  p = settings.value("recentPDFPath").toString();
-  if (p == "") {
-    p = QDir::homePath();
-  }
+    // letzten Pfad einlesen
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+    settings.beginGroup("PDF");
+    QString p = settings.value("recentPDFPath", QDir::homePath()).toString();
 
-  //printer einstellungen
-  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
-  printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setColorMode(QPrinter::Color);
-  printer->setResolution(1200);
-  QFileDialog fd(this);
+    QString fileName = QFileDialog::getSaveFileName(this, trUtf8("PDF speichern unter"), p + "/" + defaultFileName, "PDF (*.pdf)");
+    if (!fileName.isEmpty())
+    {
+        bool merker = StyleDunkel;
+        if (merker)
+        {
+            StyleDunkel = false;
+            ErstelleSudInfo();
+        }
 
-  //QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p, trUtf8("Suddateien (*.pdf)"),0,QFileDialog::DontUseNativeDialog);
-  QString fileName = fd.getSaveFileName(this, trUtf8("PDF Datei Speichern unter"), p + "/Rohstoffliste.pdf", trUtf8("Suddateien (*.pdf)"),0);
-  if (!fileName.isEmpty()) {
-    printer->setOutputFileName(fileName);
-    //pdf speichern
-    webView_Info -> print(printer);
+        // pdf speichern
+        webView_Info->printToPdf(fileName);
 
-    //Pfad abspeichern
-    QFileInfo fi(fileName);
-    settings.setValue("recentPDFPath",fi.absolutePath());
+        if (merker)
+        {
+            StyleDunkel = merker;
+            ErstelleSudInfo();
+        }
 
-    //PDF Betrachter starten
-    if (settings.value("startPDFBetrachter").toBool()) {
-      QString prog = settings.value("PDFProg").toString();
-      QFileInfo fi(prog);
-      if (fi.exists()) {
-        QStringList arguments;
-        arguments << fileName;
-        QProcess *myProcess = new QProcess();
-        //qDebug() << "starte PDF Betrachter: " << prog << " " << arguments;
-        myProcess->start(prog,arguments);
-      }
+        // Pfad abspeichern
+        QFileInfo fi(fileName);
+        settings.setValue("recentPDFPath", fi.absolutePath());
+
+        // open PDF
+        qDebug() << "file:///" + fileName;
+        QDesktopServices::openUrl(QUrl("file:///" + fileName));
     }
-  }
 
-  settings.endGroup();
-  if (merker) {
-    StyleDunkel = merker;
-    ErstelleSudInfo();
-  }
+    settings.endGroup();
 }
 
 void MainWindowImpl::on_pushButton_NeueBrauanlage_clicked()

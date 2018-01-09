@@ -4,6 +4,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.2 (in Entwicklung)
 - Rohstofftabellen neu organisiert
+- Drucken wird nicht mehr unterstützt
 ### Version 1.4.4.1
 - Zustand der Tabellen werden gespeichert
 - Gewünschte Restalkalität kann auch negativ sein
