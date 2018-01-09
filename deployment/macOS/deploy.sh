@@ -81,11 +81,13 @@ echo "* Copying resource files..."
 cp "${RESOURCES}/InfoPlist.strings" "${BUNDLE}/Contents/Resources" || exit 1
 
 # remove not needed executable flags
-chmod 644 "${BUNDLE}/Contents/AppIcon.icns
-chmod 644 "${BUNDLE}/Contents/InfoPlist.strings
+chmod 644 "${BUNDLE}/Contents/Resources/AppIcon.icns"
+chmod 644 "${BUNDLE}/Contents/Resources/InfoPlist.strings"
 
-# TODO: duno how Qt on macOS does internationalization
-# cp "${SOURCES}/languages/*" "${BUNDLE}/Contents/Resources" || exit 1
+# copy internationalization files
+mkdir -p "${BUNDLE}/Contents/MacOS/languages" || exit 1
+cp "${SOURCES}"/languages/*.qm "${BUNDLE}/Contents/MacOS/languages" || exit 1
+cp "${SOURCES}"/languages/*.png "${BUNDLE}/Contents/MacOS/languages" || exit 1
 
 ###
 ### Running QT deployment
