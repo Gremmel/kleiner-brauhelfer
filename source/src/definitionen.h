@@ -1,9 +1,6 @@
 #ifndef DEFINITIONEN_H
 #define DEFINITIONEN_H
 
-// comment this line for release build
-#define DEBUG true
-
 //Datenbankversion
 //V17 highGravityFaktor Prozentwert
 //    in Tabelle Ausruestunpog Verdampfungsziffer hinzugefügt (Korrektur Nachgussmenge wird nun nicht mehr gebraucht)
@@ -36,18 +33,10 @@
 #define APP_NAME	"kleiner-brauhelfer"
 #define APP_VERZEICHNIS ".kleiner-brauhelfer"
 
-#ifdef DEBUG
-  #define APP_KONFIG "kleiner-brauhelfer-test"
-#else
-  #define APP_KONFIG "kleiner-brauhelfer"
-#endif
+#define APP_KONFIG "kleiner-brauhelfer"
 
 //URL für die Meldungen beim Start
-#ifdef DEBUG
-  #define MSG_URL "http://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2_test"
-#else
-  #define MSG_URL "http://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2"
-#endif
+#define MSG_URL "http://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2"
 
 //URL Anleitung
 #define URL_ANLEITUNG "http://www.joerum.de/kleiner-brauhelfer/doku.php"
@@ -56,11 +45,7 @@
 #define DB_VORLAGE	":/data/vorlage.sqlite"
 
 //Userdatenbankname
-#ifdef DEBUG
-  #define DB_USER_NAME	"kb_daten_test.sqlite"
-#else
-  #define DB_USER_NAME	"kb_daten.sqlite"
-#endif
+#define DB_USER_NAME	"kb_daten.sqlite"
 
 //Maximale Anzahl Rasten
 #define MAX_RASTEN 6
