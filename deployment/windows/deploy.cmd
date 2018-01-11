@@ -3,7 +3,7 @@
 SET EXE_FILE=kleiner-brauhelfer.exe
 SET DEPLOY_DIR=deploy
 
-ECHO - Select application folder (e.g. .\build-brauhelfer-Desktop_Qt_5_10_0_MSVC2017_64bit-Release\bin)
+ECHO - Select application folder (e.g. .\build\bin)
 FOR /F "Tokens=1 Delims=" %%I IN ('cscript //nologo "%~dp0BrowseFolder.vbs"') DO SET EXE_DIR=%%I
 IF "%EXE_DIR%" == "" GOTO :EOF 
 IF NOT EXIST "%EXE_DIR%\%EXE_FILE%" GOTO :EOF 
@@ -22,7 +22,7 @@ XCOPY "%~dp0..\..\source\languages\*.png" "%~dp0%DEPLOY_DIR%\languages" /Y
 ECHO - Copy logo file
 XCOPY "%~dp0..\..\source\res\logo.ico" "%~dp0%DEPLOY_DIR%" /Y
 
-ECHO - Select Qt bin folder (e.g. C:\Qt\5.3\mingw482_32\bin)
+ECHO - Select Qt bin folder (e.g. C:\Qt\5.10.0\msvc2017_64\bin)
 FOR /F "Tokens=1 Delims=" %%I IN ('cscript //nologo "%~dp0BrowseFolder.vbs"') DO SET QT_DIR=%%I
 IF "%QT_DIR%" == "" GOTO :EOF 
 IF NOT EXIST "%QT_DIR%\qmake.exe" GOTO :EOF 

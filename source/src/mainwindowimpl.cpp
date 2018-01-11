@@ -958,7 +958,7 @@ void MainWindowImpl::MalzNeueZeile(const QString& name, double ebc, double schue
     MyDoubleSpinBox *spinBoxFarbe = new MyDoubleSpinBox();
     spinBoxFarbe->setAlignment(Qt::AlignHCenter);
     spinBoxFarbe->setMinimum(0);
-    spinBoxFarbe->setMaximum(1000);
+    spinBoxFarbe->setMaximum(2000);
     spinBoxFarbe->setDecimals(1);
     spinBoxFarbe->setValue(ebc);
     tableWidget_Malz->setCellWidget(i, TableMalzColFarbe, spinBoxFarbe);
@@ -1416,7 +1416,7 @@ void MainWindowImpl::WeitereZutatNeueZeile(const QString& name, double menge, in
     MyDoubleSpinBox *spinBoxFarbe = new MyDoubleSpinBox();
     spinBoxFarbe->setAlignment(Qt::AlignHCenter);
     spinBoxFarbe->setMinimum(0);
-    spinBoxFarbe->setMaximum(100000);
+    spinBoxFarbe->setMaximum(2000);
     spinBoxFarbe->setDecimals(1);
     spinBoxFarbe->setValue(ebc);
     tableWidget_WeitereZutaten->setCellWidget(i, TableWZutatColFarbe, spinBoxFarbe);
@@ -3482,6 +3482,7 @@ void MainWindowImpl::slot_RohstoffNonZeroValueChanged(double menge)
         QColor color = menge > 0 ? qApp->palette().color(QPalette::Active, QPalette::Base) : QColor::fromRgb(200, 80, 80);
         QPalette palette(spinbox->palette());
         palette.setColor(QPalette::Active, QPalette::Base, color);
+        palette.setColor(QPalette::Inactive, QPalette::Base, color);
         spinbox->setPalette(palette);
     }
 }
@@ -3528,6 +3529,7 @@ void MainWindowImpl::slot_RohstoffHaltbarValueChanged(const QDate &date)
         QColor color = QDate::currentDate().daysTo(date) > 0 ? qApp->palette().color(QPalette::Active, QPalette::Base) : QColor::fromRgb(200, 80, 80);
         QPalette palette(dateedit->palette());
         palette.setColor(QPalette::Active, QPalette::Base, color);
+        palette.setColor(QPalette::Inactive, QPalette::Base, color);
         dateedit->setPalette(palette);
     }
 }
@@ -3543,6 +3545,8 @@ void MainWindowImpl::slot_RohstoffFarbeValueChanged(double ebc)
         else
             palette.setColor(QPalette::Active, QPalette::Base, qApp->palette().color(QPalette::Active, QPalette::Base));
         palette.setColor(QPalette::Active, QPalette::Text, ebc > 35 ? Qt::white: Qt::black);
+        palette.setColor(QPalette::Inactive, QPalette::Base, palette.color(QPalette::Active, QPalette::Base));
+        palette.setColor(QPalette::Inactive, QPalette::Text, palette.color(QPalette::Active, QPalette::Text));
         spinbox->setPalette(palette);
     }
 }

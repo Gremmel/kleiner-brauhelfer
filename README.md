@@ -2,9 +2,13 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
-### Version 1.4.4.2 (in Entwicklung)
+### Version 1.4.5.0 (in Entwicklung)
+- Umstellung auf Qt 5.10
+- Windows version wird für 64bit Architektur kompiliert
 - Rohstofftabellen neu organisiert
 - Drucken wird nicht mehr unterstützt
+- EBC Wert bis 2000
+- Fix: falsche Dropdown Werte (Hopfengabe Gewicht statt IBU, Weitere Zutaten Zugabezeitpunkt)
 ### Version 1.4.4.1
 - Zustand der Tabellen werden gespeichert
 - Gewünschte Restalkalität kann auch negativ sein
