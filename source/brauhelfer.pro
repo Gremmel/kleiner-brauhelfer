@@ -125,6 +125,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mainwindowimpl_spickzettel.cpp \
  src/mainwindowimpl_zusammenfassung.cpp \
  src/mydsvtablemodel.cpp \
- src/dialogeinmaischetemp.cpp
+ src/dialogeinmaischetemp.cpp \
+ src/mainwindowimpl_ueber.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

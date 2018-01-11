@@ -9,8 +9,6 @@
 
 void MainWindowImpl::ErstelleSpickzettel()
 {
-  //Überschrift vom Tab setzten
-  tabWidged -> setTabText(tabWidged->indexOf(tab_Spickzettel), trUtf8("Spickzettel"));
   // Seitenkopf
   QString seite, kopf, ende, style;
 

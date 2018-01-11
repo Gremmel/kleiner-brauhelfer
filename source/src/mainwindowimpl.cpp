@@ -214,7 +214,7 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
 
   createActions();
   createMenus();
-  retranslateMenus();
+  retranslate();
 
   //Überprüfen ob Messages angezeigt werden sollen
   if (!keinInternet)
@@ -356,6 +356,12 @@ void MainWindowImpl::initUi()
     settings.endGroup();
 }
 
+void MainWindowImpl::retranslate()
+{
+    ErstelleUeber();
+    retranslateMenus();
+}
+
 void MainWindowImpl::on_MsgCheckFertig(int count)
 {
   if (count > 0){
@@ -421,7 +427,7 @@ void MainWindowImpl::changeEvent(QEvent* event)
         case QEvent::LanguageChange:
             Gestartet = false;
             retranslateUi(this);
-            retranslateMenus();
+            retranslate();
             Gestartet = true;
             break;
         case QEvent::LocaleChange:
@@ -4135,6 +4141,8 @@ void MainWindowImpl::SetStatusGebraut(bool status)
   pushButton_EingabeHMengeNHopfenseihen -> setDisabled(status);
 
   groupBox_Verschneidung -> setVisible(!status);
+
+  tabWidged->setTabText(tabWidged->indexOf(tab_Spickzettel), status ? trUtf8("Zusammenfassung") : trUtf8("Spickzettel"));
 
   //Tab Gärdaten ausblenden
   tab_Gaerverlauf->setEnabled(status);
@@ -11796,7 +11804,7 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked()
         tableWidget_Sudauswahl -> selectedItems().count() == 5)
         defaultFileName = tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(), 1)->text() + "_Info.pdf";
     else
-        defaultFileName =  trUtf8("Rohstoffe.pdf");
+        defaultFileName =  trUtf8("Rohstoffe") + ".pdf";
 
     // letzten Pfad einlesen
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);

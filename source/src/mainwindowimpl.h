@@ -91,6 +91,7 @@ protected:
   void changeEvent(QEvent *event);
 private:
   void initUi();
+  void retranslate();
   //gibt die ID der im Rezept ausgewählten Brauanlage zurück
   int getBrauanlagenIDRezept();
   //gibt die ID der in der Ausrüstung ausgewählten Brauanlage zurück
@@ -277,6 +278,7 @@ private:
   bool BierWurdeVerbraucht;
   void ErstelleSpickzettel();
   void ErstelleTabSpickzettel();
+  void ErstelleUeber();
   void BerHopfen();
   void BerWasser();
   void BerSchuettung();

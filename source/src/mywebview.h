@@ -16,7 +16,10 @@ class MyWebPage : public QWebEnginePage
 
 public:
     MyWebPage(QObject* parent = Q_NULLPTR);
+    void setLinksExternal(bool external);
     bool acceptNavigationRequest(const QUrl & url, QWebEnginePage::NavigationType type, bool) Q_DECL_OVERRIDE;
+private:
+    bool mExternal;
 };
 
 class MyWebView : public QWebEngineView
@@ -26,6 +29,7 @@ class MyWebView : public QWebEngineView
 public:
     MyWebView(QWidget* parent = Q_NULLPTR);
     ~MyWebView();
+    void setLinksExternal(bool external);
     void printToPdf(const QString& filePath);
 };
 
@@ -41,10 +45,12 @@ class MyWebView : public QWebView
 
 public:
     MyWebView(QWidget* parent = 0);
+    void setLinksExternal(bool external);
     void printToPdf(const QString& filePath);
-
 private slots:
     void slot_urlClicked(const QUrl &url);
+private:
+    bool mExternal;
 };
 
 #endif
