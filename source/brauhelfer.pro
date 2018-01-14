@@ -47,7 +47,8 @@ FORMS = ui/mainwindow.ui \
  ui/dialoginfo.ui \
  ui/anhangwidget.ui \
  ui/dialogdatum.ui \
- ui/dialogeinmaischetemp.ui
+ ui/dialogeinmaischetemp.ui \
+ ui/dialogsudteilen.ui
 HEADERS = src/mainwindowimpl.h \
  src/berechnungen.h \
  src/korrektswimpl.h \
@@ -85,7 +86,9 @@ HEADERS = src/mainwindowimpl.h \
  src/mytablewidget.h \
  src/mytablewidgetitemnumeric.h \
  src/mydsvtablemodel.h \
- src/dialogeinmaischetemp.h
+ src/dialogeinmaischetemp.h \
+ src/dialogsudteilen.h \
+ src/database.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -126,6 +129,8 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mainwindowimpl_zusammenfassung.cpp \
  src/mydsvtablemodel.cpp \
  src/dialogeinmaischetemp.cpp \
- src/mainwindowimpl_ueber.cpp
+ src/mainwindowimpl_ueber.cpp \
+ src/dialogsudteilen.cpp \
+ src/database.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

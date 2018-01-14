@@ -4,10 +4,12 @@ http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
 ### Version 1.4.5.0 (in Entwicklung)
 - Umstellung auf Qt 5.10
-- Windows version wird für 64bit Architektur kompiliert
+- Windows Versionen für 32bit und 64bit Architektur
 - Rohstofftabellen neu organisiert
 - Drucken wird nicht mehr unterstützt
 - EBC Wert bis 2000
+- Weitere Zutaten können auch nach dem Zustand "gebraut" hinzugefügt werden
+- Sud kann wärend des Brauens oder Gärung in zwei Teile geteilt werden 
 - Fix: falsche Dropdown Werte (Hopfengabe Gewicht statt IBU, Weitere Zutaten Zugabezeitpunkt)
 ### Version 1.4.4.1
 - Zustand der Tabellen werden gespeichert

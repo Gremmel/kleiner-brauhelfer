@@ -25,12 +25,14 @@
 #include "einstellungsdialogimpl.h"
 #include "getrohstoffvorlage.h"
 #include "rohstoffaustauschen.h"
+#include "database.h"
 #include "dialog_berschuettungimpl.h"
 #include "dialog_berechne_ibuimpl.h"
 #include "dialogberverdampfung.h"
 #include "brauanlage.h"
 #include "dialoginfo.h"
 #include "dialogeinmaischetemp.h"
+#include "dialogsudteilen.h"
 #include "mytablewidgetitemnumeric.h"
 //
 MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
@@ -56,9 +58,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   graphicsView_bewStar->init(StyleDunkel);
   graphicsView_bewStar->setMaxStar(MaxAnzahlSterne);
   label_bew_ID->setVisible(false);
-
-  pushButton_SudVerbraucht -> setDisabled(true);
-  pushButton_SudAbgefuellt -> setDisabled(true);
 
   //Windowicon setzten
   appIcon.addFile(":/global/logo.svg",QSize(64,64));
@@ -233,14 +232,9 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   LadeBild();
 
   //letzte Suddaten laden
-  if (AktuelleSudID != 0)
-    LadeSudDB(true);
-  //RezeptTab und Brau und Gärdaten disablen
-  else {
-    //Beispielsud laden
-    AktuelleSudID = 1;
-    LadeSudDB(true);
-  }
+  if (AktuelleSudID == 0)
+      AktuelleSudID = 1;
+  LadeSudDB(true);
 
   setAenderung(false);
   AenderungAusruestung = false;
@@ -1096,7 +1090,7 @@ void MainWindowImpl::HopfenNeueZeile(const QString& name, double alpha, double m
     spinBoxMenge->setMinimum(0);
     spinBoxMenge->setMaximum(999999);
     spinBoxMenge->setDecimals(0);
-    spinBoxMenge->setSingleStep(10);
+    spinBoxMenge->setSingleStep(1);
     spinBoxMenge->setValue(menge);
     tableWidget_Hopfen->setCellWidget(i, TableHopfenColMenge, spinBoxMenge);
     tableWidget_Hopfen->setItem(i, TableHopfenColMenge, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
@@ -1370,6 +1364,7 @@ void MainWindowImpl::WeitereZutatNeueZeile(const QString& name, double menge, in
     spinBoxMenge->setAlignment(Qt::AlignHCenter);
     spinBoxMenge->setMinimum(0);
     spinBoxMenge->setMaximum(10000);
+    spinBoxMenge->setSingleStep(0.1);
     spinBoxMenge->setValue(menge);
     tableWidget_WeitereZutaten->setCellWidget(i, TableWZutatColMenge, spinBoxMenge);
     tableWidget_WeitereZutaten->setItem(i, TableWZutatColMenge, new MyTableWidgetItemNumeric(spinBoxMenge->value()));
@@ -1430,6 +1425,7 @@ void MainWindowImpl::WeitereZutatNeueZeile(const QString& name, double menge, in
     spinBoxPreis->setAlignment(Qt::AlignHCenter);
     spinBoxPreis -> setMinimum(0);
     spinBoxPreis -> setMaximum(1000);
+    spinBoxPreis->setSingleStep(0.1);
     spinBoxPreis->setValue(preis);
     tableWidget_WeitereZutaten->setCellWidget(i, TableWZutatColPreis, spinBoxPreis);
     tableWidget_WeitereZutaten->setItem(i, TableWZutatColPreis, new MyTableWidgetItemNumeric(spinBoxPreis->value()));
@@ -2278,6 +2274,10 @@ void MainWindowImpl::createActions()
   saveAct->setShortcuts(QKeySequence::Save);
   connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
+  exitAct = new QAction("", this);
+  exitAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+  connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+
   for (int i = 0; i < MaxRecentFiles; ++i) {
     recentFileActs[i] = new QAction(this);
     recentFileActs[i] -> setVisible(false);
@@ -2286,7 +2286,7 @@ void MainWindowImpl::createActions()
 
   //Aktionen in Menü Extras
   einstellungen = new QAction("", this);
-  //einstellungen->setShortcuts(QKeySequence::Save);
+  einstellungen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
   connect(einstellungen, SIGNAL(triggered()), this, SLOT(slot_einstellungen()));
 
   //Assistent zum übernehmen von einem rezept
@@ -2375,7 +2375,7 @@ void MainWindowImpl::createMenus()
   //Menü geladener Sud
   geladenerSudMenu = menuBar()->addMenu("");
   geladenerSudMenu->addAction(saveAct);
-  separatorAct = geladenerSudMenu->addSeparator();
+  geladenerSudMenu->addSeparator();
   geladenerSudMenu->addAction(schuettungProzent);
   geladenerSudMenu->addAction(berIBU);
   geladenerSudMenu->addAction(EntsperreEingabefelder);
@@ -2383,9 +2383,11 @@ void MainWindowImpl::createMenus()
   geladenerSudMenu->addAction(ResetAbgefuellt);
   geladenerSudMenu->addAction(ResetVerbraucht);
   geladenerSudMenu->addAction(ResetZugabestatus);
-  separatorAct = geladenerSudMenu->addSeparator();
+  geladenerSudMenu->addSeparator();
   for (int i = 0; i < MaxRecentFiles; ++i)
     geladenerSudMenu->addAction(recentFileActs[i]);
+  geladenerSudMenu->addSeparator();
+  geladenerSudMenu->addAction(exitAct);
 
   //Menü Extras
   extrasMenu = menuBar()->addMenu("");
@@ -2398,8 +2400,9 @@ void MainWindowImpl::createMenus()
 void MainWindowImpl::retranslateMenus()
 {
     geladenerSudMenu->setTitle(trUtf8("&Geladener Sud"));
-    saveAct->setText(trUtf8("&Speichern"));
+    saveAct->setText(trUtf8("Speichern"));
     saveAct->setStatusTip(trUtf8("Speichere die aktuellen Suddaten"));
+    exitAct->setText(trUtf8("Beenden"));
     schuettungProzent->setText(trUtf8("&Rezeptübernahme Schüttung"));
     schuettungProzent->setStatusTip(trUtf8("Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
     berIBU->setText(trUtf8("&Rezeptübernahme Bittere"));
@@ -3991,13 +3994,12 @@ void MainWindowImpl::slot_pushButton_gebraut()
 
   // Eingabefelder Disablen
   SetStatusGebraut(true);
-  pushButton_SudAbgefuellt -> setDisabled(false);
 
   //Abfrage ob Rohstoffe vom Bestand abgezogen werden sollen
   QMessageBox msgBox;
   msgBox.setWindowTitle("kleine-frage");
   msgBox.setInformativeText("");
-  msgBox.setText(trUtf8("Sollen die verwendeten Rohstoffe vom Bestand abgezogen werden?\n\nHinweis: Zutaten die bei der gärung hinzugegeben werden werden jetzt nicht verrechnet."));
+  msgBox.setText(trUtf8("Sollen die verwendeten Rohstoffe vom Bestand abgezogen werden?\n\nHinweis: Zutaten, die bei der Gärung hinzugegeben werden, werden jetzt nicht verrechnet."));
   //msgBox.setInformativeText(trUtf8("Sollen die verwendeten Rohstoffe vom Bestand abgezogen werden?"));
   msgBox.setIcon(QMessageBox::Question);
   //msgBox.setDefaultButton(QMessageBox::Save);
@@ -4044,6 +4046,7 @@ void MainWindowImpl::SetStatusGebraut(bool status)
   }
 
   pushButton_RohstoffeAbziehen -> setDisabled(status);
+  pushButton_SudAbgefuellt->setEnabled(status && !BierWurdeAbgefuellt);
 
   //lineEdit_Sudname -> setDisabled(status);
   spinBox_Menge -> setReadOnly(status);
@@ -4104,8 +4107,6 @@ void MainWindowImpl::SetStatusGebraut(bool status)
   pushButton_HopfenHinzufuegen -> setVisible(!status);
   comboBox_BerechnungsArtHopfen->setDisabled(status);
   comboBox_BerechnungsArtHopfen->setEditable(status);
-
-  pushButton_EWZ_Hinzufuegen -> setVisible(!status);
 
   //Tab Wasser
   SpinBox_waSollRestalkalitaet_dh -> setReadOnly(status);
@@ -4404,7 +4405,7 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
     bs = QAbstractSpinBox::NoButtons;
   }
 
-  pushButton_SudAbgefuellt -> setDisabled(status);
+  pushButton_SudAbgefuellt->setDisabled(status || !BierWurdeGebraut);
 
   doubleSpinBox_CO2 -> setReadOnly(status);
   doubleSpinBox_CO2 -> setButtonSymbols(bs);
@@ -4435,6 +4436,8 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
   spinBox_JungbiermengeAbfuellen -> setReadOnly(status);
   spinBox_JungbiermengeAbfuellen -> setButtonSymbols(bs);
 
+  pushButton_EWZ_Hinzufuegen -> setVisible(!status);
+
   //Tab Bewertung ausblenden
   tab_Bewertung->setEnabled(status);
   tabWidged->setTabEnabled(tabWidged->indexOf(tab_Bewertung), status);
@@ -4442,7 +4445,7 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status)
 
 void MainWindowImpl::SetDisabledVerbraucht(bool status)
 {
-  pushButton_SudVerbraucht -> setDisabled(status);
+    pushButton_SudVerbraucht->setDisabled(status);
 }
 
 void MainWindowImpl::slot_Changed()
@@ -5016,21 +5019,16 @@ void MainWindowImpl::CheckPfannevoll()
 
 void MainWindowImpl::openRecentFile()
 {
-  QAction *action = qobject_cast<QAction *>(sender());
-  if (action){
-    if (Aenderung){
-      if (AbfrageSpeichern()){
-          AktuelleSudID = action -> data().toInt();
-          LadeSudDB(true);
-      }
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+    {
+        if (Aenderung ? AbfrageSpeichern() : true)
+        {
+            AktuelleSudID = action -> data().toInt();
+            LadeSudDB(true);
+        }
     }
-    else {
-        AktuelleSudID = action -> data().toInt();
-        LadeSudDB(true);
-    }
-  }
 }
-
 
 void MainWindowImpl::setRecentFile(int ID)
 {
@@ -5385,8 +5383,6 @@ void MainWindowImpl::updateRecentFileActions()
   }
   for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
     recentFileActs[j]->setVisible(false);
-
-  separatorAct->setVisible(numRecentFiles > 0);
 }
 
 
@@ -5404,32 +5400,13 @@ int MainWindowImpl::strippedID(const QString &fullFileName)
 void MainWindowImpl::LadeSudDB(bool aktivateTab)
 {
   AmLaden = true;
-  BierWurdeGebraut = false;
   ErstelleZutatenlisten();
   FuelleRezeptComboAuswahlen();
   LeseSuddatenDB(aktivateTab);
-  if (BierWurdeGebraut) {
-    SetStatusGebraut(true);
-  }
-  else {
-    SetStatusGebraut(false);
-  }
-
-  if (BierWurdeAbgefuellt) {
-    SetDisabledAbgefuellt(true);
-  }
-  else {
-    SetDisabledAbgefuellt(false);
-    if (!BierWurdeGebraut)
-      pushButton_SudAbgefuellt -> setDisabled(true);
-  }
-
-  if (BierWurdeVerbraucht || !BierWurdeAbgefuellt) {
-    SetDisabledVerbraucht(true);
-  }
-  else {
-    SetDisabledVerbraucht(false);
-  }
+  SetStatusGebraut(BierWurdeGebraut);
+  SetDisabledAbgefuellt(BierWurdeAbgefuellt);
+  SetDisabledVerbraucht(BierWurdeVerbraucht || !BierWurdeAbgefuellt);
+  pushButton_SudTeilen->setDisabled(BierWurdeVerbraucht);
   setRecentFile(AktuelleSudID);
   AmLaden = false;
   BerAlles();
@@ -6064,430 +6041,12 @@ int MainWindowImpl::slot_pushButton_SudNeu()
 
 void MainWindowImpl::slot_pushButton_SudKopie()
 {
-  pushButton_SudKopie -> setEnabled(false);
-  QSqlQuery query;
-  int row = tableWidget_Sudauswahl -> currentRow();
-  QString SudIDFrom = tableWidget_Sudauswahl -> item(row,0) -> text();
-  QString SudIDNeu;
-
-  QSqlDatabase::database().transaction();
-
-  //Datensatz Kopieren
-  QString sql = "SELECT * FROM Sud WHERE ID=" + SudIDFrom;
-  if (!query.exec(sql)) {
-    // Fehlermeldung Datenbankabfrage
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
-  }
-  query.first();
-  sql = "INSERT INTO Sud ('Sudname',";
-  sql += "'Menge',";
-  sql += "'SW',";
-  sql += "'CO2',";
-  sql += "'IBU',";
-  sql += "'Kommentar' ,";
-  sql += "'Braudatum',";
-  sql += "'BierWurdeGebraut' ,";
-  sql += "'Anstelldatum' ,";
-  sql += "'WuerzemengeAnstellen'  ,";
-  sql += "'SWAnstellen'  ,";
-  sql += "'Abfuelldatum',";
-  sql += "'BierWurdeAbgefuellt' ,";
-  sql += "'SWSchnellgaerprobe' ,";
-  sql += "'SWJungbier' ,";
-  sql += "'TemperaturJungbier' ,";
-  sql += "'WuerzemengeKochende' ,";
-  sql += "'Speisemenge' ,";
-  sql += "'SWKochende'  ,";
-  sql += "'AuswahlHefe' ,";
-  sql += "'FaktorHauptguss' ,";
-  sql += "'KochdauerNachBitterhopfung' ,";
-  sql += "'EinmaischenTemp' ,";
-  sql += "'Erstellt' ,";
-  sql += "'Gespeichert' ,";
-  sql += "'AktivTab' ,";
-  sql += "'erg_S_Gesammt'  ,";
-  sql += "'erg_W_Gesammt' ,";
-  sql += "'erg_WHauptguss'  ,";
-  sql += "'erg_WNachguss'  ,";
-  sql += "'erg_Sudhausausbeute' ,";
-  sql += "'erg_Farbe'  ,";
-  sql += "'erg_Preis' ,";
-  sql += "'erg_Alkohol' ,";
-  sql += "'erg_EffektiveAusbeute' ,";
-  sql += "'KostenWasserStrom' ,";
-  sql += "'Nachisomerisierungszeit' ,";
-  sql += "'WuerzemengeVorHopfenseihen' ,";
-  sql += "'SWVorHopfenseihen' ,";
-  sql += "'RestalkalitaetSoll' ,";
-  sql += "'SchnellgaerprobeAktiv' ,";
-  sql += "'JungbiermengeAbfuellen' ,";
-  sql += "'erg_AbgefuellteBiermenge' ,";
-  sql += "'BewertungMaxSterne' ,";
-  sql += "'NeuBerechnen' ,";
-  sql += "'HefeAnzahlEinheiten' ,";
-  sql += "'berechnungsArtHopfen' ,";
-  sql += "'highGravityFaktor' ,";
-  sql += "'AuswahlBrauanlage' ,";
-  sql += "'AuswahlBrauanlageName' ,";
-  sql += "'Reifezeit') ";
-  sql += "Values(";
-  sql += "'Kopie von " + query.value(1).toString().replace("'","''") + "',";
-  sql += "'" + query.value(2).toString().replace("'","''") + "',";
-  sql += "'" + query.value(3).toString().replace("'","''") + "',";
-  sql += "'" + query.value(4).toString().replace("'","''") + "',";
-  sql += "'" + query.value(5).toString().replace("'","''") + "',";
-  sql += "'" + query.value(6).toString().replace("'","''") + "',";
-  sql += "'" + query.value(7).toString().replace("'","''") + "',";
-  sql += "'0',";
-  sql += "'" + query.value(9).toString().replace("'","''") + "',";
-  sql += "'" + query.value(10).toString().replace("'","''") + "',";
-  sql += "'" + query.value(11).toString().replace("'","''") + "',";
-  sql += "'" + query.value(12).toString().replace("'","''") + "',";
-  sql += "'0',";
-  sql += "'" + query.value(14).toString().replace("'","''") + "',";
-  sql += "'" + query.value(15).toString().replace("'","''") + "',";
-  sql += "'" + query.value(16).toString().replace("'","''") + "',";
-  sql += "'" + query.value(17).toString().replace("'","''") + "',";
-  sql += "'" + query.value(18).toString().replace("'","''") + "',";
-  sql += "'" + query.value(19).toString().replace("'","''") + "',";
-  sql += "'" + query.value(20).toString().replace("'","''") + "',";
-  sql += "'" + query.value(21).toString().replace("'","''") + "',";
-  sql += "'" + query.value(22).toString().replace("'","''") + "',";
-  sql += "'" + query.value(23).toString().replace("'","''") + "',";
-  sql += "'" + QDateTime::currentDateTime().toString(Qt::ISODate) + "',";
-  sql += "'',";
-  sql += "'" + query.value(26).toString().replace("'","''") + "',";
-  sql += "'" + query.value(27).toString().replace("'","''") + "',";
-  sql += "'" + query.value(28).toString().replace("'","''") + "',";
-  sql += "'" + query.value(29).toString().replace("'","''") + "',";
-  sql += "'" + query.value(30).toString().replace("'","''") + "',";
-  sql += "'" + query.value(31).toString().replace("'","''") + "',";
-  sql += "'" + query.value(32).toString().replace("'","''") + "',";
-  sql += "'" + query.value(33).toString().replace("'","''") + "',";
-  sql += "'" + query.value(34).toString().replace("'","''") + "',";
-  sql += "'" + query.value(44).toString().replace("'","''") + "',";
-  sql += "'" + query.value(35).toString().replace("'","''") + "',";
-  sql += "'" + query.value(41).toString().replace("'","''") + "',";
-  sql += "'" + query.value(42).toString().replace("'","''") + "',";
-  sql += "'" + query.value(43).toString().replace("'","''") + "',";
-  sql += "'" + query.value(45).toString().replace("'","''") + "',";
-  sql += "'" + query.value(46).toString().replace("'","''") + "',";
-  sql += "'" + query.value(47).toString().replace("'","''") + "',";
-  sql += "'" + query.value(48).toString().replace("'","''") + "',";
-  sql += "'" + query.value(49).toString().replace("'","''") + "',";
-  sql += "'" + query.value(50).toString().replace("'","''") + "',";
-  sql += "'" + query.value(51).toString().replace("'","''") + "',";
-  sql += "'" + query.value(52).toString().replace("'","''") + "',";
-  sql += "'" + query.value(53).toString().replace("'","''") + "',";
-  sql += "'" + query.value(54).toString().replace("'","''") + "',";
-  sql += "'" + query.value(55).toString().replace("'","''") + "',";
-  sql += "'" + query.value(39).toString().replace("'","''") + "'";
-  sql += ");";
-  if (!query.exec(sql)) {
-    // Fehlermeldung Datenbankabfrage
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
-  }
-  else {
-    //SudID auslesen
-    sql = "SELECT last_insert_rowid();";
-    if (!query.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    else {
-      query.first();
-      SudIDNeu = query.value(0).toString();
-    }
-
-    //Rastdatensätze Kopieren
-    QSqlQuery query_rasten;
-    sql = "SELECT * FROM Rasten WHERE SudID=" + SudIDFrom + ";";
-    if (!query_rasten.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_rasten.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    while (query_rasten.next()){
-      sql = "INSERT INTO Rasten ";
-      sql += "(";
-      sql += "'SudID', ";
-      sql += "'RastAktiv', ";
-      sql += "'RastTemp', ";
-      sql += "'RastDauer', ";
-      sql += "'RastName' ";
-      sql += ")Values(";
-      sql += "'" + SudIDNeu + "',";
-      sql += "'" + query_rasten.value(2).toString().replace("'","''") + "',";
-      sql += "'" + query_rasten.value(3).toString().replace("'","''") + "',";
-      sql += "'" + query_rasten.value(4).toString().replace("'","''") + "',";
-      sql += "'" + query_rasten.value(5).toString().replace("'","''") + "'";
-      sql += ");";
-      if (!query.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-    }
-    //Malz Schüttung Kopieren
-    QSqlQuery query_Malz;
-    sql = "SELECT * FROM Malzschuettung WHERE SudID=" + SudIDFrom + ";";
-    if (!query_Malz.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    while (query_Malz.next()){
-      //überprüfen ob das Malz noch existiert
-      QString name = query_Malz.value(2).toString();
-      if (name !=""){
-        bool gefunden = false;
-        for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
-          if (tableWidget_Malz -> item(i,TableMalzColName) -> text() == name)
-            gefunden = true;
-        }
-        //wenn Eintrag nicht gefunden wurde Dialogfeld zum Austauschen anzeigen
-        if (!gefunden){
-          RohstoffAustauschen raDia;
-          raDia.setButtonCancelVisible(false);
-          for (int i=0; i < tableWidget_Malz -> rowCount(); i++){
-            raDia.addAuswahlEintrag(tableWidget_Malz -> item(i,TableMalzColName) -> text() );
-          }
-          raDia.SetText(trUtf8("Der Malzeintrag <b>") + name + trUtf8("</b> ist nicht mehr vorhanden.\n\n ersetzen durch?"));
-          raDia.exec();
-          name = raDia.GetAktAuswahl();
-        }
-      }
-
-      //Malz eintragen
-      sql = "INSERT INTO Malzschuettung ";
-      sql += "(";
-      sql += "'SudID', ";
-      sql += "'Name', ";
-      sql += "'Prozent', ";
-      sql += "'erg_Menge', ";
-      sql += "'Farbe' ";
-      sql += ")Values(";
-      sql += "'" + SudIDNeu + "',";
-      sql += "'" + name.replace("'","''") + "',";
-      sql += "'" + query_Malz.value(3).toString().replace("'","''") + "',";
-      sql += "'" + query_Malz.value(4).toString().replace("'","''") + "',";
-      sql += "'" + query_Malz.value(5).toString().replace("'","''") + "'";
-      sql += ");";
-      if (!query.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-    }
-    //Hopfengaben Kopieren
-    QSqlQuery query_Hopfen;
-    sql = "SELECT * FROM Hopfengaben WHERE SudID=" + SudIDFrom + ";";
-    if (!query_Hopfen.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    while (query_Hopfen.next()){
-      //überprüfen ob der Rohstoff noch existiert
-      QString name = query_Hopfen.value(3).toString();
-      if (name !=""){
-        bool gefunden = false;
-        for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
-          if (tableWidget_Hopfen -> item(i,TableHopfenColName) -> text() == name)
-            gefunden = true;
-        }
-        //wenn Eintrag nicht gefunden wurde Dialogfeld zum Austauschen anzeigen
-        if (!gefunden){
-          RohstoffAustauschen raDia;
-          raDia.setButtonCancelVisible(false);
-          for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
-            raDia.addAuswahlEintrag(tableWidget_Hopfen -> item(i,TableHopfenColName) -> text() );
-          }
-          raDia.SetText(trUtf8("Der Hopfeneintrag <b>") + name + trUtf8("</b> ist nicht mehr vorhanden.\n\n ersetzen durch?"));
-          raDia.exec();
-          name = raDia.GetAktAuswahl();
-        }
-      }
-
-      sql = "INSERT INTO Hopfengaben ";
-      sql += "(";
-      sql += "'SudID', ";
-      sql += "'Aktiv', ";
-      sql += "'Name', ";
-      sql += "'Prozent', ";
-      sql += "'Zeit', ";
-      sql += "'erg_Menge', ";
-      sql += "'erg_Hopfentext', ";
-      sql += "'Alpha', ";
-      sql += "'Pellets', ";
-      sql += "'Vorderwuerze' ";
-      sql += ")Values(";
-      sql += "'" + SudIDNeu + "',";
-      sql += "'" + query_Hopfen.value(2).toString().replace("'","''") + "',";
-      sql += "'" + name.replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(4).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(5).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(6).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(7).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(8).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(9).toString().replace("'","''") + "',";
-      sql += "'" + query_Hopfen.value(10).toString().replace("'","''") + "'";
-      sql += ");";
-      if (!query.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-
-    }
-
-    //Weitere Zutaten Kopieren
-    QSqlQuery query_WeitereZutaten;
-    sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + SudIDFrom + ";";
-    if (!query_WeitereZutaten.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_WeitereZutaten.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    while (query_WeitereZutaten.next()){
-      QString name;
-      //wenn typ = Hopfen ist
-      if (query_WeitereZutaten.value(5).toString() == "100"){
-        //überprüfen ob der Rohstoff noch existiert
-        name = query_WeitereZutaten.value(2).toString();
-        if (name !=""){
-          bool gefunden = false;
-          for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
-            if (tableWidget_Hopfen -> item(i,TableHopfenColName) -> text() == name)
-              gefunden = true;
-          }
-          //wenn Eintrag nicht gefunden wurde Dialogfeld zum Austauschen anzeigen
-          if (!gefunden){
-            RohstoffAustauschen raDia;
-            raDia.setButtonCancelVisible(false);
-            for (int i=0; i < tableWidget_Hopfen -> rowCount(); i++){
-              raDia.addAuswahlEintrag(tableWidget_Hopfen -> item(i,TableHopfenColName) -> text() );
-            }
-            raDia.SetText(trUtf8("Der Hopfeneintrag in den Weiteren Zutaten <b>") + name + trUtf8("</b> ist nicht mehr vorhanden.\n\n ersetzen durch?"));
-            raDia.exec();
-            name = raDia.GetAktAuswahl();
-          }
-        }
-      }
-      //wenn weitere Zutat
-      else {
-        //überprüfen ob der Rohstoff noch existiert
-        name = query_WeitereZutaten.value(2).toString();
-        if (name !=""){
-          bool gefunden = false;
-          for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
-            if (tableWidget_WeitereZutaten -> item(i,TableWZutatColName) -> text() == name)
-              gefunden = true;
-          }
-          //wenn Eintrag nicht gefunden wurde Dialogfeld zum Austauschen anzeigen
-          if (!gefunden){
-            RohstoffAustauschen raDia;
-            raDia.setButtonCancelVisible(false);
-            for (int i=0; i < tableWidget_WeitereZutaten -> rowCount(); i++){
-              raDia.addAuswahlEintrag(tableWidget_WeitereZutaten -> item(i,TableWZutatColName) -> text() );
-            }
-            raDia.SetText(trUtf8("Der Rohstoffeintrag in den Weiteren Zutaten <b>") + name + trUtf8("</b> ist nicht mehr vorhanden.\n\n ersetzen durch?"));
-            raDia.exec();
-            name = raDia.GetAktAuswahl();
-          }
-        }
-      }
-
-      sql = "INSERT INTO WeitereZutatenGaben ";
-      sql += "(";
-      sql += "'SudID', ";
-      sql += "'Name', ";
-      sql += "'Menge', ";
-      sql += "'Einheit', ";
-      sql += "'Typ', ";
-      sql += "'Zeitpunkt', ";
-      sql += "'Bemerkung', ";
-      sql += "'erg_Menge', ";
-      sql += "'Ausbeute', ";
-      sql += "'Farbe', ";
-      sql += "'Zugabedauer' ";
-      sql += ")Values(";
-      sql += "'" + SudIDNeu + "',";
-      sql += "'" + name.replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(3).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(4).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(5).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(6).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(7).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(8).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(9).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(10).toString().replace("'","''") + "',";
-      sql += "'" + query_WeitereZutaten.value(15).toString().replace("'","''") + "'";
-      sql += ");";
-      if (!query.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-    }
-
-    //Anhänge Kopieren
-    QSqlQuery query_anhang;
-    sql = "SELECT * FROM Anhang WHERE SudID=" + SudIDFrom + ";";
-    if (!query_anhang.exec(sql)) {
-      // Fehlermeldung Datenbankabfrage
-      ErrorMessage *errorMessage = new ErrorMessage();
-      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                  CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
-                                  + trUtf8("\nSQL Befehl:\n") + sql);
-    }
-    while (query_anhang.next()){
-      sql = "INSERT INTO Anhang ";
-      sql += "(";
-      sql += "'SudID',";
-      sql += "'Pfad'";
-      sql += ")Values(";
-      sql += "'" + SudIDNeu + "',";
-      sql += "'" + query_anhang.value(2).toString().replace("'","''") + "'";
-      sql += ");";
-      if (!query.exec(sql)) {
-        // Fehlermeldung Datenbankabfrage
-        ErrorMessage *errorMessage = new ErrorMessage();
-        errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
-      }
-    }
-  }
-
-  QSqlDatabase::database().commit();
-  FuelleSudauswahl();
-  pushButton_SudKopie -> setEnabled(true);
+    QString id = tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(),0)->text();
+    QString name = tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(),1)->text() + trUtf8(" Kopie");
+    pushButton_SudKopie -> setEnabled(false);
+    if (Database::SudKopieren(id, name, false) > 0)
+        FuelleSudauswahl();
+    pushButton_SudKopie -> setEnabled(true);
 }
 
 void MainWindowImpl::slot_pushButton_SudDel()
@@ -6625,13 +6184,7 @@ void MainWindowImpl::slot_pushButton_SudLaden()
     int row = tableWidget_Sudauswahl->currentRow();
     if (row >= 0)
     {
-        bool load = false;
-        if (Aenderung)
-           load = AbfrageSpeichern();
-        else
-            load = true;
-
-        if (load)
+        if (Aenderung ? AbfrageSpeichern() : true)
         {
             pushButton_SudLaden->setEnabled(false);
             AktuelleSudID = tableWidget_Sudauswahl->item(row, 0)->text().toInt();
@@ -6646,13 +6199,7 @@ void MainWindowImpl::on_pushButton_SudLadenBUebersicht_clicked()
     int row = tableWidget_Brauuebersicht->currentRow();
     if (row >= 0)
     {
-        bool load = false;
-        if (Aenderung)
-           load = AbfrageSpeichern();
-        else
-            load = true;
-
-        if (load)
+        if (Aenderung ? AbfrageSpeichern() : true)
         {
             pushButton_SudLadenBUebersicht->setEnabled(false);
             AktuelleSudID = tableWidget_Brauuebersicht->item(row, 0)->text().toInt();
@@ -10238,56 +9785,78 @@ void MainWindowImpl::slot_pushButton_RastNachUnten(int id)
 
 void MainWindowImpl::on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1)
 {
-  if (Gestartet){
-    spinBox_JungbiermengeAbfuellen -> setValue(arg1);
-  }
+    if (Gestartet)
+    {
+        spinBox_JungbiermengeAbfuellen->setValue(arg1);
+    }
 }
 
 void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1)
 {
-  if (checkBox_zumischen->isChecked()) {
-    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
-    spinBox_SWAnstellen->setValue(spinBox_SW->value());
-  }
-  else {
-    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
-    spinBox_SWAnstellen->setValue(arg1);
-  }
+    if (Gestartet)
+    {
+        if (checkBox_zumischen->isChecked())
+        {
+            spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value() + spinBox_WasserVerschneidung->value());
+            spinBox_SWAnstellen->setValue(spinBox_SW->value());
+        }
+        else
+        {
+            spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
+            spinBox_SWAnstellen->setValue(arg1);
+        }
+    }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1)
 {
-  if (checkBox_zumischen->isChecked()) {
-    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
-    spinBox_SWAnstellen->setValue(spinBox_SW->value());
-  }
-  else {
-    spinBox_WuerzemengeAnstellen -> setValue(arg1 - spinBox_Speisemenge -> value());
-    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
-  }
+    if (Gestartet)
+    {
+        if (checkBox_zumischen->isChecked())
+        {
+            spinBox_WuerzemengeAnstellen->setValue(arg1 - spinBox_Speisemenge->value() + spinBox_WasserVerschneidung->value());
+            spinBox_SWAnstellen->setValue(spinBox_SW->value());
+        }
+        else
+        {
+            spinBox_WuerzemengeAnstellen->setValue(arg1 - spinBox_Speisemenge->value());
+            spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+        }
+    }
 }
 
 void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double )
 {
-  if (checkBox_zumischen->isChecked()) {
-    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value() + spinBox_WasserVerschneidung->value());
-    spinBox_SWAnstellen->setValue(spinBox_SW->value());
-  }
-  else {
-    spinBox_WuerzemengeAnstellen -> setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge -> value());
-    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
-  }
+    if (Gestartet)
+    {
+        if (checkBox_zumischen->isChecked())
+        {
+            spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value() + spinBox_WasserVerschneidung->value());
+            spinBox_SWAnstellen->setValue(spinBox_SW->value());
+        }
+        else
+        {
+            spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
+            spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
+        }
+    }
 }
 
 void MainWindowImpl::on_spinBox_SW_valueChanged(double arg1)
 {
-  spinBox_SWVorHopfenseihen -> setValue(arg1);
-  spinBox_SWKochende -> setValue(arg1);
+    if (Gestartet)
+    {
+        spinBox_SWVorHopfenseihen->setValue(arg1);
+        spinBox_SWKochende->setValue(arg1);
+    }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeVorHopfenseihen_valueChanged(double arg1)
 {
-  spinBox_WuerzemengeKochende -> setValue(arg1);
+    if (Gestartet)
+    {
+        spinBox_WuerzemengeKochende->setValue(arg1);
+    }
 }
 
 void MainWindowImpl::on_pushButton_BewertungNeu_clicked()
@@ -11712,9 +11281,11 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_itemSelectionChanged()
 
 void MainWindowImpl::on_spinBox_Menge_valueChanged(double arg1)
 {
-  spinBox_WuerzemengeVorHopfenseihen -> setValue(arg1);
-  spinBox_WuerzemengeKochende -> setValue(arg1);
-
+    if (Gestartet)
+    {
+        spinBox_WuerzemengeVorHopfenseihen->setValue(arg1);
+        spinBox_WuerzemengeKochende->setValue(arg1);
+    }
 }
 
 void MainWindowImpl::on_comboBox_BerechnungsArtHopfen_currentIndexChanged(int )
@@ -12476,4 +12047,79 @@ void MainWindowImpl::on_pushButton_CalcEinmaischeTemp_clicked()
 void MainWindowImpl::on_spinBox_AnzahlHefeEinheiten_valueChanged(int)
 {
     setHefeAuswahlListeFarbe();
+}
+
+void MainWindowImpl::on_pushButton_SudTeilen_clicked()
+{
+    if (Aenderung ? AbfrageSpeichern() : true)
+    {
+        DialogSudTeilen* dlg = new DialogSudTeilen(lineEdit_Sudname->text(), spinBox_WuerzemengeAnstellen->value(), this);
+        if (dlg->exec() == QDialog::Accepted)
+        {
+            int id = Database::SudKopieren(QString::number(AktuelleSudID), dlg->nameTeil2(), true);
+            if (id > 0)
+            {
+                double factor = 0.0;
+                int lastId = AktuelleSudID;
+                bool wurdeGebraut = BierWurdeGebraut;
+                bool wurdeAbgefuellt = BierWurdeAbgefuellt;
+
+                // Teil 2
+                AktuelleSudID = id;
+                LadeSudDB(false);
+                Gestartet = false;
+                factor = dlg->prozent();
+                spinBox_Menge->setValue(spinBox_Menge->value() * factor);
+                spinBox_WuerzemengeVorHopfenseihen->setValue(spinBox_WuerzemengeVorHopfenseihen->value() * factor);
+                spinBox_WuerzemengeKochende->setValue(spinBox_WuerzemengeKochende->value() * factor);
+                spinBox_Speisemenge->setValue(spinBox_Speisemenge->value() * factor);
+                spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeAnstellen->value() * factor);
+                spinBox_JungbiermengeAbfuellen->setValue(spinBox_JungbiermengeAbfuellen->value() * factor);
+                Gestartet = true;
+                if (wurdeGebraut)
+                {
+                    BierWurdeGebraut = false;
+                    BerAlles();
+                    BierWurdeGebraut = true;
+                }
+                if (wurdeAbgefuellt)
+                {
+                    BierWurdeAbgefuellt = false;
+                    BerAlles();
+                    BierWurdeAbgefuellt = true;
+                }
+                BerAlles();
+                save();
+
+                // Teil 1
+                AktuelleSudID = lastId;
+                LadeSudDB(false);
+                Gestartet = false;
+                factor = 1.0 - dlg->prozent();
+                lineEdit_Sudname->setText(dlg->nameTeil1());
+                spinBox_Menge->setValue(spinBox_Menge->value() * factor);
+                spinBox_WuerzemengeVorHopfenseihen->setValue(spinBox_WuerzemengeVorHopfenseihen->value() * factor);
+                spinBox_WuerzemengeKochende->setValue(spinBox_WuerzemengeKochende->value() * factor);
+                spinBox_Speisemenge->setValue(spinBox_Speisemenge->value() * factor);
+                spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeAnstellen->value() * factor);
+                spinBox_JungbiermengeAbfuellen->setValue(spinBox_JungbiermengeAbfuellen->value() * factor);
+                Gestartet = true;
+                if (wurdeGebraut)
+                {
+                    BierWurdeGebraut = false;
+                    BerAlles();
+                    BierWurdeGebraut = true;
+                }
+                if (wurdeAbgefuellt)
+                {
+                    BierWurdeAbgefuellt = false;
+                    BerAlles();
+                    BierWurdeAbgefuellt = true;
+                }
+                BerAlles();
+                save();
+            }
+        }
+        delete dlg;
+    }
 }

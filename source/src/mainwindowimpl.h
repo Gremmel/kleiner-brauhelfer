@@ -298,10 +298,10 @@ private:
   void LeseAnhangDB();
   QMenu *geladenerSudMenu;
   QMenu *extrasMenu;
-	QMenu *sprachMenu;
+  QMenu *sprachMenu;
   QMenu *recentFilesMenu;
   QAction *saveAct;
-  QAction *separatorAct;
+  QAction *exitAct;
   QAction *einstellungen;
   QAction *schuettungProzent;
   QAction *berIBU;
@@ -669,6 +669,7 @@ private slots:
   void on_checkBox_zumischen_clicked();
   void on_pushButton_CalcEinmaischeTemp_clicked();
   void on_spinBox_AnzahlHefeEinheiten_valueChanged(int);
+  void on_pushButton_SudTeilen_clicked();
 };
 #endif
 

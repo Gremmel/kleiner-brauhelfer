@@ -5097,6 +5097,9 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <widget class="QPushButton" name="pushButton_SudAbgefuellt">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Sud abgefüllt</string>
                   </property>
@@ -5104,8 +5107,21 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <widget class="QPushButton" name="pushButton_SudVerbraucht">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Sud verbraucht</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_SudTeilen">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Sud teilen</string>
                   </property>
                  </widget>
                 </item>
