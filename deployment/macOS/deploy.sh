@@ -59,6 +59,9 @@ echo "* Patching '${PLIST}'..."
 # Add finder icon
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile 'AppIcon'" ${PLIST}
 
+# Minimum OS is High Sierra to be sure
+/usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string '10.13'" ${PLIST} || exit 1
+
 # Add information for Finder
 /usr/libexec/PlistBuddy -c "Delete :CFBundleDisplayName" ${PLIST}
 /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string 'kleiner-brauhelfer'" ${PLIST} || exit 1
@@ -74,6 +77,8 @@ echo "* Patching '${PLIST}'..."
 
 /usr/libexec/PlistBuddy -c "Delete :NSHumanReadableCopyright" ${PLIST}
 /usr/libexec/PlistBuddy -c "Add :NSHumanReadableCopyright string 'Copyright © 2018 Gremmelsoft. All rights reserved.'" ${PLIST} || exit 1
+
+
 
 ###
 ### Copy resource files
