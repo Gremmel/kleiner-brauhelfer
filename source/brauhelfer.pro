@@ -3,7 +3,6 @@ QT = gui \
  svg \
  sql \
  network \
- printsupport \
  xml
 
 equals(QT_MAJOR_VERSION, 5)
@@ -11,14 +10,14 @@ equals(QT_MAJOR_VERSION, 5)
   greaterThan(QT_MINOR_VERSION, 4){
     QT +=  webenginewidgets
   } else {
-    QT += webkitwidgets
+    QT += webkitwidgets printsupport
   }
 }
 
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
-VERSION = 1.4.4.2
-VERSION_INT = 1040402
+VERSION = 1.4.5.0
+VERSION_INT = 1040500
 DEFINES += TARGET=\\\"$$TARGET\\\" VERSION=\\\"$$VERSION\\\" VERSION_INT=$$VERSION_INT
 
 win32:RC_ICONS += res/logo.ico
@@ -48,7 +47,8 @@ FORMS = ui/mainwindow.ui \
  ui/dialoginfo.ui \
  ui/anhangwidget.ui \
  ui/dialogdatum.ui \
- ui/dialogeinmaischetemp.ui
+ ui/dialogeinmaischetemp.ui \
+ ui/dialogsudteilen.ui
 HEADERS = src/mainwindowimpl.h \
  src/berechnungen.h \
  src/korrektswimpl.h \
@@ -86,7 +86,9 @@ HEADERS = src/mainwindowimpl.h \
  src/mytablewidget.h \
  src/mytablewidgetitemnumeric.h \
  src/mydsvtablemodel.h \
- src/dialogeinmaischetemp.h
+ src/dialogeinmaischetemp.h \
+ src/dialogsudteilen.h \
+ src/database.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -126,6 +128,9 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mainwindowimpl_spickzettel.cpp \
  src/mainwindowimpl_zusammenfassung.cpp \
  src/mydsvtablemodel.cpp \
- src/dialogeinmaischetemp.cpp
+ src/dialogeinmaischetemp.cpp \
+ src/mainwindowimpl_ueber.cpp \
+ src/dialogsudteilen.cpp \
+ src/database.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

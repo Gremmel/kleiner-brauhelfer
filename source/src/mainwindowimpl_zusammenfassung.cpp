@@ -9,8 +9,6 @@
 
 void MainWindowImpl::ErstelleZusammenfassung()
 {
-  //Überschrift vom Tab setzten
-  tabWidged -> setTabText(tabWidged->indexOf(tab_Spickzettel), trUtf8("Zusammenfassung"));
   // Seitenkopf
   QString seite, kopf, ende, style;
 

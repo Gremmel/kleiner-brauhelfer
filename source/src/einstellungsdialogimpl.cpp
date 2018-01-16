@@ -18,7 +18,6 @@ EinstellungsdialogImpl::EinstellungsdialogImpl( QWidget * parent, Qt::WindowFlag
   ErstelleIcons();
 
   LeseKonfig();
-  on_checkBox_PDFProgStarten_clicked();
 }
 //
 
@@ -806,44 +805,6 @@ void EinstellungsdialogImpl::LeseKonfigErweitert()
   spinBox_MaxBewertungSterne->setValue(settings.value("MaxAnzahlSterne").toInt());
 
   settings.endGroup();
-
-  //PDF Einstellungen
-  settings.beginGroup("PDF");
-  s = settings.value("zoomSpickzettel").toString();
-  if (s == ""){
-    settings.setValue("zoomSpickzettel",1);
-    d = 1;
-  }
-  else {
-    d = s.toDouble();
-  }
-  doubleSpinBox_zoomSpickzettel->setValue(d);
-
-  s = settings.value("zoomZusammenfassung").toString();
-  if (s == ""){
-    settings.setValue("zoomZusammenfassung",1);
-    d = 1;
-  }
-  else {
-    d = s.toDouble();
-  }
-  doubleSpinBox_zoomZusammenfassung->setValue(d);
-
-  s = settings.value("startPDFBetrachter").toString();
-  bool b;
-  if (s == ""){
-    settings.setValue("startPDFBetrachter",false);
-    b = false;
-  }
-  else {
-    b = settings.value("startPDFBetrachter").toBool();
-  }
-  checkBox_PDFProgStarten->setChecked(b);
-
-  lineEdit_PDFBetrachter->setText(settings.value("PDFProg").toString());
-
-  settings.endGroup();
-
 }
 
 void EinstellungsdialogImpl::LeseKonfigAnsicht()
@@ -1007,16 +968,6 @@ void EinstellungsdialogImpl::SchreibeKonfigErweitert()
   settings.setValue("MaxAnzahlSterne", spinBox_MaxBewertungSterne -> value());
 
   settings.endGroup();
-
-  //PDF Einstellungen schreiben
-  settings.beginGroup("PDF");
-
-  settings.setValue("zoomSpickzettel",doubleSpinBox_zoomSpickzettel->value());
-  settings.setValue("zoomZusammenfassung",doubleSpinBox_zoomZusammenfassung->value());
-  settings.setValue("startPDFBetrachter",checkBox_PDFProgStarten->isChecked());
-  settings.setValue("PDFProg", lineEdit_PDFBetrachter->text());
-  settings.endGroup();
-
 }
 
 
@@ -1050,26 +1001,6 @@ void EinstellungsdialogImpl::on_checkBox_NativStyle_clicked()
 void EinstellungsdialogImpl::on_comboBox_Farbgebung_currentIndexChanged(int )
 {
   StyleFelderEinausblenden();
-}
-
-
-void EinstellungsdialogImpl::on_checkBox_PDFProgStarten_clicked()
-{
-  if (checkBox_PDFProgStarten->isChecked()){
-    widget_PDFProg->setVisible(true);
-  }
-  else {
-    widget_PDFProg->setVisible(false);
-  }
-}
-
-void EinstellungsdialogImpl::on_pushButton_ProgPDF_clicked()
-{
-  QFileDialog fd(this);
-  QString fileName = fd.getOpenFileName(this, trUtf8("Bitte wähle einen PDF Betrachter aus"), "", "*");
-  if (fileName != ""){
-    lineEdit_PDFBetrachter->setText(fileName);
-  }
 }
 
 void EinstellungsdialogImpl::on_checkBox_FontSystem_clicked()

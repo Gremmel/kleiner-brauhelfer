@@ -47,8 +47,6 @@ private slots:
   void on_checkBox_NativStyle_clicked();
   void on_comboBox_Farbgebung_currentIndexChanged(int index);
   void on_pushButton_GetColorStyleAuswahl_clicked();
-  void on_checkBox_PDFProgStarten_clicked();
-  void on_pushButton_ProgPDF_clicked();
   void on_checkBox_FontSystem_clicked();
 };
 #endif
