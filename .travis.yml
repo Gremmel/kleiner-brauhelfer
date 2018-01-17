@@ -5,6 +5,7 @@ before_install:
  - sudo apt-get install qt5-default qttools5-dev-tools
 
 script:
+ - cd src
  - qmake -project
  - qmake brauhelfer.pro
  - make
