@@ -60,7 +60,7 @@ echo "* Patching '${PLIST}'..."
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile 'AppIcon'" ${PLIST}
 
 # Minimum OS is High Sierra to be sure
-/usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string '10.13'" ${PLIST} || exit 1
+/usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string '10.13'" ${PLIST}
 
 # Add information for Finder
 /usr/libexec/PlistBuddy -c "Delete :CFBundleDisplayName" ${PLIST}

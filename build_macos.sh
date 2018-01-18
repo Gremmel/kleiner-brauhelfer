@@ -8,6 +8,9 @@ fi
 
 PRO="source/brauhelfer.pro"
 
+# comment out #define DEBUG true
+sed -i '' -e '/^#define DEBUG true/ s/^#*/\/\/#/' ./source/src/definitionen.h
+
 ${QTDIR}/qmake "${PRO}" || exit 1
 make clean && make || exit 1
 ${QTDIR}/lupdate "${PRO}" || exit 1
