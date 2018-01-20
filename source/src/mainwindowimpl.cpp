@@ -44,7 +44,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   AktuelleSudID = 0;
   AmLaden = false;
   NichtBerechnen = false;
-  NeueMessungWirdAngelegt = false;
   NeuBerechnen = 0;
   Aenderung = false;
   reconnect = false;
@@ -231,12 +230,6 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   //Bierbild laden
   LadeBild();
 
-  //letzte Suddaten laden
-  if (AktuelleSudID == 0)
-      AktuelleSudID = 1;
-  LadeSudDB(true);
-
-  setAenderung(false);
   AenderungAusruestung = false;
   AenderungGeraeteliste = false;
   AenderungHauptgaerverlauf = false;
@@ -244,7 +237,11 @@ MainWindowImpl::MainWindowImpl( QWidget * parent,  Qt::WindowFlags f)
   setButtonsTextMerken();
   setFensterTitel();
   Gestartet = true;
-  BerAlles();
+
+  //letzte Suddaten laden
+  if (AktuelleSudID == 0)
+      AktuelleSudID = 1;
+  LadeSudDB(true);
 }
 
 void MainWindowImpl::initUi()
@@ -278,6 +275,15 @@ void MainWindowImpl::initUi()
         if (var.isValid())
             tableWidget_Sudauswahl->horizontalHeader()->resizeSection(i, var.toInt());
     }
+
+    // tableWidget_Schnellgaerverlauf
+    tableWidget_Schnellgaerverlauf->sortByColumn(0, Qt::AscendingOrder);
+
+    // tableWidget_Hauptgaerverlauf
+    tableWidget_Hauptgaerverlauf->sortByColumn(0, Qt::AscendingOrder);
+
+    // tableWidget_Nachgaerverlauf
+    tableWidget_Nachgaerverlauf->sortByColumn(0, Qt::AscendingOrder);
 
     // tableWidget_Brauuebersicht
     tableWidget_Brauuebersicht->setColumnHidden(0, true);
@@ -354,6 +360,7 @@ void MainWindowImpl::retranslate()
 {
     ErstelleUeber();
     retranslateMenus();
+    tabWidged->setTabText(tabWidged->indexOf(tab_Spickzettel), BierWurdeGebraut ? trUtf8("Zusammenfassung") : trUtf8("Spickzettel"));
 }
 
 void MainWindowImpl::on_MsgCheckFertig(int count)
@@ -400,7 +407,6 @@ void MainWindowImpl::closeEvent(QCloseEvent *evt)
                                       trUtf8("Anwendung schliessen?"),
                                       QMessageBox::Cancel | QMessageBox::Yes,
                                       QMessageBox::Yes) == QMessageBox::Yes;
-
     if (close)
     {
         SchreibeKonfig();
@@ -805,7 +811,7 @@ void MainWindowImpl::checkMsg()
 
 void MainWindowImpl::setAenderung(bool value)
 {
-  if (Gestartet) {
+  if (Gestartet && !AmLaden) {
     Aenderung = value;
     setFensterTitel();
   }
@@ -2735,7 +2741,7 @@ void MainWindowImpl::SchreibeBewertungenDB()
   }
 }
 
-void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
+void MainWindowImpl::LeseSuddatenDB()
 {
   QSqlQuery query_sud;
   int FeldNr;
@@ -3271,22 +3277,6 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
       //tabWidged -> setCurrentIndex(query_sud.value(FeldNr).toInt());
       //Gespeichertes Tab im Gärverlauf wiederherstellen
 
-      //Tab nach Status Einblenden
-      if (aktivateTab) {
-        // Wenn Bier Abgefüllt wurde Zusammenfassung anzeigen
-        if (BierWurdeAbgefuellt) {
-          tabWidged -> setCurrentWidget(tab_Spickzettel);
-        }
-        //Wenn Bier gebraut wurde aber noch nicht abgefüllt ist den Gärverlauf anzeigen
-        else if (BierWurdeGebraut) {
-          tabWidged -> setCurrentWidget(tab_Gaerverlauf);
-        }
-        //Bei einem noch nicht gebrauten Sud wird das Rezept eingeblendet
-        else {
-          tabWidged -> setCurrentWidget(tab_Rezept);
-        }
-      }
-
       FeldNr = query_sud.record().indexOf("AktivTab_Gaerverlauf");
       toolBox_Gaerverlauf -> setCurrentIndex(query_sud.value(FeldNr).toInt());
     }
@@ -3299,9 +3289,7 @@ void MainWindowImpl::LeseSuddatenDB(bool aktivateTab)
   LeseHauptgaerverlaufDB();
   LeseNachgaerverlaufDB();
   setFensterTitel();
-
 }
-
 
 void MainWindowImpl::FuelleRezeptComboAuswahlen()
 {
@@ -3761,16 +3749,12 @@ void MainWindowImpl::BerHopfen()
   delete [] IBUAnteil;
 }
 
-
-
 void MainWindowImpl::ErstelleTabSpickzettel()
 {
-  if (BierWurdeGebraut){
-    ErstelleZusammenfassung();
-  }
-  else {
-    ErstelleSpickzettel();
-  }
+    if (BierWurdeGebraut)
+        ErstelleZusammenfassung();
+    else
+        ErstelleSpickzettel();
 }
 
 void MainWindowImpl::LeseGeraetelisteDB(int id)
@@ -5399,18 +5383,27 @@ int MainWindowImpl::strippedID(const QString &fullFileName)
 
 void MainWindowImpl::LadeSudDB(bool aktivateTab)
 {
-  AmLaden = true;
-  ErstelleZutatenlisten();
-  FuelleRezeptComboAuswahlen();
-  LeseSuddatenDB(aktivateTab);
-  SetStatusGebraut(BierWurdeGebraut);
-  SetDisabledAbgefuellt(BierWurdeAbgefuellt);
-  SetDisabledVerbraucht(BierWurdeVerbraucht || !BierWurdeAbgefuellt);
-  pushButton_SudTeilen->setDisabled(BierWurdeVerbraucht);
-  setRecentFile(AktuelleSudID);
-  AmLaden = false;
-  BerAlles();
-  setAenderung(false);
+    AmLaden = true;
+    ErstelleZutatenlisten();
+    FuelleRezeptComboAuswahlen();
+    LeseSuddatenDB();
+    SetStatusGebraut(BierWurdeGebraut);
+    SetDisabledAbgefuellt(BierWurdeAbgefuellt);
+    SetDisabledVerbraucht(BierWurdeVerbraucht || !BierWurdeAbgefuellt);
+    pushButton_SudTeilen->setDisabled(BierWurdeVerbraucht);
+    setRecentFile(AktuelleSudID);
+    AmLaden = false;
+    BerAlles();
+    setAenderung(false);
+    if (aktivateTab)
+    {
+        if (BierWurdeAbgefuellt)
+            tabWidged->setCurrentWidget(tab_Spickzettel);
+        else if (BierWurdeGebraut)
+            tabWidged->setCurrentWidget(tab_Gaerverlauf);
+        else
+            tabWidged->setCurrentWidget(tab_Rezept);
+    }
 }
 
 
@@ -5502,43 +5495,6 @@ void MainWindowImpl::slot_spinBoxGesammtkochdauerChanged(int value)
     list_Hopfengaben[i]->setMaxKochzeit(value);
   }
 }
-
-
-void MainWindowImpl::slot_spinBoxspinBox_ZeitGabe_1Changed(int )
-{
-  //Minimalwert für die nächste gabe setzten
-  //spinBox_ZeitGabe_2 -> setMaximum(value);
-}
-
-void MainWindowImpl::slot_spinBoxspinBox_ZeitGabe_2Changed(int )
-{
-  //Minimalwert für die nächste gabe setzten
-  //spinBox_ZeitGabe_3 -> setMaximum(value);
-}
-
-void MainWindowImpl::slot_spinBoxspinBox_ZeitGabe_3Changed(int )
-{
-  //Minimalwert für die nächste gabe setzten
-  //spinBox_ZeitGabe_4 -> setMaximum(value);
-}
-
-void MainWindowImpl::slot_spinBoxspinBox_ZeitGabe_4Changed(int )
-{
-  //Minimalwert für die nächste gabe setzten
-  //spinBox_ZeitGabe_5 -> setMaximum(value);
-}
-
-void MainWindowImpl::slot_spinBoxspinBox_ZeitGabe_5Changed(int )
-{
-  //Minimalwert für die nächste gabe setzten
-  //spinBox_ZeitGabe_6 -> setMaximum(value);
-}
-
-QString MainWindowImpl::GetWertString(double value)
-{
-  return "<span class='value'>" + QString::number(value) + "</span>";
-}
-
 
 void MainWindowImpl::slot_tabWidgetChanged(int)
 {
@@ -7103,7 +7059,6 @@ void MainWindowImpl::FuelleGaerverlauf()
 
 void MainWindowImpl::on_pushButton_AddSchnellgaerMessung_clicked()
 {
-  NeueMessungWirdAngelegt = true;
   QDateTime dt;
   double sw, alc, temperatur;
   // Eintrag für den Schnellgärverlauf der Tabelle hinzufügen
@@ -7119,31 +7074,25 @@ void MainWindowImpl::on_pushButton_AddSchnellgaerMessung_clicked()
   alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), doubleSpinBox_SWSchnellgaerprobe -> value() );
   alc = double(qRound(alc * 10)) / 10;
   newItem3 -> setData(Qt::DisplayRole, alc);
+  newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
   //Temperatur
   temperatur = doubleSpinBox_TempSchnellgaerprobe -> value();
   newItem4 -> setData(Qt::DisplayRole, temperatur);
-  //Zeile anhand des Datums uhrzeit finden
   int i = tableWidget_Schnellgaerverlauf -> rowCount();
-  for (int o=0; o < tableWidget_Schnellgaerverlauf -> rowCount(); o++){
-    QDateTime dt2;
-    dt2 = tableWidget_Schnellgaerverlauf -> item(o,0) -> data(Qt::DisplayRole).toDateTime();
-    if (dt < dt2){
-      i = o;
-      o = tableWidget_Schnellgaerverlauf->rowCount();
-    }
-  }
-  tableWidget_Schnellgaerverlauf -> insertRow(i);
 
-  newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
-  tableWidget_Schnellgaerverlauf -> setItem(i, 0, newItem1);
-  tableWidget_Schnellgaerverlauf -> setItem(i, 1, newItem2);
-  tableWidget_Schnellgaerverlauf -> setItem(i, 2, newItem3);
-  tableWidget_Schnellgaerverlauf -> setItem(i, 3, newItem4);
   //Mittig ausrichten
   newItem1 -> setTextAlignment(Qt::AlignCenter);
   newItem2 -> setTextAlignment(Qt::AlignCenter);
   newItem3 -> setTextAlignment(Qt::AlignCenter);
   newItem4 -> setTextAlignment(Qt::AlignCenter);
+
+  AmLaden = true;
+  tableWidget_Schnellgaerverlauf -> insertRow(i);
+  tableWidget_Schnellgaerverlauf -> setItem(i, 0, newItem1);
+  tableWidget_Schnellgaerverlauf -> setItem(i, 1, newItem2);
+  tableWidget_Schnellgaerverlauf -> setItem(i, 2, newItem3);
+  tableWidget_Schnellgaerverlauf -> setItem(i, 3, newItem4);
+  AmLaden = false;
 
   //Diagramm füllen
   FuelleDiagrammSchnellgaerverlauf();
@@ -7153,7 +7102,6 @@ void MainWindowImpl::on_pushButton_AddSchnellgaerMessung_clicked()
   if (!BierWurdeAbgefuellt){
     spinBox_SWSchnellgaerprobe -> setValue(sw);
   }
-  NeueMessungWirdAngelegt = false;
 }
 
 void MainWindowImpl::SchreibeSchnellgaerverlaufDB()
@@ -7220,7 +7168,6 @@ void MainWindowImpl::LeseSchnellgaerverlaufDB()
       //Zeitstempel
       FeldNr = query.record().indexOf("Zeitstempel");
       newItem1 -> setData(Qt::DisplayRole, QDateTime::fromString(query.value(FeldNr).toString(),Qt::ISODate));
-      newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
       tableWidget_Schnellgaerverlauf -> setItem(i, 0, newItem1);
       //Stammwürze
       FeldNr = query.record().indexOf("SW");
@@ -7231,6 +7178,7 @@ void MainWindowImpl::LeseSchnellgaerverlaufDB()
       double alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), sw );
       alc = double(qRound(alc * 10)) / 10;
       newItem3 -> setData(Qt::DisplayRole, alc);
+      newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
       tableWidget_Schnellgaerverlauf -> setItem(i, 2, newItem3);
       //Temperatur
       FeldNr = query.record().indexOf("Temp");
@@ -7244,6 +7192,8 @@ void MainWindowImpl::LeseSchnellgaerverlaufDB()
       newItem3 -> setTextAlignment(Qt::AlignCenter);
       newItem4 -> setTextAlignment(Qt::AlignCenter);
     }
+    tableWidget_Schnellgaerverlauf->setSortingEnabled(true);
+    tableWidget_Schnellgaerverlauf->setSortingEnabled(false);
     FuelleDiagrammSchnellgaerverlauf();
     //Eingabefelder mit den letzten werten füttern
     doubleSpinBox_SWSchnellgaerprobe -> setValue(sw);
@@ -7299,7 +7249,6 @@ void MainWindowImpl::on_pushButton_DelSchnellgaerMessung_clicked()
 
 void MainWindowImpl::on_pushButton_AddHauptgaerMessung_clicked()
 {
-  NeueMessungWirdAngelegt = true;
   QDateTime dt;
   double sw, alc, temperatur;
   // Eintrag für den Schnellgärverlauf der Tabelle hinzufügen
@@ -7315,31 +7264,25 @@ void MainWindowImpl::on_pushButton_AddHauptgaerMessung_clicked()
   alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), sw );
   alc = double(qRound(alc * 10)) / 10;
   newItem3 -> setData(Qt::DisplayRole, alc);
+  newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
   //Temperatur
   temperatur = doubleSpinBox_TempHauptgaerprobe -> value();
   newItem4 -> setData(Qt::DisplayRole, temperatur);
-
-  //Zeile anhand des Datums uhrzeit finden
   int i = tableWidget_Hauptgaerverlauf -> rowCount();
-  for (int o=0; o < tableWidget_Hauptgaerverlauf -> rowCount(); o++){
-    QDateTime dt2;
-    dt2 = tableWidget_Hauptgaerverlauf -> item(o,0) -> data(Qt::DisplayRole).toDateTime();
-    if (dt < dt2){
-      i = o;
-      o = tableWidget_Hauptgaerverlauf->rowCount();
-    }
-  }
-  tableWidget_Hauptgaerverlauf -> insertRow(i);
-  newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
-  tableWidget_Hauptgaerverlauf -> setItem(i, 0, newItem1);
-  tableWidget_Hauptgaerverlauf -> setItem(i, 1, newItem2);
-  tableWidget_Hauptgaerverlauf -> setItem(i, 2, newItem3);
-  tableWidget_Hauptgaerverlauf -> setItem(i, 3, newItem4);
+
   //Mittig ausrichten
   newItem1 -> setTextAlignment(Qt::AlignCenter);
   newItem2 -> setTextAlignment(Qt::AlignCenter);
   newItem3 -> setTextAlignment(Qt::AlignCenter);
   newItem4 -> setTextAlignment(Qt::AlignCenter);
+
+  AmLaden = true;
+  tableWidget_Hauptgaerverlauf -> insertRow(i);
+  tableWidget_Hauptgaerverlauf -> setItem(i, 0, newItem1);
+  tableWidget_Hauptgaerverlauf -> setItem(i, 1, newItem2);
+  tableWidget_Hauptgaerverlauf -> setItem(i, 2, newItem3);
+  tableWidget_Hauptgaerverlauf -> setItem(i, 3, newItem4);
+  AmLaden = false;
 
   //Diagramm füllen
   FuelleDiagrammHauptgaerverlauf();
@@ -7351,7 +7294,6 @@ void MainWindowImpl::on_pushButton_AddHauptgaerMessung_clicked()
     spinBox_SWJungbier -> setValue(sw);
     spinBox_TemperaturJungbier -> setValue(temperatur);
   }
-  NeueMessungWirdAngelegt = false;
 }
 
 void MainWindowImpl::SchreibeHauptgaerverlaufDB()
@@ -7421,7 +7363,6 @@ void MainWindowImpl::LeseHauptgaerverlaufDB()
       //Zeitstempel
       FeldNr = query.record().indexOf("Zeitstempel");
       newItem1 -> setData(Qt::DisplayRole, QDateTime::fromString(query.value(FeldNr).toString(),Qt::ISODate));
-      newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
       tableWidget_Hauptgaerverlauf -> setItem(i, 0, newItem1);
       //Stammwürze
       FeldNr = query.record().indexOf("SW");
@@ -7432,6 +7373,7 @@ void MainWindowImpl::LeseHauptgaerverlaufDB()
       double alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), sw );
       alc = double(qRound(alc * 10)) / 10;
       newItem3 -> setData(Qt::DisplayRole, alc);
+      newItem3->setFlags(newItem3->flags() & (~Qt::ItemIsEditable));
       tableWidget_Hauptgaerverlauf -> setItem(i, 2, newItem3);
       //Temperatur
       FeldNr = query.record().indexOf("Temp");
@@ -7445,6 +7387,8 @@ void MainWindowImpl::LeseHauptgaerverlaufDB()
       newItem3 -> setTextAlignment(Qt::AlignCenter);
       newItem4 -> setTextAlignment(Qt::AlignCenter);
     }
+    tableWidget_Hauptgaerverlauf->setSortingEnabled(true);
+    tableWidget_Hauptgaerverlauf->setSortingEnabled(false);
     FuelleDiagrammHauptgaerverlauf();
     //Eingabefelder mit den letzten werten füttern
     doubleSpinBox_SWHauptgaerprobe -> setValue(sw);
@@ -7501,7 +7445,6 @@ void MainWindowImpl::on_pushButton_DelHauptgaerMessung_clicked()
 
 void MainWindowImpl::on_pushButton_AddNachgaerMessung_clicked()
 {
-  NeueMessungWirdAngelegt = true;
   QDateTime dt;
   double druck, temp, co2;
   // Eintrag für den Schnellgärverlauf der Tabelle hinzufügen
@@ -7519,33 +7462,26 @@ void MainWindowImpl::on_pushButton_AddNachgaerMessung_clicked()
   co2 = Berechnungen.BerCO2Gehalt(druck, temp);
   co2 = double(qRound(co2 * 100)) / 100;
   newItem4 -> setData(Qt::DisplayRole, co2);
-  //Zeile anhand des Datums uhrzeit finden
+  newItem4->setFlags(newItem4->flags() & (~Qt::ItemIsEditable));
   int i = tableWidget_Nachgaerverlauf -> rowCount();
-  for (int o=0; o < tableWidget_Nachgaerverlauf -> rowCount(); o++){
-    QDateTime dt2;
-    dt2 = tableWidget_Nachgaerverlauf -> item(o,0) -> data(Qt::DisplayRole).toDateTime();
-    if (dt < dt2){
-      i = o;
-      o = tableWidget_Nachgaerverlauf->rowCount();
-    }
-  }
-  tableWidget_Nachgaerverlauf -> insertRow(i);
 
-  newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
-  tableWidget_Nachgaerverlauf -> setItem(i, 0, newItem1);
-  tableWidget_Nachgaerverlauf -> setItem(i, 1, newItem2);
-  tableWidget_Nachgaerverlauf -> setItem(i, 2, newItem3);
-  tableWidget_Nachgaerverlauf -> setItem(i, 3, newItem4);
   //Mittig ausrichten
   newItem1 -> setTextAlignment(Qt::AlignCenter);
   newItem2 -> setTextAlignment(Qt::AlignCenter);
   newItem3 -> setTextAlignment(Qt::AlignCenter);
   newItem4 -> setTextAlignment(Qt::AlignCenter);
 
+  AmLaden = true;
+  tableWidget_Nachgaerverlauf -> insertRow(i);
+  tableWidget_Nachgaerverlauf -> setItem(i, 0, newItem1);
+  tableWidget_Nachgaerverlauf -> setItem(i, 1, newItem2);
+  tableWidget_Nachgaerverlauf -> setItem(i, 2, newItem3);
+  tableWidget_Nachgaerverlauf -> setItem(i, 3, newItem4);
+  AmLaden = false;
+
   //Diagramm füllen
   FuelleDiagrammNachgaerverlauf();
   setAenderung(true);
-  NeueMessungWirdAngelegt = false;
 }
 
 void MainWindowImpl::SchreibeNachgaerverlaufDB()
@@ -7613,7 +7549,6 @@ void MainWindowImpl::LeseNachgaerverlaufDB()
       //Zeitstempel
       FeldNr = query.record().indexOf("Zeitstempel");
       newItem1 -> setData(Qt::DisplayRole, QDateTime::fromString(query.value(FeldNr).toString(),Qt::ISODate));
-      newItem1->setFlags(newItem1->flags() & (~Qt::ItemIsEditable));
       tableWidget_Nachgaerverlauf -> setItem(i, 0, newItem1);
       //Druck
       FeldNr = query.record().indexOf("Druck");
@@ -7629,6 +7564,7 @@ void MainWindowImpl::LeseNachgaerverlaufDB()
       FeldNr = query.record().indexOf("CO2");
       co2 = query.value(FeldNr).toDouble();
       newItem4 -> setData(Qt::DisplayRole, co2);
+      newItem4->setFlags(newItem4->flags() & (~Qt::ItemIsEditable));
       tableWidget_Nachgaerverlauf -> setItem(i, 3, newItem4);
       i++;
       //Mittig ausrichten
@@ -7637,6 +7573,8 @@ void MainWindowImpl::LeseNachgaerverlaufDB()
       newItem3 -> setTextAlignment(Qt::AlignCenter);
       newItem4 -> setTextAlignment(Qt::AlignCenter);
     }
+    tableWidget_Nachgaerverlauf->setSortingEnabled(true);
+    tableWidget_Nachgaerverlauf->setSortingEnabled(false);
     FuelleDiagrammNachgaerverlauf();
     //Eingabefelder mit den letzten werten füttern
     doubleSpinBox_Nachgaerdruck -> setValue(druck);
@@ -8290,59 +8228,63 @@ void MainWindowImpl::slot_berIBU()
   }
 }
 
-void MainWindowImpl::on_tableWidget_Schnellgaerverlauf_itemChanged(QTableWidgetItem* )
+void MainWindowImpl::on_tableWidget_Schnellgaerverlauf_itemChanged(QTableWidgetItem* item)
 {
-  if (Gestartet && (!NeueMessungWirdAngelegt) && (!AmLaden)){
+  if (Gestartet && !AmLaden){
     // Alkoholgehalt dieser Zeile neu berechnen
     int zeile;
     double sw, alc;
-    zeile = tableWidget_Schnellgaerverlauf -> currentRow();
+    zeile = item->row();
     sw = tableWidget_Schnellgaerverlauf -> item(zeile,1) -> data(Qt::DisplayRole).toDouble();
     //Alkoholgehalt berechnen
     alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), sw );
     alc = double(qRound(alc * 10)) / 10;
     tableWidget_Schnellgaerverlauf -> item(zeile,2) -> setData(Qt::DisplayRole, alc);
+    tableWidget_Schnellgaerverlauf->setSortingEnabled(true);
+    tableWidget_Schnellgaerverlauf->setSortingEnabled(false);
     setAenderung(true);
     FuelleDiagrammSchnellgaerverlauf();
   }
 }
 
-void MainWindowImpl::on_tableWidget_Hauptgaerverlauf_itemChanged(QTableWidgetItem* )
+void MainWindowImpl::on_tableWidget_Hauptgaerverlauf_itemChanged(QTableWidgetItem* item)
 {
-  if (Gestartet && (!NeueMessungWirdAngelegt) && (!AmLaden)){
+  if (Gestartet && !AmLaden){
     // Alkoholgehalt dieser Zeile neu berechnen
     int zeile;
     double sw, alc;
-    zeile = tableWidget_Hauptgaerverlauf -> currentRow();
+    zeile = item->row();
     sw = tableWidget_Hauptgaerverlauf -> item(zeile,1) -> data(Qt::DisplayRole).toDouble();
     //Alkoholgehalt berechnen
     alc = Berechnungen.BerAlkohoVol(spinBox_SWSollGesammt -> value(), sw );
     alc = double(qRound(alc * 10)) / 10;
     tableWidget_Hauptgaerverlauf -> item(zeile,2) -> setData(Qt::DisplayRole, alc);
+    tableWidget_Hauptgaerverlauf->setSortingEnabled(true);
+    tableWidget_Hauptgaerverlauf->setSortingEnabled(false);
     setAenderung(true);
     AenderungHauptgaerverlauf = true;
     FuelleDiagrammHauptgaerverlauf();
   }
 }
 
-void MainWindowImpl::on_tableWidget_Nachgaerverlauf_itemChanged(QTableWidgetItem* )
+void MainWindowImpl::on_tableWidget_Nachgaerverlauf_itemChanged(QTableWidgetItem* item)
 {
-  if (Gestartet && (!NeueMessungWirdAngelegt) && (!AmLaden)){
+  if (Gestartet && !AmLaden){
     // CO2 Gehalt dieser Zeile Neu berechnen
     int zeile;
     double druck, temp, co2;
-    zeile = tableWidget_Nachgaerverlauf -> currentRow();
+    zeile = item->row();
     druck = tableWidget_Nachgaerverlauf -> item(zeile,1) -> data(Qt::DisplayRole).toDouble();
     temp = tableWidget_Nachgaerverlauf -> item(zeile,2) -> data(Qt::DisplayRole).toDouble();
     co2 = Berechnungen.BerCO2Gehalt(druck, temp);
     co2 = double(qRound(co2 * 100)) / 100;
     tableWidget_Nachgaerverlauf -> item(zeile,3) -> setData(Qt::DisplayRole, co2);
+    tableWidget_Nachgaerverlauf->setSortingEnabled(true);
+    tableWidget_Nachgaerverlauf->setSortingEnabled(false);
     setAenderung(true);
     FuelleDiagrammNachgaerverlauf();
   }
 }
-
-
 
 void MainWindowImpl::on_pushButton_SudVerbraucht_clicked()
 {
@@ -12075,6 +12017,7 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked()
                 spinBox_Speisemenge->setValue(spinBox_Speisemenge->value() * factor);
                 spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeAnstellen->value() * factor);
                 spinBox_JungbiermengeAbfuellen->setValue(spinBox_JungbiermengeAbfuellen->value() * factor);
+                spinBox_AnzahlHefeEinheiten->setValue(qRound(spinBox_AnzahlHefeEinheiten->value() * factor));
                 Gestartet = true;
                 if (wurdeGebraut)
                 {
@@ -12103,6 +12046,7 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked()
                 spinBox_Speisemenge->setValue(spinBox_Speisemenge->value() * factor);
                 spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeAnstellen->value() * factor);
                 spinBox_JungbiermengeAbfuellen->setValue(spinBox_JungbiermengeAbfuellen->value() * factor);
+                spinBox_AnzahlHefeEinheiten->setValue(qRound(spinBox_AnzahlHefeEinheiten->value() * factor));
                 Gestartet = true;
                 if (wurdeGebraut)
                 {

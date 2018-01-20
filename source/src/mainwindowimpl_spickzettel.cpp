@@ -7,6 +7,11 @@
 #include "definitionen.h"
 #include "errormessage.h"
 
+QString MainWindowImpl::GetWertString(double value)
+{
+  return "<span class='value'>" + QString::number(value) + "</span>";
+}
+
 void MainWindowImpl::ErstelleSpickzettel()
 {
   // Seitenkopf

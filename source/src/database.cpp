@@ -137,7 +137,6 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "erg_Farbe,";
     sql += "erg_Preis,";
     sql += "erg_Alkohol,";
-
     sql += "KostenWasserStrom,";
     sql += "Bewertung,";
     sql += "BewertungText,";
@@ -162,7 +161,6 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "AusbeuteIgnorieren,";
     sql += "MerklistenID,";
     sql += "Spunden";
-
     sql += " FROM Sud WHERE ID=" + id;
     if (!query.exec(sql))
     {
