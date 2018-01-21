@@ -804,6 +804,8 @@ void EinstellungsdialogImpl::LeseKonfigErweitert()
 
   spinBox_MaxBewertungSterne->setValue(settings.value("MaxAnzahlSterne").toInt());
 
+  checkBox_beendenAbfrage->setChecked(settings.value("checkBox_keineBeendenAbfrage").toBool());
+
   settings.endGroup();
 }
 
@@ -966,6 +968,8 @@ void EinstellungsdialogImpl::SchreibeKonfigErweitert()
   settings.setValue("Gaerungskorrektur", SpinBox_Gaerungskorrektur -> value());
   //Maximale Anzahl Sterne
   settings.setValue("MaxAnzahlSterne", spinBox_MaxBewertungSterne -> value());
+  //Abfrage beim Beenden
+  settings.setValue("checkBox_keineBeendenAbfrage", checkBox_beendenAbfrage -> isChecked());
 
   settings.endGroup();
 }

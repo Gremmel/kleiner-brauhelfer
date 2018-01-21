@@ -56,7 +56,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page_Datenbank">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -121,8 +121,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>548</width>
-              <height>631</height>
+              <width>564</width>
+              <height>663</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -1177,6 +1177,17 @@
           </widget>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_22">
+           <item>
+            <widget class="QCheckBox" name="checkBox_beendenAbfrage">
+             <property name="text">
+              <string>Beim beenden keinen Bestätigungs-Dialog anzeigen</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout_16">
            <item>
             <spacer name="horizontalSpacer_14">
@@ -1242,8 +1253,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>562</width>
-              <height>598</height>
+              <width>574</width>
+              <height>941</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">

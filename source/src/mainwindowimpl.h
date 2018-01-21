@@ -217,7 +217,6 @@ private:
   QColor ColorBierReift;
   QColor ColorBierFertig;
   QColor ColorBierLeer;
-  bool NeueMessungWirdAngelegt;
   void SetDiagrammFarben();
   void SetAnsicht();
   void SetMaxAnzahlSterne();
@@ -242,7 +241,7 @@ private:
   void SchreibeBewertungenDB();
   void AddMalzgabe(QString Name, double Prozent, double erg_Menge, double Farbe);
   void FuelleSudauswahl();
-  void LeseSuddatenDB(bool aktivateTab);
+  void LeseSuddatenDB();
   void LeseRohstoffeDB();
   void LadeSudDB(bool aktivateTab);
   void LeseRohstoffeDB_test();
@@ -453,11 +452,6 @@ private slots:
   void on_pushButton_HopfenKopie_clicked();
   void on_pushButton_MalzKopie_clicked();
   void slot_tabWidgetChanged(int);
-  void slot_spinBoxspinBox_ZeitGabe_1Changed(int value);
-  void slot_spinBoxspinBox_ZeitGabe_2Changed(int value);
-  void slot_spinBoxspinBox_ZeitGabe_3Changed(int value);
-  void slot_spinBoxspinBox_ZeitGabe_4Changed(int value);
-  void slot_spinBoxspinBox_ZeitGabe_5Changed(int value);
   void slot_spinBoxGesammtkochdauerChanged(int value);
   void slot_TableWidget_cellChanged(int row, int column);
   void openRecentFile();
