@@ -32,7 +32,7 @@ before_script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then chmod +x ./build_macos.sh ; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then chmod +x ./deployment/debian/deploy.sh ; fi
   # comment out #define DEBUG true
-  - sed -i '' -e '/^#define DEBUG true/ s/^#*/\/\/#/' ./source/src/definitionen.h 
+  #- sed -i '' -e '/^#define DEBUG true/ s/^#*/\/\/#/' ./source/src/definitionen.h 
 script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then TAG_NAME=${TRAVIS_TAG} ./build_macos.sh /usr/local/opt/qt/bin/ ; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then cd source; fi
