@@ -30,6 +30,7 @@ install:
 
 before_script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then chmod +x build_macos.sh ; fi
+#  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then chmod +x build_linux.sh ; fi
 
 script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then TAG_NAME=${TRAVIS_TAG} ./build_macos.sh /usr/local/opt/qt/bin/ ; fi
@@ -43,3 +44,14 @@ script:
 #  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then chmod +x build_linux.sh ; fi
 #  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then TAG_NAME=${TRAVIS_TAG} CXX="g++-6" CC="gcc-6" ./build_linux.sh ; fi
 
+deploy:
+  provider: releases
+  api_key:
+    secure: Qlu0tNuAua5erys3QFq8vf4z3W3QOlUnu9nCFL/9997er3FEUCF7IbmPcpQfXhcqPj+uVUsE5q4wkGQioReIRtxGEtDp1MNyfOWv8JNhtuYHfwHIxr1N0rmKqTvzbHgTw4Kqqgvp8rAwknKAGcdTO1zY0Wx1tLNqAA2ex0su5/NvOXlrz2Gu/4YeQsSMDonmhpINAmVB72fk3O5HeIDHaxaoU62wViHqVjhSQ1Wqi7TlgLsQfg8LJaSl21SHEOaDosftgPcFHrEDDAIeCIKMPGgSqKO8ey7akBpKVxhFQHCWQP/RP6EMyn/WTBWaNfiuJKmL3PGeVkhiFE2uPij7lOz0WNbkg4rlxVpC4GeKAzpFBWRd3HUgYLR+N8Rg6mLhnQRNHSilxC535bL95YtsLLVQmRRp2nL46ZVSTWAKx3Rj5uLbwiDhq6WyLsu2tYo1SAtJ6UqjRg4ejgkiH0r0/BI3i7IaZ9EHAQHRjI1agB6CtvnoolmmznPA72dLE2xwJQA4pgPakOPAYhLN8RKikTBVcCIfHKaSMD2qzJpt5thl03kF37N8KKep3kq5lc2+RZtlbeDmcmw91X1i3mjaNI+lvNllj3GnOsXghJ0sDkVM0Ik8bqKCjjjRFT/WpEBs62DvrkXiIixsqZ9hbSYiQscLqbMAJECep9Q1y0Z20gA=
+  file:  "./bin/kb_macos_*.zip"
+  file_glob: "true"
+  skip_cleanup: true
+  overwrite: true
+  on:
+#    repo: realholgi/kleiner-brauhelfer
+    all_branches: true
