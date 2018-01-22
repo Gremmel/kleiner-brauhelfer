@@ -29,15 +29,17 @@ install:
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then sudo apt-get install qt5-default qttools5-dev-tools ; fi
 
 before_script:
-  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then chmod +x build_macos.sh ; fi
-#  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then chmod +x build_linux.sh ; fi
-
+  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then chmod +x ./build_macos.sh ; fi
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then chmod +x ./deployment/debian/deploy.sh ; fi
+  # comment out #define DEBUG true
+  - sed -i '' -e '/^#define DEBUG true/ s/^#*/\/\/#/' ./source/src/definitionen.h 
 script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then TAG_NAME=${TRAVIS_TAG} ./build_macos.sh /usr/local/opt/qt/bin/ ; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then cd source; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then qmake -project ; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then qmake brauhelfer.pro ; fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then make ; fi
+  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then ./deployment/debian/deploy.sh ./bin/kleiner-brauhelfer /opt/Qt/5.10.0/gcc_64/bin/ ; fi
 
 #  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 100 ; fi
 #  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 100 ; fi
@@ -47,11 +49,11 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: Qlu0tNuAua5erys3QFq8vf4z3W3QOlUnu9nCFL/9997er3FEUCF7IbmPcpQfXhcqPj+uVUsE5q4wkGQioReIRtxGEtDp1MNyfOWv8JNhtuYHfwHIxr1N0rmKqTvzbHgTw4Kqqgvp8rAwknKAGcdTO1zY0Wx1tLNqAA2ex0su5/NvOXlrz2Gu/4YeQsSMDonmhpINAmVB72fk3O5HeIDHaxaoU62wViHqVjhSQ1Wqi7TlgLsQfg8LJaSl21SHEOaDosftgPcFHrEDDAIeCIKMPGgSqKO8ey7akBpKVxhFQHCWQP/RP6EMyn/WTBWaNfiuJKmL3PGeVkhiFE2uPij7lOz0WNbkg4rlxVpC4GeKAzpFBWRd3HUgYLR+N8Rg6mLhnQRNHSilxC535bL95YtsLLVQmRRp2nL46ZVSTWAKx3Rj5uLbwiDhq6WyLsu2tYo1SAtJ6UqjRg4ejgkiH0r0/BI3i7IaZ9EHAQHRjI1agB6CtvnoolmmznPA72dLE2xwJQA4pgPakOPAYhLN8RKikTBVcCIfHKaSMD2qzJpt5thl03kF37N8KKep3kq5lc2+RZtlbeDmcmw91X1i3mjaNI+lvNllj3GnOsXghJ0sDkVM0Ik8bqKCjjjRFT/WpEBs62DvrkXiIixsqZ9hbSYiQscLqbMAJECep9Q1y0Z20gA=
+    secure: P+c36BH2jYRUUP+ycXh/lS3MLFWb92Q5RInWLq4/Cn/4O/9MXi+sZHYEsKspp/lVzno112aGksA/MVrU5bPsLB6Af1YGG1WFTR9rtS8bxTm50l4fdm5m3gkt4VDfmzx2bTD5PJMRLsH3tcg+GF5ugysY5HtQuoWfO/HKSJA0jAYN+7qa80bMK0xfj5z/O/sG64avJ2Wpk/rLPi9pwGW6Oun8FLyG0Phg5e8zbjxWCogsOBYgJh+QY5EeYdB988RZK7GPGDKGTjn4TIHUinoJNfUdd/LgSgIbGzEiPrbzLuzOVDx9en+DS6O3GZ/4mEoKKCK8Iow6x0uJpnlX/phY4y1B5HR4oFKq6R/jmfWbkCllxza/HDnkjVVpQfgfn7rszNl4cmgflZzdalGrbnhXugtDWe+fmjjUkZQUyR4sdGVi953wMl+PfzOYDECkeLQm6kjfY4Pm6UCMXk3luOOjOVXU6/gEsYbTAFZkc/Cm46XdKwyhCZR9vENViF09r3V5HxWe8rAuX386p0RqARU/OcD+0h4xxcmhqKUYlYZJgTDhf8epOkrHH+1e40JvaOFUS1E862kAokpDmxNLFt7KQq0tRP/dyrBRT9d6Wg0fylqDXvKwpznRWV87QrAuEpvbTcSgkYDRYpY8SL5KcyhglMd/lcnKhMiyUxAq/ipD3JI=
   file:  "./bin/kb_macos_*.zip"
+  file:  "./kb_linux_*.tar.gz"
   file_glob: "true"
   skip_cleanup: true
   overwrite: true
   on:
-#    repo: realholgi/kleiner-brauhelfer
     all_branches: true

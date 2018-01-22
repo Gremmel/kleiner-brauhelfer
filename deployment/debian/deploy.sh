@@ -12,6 +12,12 @@ QT_DIR="$2"
 DEPLOY_DIR="$BASE_DIR/deploy"
 SOURCE_DIR="$BASE_DIR/../../source"
 
+# Path to the .pro-file
+PRO="${SOURCE_DIR}/brauhelfer.pro"
+
+echo "* Extracting version numbers from .pro file:"
+VERSION=`grep "${PRO}" -e "^ *VERSION *=" | tr -d '[:space:]' | cut -d= -f2` || exit 1
+
 mkdir -p "$DEPLOY_DIR/usr/local/bin/kleiner-brauhelfer"
 cp "$APP_PATH" "$DEPLOY_DIR/usr/local/bin/kleiner-brauhelfer"
 
@@ -30,8 +36,11 @@ cp "$BASE_DIR/kleiner-brauhelfer.desktop" "$DEPLOY_DIR/usr/share/applications"
 mkdir -p "$DEPLOY_DIR/DEBIAN"
 cp "$BASE_DIR/control" "$DEPLOY_DIR/DEBIAN"
 
-nano "$DEPLOY_DIR/DEBIAN/control"
+# nano "$DEPLOY_DIR/DEBIAN/control" #### FIXME
 
 dpkg-deb --build "$DEPLOY_DIR"
 
-tar -zcvf "$BASE_DIR/deploy.tar.gz" -C "$DEPLOY_DIR/usr/local/bin" kleiner-brauhelfer
+TARVERSION=`echo "${VERSION}" | tr '.' '_'`
+TAR="kb_linux_v${TARVERSION}.zip"
+
+tar -zcvf "$BASE_DIR/${ZIP}" -C "$DEPLOY_DIR/usr/local/bin" kleiner-brauhelfer
