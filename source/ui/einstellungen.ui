@@ -1064,6 +1064,16 @@
                   <string>Standardformel</string>
                  </property>
                 </item>
+                <item>
+                 <property name="text">
+                  <string>Terrill</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Terrill linear</string>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>

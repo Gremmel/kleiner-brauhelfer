@@ -32,7 +32,7 @@ MyDiagrammView::MyDiagrammView( QWidget * parent,  Qt::WindowFlags f )
 
 void MyDiagrammView::paintEvent(QPaintEvent * )
 {
-  if ( (L1Daten.count()<2) || (L1Datum.count()<2)){
+  if (Ids.count() < 2){
   }
   else {
     //Gitter Zeichnen
@@ -62,6 +62,7 @@ void MyDiagrammView::paintEvent(QPaintEvent * )
 
 void MyDiagrammView::mousePressEvent ( QMouseEvent * event )
 {
+  bool newSelection = false;
   int p1,p2;
   //Punkt finden der Markiert werden soll
   for (int i = 0; i < Linie1.count(); i++){
@@ -70,14 +71,22 @@ void MyDiagrammView::mousePressEvent ( QMouseEvent * event )
       p1 = 0;
       p2 = Linie1[i].x() + qRound((Linie1[i+1].x() - Linie1[i].x()) / 2.0);
       if (event -> x() < p2) {
-        MarkierterPunkt = 1;
+        if (MarkierterPunkt != 1) {
+          MarkierterPunkt = 1;
+          newSelection = true;
+        }
+        break;
       }
     }
     //Letzter Punkt
     else if (i == Linie1.count()-1){
       p1 = Linie1[i-1].x() + qRound((Linie1[i].x() - Linie1[i-1].x()) / 2.0);
       if (event -> x() > p1) {
-        MarkierterPunkt = i + 1;
+        if (MarkierterPunkt != i + 1) {
+          MarkierterPunkt = i + 1;
+          newSelection = true;
+        }
+        break;
       }
     }
     //alle anderen Punkte
@@ -85,12 +94,19 @@ void MyDiagrammView::mousePressEvent ( QMouseEvent * event )
       p1 = Linie1[i-1].x() + qRound((Linie1[i].x() - Linie1[i-1].x()) / 2.0);
       p2 = Linie1[i].x() + qRound((Linie1[i+1].x() - Linie1[i].x()) / 2.0);
       if ((event -> x() > p1) && (event -> x() < p2)) {
-        MarkierterPunkt = i + 1;
+         if (MarkierterPunkt != i + 1) {
+          MarkierterPunkt = i + 1;
+          newSelection = true;
+         }
+         break;
       }
     }
   }
 
-  repaint();
+  if (newSelection) {
+    repaint();
+    emit sig_selectionChanged(getMarkierterPunkt());
+  }
 }
 
 void MyDiagrammView::zeichneAchsen()
@@ -639,6 +655,7 @@ void MyDiagrammView::zeichneTextMarkiertenPunktL3()
 
 void MyDiagrammView::DiagrammLeeren()
 {
+  Ids.clear();
   L1Daten.clear();
   L1Datum.clear();
   L2Daten.clear();
@@ -685,6 +702,29 @@ void MyDiagrammView::setWertLinie3(double value)
 }
 
 //hebt einen Punkt im Diagramm hervor
+void MyDiagrammView::MarkierePunkt(int id)
+{
+  bool gefunden = false;
+  for (int i=0; i < Ids.count(); i++) {
+    if (Ids[i] == id) {
+      MarkierterPunkt = i + 1;
+      gefunden = true;
+      break;
+    }
+  }
+  if (!gefunden)
+    MarkierterPunkt = 0;
+
+  repaint();
+}
+
+int MyDiagrammView::getMarkierterPunkt() const
+{
+    if (MarkierterPunkt > 0 && MarkierterPunkt <= Ids.count())
+        return Ids[MarkierterPunkt - 1];
+    return 0;
+}
+
 void MyDiagrammView::MarkierePunkt(QDateTime DateTime)
 {
   bool gefunden = false;
@@ -694,6 +734,7 @@ void MyDiagrammView::MarkierePunkt(QDateTime DateTime)
     if (s1 == s2){
       MarkierterPunkt = i + 1;
       gefunden = true;
+      break;
     }
   }
   if (!gefunden)
