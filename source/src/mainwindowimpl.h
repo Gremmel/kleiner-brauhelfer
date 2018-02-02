@@ -10,7 +10,6 @@
 #include "ui_mainwindow.h"
 #include "berechnungen.h"
 #include "qexport.h"
-#include "korrektswimpl.h"
 #include "eingabehvolumenimpl.h"
 #include "erweitertezutatimpl.h"
 #include "rastwidget.h"
@@ -409,6 +408,7 @@ private slots:
   void on_SpinBox_wwCalcium_mmol_valueChanged(double );
   void on_SpinBox_wwCalcium_mg_valueChanged(double );
   void on_tableWidget_Brauuebersicht_itemSelectionChanged();
+  void slot_diagram_Brauuebersicht_selectionChanged(int id);
   void on_pushButton_SudImport_clicked();
   void on_pushButton_SudExport_clicked();
   void slot_EntsperreEingabefelder();
@@ -438,7 +438,6 @@ private slots:
   void on_pushButton_EingabeSWSchnellgaerverlauf_clicked();
   void on_pushButton_AddSchnellgaerMessung_clicked();
     void on_pushButton_DelSchnellgaerMessung_clicked();
-    void on_pushButton_BrauuebersichtRefresh_clicked();
   void on_comboBox_AuswahlL1_currentIndexChanged(int index);
   void on_comboBox_AuswahlL2_currentIndexChanged(int index);
   void on_pushButton_SpickzettelPDF_clicked();
@@ -660,10 +659,11 @@ private slots:
   void on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &arg1);
   void on_pushButton_GaerungEwzZugeben_clicked();
   void on_pushButton_GaerungEwzEntnehmen_clicked();
-  void on_checkBox_zumischen_clicked();
   void on_pushButton_CalcEinmaischeTemp_clicked();
   void on_spinBox_AnzahlHefeEinheiten_valueChanged(int);
   void on_pushButton_SudTeilen_clicked();
+  void on_dateEdit_AuswahlVon_userDateChanged(const QDate &date);
+  void on_dateEdit_AuswahlBis_userDateChanged(const QDate &date);
 };
 #endif
 

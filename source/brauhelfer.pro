@@ -29,7 +29,6 @@ OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
 FORMS = ui/mainwindow.ui \
- ui/KorrektSw.ui \
  ui/einstellungen.ui \
  ui/ber_schuettung.ui \
  ui/ber_ibu.ui \
@@ -48,10 +47,10 @@ FORMS = ui/mainwindow.ui \
  ui/anhangwidget.ui \
  ui/dialogdatum.ui \
  ui/dialogeinmaischetemp.ui \
- ui/dialogsudteilen.ui
+ ui/dialogsudteilen.ui \
+ ui/dialogstammwuerze.ui
 HEADERS = src/mainwindowimpl.h \
  src/berechnungen.h \
- src/korrektswimpl.h \
  src/bierfarbe.h \
  src/connection.h \
  src/definitionen.h \
@@ -88,11 +87,11 @@ HEADERS = src/mainwindowimpl.h \
  src/mydsvtablemodel.h \
  src/dialogeinmaischetemp.h \
  src/dialogsudteilen.h \
- src/database.h
+ src/database.h \
+ src/dialogstammwuerze.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
- src/korrektswimpl.cpp \
  src/bierfarbe.cpp \
  src/errormessage.cpp \
  src/qwidgetid.cpp \
@@ -131,6 +130,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/dialogeinmaischetemp.cpp \
  src/mainwindowimpl_ueber.cpp \
  src/dialogsudteilen.cpp \
- src/database.cpp
+ src/database.cpp \
+ src/dialogstammwuerze.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

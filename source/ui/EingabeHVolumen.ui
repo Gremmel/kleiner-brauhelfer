@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>384</width>
-    <height>252</height>
+    <height>187</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,8 +55,14 @@
          <widget class="QDoubleSpinBox" name="spinBox_VonOben">
           <property name="minimumSize">
            <size>
-            <width>75</width>
+            <width>67</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>67</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="decimals">
@@ -80,8 +86,14 @@
          <widget class="QLabel" name="label_14">
           <property name="minimumSize">
            <size>
-            <width>30</width>
+            <width>50</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -135,8 +147,14 @@
          <widget class="QDoubleSpinBox" name="spinBox_VonUnten">
           <property name="minimumSize">
            <size>
-            <width>75</width>
+            <width>67</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>67</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="decimals">
@@ -160,8 +178,14 @@
          <widget class="QLabel" name="label_16">
           <property name="minimumSize">
            <size>
-            <width>30</width>
+            <width>50</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
@@ -200,8 +224,14 @@
       <widget class="QDoubleSpinBox" name="spinBox_Temperatur">
        <property name="minimumSize">
         <size>
-         <width>75</width>
+         <width>67</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>67</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="decimals">
@@ -225,8 +255,14 @@
       <widget class="QLabel" name="label_20">
        <property name="minimumSize">
         <size>
-         <width>30</width>
+         <width>50</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">
@@ -262,8 +298,14 @@
       <widget class="QDoubleSpinBox" name="spinBox_Liter">
        <property name="minimumSize">
         <size>
-         <width>75</width>
+         <width>67</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>67</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="decimals">
@@ -287,8 +329,14 @@
       <widget class="QLabel" name="label_18">
        <property name="minimumSize">
         <size>
-         <width>30</width>
+         <width>50</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">
@@ -324,8 +372,14 @@
       <widget class="QDoubleSpinBox" name="spinBox_Liter20Grad">
        <property name="minimumSize">
         <size>
-         <width>75</width>
+         <width>67</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>67</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="readOnly">
@@ -355,8 +409,14 @@
       <widget class="QLabel" name="label_22">
        <property name="minimumSize">
         <size>
-         <width>30</width>
+         <width>50</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">

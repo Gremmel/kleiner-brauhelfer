@@ -24,6 +24,7 @@
 #include "definitionen.h"
 #include "dialog_berechne_ibuimpl.h"
 #include "dialog_berschuettungimpl.h"
+#include "dialogstammwuerze.h"
 #include "dialogberverdampfung.h"
 #include "dialogeinmaischetemp.h"
 #include "dialoginfo.h"
@@ -252,6 +253,9 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   connect(textEdit_Kommentar, SIGNAL(textChanged()), this,
           SLOT(slot_Changed()));
 
+  connect(widget_DiaBrauUebersicht, SIGNAL(sig_selectionChanged(int)), this,
+          SLOT(slot_diagram_Brauuebersicht_selectionChanged(int)));
+
   //änderung im Tablewidged
   connect(tableWidget_Malz, SIGNAL(cellChanged(int, int)), this,
           SLOT(slot_TableWidget_cellChanged(int, int)));
@@ -276,7 +280,6 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   spinBox_SWVorHopfenseihen->hide();
   label_117->hide();
   pushButton_EingabeHSWVorHopfenseihen->hide();
-  horizontalLayout_107->setSpacing(0);
 
   LeseKonfig();
 
@@ -4451,7 +4454,7 @@ void MainWindowImpl::BerBraudaten() {
   // Wassermenge zur verschneidung
   spinBox_WasserVerschneidung->setValue(Berechnungen.GetWasserVerschneidung(
       spinBox_SWSollKochen->value() / highGravityFaktor,
-      spinBox_SWKochende->value(), spinBox_WuerzemengeKochende->value()));
+      spinBox_SWAnstellen->value(), spinBox_WuerzemengeAnstellen->value()));
 
   // Spundungsdruck
   spinBox_Spundungsdruck->setValue(Berechnungen.GetSpundungsdruck());
@@ -4656,8 +4659,6 @@ void MainWindowImpl::SetStatusGebraut(bool status) {
   pushButton_EingabeHMengeVHopfenseihen->setDisabled(status);
   pushButton_EingabeHMengeNHopfenseihen->setDisabled(status);
 
-  groupBox_Verschneidung->setVisible(!status);
-
   tabWidged->setTabText(tabWidged->indexOf(tab_Spickzettel),
                         status ? trUtf8("Zusammenfassung")
                                : trUtf8("Spickzettel"));
@@ -4683,63 +4684,39 @@ void MainWindowImpl::slot_pushButton_AbfuelldatumHeute() {
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWKochende() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(spinBox_SWKochende->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    spinBox_SWKochende->setValue(Berechnungen.densityAtX(
-        ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWKochende->value(), this);
+  if (dlg->exec() == QDialog::Accepted) {
+    spinBox_SWKochende->setValue(dlg->value());
+    setAenderung(true);
   }
-  setAenderung(true);
+  delete dlg;
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWAnstellen() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(spinBox_SWAnstellen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    spinBox_SWAnstellen->setValue(Berechnungen.densityAtX(
-        ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWAnstellen->value(), this);
+  if (dlg->exec() == QDialog::Accepted) {
+    spinBox_SWAnstellen->setValue(dlg->value());
+    setAenderung(true);
   }
-  setAenderung(true);
+  delete dlg;
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWSchnellgaerprobe() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(spinBox_SWSchnellgaerprobe->value());
-  ksw.setSWAnstellen(spinBox_SWAnstellen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    if (ksw.spinBox_SwBrix->value() == 0) {
-      spinBox_SWSchnellgaerprobe->setValue(Berechnungen.densityAtX(
-          ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
-    } else {
-      spinBox_SWSchnellgaerprobe->setValue(ksw.spinBox_SwPlato->value());
-    }
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWSchnellgaerprobe->value(), spinBox_SWAnstellen->value(), this);
+  if (dlg->exec() == QDialog::Accepted) {
+    spinBox_SWSchnellgaerprobe->setValue(dlg->value());
+    setAenderung(true);
   }
-  ksw.setSWAnstellen(0);
-  setAenderung(true);
+  delete dlg;
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWJungbier() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(spinBox_SWJungbier->value());
-  ksw.setSWAnstellen(spinBox_SWAnstellen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    if (ksw.spinBox_SwBrix->value() == 0) {
-      spinBox_SWJungbier->setValue(Berechnungen.densityAtX(
-          ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
-    } else {
-      spinBox_SWJungbier->setValue(ksw.spinBox_SwPlato->value());
-    }
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWJungbier->value(), spinBox_SWAnstellen->value(), this);
+  if (dlg->exec() == QDialog::Accepted) {
+    spinBox_SWJungbier->setValue(dlg->value());
+    setAenderung(true);
   }
-  ksw.setSWAnstellen(0);
-  setAenderung(true);
+  delete dlg;
 }
 
 void MainWindowImpl::RohstoffeAbziehen() {
@@ -7388,6 +7365,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
     // Diagramm füllen wenn 2 oder mehr Datensätze vorhanden sind
     if (i > 1) {
       sql = abfrage + " ORDER BY Braudatum";
+      widget_DiaBrauUebersicht->Ids.clear();
       // Linie 1
       widget_DiaBrauUebersicht->L1Daten.clear();
       widget_DiaBrauUebersicht->L1Datum.clear();
@@ -7400,6 +7378,8 @@ void MainWindowImpl::FuelleBrauuebersicht() {
                                       trUtf8("\nSQL Befehl:\n") + sql);
       } else {
         while (query.next()) {
+          FeldNr = query.record().indexOf("ID");
+          widget_DiaBrauUebersicht->Ids.append(query.value(FeldNr).toInt());
           // Menge
           if (comboBox_AuswahlL1->currentText() == trUtf8("Menge")) {
             FeldNr = query.record().indexOf("erg_AbgefuellteBiermenge");
@@ -7606,7 +7586,14 @@ void MainWindowImpl::on_comboBox_AuswahlL2_currentIndexChanged(int) {
   widget_DiaBrauUebersicht->repaint();
 }
 
-void MainWindowImpl::on_pushButton_BrauuebersichtRefresh_clicked() {
+void MainWindowImpl::on_dateEdit_AuswahlVon_userDateChanged(const QDate&)
+{
+  FuelleBrauuebersicht();
+  widget_DiaBrauUebersicht->repaint();
+}
+
+void MainWindowImpl::on_dateEdit_AuswahlBis_userDateChanged(const QDate&)
+{
   FuelleBrauuebersicht();
   widget_DiaBrauUebersicht->repaint();
 }
@@ -7857,23 +7844,15 @@ void MainWindowImpl::FuelleDiagrammSchnellgaerverlauf() {
 }
 
 void MainWindowImpl::on_pushButton_EingabeSWSchnellgaerverlauf_clicked() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(doubleSpinBox_SWSchnellgaerprobe->value());
-  ksw.spinBox_Temperatur->setValue(doubleSpinBox_TempSchnellgaerprobe->value());
-  ksw.setSWAnstellen(spinBox_SWAnstellen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    if (ksw.spinBox_SwBrix->value() == 0) {
-      doubleSpinBox_SWSchnellgaerprobe->setValue(Berechnungen.densityAtX(
-          ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
-    } else {
-      doubleSpinBox_SWSchnellgaerprobe->setValue(ksw.spinBox_SwPlato->value());
-    }
-    doubleSpinBox_TempSchnellgaerprobe->setValue(
-        ksw.spinBox_Temperatur->value());
+  DialogStammwuerze* dlg = new DialogStammwuerze(doubleSpinBox_SWSchnellgaerprobe->value(),
+                                                 spinBox_SWAnstellen->value(),
+                                                 doubleSpinBox_TempSchnellgaerprobe->value(),
+                                                 this);
+  if (dlg->exec() == QDialog::Accepted) {
+    doubleSpinBox_SWSchnellgaerprobe->setValue(dlg->value());
+    doubleSpinBox_TempSchnellgaerprobe->setValue(dlg->temperature());
   }
-  ksw.setSWAnstellen(0);
+  delete dlg;
 }
 
 void MainWindowImpl::on_pushButton_DelSchnellgaerMessung_clicked() {
@@ -8068,22 +8047,15 @@ void MainWindowImpl::FuelleDiagrammHauptgaerverlauf() {
 }
 
 void MainWindowImpl::on_pushButton_EingabeSWHauptgaerverlauf_clicked() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(doubleSpinBox_SWHauptgaerprobe->value());
-  ksw.spinBox_Temperatur->setValue(doubleSpinBox_TempHauptgaerprobe->value());
-  ksw.setSWAnstellen(spinBox_SWAnstellen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    if (ksw.spinBox_SwBrix->value() == 0) {
-      doubleSpinBox_SWHauptgaerprobe->setValue(Berechnungen.densityAtX(
-          ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
-    } else {
-      doubleSpinBox_SWHauptgaerprobe->setValue(ksw.spinBox_SwPlato->value());
-    }
-    doubleSpinBox_TempHauptgaerprobe->setValue(ksw.spinBox_Temperatur->value());
+  DialogStammwuerze* dlg = new DialogStammwuerze(doubleSpinBox_SWHauptgaerprobe->value(),
+                                                 spinBox_SWAnstellen->value(),
+                                                 doubleSpinBox_TempHauptgaerprobe->value(),
+                                                 this);
+  if (dlg->exec() == QDialog::Accepted) {
+    doubleSpinBox_SWHauptgaerprobe->setValue(dlg->value());
+    doubleSpinBox_TempHauptgaerprobe->setValue(dlg->temperature());
   }
-  ksw.setSWAnstellen(0);
+  delete dlg;
 }
 
 void MainWindowImpl::on_pushButton_DelHauptgaerMessung_clicked() {
@@ -8947,14 +8919,12 @@ void MainWindowImpl::on_lineEdit_Sudname_textEdited(QString) {
 }
 
 void MainWindowImpl::on_pushButton_EingabeHSWVorHopfenseihen_clicked() {
-  KorrektSwImpl ksw;
-  ksw.spinBox_SwPlato->setValue(spinBox_SWVorHopfenseihen->value());
-  ksw.BerDichte();
-  ksw.exec();
-  if (!ksw.abgebrochen) {
-    spinBox_SWVorHopfenseihen->setValue(Berechnungen.densityAtX(
-        ksw.spinBox_SwPlato->value(), ksw.spinBox_Temperatur->value(), 20));
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWVorHopfenseihen->value(), this);
+  if (dlg->exec() == QDialog::Accepted) {
+    spinBox_SWVorHopfenseihen->setValue(dlg->value());
+    setAenderung(true);
   }
+  delete dlg;
 }
 
 bool MainWindowImpl::CheckDBNeuBerechnen() {
@@ -9495,11 +9465,18 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
 }
 
 void MainWindowImpl::on_tableWidget_Brauuebersicht_itemSelectionChanged() {
-  int i = tableWidget_Brauuebersicht->currentRow();
-  QDateTime dt;
-  dt.setDate(
-      tableWidget_Brauuebersicht->item(i, 2)->data(Qt::DisplayRole).toDate());
-  widget_DiaBrauUebersicht->MarkierePunkt(dt);
+  int row = tableWidget_Brauuebersicht->currentRow();
+  int id = tableWidget_Brauuebersicht->item(row, 0)->data(Qt::DisplayRole).toInt();
+  widget_DiaBrauUebersicht->MarkierePunkt(id);
+}
+
+void MainWindowImpl::slot_diagram_Brauuebersicht_selectionChanged(int id) {
+  for (int row = 0; row < tableWidget_Brauuebersicht->rowCount(); ++row) {
+    if (tableWidget_Brauuebersicht->item(row, 0)->data(Qt::DisplayRole).toInt() == id) {
+      tableWidget_Brauuebersicht->selectRow(row);
+      break;
+    }
+  }
 }
 
 void MainWindowImpl::on_SpinBox_wwCalcium_mg_valueChanged(double) {
@@ -10406,46 +10383,19 @@ void MainWindowImpl::on_spinBox_WuerzemengeAnstellen_valueChanged(double arg1) {
 
 void MainWindowImpl::on_spinBox_SWKochende_valueChanged(double arg1) {
   if (Gestartet) {
-    if (checkBox_zumischen->isChecked()) {
-      spinBox_WuerzemengeAnstellen->setValue(
-          spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value() +
-          spinBox_WasserVerschneidung->value());
-      spinBox_SWAnstellen->setValue(spinBox_SW->value());
-    } else {
-      spinBox_WuerzemengeAnstellen->setValue(
-          spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
-      spinBox_SWAnstellen->setValue(arg1);
-    }
+    spinBox_SWAnstellen->setValue(arg1);
   }
 }
 
 void MainWindowImpl::on_spinBox_WuerzemengeKochende_valueChanged(double arg1) {
   if (Gestartet) {
-    if (checkBox_zumischen->isChecked()) {
-      spinBox_WuerzemengeAnstellen->setValue(
-          arg1 - spinBox_Speisemenge->value() +
-          spinBox_WasserVerschneidung->value());
-      spinBox_SWAnstellen->setValue(spinBox_SW->value());
-    } else {
-      spinBox_WuerzemengeAnstellen->setValue(arg1 -
-                                             spinBox_Speisemenge->value());
-      spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
-    }
+    spinBox_WuerzemengeAnstellen->setValue(arg1 - spinBox_Speisemenge->value());
   }
 }
 
 void MainWindowImpl::on_spinBox_Speisemenge_valueChanged(double) {
   if (Gestartet) {
-    if (checkBox_zumischen->isChecked()) {
-      spinBox_WuerzemengeAnstellen->setValue(
-          spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value() +
-          spinBox_WasserVerschneidung->value());
-      spinBox_SWAnstellen->setValue(spinBox_SW->value());
-    } else {
-      spinBox_WuerzemengeAnstellen->setValue(
-          spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
-      spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
-    }
+    spinBox_WuerzemengeAnstellen->setValue(spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
   }
 }
 
@@ -12465,19 +12415,6 @@ void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked() {
       list_EwZutat[i]->zutatEntnehmen();
       i = list_EwZutat.count();
     }
-  }
-}
-
-void MainWindowImpl::on_checkBox_zumischen_clicked() {
-  if (checkBox_zumischen->isChecked()) {
-    spinBox_WuerzemengeAnstellen->setValue(
-        spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value() +
-        spinBox_WasserVerschneidung->value());
-    spinBox_SWAnstellen->setValue(spinBox_SW->value());
-  } else {
-    spinBox_WuerzemengeAnstellen->setValue(
-        spinBox_WuerzemengeKochende->value() - spinBox_Speisemenge->value());
-    spinBox_SWAnstellen->setValue(spinBox_SWKochende->value());
   }
 }
 

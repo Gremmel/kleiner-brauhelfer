@@ -810,9 +810,9 @@ double QBerechnungen::GetHaushaltszuckerGesammt()
 
 double QBerechnungen::GetWasserVerschneidung(double SWSoll, double SWIst, double Menge)
 {
-	double d;
-	d = SWIst / SWSoll;
-	return Menge * d - Menge;
+    if (SWIst < SWSoll || SWSoll == 0.0)
+        return 0.0;
+    return Menge * (SWIst / SWSoll - 1);
 }
 
 

@@ -64,7 +64,9 @@ private:
 	double WertLinie2;
 	double WertLinie3;
 public:
+    void MarkierePunkt(int id);
 	void MarkierePunkt(QDateTime DateTime);
+    int getMarkierterPunkt() const;
 	void setWertLinie2(double value);
 	void setWertLinie1(double value);
 	void setWertLinie3(double value);
@@ -83,6 +85,7 @@ public:
 	QString KurzbezeichnungL2;
 	QString BezeichnungL3;
 	QString KurzbezeichnungL3;
+    QList<int> Ids;
 	//Ausgangsdaten der Linie 1
 	QList<QDateTime> L1Datum;
 	QList<double> L1Daten;
@@ -96,6 +99,7 @@ public:
 	void paintEvent(QPaintEvent * event);
 	void mousePressEvent ( QMouseEvent * event );
 	MyDiagrammView(QWidget * parent = 0,  Qt::WindowFlags f = 0);
-	
+signals:
+    void sig_selectionChanged(int id);
 };
 #endif
