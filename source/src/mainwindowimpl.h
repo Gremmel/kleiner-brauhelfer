@@ -664,6 +664,7 @@ private slots:
   void on_pushButton_SudTeilen_clicked();
   void on_dateEdit_AuswahlVon_userDateChanged(const QDate &date);
   void on_dateEdit_AuswahlBis_userDateChanged(const QDate &date);
+  void on_checkBox_BrauuebersichtAuswahlAlle_stateChanged(int);
 };
 #endif
 

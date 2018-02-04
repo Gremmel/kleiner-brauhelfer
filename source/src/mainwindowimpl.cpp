@@ -2656,6 +2656,7 @@ void MainWindowImpl::SchreibeKonfig() {
   settings.beginGroup("Brauuebersicht");
   settings.setValue("ZeitraumVon", dateEdit_AuswahlVon->date());
   settings.setValue("ZeitraumBis", dateEdit_AuswahlBis->date());
+  settings.setValue("AlleAnzeigen", checkBox_BrauuebersichtAuswahlAlle->isChecked());
   settings.setValue("AuswahlLinie1", comboBox_AuswahlL1->currentIndex());
   settings.setValue("AuswahlLinie2", comboBox_AuswahlL2->currentIndex());
   settings.endGroup();
@@ -2696,6 +2697,7 @@ void MainWindowImpl::LeseKonfig() {
   settings.beginGroup("Brauuebersicht");
   dateEdit_AuswahlVon->setDate(settings.value("ZeitraumVon").toDate());
   dateEdit_AuswahlBis->setDate(settings.value("ZeitraumBis").toDate());
+  checkBox_BrauuebersichtAuswahlAlle->setChecked(settings.value("AlleAnzeigen").toBool());
   comboBox_AuswahlL1->setCurrentIndex(settings.value("AuswahlLinie1").toInt());
   comboBox_AuswahlL2->setCurrentIndex(settings.value("AuswahlLinie2").toInt());
   settings.endGroup();
@@ -4004,21 +4006,37 @@ void MainWindowImpl::slot_RohstoffMengeValueChanged(double menge) {
     if (item) {
       QTableWidget *table = item->tableWidget();
       if (table == tableWidget_Malz) {
+        if (menge > 0.0 && !table->cellWidget(item->row(), TableMalzColEinlagerung)->isEnabled()) {
+          ((QDateEdit*)table->cellWidget(item->row(), TableMalzColEinlagerung))->setDate(QDate::currentDate());
+          ((QDateEdit*)table->cellWidget(item->row(), TableMalzColMindesthalbat))->setDate(QDate::currentDate().addMonths(1));
+        }
         table->cellWidget(item->row(), TableMalzColEinlagerung)
             ->setEnabled(menge > 0);
         table->cellWidget(item->row(), TableMalzColMindesthalbat)
             ->setEnabled(menge > 0);
       } else if (table == tableWidget_Hopfen) {
+        if (menge > 0.0 && !table->cellWidget(item->row(), TableHopfenColEinlagerung)->isEnabled()) {
+          ((QDateEdit*)table->cellWidget(item->row(), TableHopfenColEinlagerung))->setDate(QDate::currentDate());
+          ((QDateEdit*)table->cellWidget(item->row(), TableHopfenColMindesthalbat))->setDate(QDate::currentDate().addMonths(1));
+        }
         table->cellWidget(item->row(), TableHopfenColEinlagerung)
             ->setEnabled(menge > 0);
         table->cellWidget(item->row(), TableHopfenColMindesthalbat)
             ->setEnabled(menge > 0);
       } else if (table == tableWidget_Hefe) {
+        if (menge > 0.0 && !table->cellWidget(item->row(), TableHefeColEinlagerung)->isEnabled()) {
+          ((QDateEdit*)table->cellWidget(item->row(), TableHefeColEinlagerung))->setDate(QDate::currentDate());
+          ((QDateEdit*)table->cellWidget(item->row(), TableHefeColMindesthalbat))->setDate(QDate::currentDate().addMonths(1));
+        }
         table->cellWidget(item->row(), TableHefeColEinlagerung)
             ->setEnabled(menge > 0);
         table->cellWidget(item->row(), TableHefeColMindesthalbat)
             ->setEnabled(menge > 0);
       } else if (table == tableWidget_WeitereZutaten) {
+        if (menge > 0.0 && !table->cellWidget(item->row(), TableWZutatColEinlagerung)->isEnabled()) {
+          ((QDateEdit*)table->cellWidget(item->row(), TableWZutatColEinlagerung))->setDate(QDate::currentDate());
+          ((QDateEdit*)table->cellWidget(item->row(), TableWZutatColMindesthalbat))->setDate(QDate::currentDate().addMonths(1));
+        }
         table->cellWidget(item->row(), TableWZutatColEinlagerung)
             ->setEnabled(menge > 0);
         table->cellWidget(item->row(), TableWZutatColMindesthalbat)
@@ -7095,8 +7113,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
   QString datumB, datumE;
   datumB = dateEdit_AuswahlVon->date().toString(Qt::ISODate);
   datumE = dateEdit_AuswahlBis->date().toString(Qt::ISODate);
-  abfrage = "SELECT * FROM Sud WHERE Braudatum BETWEEN date('" + datumB +
+  if (!checkBox_BrauuebersichtAuswahlAlle->isChecked())
+    abfrage = "SELECT * FROM Sud WHERE Braudatum BETWEEN date('" + datumB +
             "') AND date('" + datumE + "') AND BierWurdeAbgefuellt=1 ";
+  else
+    abfrage = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1 ";
   sql = abfrage + " ORDER BY Braudatum DESC";
 
   if (!query.exec(sql)) {
@@ -7365,6 +7386,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
     // Diagramm füllen wenn 2 oder mehr Datensätze vorhanden sind
     if (i > 1) {
       sql = abfrage + " ORDER BY Braudatum";
+      widget_DiaBrauUebersicht->MarkierePunkt(0);
       widget_DiaBrauUebersicht->Ids.clear();
       // Linie 1
       widget_DiaBrauUebersicht->L1Daten.clear();
@@ -7594,6 +7616,14 @@ void MainWindowImpl::on_dateEdit_AuswahlVon_userDateChanged(const QDate&)
 
 void MainWindowImpl::on_dateEdit_AuswahlBis_userDateChanged(const QDate&)
 {
+  FuelleBrauuebersicht();
+  widget_DiaBrauUebersicht->repaint();
+}
+
+void MainWindowImpl::on_checkBox_BrauuebersichtAuswahlAlle_stateChanged(int)
+{
+  dateEdit_AuswahlVon->setDisabled(checkBox_BrauuebersichtAuswahlAlle->isChecked());
+  dateEdit_AuswahlBis->setDisabled(checkBox_BrauuebersichtAuswahlAlle->isChecked());
   FuelleBrauuebersicht();
   widget_DiaBrauUebersicht->repaint();
 }
@@ -10003,7 +10033,7 @@ void MainWindowImpl::slot_EwzZugegeben(QString zutat, int typ, double menge) {
   msgBox.setWindowTitle("kleine-frage");
   msgBox.setInformativeText("");
   msgBox.setText(trUtf8("Soll die Zutat") + " " + zutat + " " +
-                 trUtf8("vom bestand abgezogen werden?"));
+                 trUtf8("vom Bestand abgezogen werden?"));
   msgBox.setIcon(QMessageBox::Question);
   // msgBox.setDefaultButton(QMessageBox::Save);
   QPushButton *JaButton =
