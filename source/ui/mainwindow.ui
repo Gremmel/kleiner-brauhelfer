@@ -4784,7 +4784,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  </size>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="tab_berechnungenAllgemein">
                  <attribute name="title">
@@ -9639,6 +9639,13 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <month>12</month>
                   <day>31</day>
                  </date>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_BrauuebersichtAuswahlAlle">
+                <property name="text">
+                 <string>alle anzeigen</string>
                 </property>
                </widget>
               </item>
