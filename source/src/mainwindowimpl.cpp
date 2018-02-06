@@ -9514,7 +9514,7 @@ void MainWindowImpl::on_SpinBox_wwCalcium_mg_valueChanged(double) {
     // umrechnen in mmol
     double d;
     d = SpinBox_wwCalcium_mg->value();
-    d = d / 40.8;
+    d = d / 40.08;
     SpinBox_wwCalcium_mmol->setValue(d);
     // in dh Umrechnen
     d = d / 0.1783;
@@ -9528,7 +9528,7 @@ void MainWindowImpl::on_SpinBox_wwCalcium_mmol_valueChanged(double) {
     // umrechnen in mg
     double d;
     d = SpinBox_wwCalcium_mmol->value();
-    d = d * 40.8;
+    d = d * 40.08;
     SpinBox_wwCalcium_mg->setValue(d);
     // in dh Umrechnen
     d = SpinBox_wwCalcium_mmol->value() / 0.1783;
@@ -9585,7 +9585,7 @@ void MainWindowImpl::BerWasserwerte() {
   // Calcium
   double d;
   d = SpinBox_wwCalcium_mg->value();
-  d = d / 40.8;
+  d = d / 40.08;
   SpinBox_wwCalcium_mmol->setValue(d);
   // in dh Umrechnen
   d = d / 0.1783;
