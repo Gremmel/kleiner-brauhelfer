@@ -786,7 +786,7 @@
     <message>
         <location filename="../ui/EingabeHVolumen.ui" line="14"/>
         <source>Eingabehilfe für Volumen</source>
-        <translation>Input assistance for voume</translation>
+        <translation>Input assistance for volume</translation>
     </message>
     <message>
         <location filename="../ui/EingabeHVolumen.ui" line="37"/>
@@ -2946,7 +2946,7 @@ This action can only be undone by editing the beer file with an editor.</transla
         <location filename="../ui/mainwindow.ui" line="10482"/>
         <location filename="../ui/mainwindow.ui" line="10883"/>
         <source>Volumen</source>
-        <translation>Voume</translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="10563"/>
@@ -4196,7 +4196,7 @@ Note: Ingredients that will be added during fermentation will not be subtracted 
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="901"/>
         <source> Hopfen untermischen</source>
-        <translation> intermix hop</translation>
+        <translation> and intermix hop</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="918"/>
@@ -4226,7 +4226,7 @@ Note: Ingredients that will be added during fermentation will not be subtracted 
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="972"/>
         <source>Kocher abschalten, wenn thermische Bewegung abgeflaut ist einen Whirlpool erzeugen</source>
-        <translation>Turn off stove. When thermic motions abate, create a whirlpool</translation>
+        <translation>Turn off heater. When thermic motions abate, create a whirlpool</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl_spickzettel.cpp" line="981"/>
@@ -4834,7 +4834,7 @@ or because an ingredient is missing from the inventory
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9159"/>
         <source>Eingabehilfe für Volumen Sudpfanne</source>
-        <translation>Input assistance for brew kettle voume</translation>
+        <translation>Input assistance for brew kettle volume</translation>
     </message>
     <message>
         <location filename="../src/mainwindowimpl.cpp" line="9188"/>
