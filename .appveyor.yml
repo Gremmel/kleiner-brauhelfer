@@ -25,11 +25,11 @@ install:
 
 before_build:
   - cd c:\dev
-  - md build
+  # - md build
 
 build_script:
-  - cd build
-  - cmake -G "Visual Studio 15 2017 Win64" -D CMAKE_PREFIX_PATH=%QTDIR% ../source
+  - cd source
+  - qmake brauhelfer.pro
   - msbuild brauhelfer.sln
 
 after_build:
@@ -45,4 +45,4 @@ after_test:
   - iscc /Q setup.iss
 
 artifacts:
-  - path: c:\dev\build\*
+  - path: c:\dev\*
