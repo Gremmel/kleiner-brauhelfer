@@ -3,12 +3,45 @@
 os: unstable
 skip_tags: true
 
+image: Visual Studio 2017
+
+environment:
+  matrix:
+  - example: kleiner-brauhelfer
+    name: win64
+    platform: amd64
+
+clone_folder: c:\dev
+clone_depth: 5
+
+init:
+  - set QTDIR=C:\Qt\5.10.0\msvc2017_64
+  - set PATH=%PATH%;%QTDIR%\bin;"C:\\Program Files (x86)\\Inno Setup 5"
+  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" %platform%
+
 install:
-  - set QTDIR=C:\Qt\5.10.0\mingw53_32
-  - set PATH=%PATH%;%QTDIR%\bin;C:\MinGW\bin
+  - cd c:\dev
+
+before_build:
+  - cd c:\dev
+  - md build
 
 build_script:
-  - cd source
-  - qmake -project
-  - qmake brauhelfer.pro
-  - mingw32-make
+  - cd build
+  - cmake -G "Visual Studio 15 2017 Win64" -D CMAKE_PREFIX_PATH=%QTDIR% ../source
+  - msbuild brauhelfer.sln
+
+after_build:
+
+test: off
+
+matrix:
+  fast_finish: true
+
+after_test:
+  - cd ..\deployment\windows
+  - cmd deploy.cmd
+  - iscc /Q setup.iss
+
+artifacts:
+  - path: c:\dev\build\*
