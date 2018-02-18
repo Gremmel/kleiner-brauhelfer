@@ -17,7 +17,7 @@ clone_depth: 5
 init:
   - set QTDIR=C:\Qt\5.10.0\msvc2017_64
   - set PATH=%PATH%;%QTDIR%\bin
-  - set PATH=%PATH%;"C:\Program Files (x86)\Inno Setup 5"
+#  - set PATH=%PATH%;"C:\Program Files (x86)\Inno Setup 5"
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %platform%
 
 install:
