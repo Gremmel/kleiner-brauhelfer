@@ -30,6 +30,7 @@ before_build:
 build_script:
   - cd source
   - qmake -v brauhelfer.pro
+  - dir
   #- msbuild brauhelfer.sln
   - nmake
 
