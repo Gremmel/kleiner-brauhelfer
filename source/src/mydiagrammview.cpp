@@ -32,7 +32,7 @@ MyDiagrammView::MyDiagrammView( QWidget * parent,  Qt::WindowFlags f )
 
 void MyDiagrammView::paintEvent(QPaintEvent * )
 {
-  if (Ids.count() < 2){
+  if ( (L1Daten.count()<2) || (L1Datum.count()<2)){
   }
   else {
     //Gitter Zeichnen
