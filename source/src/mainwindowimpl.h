@@ -242,6 +242,7 @@ private:
   void FuelleSudauswahl();
   void LeseSuddatenDB();
   void LeseRohstoffeDB();
+  void setDatumsfelder();
   void LadeSudDB(bool aktivateTab);
   void LeseRohstoffeDB_test();
   void SchreibeRohstoffeDB();

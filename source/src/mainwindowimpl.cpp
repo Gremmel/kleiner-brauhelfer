@@ -2238,6 +2238,16 @@ void MainWindowImpl::LeseRohstoffeDB() {
   }
 }
 
+void MainWindowImpl::setDatumsfelder() {
+  if (!BierWurdeGebraut) {
+    dateEdit_Braudatum->setDate(QDate::currentDate());
+    dateEdit_Anstelldatum->setDate(QDate::currentDate());
+  }
+  if (!BierWurdeAbgefuellt) {
+    dateEdit_Abfuelldatum->setDate(QDate::currentDate());
+  }
+}
+
 void MainWindowImpl::on_pushButton_MalzDel_clicked() {
   //Überprüfen ob bei nicht gebrauten Suden der Rohstoff verwendet wird.
 
@@ -5918,6 +5928,7 @@ void MainWindowImpl::LadeSudDB(bool aktivateTab) {
   SetStatusGebraut(BierWurdeGebraut);
   SetDisabledAbgefuellt(BierWurdeAbgefuellt);
   SetDisabledVerbraucht(BierWurdeVerbraucht || !BierWurdeAbgefuellt);
+  setDatumsfelder();
   pushButton_SudTeilen->setDisabled(BierWurdeVerbraucht);
   setRecentFile(AktuelleSudID);
   AmLaden = false;
