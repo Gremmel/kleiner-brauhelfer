@@ -14,6 +14,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Terrill Formel für die Berechnung der Stammwürze mit einem Refraktometer
 - Fix: falsche Dropdown Werte (Hopfengabe Gewicht statt IBU, Weitere Zutaten Zugabezeitpunkt)
 - Fix: Falsche Werte bei Spickzettel / Zusammenfassung
+- Datum in Brau&Gärdaten wird beim laden eines noch nicht gebrauten Sudes auf das heutige Datum gesetzt
 ### Version 1.4.4.1
 - Zustand der Tabellen werden gespeichert
 - Gewünschte Restalkalität kann auch negativ sein
