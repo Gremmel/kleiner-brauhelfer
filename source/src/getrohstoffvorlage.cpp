@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
+#include <QSortFilterProxyModel>
 
 #include "definitionen.h"
 #include "errormessage.h"
@@ -88,7 +89,10 @@ void GetRohstoffVorlage::viewImpl(int art)
     // open list from settings directory
     MyDsvTableModel* model = new MyDsvTableModel(this);
     model->loadFromFile(file.fileName(), true, ';');
-    ui->tableView->setModel(model);
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel();
+    proxyModel->setSourceModel(model);
+    ui->tableView->setModel(proxyModel);
+    ui->tableView->setSortingEnabled(true);
     ui->tableView->resizeColumnsToContents();
     connect(ui->tableView->model(), SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)), this, SLOT(slot_save()));
     connect(ui->tableView->model(), SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(slot_save()));

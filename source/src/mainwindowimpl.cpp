@@ -7144,59 +7144,48 @@ void MainWindowImpl::FuelleBrauuebersicht() {
     tableWidget_Brauuebersicht->setRowCount(0);
     tableWidget_Brauuebersicht->setSortingEnabled(false);
     while (query.next()) {
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem2 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      MyTableWidgetItemNumeric *newItem5 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem6 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem7 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem8 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem9 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem10 = new MyTableWidgetItemNumeric();
-      QTableWidgetItem *newItem11 = new QTableWidgetItem("");
-      MyTableWidgetItemNumeric *newItem12 = new MyTableWidgetItemNumeric();
-      MyTableWidgetItemNumeric *newItem13 = new MyTableWidgetItemNumeric();
+      QTableWidgetItem *newItem;
+      MyTableWidgetItemNumeric *newItemNum;
       tableWidget_Brauuebersicht->setRowCount(
           tableWidget_Brauuebersicht->rowCount() + 1);
       // ID
       FeldNr = query.record().indexOf("ID");
-      newItem1->setText(query.value(FeldNr).toString());
       QString id = query.value(FeldNr).toString();
-      tableWidget_Brauuebersicht->setItem(i, 0, newItem1);
+      newItem = new QTableWidgetItem(id);
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 0, newItem);
       // Sudname
       FeldNr = query.record().indexOf("Sudname");
-      newItem2->setText(query.value(FeldNr).toString());
-      tableWidget_Brauuebersicht->setItem(i, 1, newItem2);
+      newItem = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 1, newItem);
       // Bierfarbe setzten
-      QColor farbe;
       FeldNr = query.record().indexOf("erg_Farbe");
       double ebc = query.value(FeldNr).toDouble();
-      farbe = Berechnungen.GetFarbwert(query.value(FeldNr).toDouble());
-      newItem2->setBackground(farbe);
-      if (ebc > 35) {
-        newItem2->setTextColor(QColor::fromRgb(255, 255, 255));
-      } else
-        newItem2->setTextColor(QColor::fromRgb(0, 0, 0));
-
+      newItem->setBackground(Berechnungen.GetFarbwert(ebc));
+      newItem->setTextColor(ebc > 35 ? QColor::fromRgb(255, 255, 255) : QColor::fromRgb(0, 0, 0));
       // Braudatum
       FeldNr = query.record().indexOf("Braudatum");
-      newItem3->setData(
+      newItem = new QTableWidgetItem("");
+      newItem->setData(
           Qt::DisplayRole,
           QDate::fromString(query.value(FeldNr).toString(), Qt::ISODate));
       if (StyleDunkel)
-        newItem3->setBackground(
+        newItem->setBackground(
             QColor::fromRgb(FARBE_BRAUUEBERSICHT_SPALTE_ACHSE_X_DARK));
       else
-        newItem3->setBackground(
+        newItem->setBackground(
             QColor::fromRgb(FARBE_BRAUUEBERSICHT_SPALTE_ACHSE_X));
-      tableWidget_Brauuebersicht->setItem(i, 2, newItem3);
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 2, newItem);
       // Abfülldatum
       FeldNr = query.record().indexOf("Abfuelldatum");
-      newItem4->setData(
+      newItem = new QTableWidgetItem("");
+      newItem->setData(
           Qt::DisplayRole,
           QDate::fromString(query.value(FeldNr).toString(), Qt::ISODate));
-      tableWidget_Brauuebersicht->setItem(i, 3, newItem4);
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 3, newItem);
       // Tage bis Bier fertig ist
       QDate date;
       // Start der Reifung ermitteln indem das letzte Datum vom
@@ -7204,7 +7193,6 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       QString sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID=" + id +
                      " ORDER BY Zeitstempel DESC;";
       date = QDate::fromString(query.value(FeldNr).toString(), Qt::ISODate);
-
       if (!queryN.exec(sqlN)) {
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
@@ -7219,127 +7207,139 @@ void MainWindowImpl::FuelleBrauuebersicht() {
               QDate::fromString(queryN.value(FeldNr).toString(), Qt::ISODate);
         }
       }
-
       int tageReifung = date.daysTo(QDate::currentDate());
       FeldNr = query.record().indexOf("Reifezeit");
       date = date.addDays(query.value(FeldNr).toInt() * 7);
       int tage = QDate::currentDate().daysTo(date);
       FeldNr = query.record().indexOf("BierWurdeVerbraucht");
+      newItem = new QTableWidgetItem("");
       bool bwv = query.value(FeldNr).toBool();
       if (bwv) {
-        newItem11->setText(trUtf8("Verbraucht"));
+        newItem->setText(trUtf8("Verbraucht"));
         if (StyleDunkel)
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierLeer_DARK));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierLeer_DARK));
         else
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierLeer));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierLeer));
       } else if (tage > 0) {
         int w = tageReifung / 7;
-        newItem11->setText(trUtf8("%1. Woche").arg(w + 1) + ", " +
+        newItem->setText(trUtf8("%1. Woche").arg(w + 1) + ", " +
                            trUtf8("noch %1 Tage").arg(tage));
-        newItem11->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItem->setTextColor(QColor::fromRgb(0, 0, 0));
         if (StyleDunkel)
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierReift_DARK));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierReift_DARK));
         else
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierReift));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierReift));
       } else {
         int w = tageReifung / 7;
-        newItem11->setText(trUtf8("%1. Woche").arg(w + 1));
-        newItem11->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItem->setText(trUtf8("%1. Woche").arg(w + 1));
+        newItem->setTextColor(QColor::fromRgb(0, 0, 0));
         if (StyleDunkel)
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierFertig_DARK));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierFertig_DARK));
         else
-          newItem11->setBackground(QColor::fromRgb(FARBE_BierFertig));
+          newItem->setBackground(QColor::fromRgb(FARBE_BierFertig));
       }
-      tableWidget_Brauuebersicht->setItem(i, 4, newItem11);
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 4, newItem);
       // Menge
       FeldNr = query.record().indexOf("erg_AbgefuellteBiermenge");
       double d = query.value(FeldNr).toDouble();
       d = qRound(d * 100);
       d = d / 100;
-      newItem5->setValue(d);
-      tableWidget_Brauuebersicht->setItem(i, 5, newItem5);
+      newItemNum = new MyTableWidgetItemNumeric(d);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 5, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Menge")) {
-        newItem5->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem5->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Menge")) {
-        newItem5->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem5->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Stammwürze
       FeldNr = query.record().indexOf("SWAnstellen");
       double sw = query.value(FeldNr).toDouble();
       sw = qRound(sw * 100);
       sw = sw / 100;
-      newItem6->setValue(sw);
-      tableWidget_Brauuebersicht->setItem(i, 6, newItem6);
+      newItemNum = new MyTableWidgetItemNumeric(sw);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 6, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Stammwürze")) {
-        newItem6->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem6->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Stammwürze")) {
-        newItem6->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem6->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Sudhausausbeute
       FeldNr = query.record().indexOf("erg_Sudhausausbeute");
       double sha = query.value(FeldNr).toDouble();
       sha = qRound(sha * 100);
       sha = sha / 100;
-      newItem7->setValue(sha);
-      tableWidget_Brauuebersicht->setItem(i, 7, newItem7);
+      newItemNum = new MyTableWidgetItemNumeric(sha);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 7, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Sudhausausbeute")) {
-        newItem7->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem7->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Sudhausausbeute")) {
-        newItem7->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem7->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Menge Schüttung
       FeldNr = query.record().indexOf("erg_S_Gesammt");
       double msch = query.value(FeldNr).toDouble();
       msch = qRound(msch * 100);
       msch = msch / 100;
-      newItem8->setValue(msch);
-      tableWidget_Brauuebersicht->setItem(i, 8, newItem8);
+      newItemNum = new MyTableWidgetItemNumeric(msch);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 8, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Menge Schüttung")) {
-        newItem8->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem8->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Menge Schüttung")) {
-        newItem8->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem8->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Kosten Pro Liter
       FeldNr = query.record().indexOf("erg_Preis");
       double kost = query.value(FeldNr).toDouble();
       kost = qRound(kost * 100);
       kost = kost / 100;
-      newItem9->setValue(kost);
-      tableWidget_Brauuebersicht->setItem(i, 9, newItem9);
+      newItemNum = new MyTableWidgetItemNumeric(kost);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 9, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Kosten/Liter")) {
-        newItem9->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem9->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Kosten/Liter")) {
-        newItem9->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem9->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
+      // Hefe
+      FeldNr = query.record().indexOf("AuswahlHefe");
+      newItem = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItem->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 10, newItem);
       // Alc Vol
       FeldNr = query.record().indexOf("erg_Alkohol");
       double abv = query.value(FeldNr).toDouble();
       abv = qRound(abv * 100);
       abv = abv / 100;
-      newItem10->setValue(abv);
-      tableWidget_Brauuebersicht->setItem(i, 10, newItem10);
+      newItemNum = new MyTableWidgetItemNumeric(abv);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 11, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Alkohol")) {
-        newItem10->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem10->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Alkohol")) {
-        newItem10->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem10->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Scheinbarer Endvergärungsgrad
       // wenn keine Schnellgärprobe gemacht wurde restextrakt nehmen
@@ -7352,44 +7352,33 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       double svp = query.value(FeldNr).toDouble();
       double evg = qRound(Berechnungen.GetScheinbarerEVG(sw, svp) * 100);
       evg = evg / 100;
-      newItem12->setValue(evg);
-      tableWidget_Brauuebersicht->setItem(i, 11, newItem12);
+      newItemNum = new MyTableWidgetItemNumeric(evg);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 12, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Scheinbarer EVG")) {
-        newItem12->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem12->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Scheinbarer EVG")) {
-        newItem12->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem12->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
       // Effektive Ausbeute
       FeldNr = query.record().indexOf("erg_EffektiveAusbeute");
       d = query.value(FeldNr).toDouble();
       d = qRound(d * 100);
       d = d / 100;
-      newItem13->setValue(d);
-      tableWidget_Brauuebersicht->setItem(i, 12, newItem13);
+      newItemNum = new MyTableWidgetItemNumeric(d);
+      newItemNum->setTextAlignment(Qt::AlignCenter);
+      tableWidget_Brauuebersicht->setItem(i, 13, newItemNum);
       if (comboBox_AuswahlL1->currentText() == trUtf8("Effektive Ausbeute")) {
-        newItem13->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem13->setBackground(ColorBrauUebersicht_Spalte1);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
       if (comboBox_AuswahlL2->currentText() == trUtf8("Effektive Ausbeute")) {
-        newItem13->setTextColor(QColor::fromRgb(0, 0, 0));
-        newItem13->setBackground(ColorBrauUebersicht_Spalte2);
+        newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
+        newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
-      // Mittig ausrichten
-      newItem3->setTextAlignment(Qt::AlignCenter);
-      newItem4->setTextAlignment(Qt::AlignCenter);
-      newItem5->setTextAlignment(Qt::AlignCenter);
-      newItem6->setTextAlignment(Qt::AlignCenter);
-      newItem7->setTextAlignment(Qt::AlignCenter);
-      newItem8->setTextAlignment(Qt::AlignCenter);
-      newItem9->setTextAlignment(Qt::AlignCenter);
-      newItem10->setTextAlignment(Qt::AlignCenter);
-      newItem11->setTextAlignment(Qt::AlignCenter);
-      newItem12->setTextAlignment(Qt::AlignCenter);
-      newItem13->setTextAlignment(Qt::AlignCenter);
-
       i++;
     }
     tableWidget_Brauuebersicht->setSortingEnabled(true);
