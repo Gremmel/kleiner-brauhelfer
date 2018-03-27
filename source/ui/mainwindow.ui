@@ -9329,7 +9329,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
       </widget>
       <widget class="QWidget" name="tab_Brauuebersicht">
        <attribute name="title">
-        <string>Brau-Übersicht</string>
+        <string>Brauübersicht</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_38">
         <item>
@@ -9563,6 +9563,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <column>
                <property name="text">
                 <string>Kosten / Liter</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Hefe</string>
                </property>
               </column>
               <column>
