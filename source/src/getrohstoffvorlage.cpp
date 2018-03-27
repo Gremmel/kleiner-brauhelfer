@@ -233,8 +233,8 @@ void GetRohstoffVorlage::on_buttonBox_accepted()
 
 void GetRohstoffVorlage::slot_save()
 {
-    MyDsvTableModel *model = qobject_cast<MyDsvTableModel*>(ui->tableView->model());
-    model->save(getFileName(true), ';');
+    QSortFilterProxyModel *model = qobject_cast<QSortFilterProxyModel*>(ui->tableView->model());
+    ((MyDsvTableModel*)model->sourceModel())->save(getFileName(true), ';');
 }
 
 void GetRohstoffVorlage::on_buttonBox_rejected()
@@ -278,8 +278,8 @@ void GetRohstoffVorlage::on_btn_Export_clicked()
                                                     "CSV (*.csv)");
     if (!fileName.isEmpty())
     {
-        MyDsvTableModel *model = qobject_cast<MyDsvTableModel*>(ui->tableView->model());
-        model->save(fileName, ';');
+        QSortFilterProxyModel *model = qobject_cast<QSortFilterProxyModel*>(ui->tableView->model());
+        ((MyDsvTableModel*)model->sourceModel())->save(fileName, ';');
     }
 }
 
