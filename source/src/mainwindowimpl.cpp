@@ -7116,10 +7116,10 @@ void MainWindowImpl::FuelleBrauuebersicht() {
   QSqlQuery query, queryN;
   int FeldNr;
   QString sql, abfrage;
-  int SelZeile = tableWidget_Brauuebersicht->currentRow();
+  //int SelZeile = tableWidget_Brauuebersicht->currentRow();
 
-  if (SelZeile == -1)
-    SelZeile = 0;
+  //if (SelZeile == -1)
+    //SelZeile = 0;
 
   QString datumB, datumE;
   datumB = dateEdit_AuswahlVon->date().toString(Qt::ISODate);
