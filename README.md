@@ -17,6 +17,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Datum in Brau&Gärdaten wird beim laden eines noch nicht gebrauten Sudes auf das heutige Datum gesetzt
 - Neue Spalte "Hefe" in der Brauübersicht
 - Tabelle "Rohstoffvorlage" lässt sich sortieren (keine numerische Sortierung)
+- Textfilter für den Sudname in der Sudauswahl
 ### Version 1.4.4.1
 - Zustand der Tabellen werden gespeichert
 - Gewünschte Restalkalität kann auch negativ sein

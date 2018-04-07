@@ -68,7 +68,7 @@ void MyDiagrammView::mousePressEvent ( QMouseEvent * event )
   for (int i = 0; i < Linie1.count(); i++){
     //Erster Punkt
     if (i == 0) {
-      p1 = 0;
+      //p1 = 0;
       p2 = Linie1[i].x() + qRound((Linie1[i+1].x() - Linie1[i].x()) / 2.0);
       if (event -> x() < p2) {
         if (MarkierterPunkt != 1) {
