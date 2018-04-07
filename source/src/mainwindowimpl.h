@@ -444,6 +444,7 @@ private slots:
   void on_pushButton_SpickzettelPDF_clicked();
   void slot_pushButton_SudKopie();
   void slot_FilterClicked(bool checked);
+  void on_lineEdit_FilterText_textChanged(const QString &arg1);
   void slot_pushButton_SudLaden();
   void slot_pushButton_SudDel();
   int slot_pushButton_SudNeu();

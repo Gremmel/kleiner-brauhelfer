@@ -5,20 +5,21 @@ QT = gui \
  network \
  xml
 
-equals(QT_MAJOR_VERSION, 5)
-{
-  greaterThan(QT_MINOR_VERSION, 4){
-    QT +=  webenginewidgets
-  } else {
-    QT += webkitwidgets printsupport
-  }
+lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 5) {
+ QT += webkitwidgets printsupport
+} else {
+ QT += webenginewidgets
 }
 
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
 VERSION = 1.4.5.0
+VERSION_SUFFIX =
 VERSION_INT = 1040500
-DEFINES += TARGET=\\\"$$TARGET\\\" VERSION=\\\"$$VERSION\\\" VERSION_INT=$$VERSION_INT
+
+DEFINES += TARGET=\\\"$${TARGET}\\\" \
+           VERSION=\\\"$${VERSION}$${VERSION_SUFFIX}\\\" \
+           VERSION_INT=$${VERSION_INT}
 
 win32:RC_ICONS += res/logo.ico
 macx:ICON = res/AppIcon.icns

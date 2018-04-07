@@ -46,6 +46,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_247">
             <item>
              <layout class="QHBoxLayout" name="layFilter">
+              <property name="spacing">
+               <number>9</number>
+              </property>
               <item>
                <widget class="QRadioButton" name="radioButton_FilterAlle">
                 <property name="text">
@@ -90,6 +93,9 @@
                  <string>&amp;Merkliste</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_FilterText"/>
               </item>
              </layout>
             </item>

@@ -6332,29 +6332,25 @@ void MainWindowImpl::FuelleSudauswahl() {
   if (SelZeile == -1)
     SelZeile = 0;
 
-  // Malz einlesen
-  // Alle Anzeigen
-  if (radioButton_FilterAlle->isChecked())
-    sql = "SELECT * FROM Sud";
-  // Nur die anzeigen dien noch nicht Gebraut wurden
-  else if (radioButton_FilterNichtGebraut->isChecked())
-    sql = "SELECT * FROM Sud WHERE BierWurdeGebraut=0";
-  // Gebraut aber noch nicht Abgefüllt
-  else if (radioButton_FilterGebrautNichtAbgefuellt->isChecked())
-    sql =
-        "SELECT * FROM Sud WHERE BierWurdeGebraut=1 AND BierWurdeAbgefuellt=0";
-  // Abgefüllt
-  else if (radioButton_Abgefuellt->isChecked())
-    sql = "SELECT * FROM Sud WHERE BierWurdeAbgefuellt=1";
-  // nicht verbraucht
-  else if (radioButton_nichtVerbraucht->isChecked())
-    sql = "SELECT * FROM Sud WHERE BierWurdeVerbraucht=0";
-  // Merkliste
-  else if (radioButton_Merkliste->isChecked())
-    sql = "SELECT * FROM Sud WHERE MerklistenID=1";
-  else
-    sql = "SELECT * FROM Sud";
-
+  sql = "SELECT * FROM Sud";
+  if (radioButton_FilterNichtGebraut->isChecked())
+    sql += " WHERE BierWurdeGebraut=0";
+  if (radioButton_FilterGebrautNichtAbgefuellt->isChecked())
+    sql += " WHERE BierWurdeGebraut=1 AND BierWurdeAbgefuellt=0";
+  if (radioButton_Abgefuellt->isChecked())
+    sql += " WHERE BierWurdeAbgefuellt=1";
+  if (radioButton_nichtVerbraucht->isChecked())
+    sql += " WHERE BierWurdeVerbraucht=0";
+  if (radioButton_Merkliste->isChecked())
+    sql += " WHERE MerklistenID=1";
+  if (!lineEdit_FilterText->text().isEmpty())
+  {
+      if (sql == "SELECT * FROM Sud")
+          sql += " WHERE ";
+      else
+          sql += " AND ";
+      sql += "Sudname LIKE '%" + lineEdit_FilterText->text() + "%'";
+  }
   sql += " ORDER BY Braudatum DESC";
 
   if (!query.exec(sql)) {
@@ -6778,6 +6774,11 @@ void MainWindowImpl::AddMalzgabe(QString Name, double Prozent, double erg_Menge,
 }
 
 void MainWindowImpl::slot_FilterClicked(bool) { FuelleSudauswahl(); }
+void MainWindowImpl::on_lineEdit_FilterText_textChanged(const QString&)
+{
+    FuelleSudauswahl();
+    lineEdit_FilterText->setFocus();
+}
 
 void MainWindowImpl::SchreibeRastenDB() {
   QSqlQuery query;
