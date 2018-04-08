@@ -9622,6 +9622,8 @@ void MainWindowImpl::BerWasserwerte() {
   SpinBox_waMilchsaeureNG_ml->setValue(RA_Reduzierung * 0.033333333 *
                                        doubleSpinBox_WNachguss->value());
 
+  SpinBox_waMilchsaeureGesamt_ml->setValue(SpinBox_waMilchsaeureHG_ml->value() + SpinBox_waMilchsaeureNG_ml->value());
+  widget_MilchsauereGesamt->setVisible(SpinBox_waMilchsaeureGesamt_ml->value() > 0.0);
   widget_MilchsauereHG->setVisible(SpinBox_waMilchsaeureHG_ml->value() > 0.0);
   widget_MilchsauereNG->setVisible(SpinBox_waMilchsaeureNG_ml->value() > 0.0);
   widget_SauermalzHG->setVisible(false);
@@ -9824,9 +9826,6 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked() {
           SLOT(slot_HopfenGetMenge(QString)));
   connect(ewz, SIGNAL(sig_getEwzMenge(QString)), this,
           SLOT(slot_EwzGetMenge(QString)));
-  // Zutatenliste füllen
-  ewz->setEwListe(ewzListe);
-  ewz->setHopfenListe(HopfenListe);
 
   verticalLayout_WeitereZutaten->addWidget(ewz);
   list_EwZutat.append(ewz);
@@ -9836,6 +9835,8 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked() {
   verticalLayout_BerWeitereZutaten->addWidget(ewz->ergWidget);
   ewz->setBierWurdeGebraut(BierWurdeGebraut);
   ewz->setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
+  ewz->setEwListe(ewzListe);
+  ewz->setHopfenListe(HopfenListe);
 
   setAenderung(true);
 }

@@ -221,7 +221,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Rest</string>
+         <string>Nach Brauen übrig</string>
         </property>
        </widget>
       </item>
