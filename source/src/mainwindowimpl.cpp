@@ -504,7 +504,7 @@ void MainWindowImpl::closeEvent(QCloseEvent *evt) {
     settings.endGroup();
     if (!abfrage) {
       close =
-          QMessageBox::question(this, APP_NAME, trUtf8("Anwendung schliessen?"),
+          QMessageBox::question(this, APP_NAME, trUtf8("Anwendung schließen?"),
                                 QMessageBox::Cancel | QMessageBox::Yes,
                                 QMessageBox::Yes) == QMessageBox::Yes;
     } else
