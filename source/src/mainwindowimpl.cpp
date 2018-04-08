@@ -2888,14 +2888,14 @@ void MainWindowImpl::retranslateMenus() {
   EntsperreEingabefelder->setText(trUtf8("&Entsperre Eingabefelder"));
   EntsperreEingabefelder->setStatusTip(
       trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
-  ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzten"));
+  ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzen"));
   ResetBierGebraut->setStatusTip(
       trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der "
              "Datenbank zurück"));
-  ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzten"));
+  ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzen"));
   ResetAbgefuellt->setStatusTip(trUtf8(
       "Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
-  ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzten"));
+  ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzen"));
   ResetVerbraucht->setStatusTip(
       trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der "
              "Datenbank zurück"));
@@ -3124,7 +3124,7 @@ void MainWindowImpl::SchreibeSuddatenDB() {
     }
   }
 
-  // Neu Berechnen zurücksetzten
+  // Neu Berechnen zurücksetzen
   sql += "NeuBerechnen='false', ";
 
   // Bewertung
@@ -5980,7 +5980,7 @@ bool MainWindowImpl::AbfrageSpeichern() {
     // für den fall das sich die Rohstoffe geändert haben müssen sie neu geladen
     // werden
     // in der Zeit des neu einlesens der Rohstoffe merker gestartet
-    // zurücksetzten
+    // zurücksetzen
     // das hat den effekt das bei einer änderung an den Tabellen nicht neu
     // berechnet wird
     // was zu einem absturz fürhen würde
@@ -9142,7 +9142,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
         }
       }
     }
-    // Flag das neu Berechnet werden muss wieder zurücksetzten
+    // Flag das neu Berechnet werden muss wieder zurücksetzen
     sql = "UPDATE 'Global' SET 'db_NeuBerechnen'=0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -9335,7 +9335,7 @@ void MainWindowImpl::slot_ResetAbgefuellt() {
 }
 
 void MainWindowImpl::slot_ResetWZZugabestatus() {
-  // Zugabestatus der Weiteren Zutaten zurücksetzten
+  // Zugabestatus der Weiteren Zutaten zurücksetzen
   for (int i = 0; i < list_EwZutat.count(); i++) {
     list_EwZutat[i]->setZugabestatus(0);
   }
