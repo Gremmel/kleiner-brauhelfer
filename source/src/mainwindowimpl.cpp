@@ -6340,7 +6340,7 @@ void MainWindowImpl::FuelleSudauswahl() {
   if (radioButton_Abgefuellt->isChecked())
     sql += " WHERE BierWurdeAbgefuellt=1";
   if (radioButton_nichtVerbraucht->isChecked())
-    sql += " WHERE BierWurdeVerbraucht=0";
+    sql += " WHERE BierWurdeVerbraucht=0 AND BierWurdeGebraut=1 AND BierWurdeAbgefuellt=1";
   if (radioButton_Merkliste->isChecked())
     sql += " WHERE MerklistenID=1";
   if (!lineEdit_FilterText->text().isEmpty())
