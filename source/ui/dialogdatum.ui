@@ -24,7 +24,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Zugabedatum übernehmen</string>
+      <string>Datum übernehmen</string>
      </property>
     </widget>
    </item>
