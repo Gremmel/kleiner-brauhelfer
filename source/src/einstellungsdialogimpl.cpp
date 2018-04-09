@@ -641,7 +641,7 @@ void EinstellungsdialogImpl::on_pushButton_GetColorStyleAuswahl_clicked()
 void EinstellungsdialogImpl::on_pushButton_SetDefaultFarbe_clicked()
 {
   QColor color;
-  //Farbwerte zurücksetzten
+  //Farbwerte zurücksetzen
 
   color = QColor::fromRgb(FARBE_STYLE_HIGHLIGHT);
   //wenn Farbwert gültig ist Farbe setzen

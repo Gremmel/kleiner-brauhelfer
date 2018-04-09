@@ -2879,7 +2879,7 @@ static bool ErstelleVerbindung() {
       return false;
     }
     QSqlDatabase::database().commit();
-    updateNr = 21;
+    //updateNr = 21;
   }
   return true;
 }

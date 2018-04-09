@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
+#include <QSortFilterProxyModel>
 
 #include "definitionen.h"
 #include "errormessage.h"
@@ -88,7 +89,10 @@ void GetRohstoffVorlage::viewImpl(int art)
     // open list from settings directory
     MyDsvTableModel* model = new MyDsvTableModel(this);
     model->loadFromFile(file.fileName(), true, ';');
-    ui->tableView->setModel(model);
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel();
+    proxyModel->setSourceModel(model);
+    ui->tableView->setModel(proxyModel);
+    ui->tableView->setSortingEnabled(true);
     ui->tableView->resizeColumnsToContents();
     connect(ui->tableView->model(), SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)), this, SLOT(slot_save()));
     connect(ui->tableView->model(), SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(slot_save()));
@@ -229,8 +233,8 @@ void GetRohstoffVorlage::on_buttonBox_accepted()
 
 void GetRohstoffVorlage::slot_save()
 {
-    MyDsvTableModel *model = qobject_cast<MyDsvTableModel*>(ui->tableView->model());
-    model->save(getFileName(true), ';');
+    QSortFilterProxyModel *model = qobject_cast<QSortFilterProxyModel*>(ui->tableView->model());
+    ((MyDsvTableModel*)model->sourceModel())->save(getFileName(true), ';');
 }
 
 void GetRohstoffVorlage::on_buttonBox_rejected()
@@ -274,8 +278,8 @@ void GetRohstoffVorlage::on_btn_Export_clicked()
                                                     "CSV (*.csv)");
     if (!fileName.isEmpty())
     {
-        MyDsvTableModel *model = qobject_cast<MyDsvTableModel*>(ui->tableView->model());
-        model->save(fileName, ';');
+        QSortFilterProxyModel *model = qobject_cast<QSortFilterProxyModel*>(ui->tableView->model());
+        ((MyDsvTableModel*)model->sourceModel())->save(fileName, ';');
     }
 }
 

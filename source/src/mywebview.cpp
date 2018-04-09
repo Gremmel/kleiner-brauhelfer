@@ -4,6 +4,8 @@
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
 
 #include <QEventLoop>
+#include <QMessageBox>
+#include "definitionen.h"
 
 MyWebPage::MyWebPage(QObject* parent) :
     QWebEnginePage(parent),
@@ -49,10 +51,15 @@ void MyWebView::setLinksExternal(bool external)
 
 void MyWebView::printToPdf(const QString& filePath)
 {
+  #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     QEventLoop loop;
     connect(page(), SIGNAL(pdfPrintingFinished(const QString&, bool)), &loop, SLOT(quit()));
     page()->printToPdf(filePath, QPageLayout(QPageSize(QPageSize::A4), QPageLayout::Portrait, QMarginsF(20, 20, 20, 20)));
     loop.exec();
+  #else
+    Q_UNUSED(filePath)
+    QMessageBox::critical(this, APP_NAME, tr("PDF Erstellung wird von dieser Qt Version nicht unterstüzt."));
+  #endif
 }
 
 #else

@@ -92,7 +92,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     s += "<td>";
     s += "<p>" + trUtf8("High Gravity Faktor") + "</p>";
     s += "</td>";
-    s += "<td align='right'>";
+    s += "<td>";
     s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
     s += "</td>";
     s += "<td>";
@@ -119,8 +119,16 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "</td>";
   s += "<td>";
   //Bittere anhand der Ausschlagmenge Berechnen
-  double ibu = spinBox_IBU -> value()*highGravityFaktor;
-  ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_BiermengeAbfuellen -> value() * ibu;
+  double ibu = spinBox_IBU -> value() * highGravityFaktor;
+  //wenn abgefüllt wurde mit Soll Ist Biermenge verrechnen
+  if (BierWurdeAbgefuellt) {
+    ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_BiermengeAbfuellen -> value() * ibu;
+  }
+  //wenn gebraut wurde mit würze menge beim Anstellen berechnen
+  else if (BierWurdeGebraut) {
+    ibu = spinBox_MengeSollNachHopfenseihen -> value() / spinBox_WuerzemengeAnstellen->value() * ibu;
+  }
+
   ibu = qRound(ibu*10);
   ibu = ibu/10;
   s += "<p class='value'>" + QString::number(ibu) + "</p>";
