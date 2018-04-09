@@ -32,7 +32,7 @@ LANGUAGES="${BUNDLE}/Contents/MacOS/languages"
 ###
 
 echo "* Extracting version numbers from .pro file:"
-VERSION=`grep "${PRO}" -e "^ *VERSION *=" | tr -d '[:space:]' | cut -d= -f2` || exit 1
+VERSION=`grep "${PRO}" -e "^ *VERSION *=" -m 1| tr -d '[:space:]' | cut -d= -f2` || exit 1
 VERSION_INT=`grep "${PRO}" -e "^ *VERSION_INT *=" | tr -d '[:space:]' | cut -d= -f2` || exit 1
 echo "  - Version: '${VERSION}'"
 echo "  - Internal version: '${VERSION_INT}'"
