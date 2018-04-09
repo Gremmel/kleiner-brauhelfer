@@ -56,7 +56,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_Datenbank">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -121,7 +121,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>564</width>
+              <width>568</width>
               <height>663</height>
              </rect>
             </property>
@@ -968,7 +968,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_SetDefaultFarbe">
              <property name="text">
-              <string>Farben auf Defaultwerte zurücksetzten</string>
+              <string>Farben auf Defaultwerte zurücksetzen</string>
              </property>
             </widget>
            </item>
@@ -1215,7 +1215,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_SetDefaultErweitert">
              <property name="text">
-              <string>auf Defaultwerte zurücksetzten</string>
+              <string>auf Defaultwerte zurücksetzen</string>
              </property>
             </widget>
            </item>

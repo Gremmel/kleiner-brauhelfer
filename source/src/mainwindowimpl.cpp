@@ -504,7 +504,7 @@ void MainWindowImpl::closeEvent(QCloseEvent *evt) {
     settings.endGroup();
     if (!abfrage) {
       close =
-          QMessageBox::question(this, APP_NAME, trUtf8("Anwendung schliessen?"),
+          QMessageBox::question(this, APP_NAME, trUtf8("Anwendung schließen?"),
                                 QMessageBox::Cancel | QMessageBox::Yes,
                                 QMessageBox::Yes) == QMessageBox::Yes;
     } else
@@ -2888,14 +2888,14 @@ void MainWindowImpl::retranslateMenus() {
   EntsperreEingabefelder->setText(trUtf8("&Entsperre Eingabefelder"));
   EntsperreEingabefelder->setStatusTip(
       trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
-  ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzten"));
+  ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzen"));
   ResetBierGebraut->setStatusTip(
       trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der "
              "Datenbank zurück"));
-  ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzten"));
+  ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzen"));
   ResetAbgefuellt->setStatusTip(trUtf8(
       "Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
-  ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzten"));
+  ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzen"));
   ResetVerbraucht->setStatusTip(
       trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der "
              "Datenbank zurück"));
@@ -3124,7 +3124,7 @@ void MainWindowImpl::SchreibeSuddatenDB() {
     }
   }
 
-  // Neu Berechnen zurücksetzten
+  // Neu Berechnen zurücksetzen
   sql += "NeuBerechnen='false', ";
 
   // Bewertung
@@ -5980,7 +5980,7 @@ bool MainWindowImpl::AbfrageSpeichern() {
     // für den fall das sich die Rohstoffe geändert haben müssen sie neu geladen
     // werden
     // in der Zeit des neu einlesens der Rohstoffe merker gestartet
-    // zurücksetzten
+    // zurücksetzen
     // das hat den effekt das bei einer änderung an den Tabellen nicht neu
     // berechnet wird
     // was zu einem absturz fürhen würde
@@ -6340,7 +6340,7 @@ void MainWindowImpl::FuelleSudauswahl() {
   if (radioButton_Abgefuellt->isChecked())
     sql += " WHERE BierWurdeAbgefuellt=1";
   if (radioButton_nichtVerbraucht->isChecked())
-    sql += " WHERE BierWurdeVerbraucht=0";
+    sql += " WHERE BierWurdeVerbraucht=0 AND BierWurdeGebraut=1 AND BierWurdeAbgefuellt=1";
   if (radioButton_Merkliste->isChecked())
     sql += " WHERE MerklistenID=1";
   if (!lineEdit_FilterText->text().isEmpty())
@@ -9142,7 +9142,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
         }
       }
     }
-    // Flag das neu Berechnet werden muss wieder zurücksetzten
+    // Flag das neu Berechnet werden muss wieder zurücksetzen
     sql = "UPDATE 'Global' SET 'db_NeuBerechnen'=0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
@@ -9335,7 +9335,7 @@ void MainWindowImpl::slot_ResetAbgefuellt() {
 }
 
 void MainWindowImpl::slot_ResetWZZugabestatus() {
-  // Zugabestatus der Weiteren Zutaten zurücksetzten
+  // Zugabestatus der Weiteren Zutaten zurücksetzen
   for (int i = 0; i < list_EwZutat.count(); i++) {
     list_EwZutat[i]->setZugabestatus(0);
   }
@@ -9622,6 +9622,8 @@ void MainWindowImpl::BerWasserwerte() {
   SpinBox_waMilchsaeureNG_ml->setValue(RA_Reduzierung * 0.033333333 *
                                        doubleSpinBox_WNachguss->value());
 
+  SpinBox_waMilchsaeureGesamt_ml->setValue(SpinBox_waMilchsaeureHG_ml->value() + SpinBox_waMilchsaeureNG_ml->value());
+  widget_MilchsauereGesamt->setVisible(SpinBox_waMilchsaeureGesamt_ml->value() > 0.0);
   widget_MilchsauereHG->setVisible(SpinBox_waMilchsaeureHG_ml->value() > 0.0);
   widget_MilchsauereNG->setVisible(SpinBox_waMilchsaeureNG_ml->value() > 0.0);
   widget_SauermalzHG->setVisible(false);
@@ -9824,9 +9826,6 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked() {
           SLOT(slot_HopfenGetMenge(QString)));
   connect(ewz, SIGNAL(sig_getEwzMenge(QString)), this,
           SLOT(slot_EwzGetMenge(QString)));
-  // Zutatenliste füllen
-  ewz->setEwListe(ewzListe);
-  ewz->setHopfenListe(HopfenListe);
 
   verticalLayout_WeitereZutaten->addWidget(ewz);
   list_EwZutat.append(ewz);
@@ -9836,6 +9835,8 @@ void MainWindowImpl::on_pushButton_EWZ_Hinzufuegen_clicked() {
   verticalLayout_BerWeitereZutaten->addWidget(ewz->ergWidget);
   ewz->setBierWurdeGebraut(BierWurdeGebraut);
   ewz->setBierWurdeAbgefuellt(BierWurdeAbgefuellt);
+  ewz->setEwListe(ewzListe);
+  ewz->setHopfenListe(HopfenListe);
 
   setAenderung(true);
 }
