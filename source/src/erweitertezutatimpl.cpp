@@ -261,7 +261,7 @@ void ErweiterteZutatImpl::setHopfenListe(QStringList value)
 
 void ErweiterteZutatImpl::ErstelleAuswahlliste()
 {
-  if (!BierWurdeGebraut){
+  if (!BierWurdeAbgefuellt){
     //Aktuelle Auswahl speichern
     QString s = comboBox_Zutat -> currentText();
     comboBox_Zutat -> clear();
@@ -338,14 +338,12 @@ void ErweiterteZutatImpl::zutatEntnehmen()
 void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
 {
   if (string != ""){
+    typ = sig_getEwzTyp(string);
     // Überprüfen ob Eintrag in der Hopfenliste ist
-    if ((hopfenListe.indexOf(string) < 0)  && !((typ == 100) && (BierWurdeGebraut))){
-      if (!BierWurdeGebraut){
-        ausbeute = sig_getEwzAusbeute(string);
-        farbe = sig_getEwzFarbe(string);
-        typ = sig_getEwzTyp(string);
-        preis = sig_getEwzPreis(string);
-      }
+    if ((hopfenListe.indexOf(string) < 0)  && !((typ == EWZ_Typ_Hopfen) && (BierWurdeGebraut))){
+      ausbeute = sig_getEwzAusbeute(string);
+      farbe = sig_getEwzFarbe(string);
+      preis = sig_getEwzPreis(string);
       //Icon setzten
       //Honig
       if (typ == EWZ_Typ_Honig){
@@ -662,7 +660,7 @@ void ErweiterteZutatImpl::on_buttonZugeben_clicked()
 void ErweiterteZutatImpl::on_buttonEntnehmen_clicked()
 {
   //Dialog für das Setzen des Entnahmedatums
-  DialogDatum* dlg = new DialogDatum(this, trUtf8("Entnahmedatum"), trUtf8("Zugabedatum übernehmen"));
+  DialogDatum* dlg = new DialogDatum(this, trUtf8("Entnahmedatum"), trUtf8("Datum übernehmen"));
 
   dlg->exec();
   //Entnahmedatum setzen
