@@ -6223,6 +6223,11 @@ void MainWindowImpl::on_pushButton_SpickzettelPDF_clicked() {
   settings.endGroup();
 }
 
+void MainWindowImpl::on_horizontalSlider_ScalePDF_valueChanged(int)
+{
+  ErstelleTabSpickzettel();
+}
+
 void MainWindowImpl::LadeBild() {
 
   graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -6349,7 +6354,7 @@ void MainWindowImpl::FuelleSudauswahl() {
           sql += " WHERE ";
       else
           sql += " AND ";
-      sql += "Sudname LIKE '%" + lineEdit_FilterText->text() + "%'";
+      sql += "Sudname LIKE '%" + lineEdit_FilterText->text().replace("'", "''") + "%'";
   }
   sql += " ORDER BY Braudatum DESC";
 
@@ -11765,6 +11770,7 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index) {
   // Zusammenfassung / Spickzettel
   else if (currentTab == tab_Spickzettel) {
     // Seite Spickzettel erstellen
+    horizontalSlider_ScalePDF->setValue(100);
     ErstelleTabSpickzettel();
   }
   // Brau && Gärdaten
@@ -12480,7 +12486,7 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked() {
         AktuelleSudID = id;
         LadeSudDB(false);
         Gestartet = false;
-        factor = dlg->prozent();
+        factor = 1.0 - dlg->prozent();
         spinBox_Menge->setValue(spinBox_Menge->value() * factor);
         spinBox_WuerzemengeVorHopfenseihen->setValue(
             spinBox_WuerzemengeVorHopfenseihen->value() * factor);
@@ -12511,7 +12517,7 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked() {
         AktuelleSudID = lastId;
         LadeSudDB(false);
         Gestartet = false;
-        factor = 1.0 - dlg->prozent();
+        factor = dlg->prozent();
         lineEdit_Sudname->setText(dlg->nameTeil1());
         spinBox_Menge->setValue(spinBox_Menge->value() * factor);
         spinBox_WuerzemengeVorHopfenseihen->setValue(
