@@ -667,6 +667,7 @@ private slots:
   void on_dateEdit_AuswahlVon_userDateChanged(const QDate &date);
   void on_dateEdit_AuswahlBis_userDateChanged(const QDate &date);
   void on_checkBox_BrauuebersichtAuswahlAlle_stateChanged(int);
+  void on_horizontalSlider_ScalePDF_valueChanged(int);
 };
 #endif
 

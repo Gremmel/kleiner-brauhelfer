@@ -9,41 +9,43 @@
 
 void MainWindowImpl::ErstelleZusammenfassung()
 {
+  double factor = horizontalSlider_ScalePDF->value() / 100.0;
+
   // Seitenkopf
   QString seite, kopf, ende, style;
 
   kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
   style = "<style type='text/css'>";
   //Style für P
-  style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
+  style += "p{color:black;font-size:" + QString::number(10 * factor) + "pt;padding:0px;margin:0px;}";
   //Style für Variable
   style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
   //Style für div Kommentar
   style += ".koment{}";
   //Style für ul
-  style += "ul{color:black;font-size:10pt;}";
+  style += "ul{color:black;font-size:" + QString::number(10 * factor) + "pt;}";
   //Style für Überschrift h1
-  style += "p.h1{color:black;font-size:12pt;}";
+  style += "p.h1{color:black;font-size:" + QString::number(12 * factor) + "pt;}";
   //Style für Überschrift h2
-  style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
-  style += "p.version{color:#999999;font-size:11pt;margin-top:5px;}";
+  style += "p.h2{color:black;font-size:" + QString::number(11 * factor) + "pt;margin-bottom:5px;}";
+  style += "p.version{color:#999999;font-size:" + QString::number(11 * factor) + "pt;margin-top:5px;}";
   //Style für Kommentar
-  style += "p.kommentar{color:#555555;font-size:10pt;margin-bottom:5px;margin-left:5px;}";
+  style += "p.kommentar{color:#555555;font-size:" + QString::number(10 * factor) + "pt;margin-bottom:5px;margin-left:5px;}";
   //Style für Div Box ohne Rahmen
-  style += "p.zugegeben{color:#555555;font-size:10pt;margin-bottom:2px;margin-left:5px;}";
+  style += "p.zugegeben{color:#555555;font-size:" + QString::number(10 * factor) + "pt;margin-bottom:2px;margin-left:5px;}";
   //Style für Div Box ohne Rahmen
   style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
   //Style für Div Box mit Rahmen
   style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;}";
   //Style für Tabelle
-  style += "td{padding:2px;margin:0px;font-size:10pt;}";
+  style += "td{padding:2px;margin:0px;font-size:" + QString::number(10 * factor) + "pt;}";
   style += "td.r{padding:2px;margin:0px;border-bottom-color:#dddddd;border-bottom-style:solid;border-width:1px;}";
   //Style für Hinweis Wert in Brau und Gärdaten eintragen
   style += "td.we{background-color: #eba328;}";
   style += "tr{padding:0px;margin:0px;}";
   style += "</style>";
   kopf += style;
-  kopf += "</head><body align='center' style='font-family:Ubuntu,Arial; font-size:10pt; font-style:normal;background-color:#fff;'>";
+  kopf += "</head><body align='center' style='font-family:Ubuntu,Arial; font-size:" + QString::number(10 * factor) + "pt; font-style:normal;background-color:#fff;'>";
   seite = kopf;
 
   QString s = "";
