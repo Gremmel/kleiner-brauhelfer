@@ -1097,7 +1097,7 @@ void MainWindowImpl::MalzNeueZeile(const QString &name, double ebc,
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
   spinBoxMenge->setAlignment(Qt::AlignHCenter);
   spinBoxMenge->setMinimum(0);
-  spinBoxMenge->setMaximum(1000);
+  spinBoxMenge->setMaximum(9999);
   spinBoxMenge->setDecimals(3);
   spinBoxMenge->setSingleStep(0.1);
   spinBoxMenge->setValue(menge);
@@ -1116,7 +1116,7 @@ void MainWindowImpl::MalzNeueZeile(const QString &name, double ebc,
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
   spinBoxPreis->setAlignment(Qt::AlignHCenter);
   spinBoxPreis->setMinimum(0);
-  spinBoxPreis->setMaximum(1000);
+  spinBoxPreis->setMaximum(9999);
   spinBoxPreis->setDecimals(2);
   spinBoxPreis->setSingleStep(0.1);
   spinBoxPreis->setValue(preis);
@@ -1599,7 +1599,7 @@ void MainWindowImpl::WeitereZutatNeueZeile(
   MyDoubleSpinBox *spinBoxMenge = new MyDoubleSpinBox();
   spinBoxMenge->setAlignment(Qt::AlignHCenter);
   spinBoxMenge->setMinimum(0);
-  spinBoxMenge->setMaximum(10000);
+  spinBoxMenge->setMaximum(99999);
   spinBoxMenge->setSingleStep(0.1);
   spinBoxMenge->setValue(menge);
   tableWidget_WeitereZutaten->setCellWidget(i, TableWZutatColMenge,
@@ -1695,7 +1695,7 @@ void MainWindowImpl::WeitereZutatNeueZeile(
   MyDoubleSpinBox *spinBoxPreis = new MyDoubleSpinBox();
   spinBoxPreis->setAlignment(Qt::AlignHCenter);
   spinBoxPreis->setMinimum(0);
-  spinBoxPreis->setMaximum(1000);
+  spinBoxPreis->setMaximum(9999);
   spinBoxPreis->setSingleStep(0.1);
   spinBoxPreis->setValue(preis);
   tableWidget_WeitereZutaten->setCellWidget(i, TableWZutatColPreis,
@@ -10312,7 +10312,7 @@ void MainWindowImpl::fuelleComboEwzZugeben() {
     if (list_EwZutat[i]->getZeitpunkt() == EWZ_Zeitpunkt_Gaerung) {
       if (list_EwZutat[i]->getZugabestatus() ==
           EWZ_Zugabestatus_nichtZugegeben) {
-        comboBox_GaerungEwzAuswahl->addItem(list_EwZutat[i]->getName());
+        comboBox_GaerungEwzAuswahl->addItem(list_EwZutat[i]->getName(), list_EwZutat[i]->getID());
       }
     }
   }
@@ -10330,7 +10330,7 @@ void MainWindowImpl::fuelleComboEwzEntnehmen() {
       if (list_EwZutat[i]->getZugabestatus() == EWZ_Zugabestatus_Zugegeben &&
           list_EwZutat[i]->getEntnahmeindex() ==
               EWZ_Entnahmeindex_MitEntnahme) {
-        comboBox_GaerungEwzAuswahlEntnahme->addItem(list_EwZutat[i]->getName());
+        comboBox_GaerungEwzAuswahlEntnahme->addItem(list_EwZutat[i]->getName(), list_EwZutat[i]->getID());
       }
     }
   }
@@ -12426,10 +12426,10 @@ void MainWindowImpl::SchreibeAnhangDB() {
   }
 }
 
-void MainWindowImpl::on_comboBox_GaerungEwzAuswahl_currentIndexChanged(
-    const QString &arg1) {
+void MainWindowImpl::on_comboBox_GaerungEwzAuswahl_currentIndexChanged(const QString &) {
+  int id =  comboBox_GaerungEwzAuswahl->currentData().toInt();
   for (int i = 0; i < list_EwZutat.count(); i++) {
-    if (list_EwZutat[i]->getName() == arg1) {
+    if (list_EwZutat[i]->getID() == id) {
       label_gaerungEwzZugenMenge->setText(
           QString::number(list_EwZutat[i]->getErg_Menge()) + "g");
     }
@@ -12437,9 +12437,9 @@ void MainWindowImpl::on_comboBox_GaerungEwzAuswahl_currentIndexChanged(
 }
 
 void MainWindowImpl::on_pushButton_GaerungEwzZugeben_clicked() {
+  int id =  comboBox_GaerungEwzAuswahl->currentData().toInt();
   for (int i = 0; i < list_EwZutat.count(); i++) {
-    if (list_EwZutat[i]->getName() ==
-        comboBox_GaerungEwzAuswahl->currentText()) {
+    if (list_EwZutat[i]->getID() == id) {
       list_EwZutat[i]->zutatZugeben();
       i = list_EwZutat.count();
     }
@@ -12447,9 +12447,9 @@ void MainWindowImpl::on_pushButton_GaerungEwzZugeben_clicked() {
 }
 
 void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked() {
+  int id =  comboBox_GaerungEwzAuswahl->currentData().toInt();
   for (int i = 0; i < list_EwZutat.count(); i++) {
-    if (list_EwZutat[i]->getName() ==
-        comboBox_GaerungEwzAuswahlEntnahme->currentText()) {
+    if (list_EwZutat[i]->getID() == id) {
       list_EwZutat[i]->zutatEntnehmen();
       i = list_EwZutat.count();
     }
