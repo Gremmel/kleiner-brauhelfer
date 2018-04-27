@@ -126,7 +126,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "FaktorHauptguss,";
     sql += "KochdauerNachBitterhopfung,";
     sql += "EinmaischenTemp,";
-    sql += full ? "Erstellt," : "'" + QDateTime::currentDateTime().toString(Qt::ISODate) + "',";
+    sql += full ? "Erstellt," : ("'" + QDateTime::currentDateTime().toString(Qt::ISODate) + "',");
     sql += "'" + QDateTime::currentDateTime().toString(Qt::ISODate) + "',"; // Gespeichert
     sql += "AktivTab,";
     sql += "erg_S_Gesammt,";
@@ -142,7 +142,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "BewertungText,";
     sql += "AktivTab_Gaerverlauf,";
     sql += "Reifezeit,";
-    sql += "BierWurdeVerbraucht,";
+    sql += full ? "BierWurdeVerbraucht," : "0,";
     sql += "Nachisomerisierungszeit,";
     sql += "WuerzemengeVorHopfenseihen,";
     sql += "SWVorHopfenseihen,";
@@ -271,7 +271,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Farbe,";
     sql += "Zeitpunkt_von,";
     sql += "Zeitpunkt_bis,";
-    sql += "Zugabestatus,";
+    sql += full ? "Zugabestatus," : "0,";
     sql += "Entnahmeindex,";
     sql += "Zugabedauer";
     sql += " FROM WeitereZutatenGaben WHERE SudID=" + id;
