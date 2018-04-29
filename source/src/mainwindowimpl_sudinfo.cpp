@@ -93,13 +93,14 @@ void MainWindowImpl::ErstelleSudInfo()
       //Datensatz abfragen
       QSqlQuery query_sud;
       int FeldNr;
-      QString sql = "SELECT * FROM Sud WHERE ID=" + QString::number(SudID) + ";";
-      if (!query_sud.exec(sql)) {
+      query_sud.prepare("SELECT * FROM Sud WHERE ID=:sudid;");
+      query_sud.bindValue(":sudid", SudID);
+      if (!query_sud.exec()) {
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL Befehl:\n") + query_sud.lastQuery());
       }
       else {
         if (query_sud.first()) {
@@ -238,13 +239,14 @@ void MainWindowImpl::ErstelleSudInfo()
           ListSudID.append(SudID);
           //Datensatz abfragen
           QSqlQuery query_sud;
-          QString sql = "SELECT Sudname,NeuBerechnen FROM Sud WHERE ID=" + QString::number(SudID) + ";";
-          if (!query_sud.exec(sql)) {
+          query_sud.prepare("SELECT Sudname,NeuBerechnen FROM Sud WHERE ID=:sudid;");
+          query_sud.bindValue(":sudid", SudID);
+          if (!query_sud.exec()) {
             // Fehlermeldung Datenbankabfrage
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL Befehl:\n") + query_sud.lastQuery());
           }
           else {
             if (query_sud.first()) {
