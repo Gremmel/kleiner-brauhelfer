@@ -4,16 +4,6 @@
 #include "definitionen.h"
 #include "berechnungen.h"
 
-DialogStammwuerze::DialogStammwuerze(double value, QWidget *parent) :
-    DialogStammwuerze(value, 0.0, 20.0, parent)
-{
-}
-
-DialogStammwuerze::DialogStammwuerze(double value, double sw, QWidget *parent) :
-    DialogStammwuerze(value, sw, 20.0, parent)
-{
-}
-
 DialogStammwuerze::DialogStammwuerze(double value, double sw, double temp, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogStammwuerze)

@@ -521,11 +521,23 @@ void MainWindowImpl::closeEvent(QCloseEvent *evt) {
 
 void MainWindowImpl::changeEvent(QEvent *event) {
   if (event) {
+    int idx_comboBox_BerechnungsArtHopfen;
+    int idx_comboBox_AuswahlL1;
+    int idx_comboBox_AuswahlL2;
     switch (event->type()) {
     case QEvent::LanguageChange:
       Gestartet = false;
+      idx_comboBox_BerechnungsArtHopfen = comboBox_BerechnungsArtHopfen->currentIndex();
+      idx_comboBox_AuswahlL1 = comboBox_AuswahlL1->currentIndex();
+      idx_comboBox_AuswahlL2 = comboBox_AuswahlL2->currentIndex();
       retranslateUi(this);
       retranslate();
+      if (comboBox_BerechnungsArtHopfen->currentIndex() != idx_comboBox_BerechnungsArtHopfen)
+          comboBox_BerechnungsArtHopfen->setCurrentIndex(idx_comboBox_BerechnungsArtHopfen);
+      if (comboBox_AuswahlL1->currentIndex() != idx_comboBox_AuswahlL1)
+          comboBox_AuswahlL1->setCurrentIndex(idx_comboBox_AuswahlL1);
+      if (comboBox_AuswahlL2->currentIndex() != idx_comboBox_AuswahlL2)
+          comboBox_AuswahlL2->setCurrentIndex(idx_comboBox_AuswahlL2);
       Gestartet = true;
       break;
     case QEvent::LocaleChange:
@@ -4712,7 +4724,7 @@ void MainWindowImpl::slot_pushButton_AbfuelldatumHeute() {
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWKochende() {
-  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWKochende->value(), this);
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWKochende->value(), 0.0, 20.0, this);
   if (dlg->exec() == QDialog::Accepted) {
     spinBox_SWKochende->setValue(dlg->value());
     setAenderung(true);
@@ -4721,7 +4733,7 @@ void MainWindowImpl::slot_pushButton_EingabeHSWKochende() {
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWAnstellen() {
-  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWAnstellen->value(), this);
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWAnstellen->value(), 0.0, 20.0, this);
   if (dlg->exec() == QDialog::Accepted) {
     spinBox_SWAnstellen->setValue(dlg->value());
     setAenderung(true);
@@ -4730,7 +4742,7 @@ void MainWindowImpl::slot_pushButton_EingabeHSWAnstellen() {
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWSchnellgaerprobe() {
-  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWSchnellgaerprobe->value(), spinBox_SWAnstellen->value(), this);
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWSchnellgaerprobe->value(), spinBox_SWAnstellen->value(), 20.0, this);
   if (dlg->exec() == QDialog::Accepted) {
     spinBox_SWSchnellgaerprobe->setValue(dlg->value());
     setAenderung(true);
@@ -4739,7 +4751,7 @@ void MainWindowImpl::slot_pushButton_EingabeHSWSchnellgaerprobe() {
 }
 
 void MainWindowImpl::slot_pushButton_EingabeHSWJungbier() {
-  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWJungbier->value(), spinBox_SWAnstellen->value(), this);
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWJungbier->value(), spinBox_SWAnstellen->value(), 20.0, this);
   if (dlg->exec() == QDialog::Accepted) {
     spinBox_SWJungbier->setValue(dlg->value());
     setAenderung(true);
@@ -8955,7 +8967,7 @@ void MainWindowImpl::on_lineEdit_Sudname_textEdited(QString) {
 }
 
 void MainWindowImpl::on_pushButton_EingabeHSWVorHopfenseihen_clicked() {
-  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWVorHopfenseihen->value(), this);
+  DialogStammwuerze* dlg = new DialogStammwuerze(spinBox_SWVorHopfenseihen->value(), 0.0, 20.0, this);
   if (dlg->exec() == QDialog::Accepted) {
     spinBox_SWVorHopfenseihen->setValue(dlg->value());
     setAenderung(true);

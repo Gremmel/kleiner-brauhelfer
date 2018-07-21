@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "kleiner-brauhelfer"
-#define MyAppVersion "1.4.5.0"
+#define MyAppVersion "1.4.4.2"
 #define MyAppPublisher "Gremmelsoft"
 #define MyAppURL "http://www.joerum.de/kleiner-brauhelfer"
 #define MyAppExeName "kleiner-brauhelfer.exe"
-#define MyAppOutFileName "kb_setup_v1_4_5_0_64bit"
+#define MyAppOutFileName "kb_setup_v1_4_4_2"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
