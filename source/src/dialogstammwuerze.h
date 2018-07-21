@@ -12,9 +12,7 @@ class DialogStammwuerze : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogStammwuerze(double value, QWidget *parent = 0);
-    DialogStammwuerze(double value, double sw, QWidget *parent = 0);
-    DialogStammwuerze(double value, double sw, double temp, QWidget *parent = 0);
+    explicit DialogStammwuerze(double value, double sw = 0.0, double temp = 20.0, QWidget *parent = 0);
     ~DialogStammwuerze();
     double value() const;
     double temperature() const;

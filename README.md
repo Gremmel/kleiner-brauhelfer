@@ -2,9 +2,9 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
-### Version 1.4.5.0 (in Entwicklung)
-- Umstellung auf Qt 5.10
-- Windows Versionen für 32bit und 64bit Architektur
+### Version 1.4.4.2
+- ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
+- ~~Windows Versionen für 32bit und 64bit Architektur~~
 - Rohstofftabellen neu organisiert
 - Direktes Drucken wird nicht mehr unterstützt (PDF erstellen bleibt wie gewohnt)
 - EBC Wert bis 2000
