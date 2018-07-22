@@ -1528,9 +1528,6 @@ p, li { white-space: pre-wrap; }
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_16">
                      <property name="spacing">
                       <number>0</number>
@@ -2047,9 +2044,6 @@ p, li { white-space: pre-wrap; }
                           <width>20</width>
                           <height>20</height>
                          </size>
-                        </property>
-                        <property name="text">
-                         <string/>
                         </property>
                         <property name="pixmap">
                          <pixmap resource="../res/grafiken.qrc">:/global/nio.svg</pixmap>
@@ -4411,9 +4405,6 @@ p, li { white-space: pre-wrap; }
                    <property name="layoutDirection">
                     <enum>Qt::RightToLeft</enum>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                   </widget>
                  </item>
                  <item row="0" column="1">
@@ -4587,9 +4578,6 @@ p, li { white-space: pre-wrap; }
                   <widget class="QCheckBox" name="checkBox_Spunden">
                    <property name="layoutDirection">
                     <enum>Qt::RightToLeft</enum>
-                   </property>
-                   <property name="text">
-                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -4813,9 +4801,6 @@ p, li { white-space: pre-wrap; }
                    <property name="layoutDirection">
                     <enum>Qt::RightToLeft</enum>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -4903,9 +4888,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <layout class="QVBoxLayout" name="verticalLayout_125">
                   <item>
                    <widget class="QGroupBox" name="groupBox_29">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_36">
                      <property name="spacing">
                       <number>2</number>
@@ -5307,9 +5289,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_27">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_31">
                      <property name="spacing">
                       <number>2</number>
@@ -5827,9 +5806,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_evg">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_86">
                      <property name="spacing">
                       <number>2</number>
@@ -6041,9 +6017,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_sha">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_87">
                      <property name="spacing">
                       <number>2</number>
@@ -6255,9 +6228,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_alk">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_88">
                      <property name="spacing">
                       <number>2</number>
@@ -6489,9 +6459,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <layout class="QVBoxLayout" name="verticalLayout_126">
                   <item>
                    <widget class="QGroupBox" name="groupBox_afg">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_10">
                      <property name="spacing">
                       <number>2</number>
@@ -6745,9 +6712,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_smg">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_19">
                      <property name="spacing">
                       <number>2</number>
@@ -7036,9 +7000,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_sm05">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_22">
                      <property name="leftMargin">
                       <number>2</number>
@@ -7324,9 +7285,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </item>
                   <item>
                    <widget class="QGroupBox" name="groupBox_sm033">
-                    <property name="title">
-                     <string/>
-                    </property>
                     <layout class="QVBoxLayout" name="verticalLayout_26">
                      <property name="leftMargin">
                       <number>2</number>
@@ -7673,9 +7631,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <verstretch>1</verstretch>
                 </sizepolicy>
                </property>
-               <property name="title">
-                <string/>
-               </property>
                <property name="flat">
                 <bool>true</bool>
                </property>
@@ -7698,9 +7653,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <horstretch>0</horstretch>
                  <verstretch>1</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="title">
-                <string/>
                </property>
                <property name="flat">
                 <bool>true</bool>
@@ -7859,9 +7811,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                <enum>Qt::Vertical</enum>
               </property>
               <widget class="QGroupBox" name="groupBox_12">
-               <property name="title">
-                <string/>
-               </property>
                <property name="flat">
                 <bool>true</bool>
                </property>
@@ -7879,9 +7828,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </layout>
               </widget>
               <widget class="QGroupBox" name="groupBox_13">
-               <property name="title">
-                <string/>
-               </property>
                <property name="flat">
                 <bool>true</bool>
                </property>
@@ -8160,9 +8106,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                <enum>Qt::Vertical</enum>
               </property>
               <widget class="QGroupBox" name="groupBox_14">
-               <property name="title">
-                <string/>
-               </property>
                <property name="flat">
                 <bool>true</bool>
                </property>
@@ -8180,9 +8123,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </layout>
               </widget>
               <widget class="QGroupBox" name="groupBox_15">
-               <property name="title">
-                <string/>
-               </property>
                <property name="flat">
                 <bool>true</bool>
                </property>
@@ -8493,9 +8433,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="text">
-                <string/>
-               </property>
               </widget>
              </item>
              <item>
@@ -8521,9 +8458,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                </property>
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
-               </property>
-               <property name="text">
-                <string/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -8602,9 +8536,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    <layout class="QHBoxLayout" name="horizontalLayout_153">
                     <item>
                      <widget class="QGroupBox" name="groupBox_33">
-                      <property name="title">
-                       <string/>
-                      </property>
                       <layout class="QVBoxLayout" name="verticalLayout_97">
                        <item>
                         <widget class="QRadioButton" name="radioButton_farbe_0">
@@ -8736,9 +8667,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <layout class="QVBoxLayout" name="verticalLayout_104">
                    <item>
                     <widget class="QGroupBox" name="groupBox_35">
-                     <property name="title">
-                      <string/>
-                     </property>
                      <layout class="QVBoxLayout" name="verticalLayout_100">
                       <item>
                        <widget class="QRadioButton" name="radioButton_schaum_0">
@@ -8759,9 +8687,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    </item>
                    <item>
                     <widget class="QGroupBox" name="groupBox_36">
-                     <property name="title">
-                      <string/>
-                     </property>
                      <layout class="QVBoxLayout" name="verticalLayout_101">
                       <item>
                        <widget class="QRadioButton" name="radioButton_schaum_2">
@@ -8784,9 +8709,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  </item>
                  <item>
                   <widget class="QGroupBox" name="groupBox_38">
-                   <property name="title">
-                    <string/>
-                   </property>
                    <layout class="QVBoxLayout" name="verticalLayout_103">
                     <item>
                      <widget class="QRadioButton" name="radioButton_schaum_4">
@@ -8814,9 +8736,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  </item>
                  <item>
                   <widget class="QGroupBox" name="groupBox_37">
-                   <property name="title">
-                    <string/>
-                   </property>
                    <layout class="QVBoxLayout" name="verticalLayout_102">
                     <item>
                      <widget class="QRadioButton" name="radioButton_schaum_7">
@@ -9385,9 +9304,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <layout class="QVBoxLayout" name="verticalLayout_121">
                <item>
                 <widget class="QGroupBox" name="groupBox_45">
-                 <property name="title">
-                  <string/>
-                 </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_102">
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_122">
@@ -9494,9 +9410,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="title">
-            <string/>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -9639,9 +9552,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
            </layout>
           </widget>
           <widget class="QGroupBox" name="groupBox_9">
-           <property name="title">
-            <string/>
-           </property>
            <property name="flat">
             <bool>true</bool>
            </property>
@@ -9967,9 +9877,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </property>
                 <item>
                  <widget class="QLabel" name="SHA_label">
-                  <property name="toolTip">
-                   <string/>
-                  </property>
                   <property name="text">
                    <string>Ausbeute für die Schüttungsberechnung</string>
                   </property>
@@ -10004,9 +9911,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </property>
                   <property name="toolTip">
                    <string>Dieser Wert wird zur berechnung der Schüttung verwendet.</string>
-                  </property>
-                  <property name="whatsThis">
-                   <string/>
                   </property>
                   <property name="minimum">
                    <number>1</number>

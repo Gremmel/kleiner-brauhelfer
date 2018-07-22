@@ -2,6 +2,8 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
+### Version 1.4.4.3 (in Entwicklung)
+- Fix: Absturz in "Bewertung" bei Sprachumschaltung
 ### Version 1.4.4.2
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
 - ~~Windows Versionen für 32bit und 64bit Architektur~~
