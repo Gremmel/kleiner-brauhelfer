@@ -58,7 +58,7 @@ void MyWebView::printToPdf(const QString& filePath)
     loop.exec();
   #else
     Q_UNUSED(filePath)
-    QMessageBox::critical(this, APP_NAME, tr("PDF Erstellung wird von dieser Qt Version nicht unterstüzt."));
+    QMessageBox::critical(this, APP_NAME, tr("PDF-Erstellung wird von dieser Qt-Version nicht unterstÃ¼zt."));
   #endif
 }
 

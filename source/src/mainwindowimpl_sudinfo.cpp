@@ -100,7 +100,7 @@ void MainWindowImpl::ErstelleSudInfo()
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + query_sud.lastQuery());
+                                    + trUtf8("\nSQL-Befehl:\n") + query_sud.lastQuery());
       }
       else {
         if (query_sud.first()) {
@@ -204,17 +204,17 @@ void MainWindowImpl::ErstelleSudInfo()
             s += "<p>" + trUtf8("EBC") + "</p>";
             s += "</td>";
             s += "</tr>";
-            //CO2 Gehalt
+            //CO₂-Gehalt
             FeldNr = query_sud.record().indexOf("CO2");
             s += "<tr style=''>";
             s += "<td>";
-            s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
+            s += "<p>" + trUtf8("CO₂-Gehalt") + "</p>";
             s += "</td>";
             s += "<td align='right'>";
             s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
             s += "</td>";
             s += "<td>";
-            s += "<p>" + trUtf8("g/Liter") + "</p>";
+            s += "<p>" + trUtf8("g/l") + "</p>";
             s += "</td>";
             s += "</tr>";
             s += "</tbody></table>";
@@ -246,7 +246,7 @@ void MainWindowImpl::ErstelleSudInfo()
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + query_sud.lastQuery());
+                                        + trUtf8("\nSQL-Befehl:\n") + query_sud.lastQuery());
           }
           else {
             if (query_sud.first()) {
@@ -268,7 +268,7 @@ void MainWindowImpl::ErstelleSudInfo()
     if (NeuBerechnen > 0){
       //Meldung ausgeben das der Sud zum Neu Berechnen geladen werden muss.
       seite += "<div class='rmh' style='margin-bottom:10px;' align='center'>";
-      seite += trUtf8("Bei dem Sud >") + SudnameFehler + trUtf8("< wurde ein Rohstoff verändert und die Berechneten Werte stimmen nun nicht mehr. Zum neu Berechnen bitte den Sud Laden und wieder Speichern.");
+      seite += trUtf8("Bei dem Sud &gt;") + SudnameFehler + trUtf8("&lt; wurde ein Rohstoff verändert. Die berechneten Werte stimmen  nicht mehr. Zum Neuberechnen bitte den Sud laden und wieder speichern.");
       seite += "</div>";
     }
     else {
@@ -285,7 +285,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_Malz.next()){
@@ -328,7 +328,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_Hopfen.next()){
@@ -367,7 +367,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_Hopfen.next()){
@@ -408,7 +408,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hefe.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_Hefe.next()){
@@ -461,7 +461,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_weitereZutaten.next()){
@@ -500,7 +500,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_weitereZutaten.next()){
@@ -540,7 +540,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_weitereZutaten.next()){
@@ -581,7 +581,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_weitereZutaten.next()){
@@ -622,7 +622,7 @@ void MainWindowImpl::ErstelleSudInfo()
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           while (query_weitereZutaten.next()){
@@ -1095,7 +1095,7 @@ void MainWindowImpl::ErstelleSudInfo()
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         while (query_anhang.next()){

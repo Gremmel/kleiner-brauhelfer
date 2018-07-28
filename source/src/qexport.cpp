@@ -41,8 +41,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rueckgabe:\n") + query_sud.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   else {
     if (query_sud.first()) {
@@ -146,8 +146,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
       element.appendChild(text);
       sud.appendChild(element);
 
-      //CO2 Gehalt
-      komentar = doc.createComment("Soll CO2 Gehalt");
+      //CO₂-Gehalt
+      komentar = doc.createComment("Soll CO₂-Gehalt");
       sud.appendChild(komentar);
       FeldNr = query_sud.record().indexOf("CO2");
       element = doc.createElement("CO2");
@@ -526,8 +526,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
       element.appendChild(text);
       sud.appendChild(element);
 
-      //High Gravity Faktor
-      komentar = doc.createComment("High Gravity Faktor");
+      //High-Gravity-Faktor
+      komentar = doc.createComment("High-Gravity-Faktor");
       sud.appendChild(komentar);
       FeldNr = query_sud.record().indexOf("highGravityFaktor");
       element = doc.createElement("highGravityFaktor");
@@ -634,8 +634,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_rasten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_rasten.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Rasten = doc.createElement("Rasten");
@@ -698,8 +698,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Schuettung = doc.createElement("Schuettung");
@@ -761,8 +761,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Hopfengaben = doc.createElement("Hopfengaben");
@@ -875,8 +875,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_WeitereZutaten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_WeitereZutaten.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement WeitereZutatenGaben = doc.createElement("WeitereZutatenGaben");
@@ -991,7 +991,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Schnellgaerverlauf = doc.createElement("Schnellgaerverlauf");
@@ -1054,7 +1054,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Hauptgaerverlauf = doc.createElement("Hauptgaerverlauf");
@@ -1117,7 +1117,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Nachgaerverlauf = doc.createElement("Nachgaerverlauf");
@@ -1159,8 +1159,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
           element.appendChild(text);
           Eintrag.appendChild(element);
 
-          //Co2 Gehalt
-          komentar = doc.createComment("Berechneter CO2 Gehalt des Jungbieres");
+          //CO₂-Gehalt
+          komentar = doc.createComment("Berechneter CO₂-Gehalt des Jungbieres");
           Eintrag.appendChild(komentar);
           FeldNr = query.record().indexOf("CO2");
           element = doc.createElement("CO2");
@@ -1181,7 +1181,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Bewertungen = doc.createElement("Bewertungen");
@@ -1413,8 +1413,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Malz = doc.createElement("Malz");
@@ -1430,7 +1430,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL-Befehl:\n") + sql);
           }
           else {
             //Wenn Eintrag in Schüttungsauswahl vorhanden ist Eintrag Schreiben
@@ -1555,8 +1555,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         Rohstoffe.appendChild(Hopfen);
@@ -1570,7 +1570,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL-Befehl:\n") + sql);
           }
           else {
             //Wenn Eintrag in Schüttungsauswahl vorhanden ist Eintrag Schreiben
@@ -1703,8 +1703,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         //QDomElement Hopfen = doc.createElement("Hopfen");
@@ -1719,7 +1719,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL-Befehl:\n") + sql);
           }
           else {
             //Wenn Eintrag in Schüttungsauswahl vorhanden ist Eintrag Schreiben
@@ -1855,7 +1855,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         if (query.first()){
@@ -2027,8 +2027,8 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + WeitereZutatenGaben.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + WeitereZutatenGaben.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement WeitereZutaten = doc.createElement("WeitereZutaten");
@@ -2044,7 +2044,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL-Befehl:\n") + sql);
           }
           else {
             //Wenn Eintrag in Schüttungsauswahl vorhanden ist Eintrag Schreiben
@@ -2193,8 +2193,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                CANCEL_NO, trUtf8("Rueckgabe:\n") + query_sud.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                CANCEL_NO, trUtf8("Rückgabe:\n") + query_sud.lastError().databaseText()
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   else {
     if (query_sud.first()) {
@@ -2299,8 +2299,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Anteil;
@@ -2393,8 +2393,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Anteil;
@@ -2470,7 +2470,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                         CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                        + trUtf8("\nSQL Befehl:\n") + sql);
+                                        + trUtf8("\nSQL-Befehl:\n") + sql);
           }
           else {
             if (query.first()){
@@ -2515,8 +2515,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Malz.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Anteil;
@@ -2591,8 +2591,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Anteil;
@@ -2745,8 +2745,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         query.first();
@@ -2786,8 +2786,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_Hopfen.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement misc;
@@ -2930,8 +2930,8 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
-                                    CANCEL_NO, trUtf8("Rueckgabe:\n") + query_rasten.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    CANCEL_NO, trUtf8("Rückgabe:\n") + query_rasten.lastError().databaseText()
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         QDomElement Rast;
@@ -3108,7 +3108,7 @@ int QExport::IfXmlOK(QString cDateiname)
 
   //Error Msg Text setzten
   if (rueckgabe == 3) {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
     return 3;
   }
   return 0;
@@ -3175,7 +3175,7 @@ void QExport::convertJSON(QString json, QString xsud)
     xml += QString::number(root["Stammwuerze"].toDouble());
     xml += "</SW>";
 
-    xml += "<!--Soll CO2 Gehalt--><CO2 Einheit=\"Gramm/Liter\">";
+    xml += "<!--Soll CO₂-Gehalt--><CO2 Einheit=\"Gramm/Liter\">";
     xml += root["Karbonisierung"].toString();
     xml += "</CO2>";
 
@@ -3268,7 +3268,7 @@ void QExport::convertJSON(QString json, QString xsud)
     xml += QString::number(root["Ausschlagswuerze"].toDouble());
     xml += "</JungbiermengeAbfuellen>";
 
-    xml += "<!--Beste Bewertung (Anzahl Sterne)--><Bewertung Einheit=\"Integer\">0</Bewertung><!--Reifewoche der Besten Bewertung--><BewertungText Einheit=\"Text\"></BewertungText><!--Maximale Anzahl Sterne bei diesem Sud--><BewertungMaxSterne Einheit=\"Integer\">5</BewertungMaxSterne><!--Art der Hopfenberechnung--><berechnungsArtHopfen Einheit=\"Integer\">0</berechnungsArtHopfen><!--High Gravity Faktor--><highGravityFaktor Einheit=\"Integer\">0</highGravityFaktor>";
+    xml += "<!--Beste Bewertung (Anzahl Sterne)--><Bewertung Einheit=\"Integer\">0</Bewertung><!--Reifewoche der Besten Bewertung--><BewertungText Einheit=\"Text\"></BewertungText><!--Maximale Anzahl Sterne bei diesem Sud--><BewertungMaxSterne Einheit=\"Integer\">5</BewertungMaxSterne><!--Art der Hopfenberechnung--><berechnungsArtHopfen Einheit=\"Integer\">0</berechnungsArtHopfen><!--High-Gravity-Faktor--><highGravityFaktor Einheit=\"Integer\">0</highGravityFaktor>";
 
     // Rasten
     xml += "<Rasten>";
@@ -3466,7 +3466,7 @@ int QExport::ImportSudXML(QString cDateiname)
   file.close();
   QDomElement root = doc.documentElement();
   if (root.tagName() != "xsud") {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
     rueckgabe = 3;
   }
   else {
@@ -3565,7 +3565,7 @@ int QExport::ImportSudXML(QString cDateiname)
       else
         s = "";
       sql += "'" + s + "',";
-      //Soll CO2 Gehalt
+      //Soll CO₂-Gehalt
       e = Sud.firstChildElement("CO2");
       if (!e.isNull())
         s = e.text().replace("'","''");
@@ -3842,7 +3842,7 @@ int QExport::ImportSudXML(QString cDateiname)
       else
         s = "";
       sql += "'" + s + "',";
-      //High Gravity Faktor
+      //High-Gravity-Faktor
       e = Sud.firstChildElement("highGravityFaktor");
       if (!e.isNull())
         s = e.text();
@@ -3922,7 +3922,7 @@ int QExport::ImportSudXML(QString cDateiname)
         if (Abgefuellt){
           //Wenn Abgefüllte Speisemenge nicht 0 ist einen Hinweis ausgeben das die Menge neu berechnet werden muss.
           if (AbgefuellteSpeisemenge > 0){
-            HinweisAusgeben(trUtf8("In dieser Sud Datei ist der Eintrag Abgefüllte Biermenge noch nicht vorhanden\nDas die Menge in der Brauübersicht richtig dargestellt wird muss dieser Sud einmal geladen und weider gespeichert werden, dann wird dieser Wert neu berechnet."));
+            HinweisAusgeben(trUtf8("In dieser Suddatei ist der Eintrag \"Abgefüllte Biermenge\" noch nicht vorhanden.\nDamit die Menge in der Brauübersicht richtig dargestellt wird, muss dieser Sud einmal geladen und wieder gespeichert werden, dann wird dieser Wert neu berechnet."));
           }
           else {
             s = QString::number(Jungbiermenge);
@@ -3938,7 +3938,7 @@ int QExport::ImportSudXML(QString cDateiname)
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                    + trUtf8("\nSQL Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + sql);
       }
       else {
         //SudID auslesen
@@ -3948,7 +3948,7 @@ int QExport::ImportSudXML(QString cDateiname)
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                      + trUtf8("\nSQL Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           query.first();
@@ -4004,7 +4004,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4072,7 +4072,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4181,7 +4181,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4302,7 +4302,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4360,7 +4360,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4419,7 +4419,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4465,7 +4465,7 @@ int QExport::ImportSudXML(QString cDateiname)
                 else
                   s = "";
                 sql += "'" + s + "',";
-                //Berechneter CO2 Gehalt des Jungbieres
+                //Berechneter CO₂-Gehalt des Jungbieres
                 e = Eintrag.firstChildElement("CO2");
                 if (!e.isNull())
                   s = e.text();
@@ -4478,7 +4478,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4666,7 +4666,7 @@ int QExport::ImportSudXML(QString cDateiname)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
               n = n.nextSibling();
@@ -4678,7 +4678,7 @@ int QExport::ImportSudXML(QString cDateiname)
       QSqlDatabase::database().commit();
     }
     else {
-      errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+      errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
       rueckgabe = 3;
     }
   }
@@ -4697,7 +4697,7 @@ void QExport::CheckMalzEintrag(QString Name)
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   if (query.first()){
 
@@ -4723,7 +4723,7 @@ void QExport::CheckHopfenEintrag(QString Name)
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   if (query.first()){
 
@@ -4748,7 +4748,7 @@ void QExport::CheckHefeEintrag(QString Name)
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   if (query.first()){
 
@@ -4774,7 +4774,7 @@ void QExport::CheckWeitereZutatEintrag(QString Name)
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   if (query.first()){
 
@@ -4812,7 +4812,7 @@ bool QExport::AbfrageRohstoffuebernahme(QString str, QString rohstoff)
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   else {
     while (query.next()){
@@ -4839,7 +4839,7 @@ bool QExport::AbfrageRohstoffuebernahme(QString str, QString rohstoff)
 void QExport::HinweisAusgeben(QString Text)
 {
   QMessageBox msgBox;
-  msgBox.setWindowTitle(trUtf8("Hinweis!"));
+  msgBox.setWindowTitle(trUtf8("Hinweis"));
   msgBox.setText(Text);
   msgBox.setIcon(QMessageBox::Information);
 
@@ -4885,7 +4885,7 @@ void QExport::RohstoffMalzUebernehmen(QString Name)
   file.close();
   QDomElement root = doc.documentElement();
   if (root.tagName() != "xsud") {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
   }
   else {
     //Malzdaten auslesen
@@ -4971,7 +4971,7 @@ void QExport::RohstoffMalzUebernehmen(QString Name)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
             }
@@ -4997,7 +4997,7 @@ void QExport::RohstoffWeitereZutatUebernehmen(QString Name)
   file.close();
   QDomElement root = doc.documentElement();
   if (root.tagName() != "xsud") {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
   }
   else {
     //Weitere Zutaten auslesen
@@ -5075,7 +5075,7 @@ void QExport::RohstoffWeitereZutatUebernehmen(QString Name)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
             }
@@ -5103,7 +5103,7 @@ void QExport::RohstoffHopfenUebernehmen(QString Name)
   file.close();
   QDomElement root = doc.documentElement();
   if (root.tagName() != "xsud") {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
   }
   else {
     //Hopfendaten auslesen
@@ -5196,7 +5196,7 @@ void QExport::RohstoffHopfenUebernehmen(QString Name)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
             }
@@ -5225,7 +5225,7 @@ void QExport::RohstoffHefeUebernehmen(QString Name)
   file.close();
   QDomElement root = doc.documentElement();
   if (root.tagName() != "xsud") {
-    errMsg = trUtf8("Die Datei ist keine gültige xsud Importdatei");
+    errMsg = trUtf8("Die Datei ist keine gültige xsud-Importdatei");
   }
   else {
     //Hefedaten auslesen
@@ -5345,7 +5345,7 @@ void QExport::RohstoffHefeUebernehmen(QString Name)
                   ErrorMessage *errorMessage = new ErrorMessage();
                   errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                               CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                              + trUtf8("\nSQL Befehl:\n") + sql);
+                                              + trUtf8("\nSQL-Befehl:\n") + sql);
                 }
               }
             }

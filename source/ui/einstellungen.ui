@@ -85,7 +85,7 @@
               <item>
                <widget class="QPushButton" name="pushButton_GetPfad">
                 <property name="text">
-                 <string>...</string>
+                 <string notr="true">...</string>
                 </property>
                </widget>
               </item>
@@ -129,13 +129,13 @@
              <item>
               <widget class="QGroupBox" name="groupBox_14">
                <property name="title">
-                <string>Style (Diese Einstellung wird erst nach dem Neustart der Anwendung wirksam)</string>
+                <string>Stil (Diese Einstellung wird erst nach dem Neustart der Anwendung wirksam)</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <item>
                  <widget class="QCheckBox" name="checkBox_NativStyle">
                   <property name="text">
-                   <string>Style vom Betriebssystem benutzen</string>
+                   <string>Stil des Betriebssystems nutzen</string>
                   </property>
                  </widget>
                 </item>
@@ -223,7 +223,7 @@
                      <item>
                       <widget class="QPushButton" name="pushButton_GetColorStyleAuswahl">
                        <property name="text">
-                        <string>...</string>
+                        <string notr="true">...</string>
                        </property>
                       </widget>
                      </item>
@@ -303,7 +303,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_S_L1">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -356,7 +356,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_S_L2">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -409,7 +409,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_S_L3">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -469,7 +469,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_H_L1">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -522,7 +522,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_H_L2">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -575,7 +575,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_H_L3">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -593,7 +593,7 @@
                   <item>
                    <widget class="QLabel" name="label_7">
                     <property name="text">
-                     <string>Nachgärverlauf Linie CO2 Gehalt</string>
+                     <string>Nachgärverlauf Linie CO₂-Gehalt</string>
                     </property>
                    </widget>
                   </item>
@@ -635,7 +635,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_N_L1">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -688,7 +688,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_N_L2">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -765,7 +765,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_B_L1">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -818,7 +818,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_SPB_L1">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -871,7 +871,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_B_L2">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -924,7 +924,7 @@
                   <item>
                    <widget class="QPushButton" name="pushButton_GetColorDia_SpB_L2">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -968,7 +968,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_SetDefaultFarbe">
              <property name="text">
-              <string>Farben auf Defaultwerte zurücksetzen</string>
+              <string>Farben auf Standardwerte zurücksetzen</string>
              </property>
             </widget>
            </item>
@@ -1191,7 +1191,7 @@
            <item>
             <widget class="QCheckBox" name="checkBox_beendenAbfrage">
              <property name="text">
-              <string>Beim beenden keinen Bestätigungs-Dialog anzeigen</string>
+              <string>Beim Beenden keinen Bestätigungsdialog anzeigen</string>
              </property>
             </widget>
            </item>
@@ -1215,7 +1215,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_SetDefaultErweitert">
              <property name="text">
-              <string>auf Defaultwerte zurücksetzen</string>
+              <string>auf Standardwerte zurücksetzen</string>
              </property>
             </widget>
            </item>
@@ -1464,14 +1464,14 @@
                    <item>
                     <widget class="QCheckBox" name="checkBox_Ansicht_BuG_tevg">
                      <property name="text">
-                      <string>tatsächlicher Endvergärungsgrad</string>
+                      <string>tatsächlicher Endvergärungsgrad (tEVG)</string>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QCheckBox" name="checkBox_Ansicht_BuG_sevg">
                      <property name="text">
-                      <string>scheinbarer Endvergärungsgrad</string>
+                      <string>scheinbarer Endvergärungsgrad (sEVG)</string>
                      </property>
                     </widget>
                    </item>
@@ -1502,7 +1502,7 @@
                    <item>
                     <widget class="QCheckBox" name="checkBox_Ansicht_BuG_shab">
                      <property name="text">
-                      <string>Sudhausausbeute</string>
+                      <string>Sudhausausbeute (SHA)</string>
                      </property>
                     </widget>
                    </item>
@@ -1661,7 +1661,7 @@
                    <item>
                     <widget class="QCheckBox" name="checkBox_Ansicht_BuG_s05">
                      <property name="text">
-                      <string>Speisemenge pro 0,5 Liter Flasche</string>
+                      <string>Speisemenge pro Flasche 0,5 Liter</string>
                      </property>
                     </widget>
                    </item>
@@ -1706,7 +1706,7 @@
                    <item>
                     <widget class="QCheckBox" name="checkBox_Ansicht_BuG_s033">
                      <property name="text">
-                      <string>Speisemenge pro 0,33 Liter Flasche</string>
+                      <string>Speisemenge pro Flasche 0,33 Liter</string>
                      </property>
                     </widget>
                    </item>

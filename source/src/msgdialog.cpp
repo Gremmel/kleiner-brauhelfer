@@ -52,7 +52,7 @@ void MsgDialog::httpFinished()
 			ui->button_next->setText(trUtf8("Nächste Meldung"));
 		}
 		else {
-			ui->button_next->setText(trUtf8("Ok"));
+			ui->button_next->setText(trUtf8("OK"));
 		}
 		
 		emit sig_checkFertig(Meldungen.count());
@@ -121,7 +121,7 @@ void MsgDialog::on_button_next_clicked()
 	}
 	aktMsg++;
 	if (aktMsg+1 == Meldungen.count()){
-		ui->button_next->setText(trUtf8("Ok"));
+		ui->button_next->setText(trUtf8("OK"));
 	}
 	if (aktMsg < Meldungen.count())
 		MeldungEintragen(aktMsg);

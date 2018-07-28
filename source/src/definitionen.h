@@ -21,7 +21,7 @@
 //Version 6 mit Bewertungen
 //Version 7 mit Erweiterten Rohstoffeinträgen
 //Version 8 mit Berechnungsart Hopfen
-//Version 9 mit High Gravity Faktor
+//Version 9 mit High-Gravity-Faktor
 #define XSUD_VERSION "9"
 
 //Portable USB-Stick Version

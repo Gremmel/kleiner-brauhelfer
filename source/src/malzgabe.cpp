@@ -150,7 +150,7 @@ void malzgabe::setName(QString Name)
       raDia.setButtonCancelVisible(false);
 
       //Text für Dialog erstellen
-      QString text = trUtf8("Rohstoffeintrag in den Malz Zutaten ist nicht mehr vorhanden") + " <br><b>" + Name + "</b> ";
+      QString text = trUtf8("Rohstoffeintrag in den Malzzutaten ist nicht mehr vorhanden") + " <br><b>" + Name + "</b> ";
       text += "<br>Bitte einen Ersatz auswählen?";
       raDia.SetText(text);
       //Auswahl für Ersetzung füllen

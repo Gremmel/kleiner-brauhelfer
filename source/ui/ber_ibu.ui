@@ -115,7 +115,7 @@
           <item>
            <widget class="QLabel" name="label_36">
             <property name="text">
-             <string>Nachisomerisierungs-zeit</string>
+             <string>Nachisomerisierungszeit</string>
             </property>
            </widget>
           </item>

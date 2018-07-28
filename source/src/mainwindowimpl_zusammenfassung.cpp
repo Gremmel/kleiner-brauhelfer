@@ -88,11 +88,11 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p>" + trUtf8("°P") + "</p>";
   s += "</td>";
   s += "</tr>";
-  //High Gravity Faktor
+  //High-Gravity-Faktor
   if (spinBox_High_Gravity->value() > 0) {
     s += "<tr style=''>";
     s += "<td>";
-    s += "<p>" + trUtf8("High Gravity Faktor") + "</p>";
+    s += "<p>" + trUtf8("High-Gravity-Faktor") + "</p>";
     s += "</td>";
     s += "<td>";
     s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
@@ -111,7 +111,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p class='value'>" + QString::number(spinBox_AlkoholVol -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("%vol") + "</p>";
+  s += "<p>" + trUtf8("Vol.%") + "</p>";
   s += "</td>";
   s += "</tr>";
   //Bittere
@@ -151,13 +151,13 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p>" + trUtf8("EBC") + "</p>";
   s += "</td>";
   s += "</tr>";
-  //CO2 Gehalt
+  //CO₂-Gehalt
   s += "<tr style=''>";
   s += "<td>";
-  s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
+  s += "<p>" + trUtf8("CO₂-Gehalt") + "</p>";
   s += "</td>";
   s += "<td>";
-  //Bei mehr als einem Eintrag im Nachgärverlauf wird der CO2 Gehalt aus dem
+  //Bei mehr als einem Eintrag im Nachgärverlauf wird der CO₂-Gehalt aus dem
   //Nachgärverlauf entnommen ansonsten der Teoretische
   double d = doubleSpinBox_CO2 -> value();
   QString sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID="
@@ -168,7 +168,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sqlN);
+                                + trUtf8("\nSQL-Befehl:\n") + sqlN);
   }
   else {
     if (queryN.first()){
@@ -184,14 +184,14 @@ void MainWindowImpl::ErstelleZusammenfassung()
   s += "<p class='value'>" + QString::number(d) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("g/Liter") + "</p>";
+  s += "<p>" + trUtf8("g/l") + "</p>";
   s += "</td>";
   s += "</tr>";
   if (BierWurdeAbgefuellt){
     //Scheinbarer Endvergärungsgrad
     s += "<tr style=''>";
     s += "<td>";
-    s += "<p>" + trUtf8("scheinbarer Endvergärungsgrad") + "</p>";
+    s += "<p>" + trUtf8("scheinbarer Endvergärungsgrad (sEVG)") + "</p>";
     s += "</td>";
     s += "<td>";
     s += "<p class='value'>" + QString::number(spinBox_SEVG -> value()) + "</p>";
@@ -273,7 +273,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sqlN);
+                                + trUtf8("\nSQL-Befehl:\n") + sqlN);
   }
   else {
     if (queryN.first()){

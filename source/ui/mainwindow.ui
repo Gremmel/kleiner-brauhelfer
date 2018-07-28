@@ -152,7 +152,7 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Merkliste bei der Rohstoffmengen-Überprüfung im Rezept mit einbeziehen</string>
+               <string>Merkliste zur Überprüfung der Rohstoffmengen im Rezept miteinbeziehen</string>
               </property>
              </widget>
             </item>
@@ -543,7 +543,7 @@
                    <item>
                     <widget class="QLabel" name="label_18">
                      <property name="text">
-                      <string>High Gravity Faktor</string>
+                      <string>High-Gravity-Faktor</string>
                      </property>
                     </widget>
                    </item>
@@ -604,7 +604,7 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mit diesem Wert kann die Würzemenge beim Kochen reduziert werden um anschliesend beim Anstellen wieder auf Wunschmenge zu verdünnen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mit diesem Wert kann die Würzemenge beim Kochen reduziert werden, um anschließend beim Anstellen wieder auf Wunschmenge zu verdünnen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="minimum">
                       <number>0</number>
@@ -640,7 +640,7 @@
                    <item>
                     <widget class="QLabel" name="label_9">
                      <property name="text">
-                      <string>CO2 Gehalt</string>
+                      <string>CO₂-Gehalt</string>
                      </property>
                     </widget>
                    </item>
@@ -701,7 +701,7 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>Gewünschter CO2 Gehalt</string>
+                      <string>Gewünschter CO₂-Gehalt</string>
                      </property>
                      <property name="decimals">
                       <number>1</number>
@@ -732,7 +732,7 @@
                       </size>
                      </property>
                      <property name="text">
-                      <string>g/Liter</string>
+                      <string>g/l</string>
                      </property>
                     </widget>
                    </item>
@@ -1008,7 +1008,7 @@
                    <item>
                     <widget class="QLabel" name="label_80">
                      <property name="text">
-                      <string>angepeilte Reifezeit nach Abfüllung</string>
+                      <string>Reifezeit nach Abfüllung</string>
                      </property>
                     </widget>
                    </item>
@@ -1193,7 +1193,7 @@
                       </size>
                      </property>
                      <property name="text">
-                      <string>...</string>
+                      <string notr="true">...</string>
                      </property>
                     </widget>
                    </item>
@@ -1402,7 +1402,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Diese Zeit wird zu 100% auf die Kochzeit aufaddiert&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="text">
-                      <string>Nachisomerisierungs-Zeit nach dem Kochen</string>
+                      <string>Nachisomerisierungszeit nach dem Kochen</string>
                      </property>
                     </widget>
                    </item>
@@ -3293,13 +3293,13 @@ p, li { white-space: pre-wrap; }
                   </sizepolicy>
                  </property>
                  <attribute name="title">
-                  <string>Ber. weitere Zutaten</string>
+                  <string>Ber. Weitere Zutaten</string>
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_83">
                   <item>
                    <widget class="QGroupBox" name="groupBox_BerWeitereZutaten">
                     <property name="title">
-                     <string>Mengen weiterer Zutaten</string>
+                     <string>Mengen Weitere Zutaten</string>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_82">
                      <property name="leftMargin">
@@ -3551,7 +3551,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QGroupBox" name="groupBox_16">
                 <property name="title">
-                 <string>vor dem Hopfenseihen</string>
+                 <string>Vor dem Hopfenseihen</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout">
                  <property name="leftMargin">
@@ -3660,7 +3660,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -3679,7 +3679,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -3737,7 +3737,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QGroupBox" name="groupBox">
                 <property name="title">
-                 <string>nach dem Hopfenseihen</string>
+                 <string>Nach dem Hopfenseihen</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_2">
                  <property name="leftMargin">
@@ -3806,7 +3806,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -3872,7 +3872,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -3917,7 +3917,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QGroupBox" name="groupBox_3">
                 <property name="title">
-                 <string>vor der Hefezugabe</string>
+                 <string>Vor der Hefezugabe</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_3">
                  <property name="leftMargin">
@@ -3980,7 +3980,7 @@ p, li { white-space: pre-wrap; }
                  <item row="4" column="0">
                   <widget class="QLabel" name="label_45">
                    <property name="text">
-                    <string>Stammwürze beim Anstellen (vor Zugabe der weiteren Zutaten)</string>
+                    <string>Stammwürze beim Anstellen (vor Zugabe weiterer Zutaten)</string>
                    </property>
                   </widget>
                  </item>
@@ -4021,7 +4021,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -4229,7 +4229,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QGroupBox" name="groupBox_4">
                 <property name="title">
-                 <string>beim Abfüllen</string>
+                 <string>Beim Abfüllen</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_4">
                  <property name="leftMargin">
@@ -4570,7 +4570,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="text">
-                    <string>...</string>
+                    <string notr="true">...</string>
                    </property>
                   </widget>
                  </item>
@@ -4678,7 +4678,7 @@ p, li { white-space: pre-wrap; }
                        </size>
                       </property>
                       <property name="text">
-                       <string>...</string>
+                       <string notr="true">...</string>
                       </property>
                      </widget>
                     </item>
@@ -4792,7 +4792,7 @@ p, li { white-space: pre-wrap; }
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_165">
                    <property name="text">
-                    <string>Ausbeute dieses Sudes bei Durchschnittsberechnung ignoirieren</string>
+                    <string>Ausbeute dieses Sudes bei Durchschnittsberechnung ignorieren</string>
                    </property>
                   </widget>
                  </item>
@@ -4811,9 +4811,9 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QPushButton" name="pushButton_RohstoffeAbziehen">
                   <property name="toolTip">
-                   <string>Sud wird als Gebraut Markiert.
-Es sind keine änderungen an den Rezept und Braudaten mehr möglich.
-Die Malz/Hopfen Mengen werden zur Dokumentation abgespeichert und nicht mehr berechnet.
+                   <string>Sud wird als gebraut markiert.
+Es sind keine Änderungen an Rezept und Braudaten mehr möglich.
+Die Malz- und Hopfenmengen werden zur Dokumentation abgespeichert und nicht mehr berechnet.
 Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig gemacht werden.</string>
                   </property>
                   <property name="text">
@@ -4883,7 +4883,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </property>
                 <widget class="QWidget" name="tab_berechnungenAllgemein">
                  <attribute name="title">
-                  <string>allgemeine Berechnungen</string>
+                  <string>Allgemeine Berechnungen</string>
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_125">
                   <item>
@@ -5613,7 +5613,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                           <item>
                            <widget class="QLabel" name="label_StammwuerzeEWZAnteil">
                             <property name="text">
-                             <string>Anteil Stammwürze der Weiteren Zutaten</string>
+                             <string>Anteil Stammwürze "Weitere Zutaten"</string>
                             </property>
                            </widget>
                           </item>
@@ -5708,7 +5708,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                           <item>
                            <widget class="QLabel" name="label_StammwuerzeEWZ">
                             <property name="text">
-                             <string>Stammwürze Gesammt inklusive Weitere Zutaten</string>
+                             <string>Stammwürze Gesamt inklusive "Weitere Zutaten"</string>
                             </property>
                            </widget>
                           </item>
@@ -5922,7 +5922,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_sevg">
                          <property name="text">
-                          <string>scheinbarer Endvergärungsgrad (EVG)</string>
+                          <string>scheinbarer Endvergärungsgrad (sEVG)</string>
                          </property>
                         </widget>
                        </item>
@@ -6038,7 +6038,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_sha">
                          <property name="text">
-                          <string>Sudhausausbeute</string>
+                          <string>Sudhausausbeute (SHA)</string>
                          </property>
                         </widget>
                        </item>
@@ -7018,7 +7018,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_s05">
                          <property name="text">
-                          <string>Speisemenge pro 0,5 Liter Flasche</string>
+                          <string>Speisemenge pro Flasche 0,5 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7113,7 +7113,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_hz05">
                          <property name="text">
-                          <string>Haushaltszuckergabe pro 0,5 Liter Flasche</string>
+                          <string>Haushaltszuckergabe pro Flasche 0,5 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7208,7 +7208,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_tz05">
                          <property name="text">
-                          <string>Traubenzuckergabe pro 0,5 Liter Flasche</string>
+                          <string>Traubenzuckergabe pro Flasche 0,5 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7303,7 +7303,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_s033">
                          <property name="text">
-                          <string>Speisemenge pro 0,33 Liter Flasche</string>
+                          <string>Speisemenge pro Flasche 0,33 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7398,7 +7398,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_hz033">
                          <property name="text">
-                          <string>Haushaltszuckergabe pro 0,33 Liter Flasche</string>
+                          <string>Haushaltszuckergabe pro Flasche 0,33 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7493,7 +7493,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                        <item>
                         <widget class="QLabel" name="label_tz033">
                          <property name="text">
-                          <string>Traubenzuckergabe pro 0,33 Liter Flasche</string>
+                          <string>Traubenzuckergabe pro Flasche 0,33 Liter</string>
                          </property>
                         </widget>
                        </item>
@@ -7753,7 +7753,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <item>
                    <widget class="QPushButton" name="pushButton_EingabeSWSchnellgaerverlauf">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -7918,7 +7918,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <item>
                    <widget class="QPushButton" name="pushButton_EingabeSWHauptgaerverlauf">
                     <property name="text">
-                     <string>...</string>
+                     <string notr="true">...</string>
                     </property>
                    </widget>
                   </item>
@@ -8158,7 +8158,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   </column>
                   <column>
                    <property name="text">
-                    <string>CO2 Gehalt</string>
+                    <string>CO₂-Gehalt</string>
                    </property>
                   </column>
                  </widget>
@@ -8523,7 +8523,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
              </property>
              <widget class="QWidget" name="tab_3">
               <attribute name="title">
-               <string>Farbe/Klarheit</string>
+               <string>Farbe, Klarheit</string>
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_99">
                <item>
@@ -8621,7 +8621,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_farbe_8">
                       <property name="text">
-                       <string>kupferrot, amber</string>
+                       <string>kupferrot, bernsteinfarben</string>
                       </property>
                      </widget>
                     </item>
@@ -8635,7 +8635,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_farbe_10">
                       <property name="text">
-                       <string>schwarz, tief dunkel</string>
+                       <string>schwarz, tiefdunkel</string>
                       </property>
                      </widget>
                     </item>
@@ -8808,7 +8808,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    <item>
                     <widget class="QCheckBox" name="checkBox_geruch_2">
                      <property name="text">
-                      <string>wohlrichend</string>
+                      <string>wohlriechend</string>
                      </property>
                     </widget>
                    </item>
@@ -9057,7 +9057,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                <item>
                 <widget class="QGroupBox" name="groupBox_42">
                  <property name="title">
-                  <string>Rezenz / Frischeindruck</string>
+                  <string>Rezenz, Frischeeindruck</string>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_151">
                   <item>
@@ -9097,7 +9097,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_antrunk_4">
                       <property name="text">
-                       <string>stark prickelnd,aufdringlich</string>
+                       <string>stark prickelnd, aufdringlich</string>
                       </property>
                      </widget>
                     </item>
@@ -9153,7 +9153,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <item>
                    <widget class="QRadioButton" name="radioButton_haupttrunk_0">
                     <property name="text">
-                     <string>wässrig / leer / dünn</string>
+                     <string>wässrig, leer, dünn</string>
                     </property>
                    </widget>
                   </item>
@@ -9181,7 +9181,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <item>
                    <widget class="QRadioButton" name="radioButton_haupttrunk_4">
                     <property name="text">
-                     <string>mastig / breit</string>
+                     <string>mastig, breit</string>
                     </property>
                    </widget>
                   </item>
@@ -9269,7 +9269,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                     <item>
                      <widget class="QRadioButton" name="radioButton_nachtrunk_7">
                       <property name="text">
-                       <string>nicht / kaum wahrnehmbar</string>
+                       <string>nicht oder kaum wahrnehmbar</string>
                       </property>
                      </widget>
                     </item>
@@ -9443,7 +9443,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sudhausausbeute</string>
+                  <string>Sudhausausbeute (SHA)</string>
                  </property>
                 </item>
                 <item>
@@ -9453,12 +9453,12 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Menge Schüttung</string>
+                  <string>Schüttung</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Kosten/Liter</string>
+                  <string>Kosten pro Liter</string>
                  </property>
                 </item>
                 <item>
@@ -9468,7 +9468,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Scheinbarer EVG</string>
+                  <string>Scheinbarer EVG (sEVG)</string>
                  </property>
                 </item>
                 <item>
@@ -9512,7 +9512,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sudhausausbeute</string>
+                  <string>Sudhausausbeute (SHA)</string>
                  </property>
                 </item>
                 <item>
@@ -9522,12 +9522,12 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Menge Schüttung</string>
+                  <string>Schüttung</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Kosten/Liter</string>
+                  <string>Kosten pro Liter</string>
                  </property>
                 </item>
                 <item>
@@ -9537,7 +9537,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 </item>
                 <item>
                  <property name="text">
-                  <string>Scheinbarer EVG</string>
+                  <string>Scheinbarer EVG (sEVG)</string>
                  </property>
                 </item>
                 <item>
@@ -9610,17 +9610,17 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Sudhausausbeute</string>
+                <string>SHA</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Menge Schüttung</string>
+                <string>Schüttung</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Kosten / Liter</string>
+                <string>Kosten pro Liter</string>
                </property>
               </column>
               <column>
@@ -9630,17 +9630,17 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Alc Vol%</string>
+                <string>Alkohol</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Sch. EVG %</string>
+                <string>sEVG</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Eff. Ausbeute</string>
+                <string>Eff. SHA</string>
                </property>
               </column>
              </widget>
@@ -9708,7 +9708,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QCheckBox" name="checkBox_BrauuebersichtAuswahlAlle">
                 <property name="text">
-                 <string>alle anzeigen</string>
+                 <string>Alle anzeigen</string>
                 </property>
                </widget>
               </item>
@@ -9750,7 +9750,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
           <item>
            <widget class="QGroupBox" name="groupBox_6">
             <property name="title">
-             <string>Brauanlagen auswahl</string>
+             <string>Brauanlagen Auswahl</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_56">
              <item>
@@ -9783,7 +9783,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>lösche Brauanlage</string>
+                  <string>Lösche Brauanlage</string>
                  </property>
                 </widget>
                </item>
@@ -9811,14 +9811,14 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QPushButton" name="pushButton_GeraeteNeu">
                 <property name="text">
-                 <string>neuer Eintrag</string>
+                 <string>Neuer Eintrag</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_GeraeteDel">
                 <property name="text">
-                 <string>lösche Eintrag</string>
+                 <string>Lösche Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -9910,7 +9910,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Dieser Wert wird zur berechnung der Schüttung verwendet.</string>
+                   <string>Dieser Wert wird zur Berechnung der Schüttung verwendet.</string>
                   </property>
                   <property name="minimum">
                    <number>1</number>
@@ -9949,7 +9949,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_2">
                   <property name="text">
-                   <string>durchschnittliche Ausbeute dieser Anlage über die letzten</string>
+                   <string>Durchschnittliche Ausbeute dieser Anlage über die letzten</string>
                   </property>
                  </widget>
                 </item>
@@ -9998,7 +9998,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Durchschnittliche Sudhausausbeute von allen als gebraut Markierten Suden</string>
+                   <string>Durchschnittliche Sudhausausbeute von allen als gebraut markierten Suden</string>
                   </property>
                   <property name="readOnly">
                    <bool>true</bool>
@@ -10131,7 +10131,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    </size>
                   </property>
                   <property name="text">
-                   <string>...</string>
+                   <string notr="true">...</string>
                   </property>
                  </widget>
                 </item>
@@ -10617,7 +10617,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_6">
                   <property name="text">
-                   <string>maximal nutzbare Füllhöhe</string>
+                   <string>Maximal nutzbare Füllhöhe</string>
                   </property>
                  </widget>
                 </item>
@@ -10691,7 +10691,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_7">
                   <property name="text">
-                   <string>nutzbares Volumen</string>
+                   <string>Nutzbares Volumen</string>
                   </property>
                  </widget>
                 </item>
@@ -11018,7 +11018,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_11">
                   <property name="text">
-                   <string>maximal nutzbare Füllhöhe</string>
+                   <string>Maximal nutzbare Füllhöhe</string>
                   </property>
                  </widget>
                 </item>
@@ -11092,7 +11092,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                 <item>
                  <widget class="QLabel" name="label_IST_SHA_12">
                   <property name="text">
-                   <string>nutzbares Volumen</string>
+                   <string>Nutzbares Volumen</string>
                   </property>
                  </widget>
                 </item>
@@ -11258,7 +11258,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Mindesthaltbar</string>
+                <string>Mindesthaltbarkeit</string>
                </property>
               </column>
               <column>
@@ -11273,14 +11273,14 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QPushButton" name="pushButton_MalzNeu">
                 <property name="text">
-                 <string>neuer Eintrag</string>
+                 <string>Neuer Eintrag</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_MalzNeuVorlage">
                 <property name="text">
-                 <string>neuer Eintrag aus Vorlage</string>
+                 <string>Neuer Eintrag aus Vorlage</string>
                 </property>
                </widget>
               </item>
@@ -11290,7 +11290,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>kopiere Eintrag</string>
+                 <string>Kopiere Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11300,7 +11300,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>lösche Eintrag</string>
+                 <string>Lösche Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11379,7 +11379,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Mindesthaltbar</string>
+                <string>Mindesthaltbarkeit</string>
                </property>
               </column>
               <column>
@@ -11394,14 +11394,14 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QPushButton" name="pushButton_HopfenNeu">
                 <property name="text">
-                 <string>neuer Eintrag</string>
+                 <string>Neuer Eintrag</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HopfenNeuVorlage">
                 <property name="text">
-                 <string>neuer Eintrag aus Vorlage</string>
+                 <string>Neuer Eintrag aus Vorlage</string>
                 </property>
                </widget>
               </item>
@@ -11411,7 +11411,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>kopiere Eintrag</string>
+                 <string>Kopiere Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11421,7 +11421,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>lösche Eintrag</string>
+                 <string>Lösche Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11520,7 +11520,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Mindesthaltbar</string>
+                <string>Mindesthaltbarkeit</string>
                </property>
               </column>
               <column>
@@ -11535,14 +11535,14 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QPushButton" name="pushButton_HefeNeu">
                 <property name="text">
-                 <string>neuer Eintrag</string>
+                 <string>Neuer Eintrag</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_HefeNeuVorlage">
                 <property name="text">
-                 <string>neuer Eintrag aus Vorlage</string>
+                 <string>Neuer Eintrag aus Vorlage</string>
                 </property>
                </widget>
               </item>
@@ -11552,7 +11552,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>kopiere Eintrag</string>
+                 <string>Kopiere Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11562,7 +11562,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>lösche Eintrag</string>
+                 <string>Lösche Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11641,7 +11641,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </column>
               <column>
                <property name="text">
-                <string>Mindesthaltbar</string>
+                <string>Mindesthaltbarkeit</string>
                </property>
               </column>
               <column>
@@ -11656,14 +11656,14 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenNeu">
                 <property name="text">
-                 <string>neuer Eintrag</string>
+                 <string>Neuer Eintrag</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_WeitereZutatenNeuVorlage">
                 <property name="text">
-                 <string>neuer Eintrag aus Vorlage</string>
+                 <string>Neuer Eintrag aus Vorlage</string>
                 </property>
                </widget>
               </item>
@@ -11673,7 +11673,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>kopiere Eintrag</string>
+                 <string>Kopiere Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11683,7 +11683,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>lösche Eintrag</string>
+                 <string>Lösche Eintrag</string>
                 </property>
                </widget>
               </item>
@@ -11782,7 +11782,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                            </size>
                           </property>
                           <property name="text">
-                           <string>mg/L</string>
+                           <string>mg/l</string>
                           </property>
                          </widget>
                         </item>
@@ -11818,7 +11818,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                            </size>
                           </property>
                           <property name="text">
-                           <string>mmol/L</string>
+                           <string>mmol/l</string>
                           </property>
                          </widget>
                         </item>
@@ -11881,7 +11881,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                            </size>
                           </property>
                           <property name="text">
-                           <string>mg/L</string>
+                           <string>mg/l</string>
                           </property>
                          </widget>
                         </item>
@@ -11917,7 +11917,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                            </size>
                           </property>
                           <property name="text">
-                           <string>mmol/L</string>
+                           <string>mmol/l</string>
                           </property>
                          </widget>
                         </item>
@@ -11939,7 +11939,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                       <item>
                        <widget class="QLabel" name="label_139">
                         <property name="text">
-                         <string>Säurekapazität 4.3 ph</string>
+                         <string>Säurekapazität 4,3 pH</string>
                         </property>
                        </widget>
                       </item>
@@ -11978,7 +11978,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                          </size>
                         </property>
                         <property name="text">
-                         <string>mmol/L</string>
+                         <string>mmol/l</string>
                         </property>
                        </widget>
                       </item>
@@ -12043,7 +12043,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <item>
                <widget class="QGroupBox" name="groupBox_23">
                 <property name="title">
-                 <string>berechnete Härtegrade</string>
+                 <string>Berechnete Härtegrade</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_65">
                  <item>

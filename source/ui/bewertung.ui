@@ -70,11 +70,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCommandLinkButton" name="button_woche">
-          <property name="text">
-           <string>6 Woche</string>
-          </property>
-         </widget>
+         <widget class="QCommandLinkButton" name="button_woche"/>
         </item>
        </layout>
       </item>

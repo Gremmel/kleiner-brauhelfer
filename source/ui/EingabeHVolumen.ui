@@ -34,7 +34,7 @@
         <item>
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Füllhöhe von Oberkannte aus gemessen</string>
+           <string>Füllhöhe von Oberkante aus gemessen</string>
           </property>
          </widget>
         </item>

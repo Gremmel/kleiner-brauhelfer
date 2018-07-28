@@ -24,7 +24,7 @@
    <item>
     <widget class="QCheckBox" name="checkBox_ignor">
      <property name="text">
-      <string>Diese Meldung nicht mehr Anzeigen</string>
+      <string>Diese Meldung nicht mehr anzeigen</string>
      </property>
      <property name="checked">
       <bool>true</bool>

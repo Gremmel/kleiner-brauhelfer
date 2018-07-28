@@ -3,6 +3,8 @@ Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.3 (in Entwicklung)
+- Deutsch überarbeitet (grossen Dank an Radulph)
+- Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 ### Version 1.4.4.2
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)

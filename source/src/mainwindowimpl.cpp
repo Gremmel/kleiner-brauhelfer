@@ -473,7 +473,7 @@ void MainWindowImpl::on_MsgCheckFertig(int count) {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // dann Liste neu füllen
@@ -486,7 +486,7 @@ void MainWindowImpl::on_MsgCheckFertig(int count) {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
   }
@@ -907,7 +907,7 @@ void MainWindowImpl::checkMsg() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     } else {
       while (query.next()) {
         int FeldNr = query.record().indexOf("MsgID");
@@ -937,7 +937,7 @@ void MainWindowImpl::LeseAusruestungDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     listWidget_Brauanlagen->clear();
     while (query.next()) {
@@ -1008,7 +1008,7 @@ void MainWindowImpl::SchreibeAusruestungDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     for (int i = 0; i < listWidget_Brauanlagen->count(); i++) {
       Brauanlage *item =
@@ -1038,7 +1038,7 @@ void MainWindowImpl::SchreibeAusruestungDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   QObject::trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      QObject::trUtf8("\nSQL Befehl:\n") + sql);
+                                      QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
     AenderungAusruestung = false;
@@ -1485,8 +1485,8 @@ void MainWindowImpl::HefeNeueZeile(
   // Typ fluessig trocken
   MyComboBox *comboBoxTypTrFl = new MyComboBox();
   comboBoxTypTrFl->addItem("");
-  comboBoxTypTrFl->addItem(trUtf8("trocken"));
-  comboBoxTypTrFl->addItem(trUtf8("flüssig"));
+  comboBoxTypTrFl->addItem(trUtf8("Trocken"));
+  comboBoxTypTrFl->addItem(trUtf8("Flüssig"));
   comboBoxTypTrFl->setCurrentIndex(typ2);
   tableWidget_Hefe->setCellWidget(i, TableHefeColTypTrFlg, comboBoxTypTrFl);
   tableWidget_Hefe->setItem(
@@ -1509,9 +1509,9 @@ void MainWindowImpl::HefeNeueZeile(
   // Sedimentation
   MyComboBox *comboBoxSED = new MyComboBox();
   comboBoxSED->addItem("");
-  comboBoxSED->addItem(trUtf8("hoch"));
-  comboBoxSED->addItem(trUtf8("mittel"));
-  comboBoxSED->addItem(trUtf8("niedrig"));
+  comboBoxSED->addItem(trUtf8("Hoch"));
+  comboBoxSED->addItem(trUtf8("Mittel"));
+  comboBoxSED->addItem(trUtf8("Niedrig"));
   comboBoxSED->setCurrentIndex(sedimentation);
   tableWidget_Hefe->setCellWidget(i, TableHefeColSedimentation, comboBoxSED);
   tableWidget_Hefe->setItem(i, TableHefeColSedimentation,
@@ -1810,7 +1810,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Schreibe Tabelle Malz
@@ -1853,7 +1853,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
   // Hopfen
@@ -1866,7 +1866,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Schreibe Tabelle Hopfen
@@ -1917,7 +1917,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
   // Hefe
@@ -1930,7 +1930,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Schreibe Tabelle Hefe
@@ -1988,7 +1988,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 
@@ -2002,7 +2002,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Schreibe Tabelle Weitere Zutaten
@@ -2056,7 +2056,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 
@@ -2071,7 +2071,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   // Magnesium
   sql = "UPDATE 'Wasser' SET 'Magnesium'=" +
@@ -2082,7 +2082,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   // Saeurekapazitaet
   sql = "UPDATE 'Wasser' SET 'Saeurekapazitaet'=" +
@@ -2093,7 +2093,7 @@ void MainWindowImpl::SchreibeRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 }
 
@@ -2107,7 +2107,7 @@ void MainWindowImpl::LeseRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     tableWidget_Malz->clearSelection();
     Malz_Bezeichnung_Merker = "";
@@ -2138,7 +2138,7 @@ void MainWindowImpl::LeseRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     tableWidget_Hopfen->clearSelection();
     Hopfen_Bezeichnung_Merker = "";
@@ -2170,7 +2170,7 @@ void MainWindowImpl::LeseRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     tableWidget_Hefe->clearSelection();
     Hefe_Bezeichnung_Merker = "";
@@ -2206,7 +2206,7 @@ void MainWindowImpl::LeseRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     tableWidget_WeitereZutaten->clearSelection();
     WZutaten_Bezeichnung_Merker = "";
@@ -2238,7 +2238,7 @@ void MainWindowImpl::LeseRohstoffeDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     query.first();
     SpinBox_wwCalcium_mg->setValue(
@@ -2278,7 +2278,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     save();
     QString letzeAuswahl;
@@ -2298,7 +2298,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql2);
+                                        trUtf8("\nSQL-Befehl:\n") + sql2);
         } else {
           if ((ok) && (query2.first())) {
             // Dialog mit Rohstoffauswahl zum Austauschen des zu löschenden
@@ -2307,7 +2307,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
 
             // Text für Dialog erstellen
             QString text = trUtf8("Der Rohstoff <b>") + del_name +
-                           trUtf8("</b> den Du löschen frochtest, wird in dem "
+                           trUtf8("</b> den Du löschen möchtest, wird in dem "
                                   "noch nicht gebrauten Sud <b>");
             int FeldNr = query.record().indexOf("Sudname");
             text += query.value(FeldNr).toString() +
@@ -2338,7 +2338,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql2);
+                        trUtf8("\nSQL-Befehl:\n") + sql2);
               } else {
                 // Bit setzen das dieser Sud neu Berechnet werden muss die
                 // Berechneten wert nun nicht mehr stimmen.
@@ -2349,7 +2349,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
                   errorMessage->showMessage(
                       ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                       trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                          trUtf8("\nSQL Befehl:\n") + sql2);
+                          trUtf8("\nSQL-Befehl:\n") + sql2);
                 }
               }
             }
@@ -2387,7 +2387,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     QString letzeAuswahl;
     QString sudid;
@@ -2407,7 +2407,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql2);
+                                        trUtf8("\nSQL-Befehl:\n") + sql2);
         } else {
           if ((ok) && (query2.first())) {
             // Dialog mit Rohstoffauswahl zum Austauschen des zu löschenden
@@ -2417,8 +2417,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
             // Text für Dialog erstellen
             QString text =
                 trUtf8("Der Rohstoff <b>") + del_name +
-                trUtf8("</b> den Du löschen möchtest, wird in den Weiteren "
-                       "Zutaten in dem noch nicht gebrauten Sud <b>");
+                trUtf8("</b> den Du löschen möchtest, wird in den \"Weitere Zutaten\" in dem noch nicht gebrauten Sud <b>");
             int FeldNr = query.record().indexOf("Sudname");
             text += query.value(FeldNr).toString() +
                     "</b> verwendet.\n\nSoll dieser Eintrag mit der folgenden "
@@ -2447,7 +2446,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql);
+                        trUtf8("\nSQL-Befehl:\n") + sql);
               } else {
                 // Bit setzen das dieser Sud neu Berechnet werden muss da die
                 // Berechneten wert nun nicht mehr stimmen.
@@ -2458,7 +2457,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                   errorMessage->showMessage(
                       ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                       trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                          trUtf8("\nSQL Befehl:\n") + sql2);
+                          trUtf8("\nSQL-Befehl:\n") + sql2);
                 }
               }
             }
@@ -2473,7 +2472,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql2);
+                                        trUtf8("\nSQL-Befehl:\n") + sql2);
         } else {
           if ((ok) && (query2.first())) {
             // Dialog mit Rohstoffauswahl zum Austauschen des zu löschenden
@@ -2513,7 +2512,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql);
+                        trUtf8("\nSQL-Befehl:\n") + sql);
               } else {
                 // Bit setzen das dieser Sud neu Berechnet werden muss da die
                 // Berechneten wert nun nicht mehr stimmen.
@@ -2524,7 +2523,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                   errorMessage->showMessage(
                       ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                       trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                          trUtf8("\nSQL Befehl:\n") + sql2);
+                          trUtf8("\nSQL-Befehl:\n") + sql2);
                 }
               }
             }
@@ -2560,7 +2559,7 @@ void MainWindowImpl::on_pushButton_HefeDel_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     QString letzeAuswahl;
     QString sudid;
@@ -2610,7 +2609,7 @@ void MainWindowImpl::on_pushButton_HefeDel_clicked() {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             } else {
               // Bit setzen das dieser Sud neu Berechnet werden muss da die
               // Berechneten wert nun nicht mehr stimmen.
@@ -2622,7 +2621,7 @@ void MainWindowImpl::on_pushButton_HefeDel_clicked() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql2);
+                        trUtf8("\nSQL-Befehl:\n") + sql2);
               }
             }
           }
@@ -2893,7 +2892,7 @@ void MainWindowImpl::retranslateMenus() {
   exitAct->setText(trUtf8("Beenden"));
   schuettungProzent->setText(trUtf8("&Rezeptübernahme Schüttung"));
   schuettungProzent->setStatusTip(trUtf8(
-      "Öffnet einen Dialog zur unterstützung für die Übernahme der Schüttung"));
+      "Öffnet einen Dialog zur Unterstützung für die Übernahme der Schüttung"));
   berIBU->setText(trUtf8("&Rezeptübernahme Bittere"));
   berIBU->setStatusTip(
       trUtf8("Öffnet einen Dialog zur Berechnung der Bittere"));
@@ -2902,18 +2901,16 @@ void MainWindowImpl::retranslateMenus() {
       trUtf8("Hebt die Eingabesperre der Eingabefelder auf"));
   ResetBierGebraut->setText(trUtf8("\"Bier &gebraut\" zurücksetzen"));
   ResetBierGebraut->setStatusTip(
-      trUtf8("Setzt das Bit Bier wurde Gebraut von dem aktuellen Sud in der "
-             "Datenbank zurück"));
+      trUtf8("Setzt \"Bier wurde gebraut\" vom aktuellen Sud in der Datenbank zurück"));
   ResetAbgefuellt->setText(trUtf8("\"Bier &abgefüllt\" zurücksetzen"));
   ResetAbgefuellt->setStatusTip(trUtf8(
-      "Setzt das Bit Abgefüllt von dem aktuellen Sud in der Datenbank zurück"));
+      "Setzt \"Abgefüllt\" vom aktuellen Sud in der Datenbank zurück"));
   ResetVerbraucht->setText(trUtf8("\"Bier &verbraucht\" zurücksetzen"));
   ResetVerbraucht->setStatusTip(
-      trUtf8("Setzt das Bit Bier Verbraucht von dem aktuellen Sud in der "
-             "Datenbank zurück"));
-  ResetZugabestatus->setText(trUtf8("&Reset Zugabestatus WZutaten"));
+      trUtf8("Setzt \"Bier verbraucht\" vom aktuellen Sud in der Datenbank zurück"));
+  ResetZugabestatus->setText(trUtf8("&\"Weitere Zutaten\" zurücks."));
   ResetZugabestatus->setStatusTip(
-      trUtf8("setzt den Zugabestatus der Weiteren Zutaten zurück"));
+      trUtf8("Setzt den Zugabestatus \"Weitere Zutaten\" zurück"));
 
   extrasMenu->setTitle(trUtf8("&Extras"));
   einstellungen->setText(trUtf8("&Einstellungen"));
@@ -2947,13 +2944,13 @@ void MainWindowImpl::save() {
   } else {
     reconnect = true;
     QMessageBox msgBox;
-    msgBox.setWindowTitle(trUtf8("Keine verbindung zur Datenbank"));
-    msgBox.setText(trUtf8("Die Datenbank-datei: ") + dbpfad +
+    msgBox.setWindowTitle(trUtf8("Keine Verbindung zur Datenbank"));
+    msgBox.setText(trUtf8("Die Datenbankdatei: ") + dbpfad +
                    trUtf8(" existiert nicht mehr!"));
     msgBox.setInformativeText(
         trUtf8("Wenn die Datenbank auf einem USB-Stick oder Netzlaufwerk "
-               "liegt, stellen sie die verbindung wieder her und speichern sie "
-               "anschliessend nocheinmal."));
+               "liegt, stellen sie die Verbindung wieder her und speichern sie "
+               "anschließend noch einmal."));
     msgBox.setIcon(QMessageBox::Critical);
     msgBox.setStandardButtons(QMessageBox::Ok);
 
@@ -2973,7 +2970,7 @@ void MainWindowImpl::SchreibeSuddatenDB() {
   // Stammwürze
   sql += "SW='";
   sql += QString::number(spinBox_SW->value()) + "', ";
-  // CO2 Gehalt
+  // CO₂-Gehalt
   sql += "CO2='";
   sql += QString::number(doubleSpinBox_CO2->value()) + "', ";
   // Bitterkeit
@@ -3157,7 +3154,7 @@ void MainWindowImpl::SchreibeSuddatenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     setAenderung(false);
 
@@ -3197,7 +3194,7 @@ void MainWindowImpl::SchreibeBewertungenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_Bewertung.count(); i++) {
@@ -3237,7 +3234,7 @@ void MainWindowImpl::SchreibeBewertungenDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -3253,7 +3250,7 @@ void MainWindowImpl::LeseSuddatenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query_sud.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     if (query_sud.first()) {
       // Felder füllen
@@ -3267,7 +3264,7 @@ void MainWindowImpl::LeseSuddatenDB() {
       // Stammwürze
       FeldNr = query_sud.record().indexOf("SW");
       spinBox_SW->setValue(query_sud.value(FeldNr).toDouble());
-      // CO2 Gehalt
+      // CO₂-Gehalt
       FeldNr = query_sud.record().indexOf("CO2");
       doubleSpinBox_CO2->setValue(query_sud.value(FeldNr).toDouble());
       // Bitterkeit
@@ -3429,7 +3426,7 @@ void MainWindowImpl::LeseSuddatenDB() {
       comboBox_BerechnungsArtHopfen->setCurrentIndex(
           query_sud.value(FeldNr).toInt());
 
-      // High Gravity Faktor
+      // High-Gravity-Faktor
       FeldNr = query_sud.record().indexOf("highGravityFaktor");
       spinBox_High_Gravity->setValue(query_sud.value(FeldNr).toInt());
 
@@ -3469,7 +3466,7 @@ void MainWindowImpl::LeseSuddatenDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query_rasten.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         bool b;
         int i = 1;
@@ -3528,7 +3525,7 @@ void MainWindowImpl::LeseSuddatenDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query_Malz.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         // Erstmal Zutatenlsite leeren
         for (int i = 0; i < list_Malzgaben.count(); i++) {
@@ -3559,7 +3556,7 @@ void MainWindowImpl::LeseSuddatenDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query_Hopfen.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         // Erstmal Zutatenlsite leeren
         for (int i = 0; i < list_Hopfengaben.count(); i++) {
@@ -3594,7 +3591,7 @@ void MainWindowImpl::LeseSuddatenDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query_ewz.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         // Erstmal Zutatenlsite leeren
         for (int i = 0; i < list_EwZutat.count(); i++) {
@@ -3704,7 +3701,7 @@ void MainWindowImpl::LeseSuddatenDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query_bew.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         // Bewertungen erstellen
         while (query_bew.next()) {
@@ -3734,7 +3731,7 @@ void MainWindowImpl::LeseSuddatenDB() {
             errorMessage->showMessage(
                 ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                 trUtf8("Rückgabe:\n") + queryN.lastError().databaseText() +
-                    trUtf8("\nSQL Befehl:\n") + sqlN);
+                    trUtf8("\nSQL-Befehl:\n") + sqlN);
           } else {
             if (queryN.first()) {
               int FeldNr = queryN.record().indexOf("Zeitstempel");
@@ -4311,7 +4308,7 @@ void MainWindowImpl::LeseGeraetelisteDB(int id) {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Geraete->clearContents();
@@ -4346,7 +4343,7 @@ void MainWindowImpl::SchreibeGeraetelisteDB(int id) {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // Dann wieder mit den Tabellendaten füllen
@@ -4360,7 +4357,7 @@ void MainWindowImpl::SchreibeGeraetelisteDB(int id) {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
     AenderungGeraeteliste = false;
@@ -4891,11 +4888,9 @@ void MainWindowImpl::slot_pushButton_SudAbgefuellt() {
       msgBox.setWindowTitle("Hinweis");
       msgBox.setInformativeText("");
       msgBox.setText(
-          trUtf8("Das Bier kann noch nicht als abgefüllt Markiert werden da "
-                 "der Sud Zutaten für die Gärung enthält die noch nicht als "
-                 "zugegeben oder entnommen Markiert wurden."));
-      msgBox.setInformativeText(trUtf8("Bitte die Zutaten entfernen oder den "
-                                       "Status noch entsprechend setzten"));
+          trUtf8("Das Bier kann noch nicht als abgefüllt markiert werden, da der "
+          "Sud Zutaten für die Gärung enthält, die noch nicht als zugegeben oder entnommen markiert wurden."));
+      msgBox.setInformativeText(trUtf8("Bitte die Zutaten entfernen oder den Status entsprechend setzten"));
       msgBox.setIcon(QMessageBox::Information);
       // msgBox.setDefaultButton(QMessageBox::Save);
 
@@ -5033,7 +5028,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         while (query.next()) {
           // ID
@@ -5051,7 +5046,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             } else {
               while (query2.next()) {
                 FeldNr = query2.record().indexOf("erg_Menge");
@@ -5147,7 +5142,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         while (query.next()) {
           // ID
@@ -5166,7 +5161,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             } else {
               while (query2.next()) {
                 FeldNr = query2.record().indexOf("erg_Menge");
@@ -5182,7 +5177,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             } else {
               while (query2.next()) {
                 FeldNr = query2.record().indexOf("erg_Menge");
@@ -5247,7 +5242,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         while (query.next()) {
           // ID
@@ -5312,7 +5307,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           while (query.next()) {
             // ID
@@ -5331,7 +5326,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql2);
+                        trUtf8("\nSQL-Befehl:\n") + sql2);
               } else {
                 while (query2.next()) {
                   FeldNr = query2.record().indexOf("erg_Menge");
@@ -5347,7 +5342,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql2);
+                        trUtf8("\nSQL-Befehl:\n") + sql2);
               } else {
                 while (query2.next()) {
                   FeldNr = query2.record().indexOf("erg_Menge");
@@ -5410,7 +5405,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           while (query.next()) {
             // ID
@@ -5429,7 +5424,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query2.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql2);
+                        trUtf8("\nSQL-Befehl:\n") + sql2);
               } else {
                 while (query2.next()) {
                   FeldNr = query2.record().indexOf("erg_Menge");
@@ -5501,8 +5496,7 @@ void MainWindowImpl::CheckJungbierSW() {
 
   if ((spinBox_SWJungbier->value() > spinBox_Gruenschlauchzeitpunkt->value()) &&
       (checkBox_SchnellgaerprobeAktiv->isChecked())) {
-    QString s = trUtf8("!!!Achtung das Jungbier ist noch nicht weit genug "
-                       "endvergoren, der Restextrakt sollte nicht über ") +
+    QString s = trUtf8("Achtung das Jungbier ist noch nicht weit genug endvergoren, der Restextrakt sollte nicht über ") +
                 QString::number(spinBox_Gruenschlauchzeitpunkt->value()) +
                 trUtf8("°P liegen");
     spinBox_SWJungbier->setPalette(paletteF);
@@ -6305,9 +6299,8 @@ void MainWindowImpl::BerFarbe(double cEBC) {
       Bierfarbe = QColor::fromRgb(255, 255, 255);
       EBC = 0;
       doubleSpinBox_EBC->setToolTip(
-          trUtf8("Farbe konnte nicht berechnet werden da eine Auswahl in der "
-                 "Schüttungs-zusammenstellung\nin den Rohstoffdaten nicht mehr "
-                 "vorhanden ist"));
+          trUtf8("Farbe konnte nicht berechnet werden, da eine Auswahl in der Schüttungszusammenstellung\n"
+                 "in den Rohstoffdaten nicht mehr vorhanden ist"));
       doubleSpinBox_EBC->setPalette(paletteF);
     } else {
       doubleSpinBox_EBC->setToolTip("");
@@ -6376,7 +6369,7 @@ void MainWindowImpl::FuelleSudauswahl() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Sudauswahl->clearContents();
@@ -6498,7 +6491,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     // SudID auslesen
     sql = "SELECT last_insert_rowid();";
@@ -6508,7 +6501,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     } else {
       query.first();
       SudID = query.value(0).toInt();
@@ -6527,7 +6520,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
 
@@ -6544,7 +6537,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
     // Letzte Hopfengabe als Vorderwürzehopfung markieren
@@ -6555,7 +6548,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     } else {
       if (query.last()) {
         int FeldNr = query.record().indexOf("ID");
@@ -6567,7 +6560,7 @@ int MainWindowImpl::slot_pushButton_SudNeu() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         }
       }
     }
@@ -6605,7 +6598,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
   msgBox.setText(trUtf8("Soll der Sud >") + Sudname +
                  trUtf8("< gelöscht werden?"));
   msgBox.setInformativeText(
-      trUtf8("Achtung: dies kann nicht rückgängig gemacht werden!"));
+      trUtf8("Achtung, dies kann nicht rückgängig gemacht werden!"));
   msgBox.setIcon(QMessageBox::Warning);
   QPushButton *LoeschenButton =
       msgBox.addButton(trUtf8("Löschen"), QMessageBox::ActionRole);
@@ -6626,7 +6619,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Rasten löschen
     sql = "DELETE FROM Rasten WHERE SudID=" + SudID + ";";
@@ -6637,7 +6630,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Malzgaben löschen
     sql = "DELETE FROM Malzschuettung WHERE SudID=" + SudID + ";";
@@ -6648,7 +6641,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Hopfengaben löschen
     sql = "DELETE FROM Hopfengaben WHERE SudID=" + SudID + ";";
@@ -6659,7 +6652,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Schnellgärungsdaten löschen
     sql = "DELETE FROM Schnellgaerverlauf WHERE SudID=" + SudID + ";";
@@ -6670,7 +6663,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Hauptgärungsdaten löschen
     sql = "DELETE FROM Hauptgaerverlauf WHERE SudID=" + SudID + ";";
@@ -6681,7 +6674,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Nachgärungsdaten löschen
     sql = "DELETE FROM Nachgaerverlauf WHERE SudID=" + SudID + ";";
@@ -6692,7 +6685,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     // Alle zugehörigen Weitere Zutaten löschen
     sql = "DELETE FROM WeitereZutatenGaben WHERE SudID=" + SudID + ";";
@@ -6703,7 +6696,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // Alle zugehörigen Bewertungen löschen
@@ -6715,7 +6708,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // Alle zugehörigen Anhänge löschen
@@ -6727,7 +6720,7 @@ void MainWindowImpl::slot_pushButton_SudDel() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // Sudauswahl aktuallisieren
@@ -6807,7 +6800,7 @@ void MainWindowImpl::SchreibeRastenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_Rasten.count(); i++) {
@@ -6823,7 +6816,7 @@ void MainWindowImpl::SchreibeRastenDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -6842,7 +6835,7 @@ void MainWindowImpl::SchreibeHopfengabenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_Hopfengaben.count(); i++) {
@@ -6900,7 +6893,7 @@ void MainWindowImpl::SchreibeHopfengabenDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -6918,7 +6911,7 @@ void MainWindowImpl::SchreibeMalzschuettungDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_Malzgaben.count(); i++) {
@@ -6958,7 +6951,7 @@ void MainWindowImpl::SchreibeMalzschuettungDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -7105,7 +7098,7 @@ void MainWindowImpl::BerKosten() {
   prozent = round(kostenAnlage / summe * 100);
   str += trUtf8("Brauanlage: ") + QString::number(prozent) + "% " +
          QString::number(round(kostenAnlage * 100) / 100) + trUtf8(" €") + "\n";
-  str += trUtf8("gesamt: ") + QString::number(round(summe * 100) / 100) +
+  str += trUtf8("Gesamt: ") + QString::number(round(summe * 100) / 100) +
          trUtf8(" €") + " / " +
          QString::number(spinBox_JungbiermengeAbfuellen->value()) + " Liter";
 
@@ -7114,8 +7107,8 @@ void MainWindowImpl::BerKosten() {
     spinBox_Preis->setPalette(paletteN);
     spinBox_Preis->setValue(summe / spinBox_JungbiermengeAbfuellen->value());
   } else {
-    str += trUtf8("\n\nKosten konnten nicht berechnet werden da die Angaben im "
-                  "Rezept unvollständig\noder die Auswahl in den Rohstoffdaten "
+    str += trUtf8("\n\nKosten konnten nicht berechnet werden, da die Angaben im "
+                  "Rezept unvollständig sind\noder die Auswahl in den Rohstoffdaten "
                   "nicht mehr vorhanden ist\n\n");
     if (!Schuettung)
       str += trUtf8("Überprüfe die Malzschüttung\n");
@@ -7155,7 +7148,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Brauuebersicht->clearContents();
@@ -7217,7 +7210,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       queryN.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sqlN);
+                                      trUtf8("\nSQL-Befehl:\n") + sqlN);
       } else {
         if (queryN.first()) {
           FeldNr = queryN.record().indexOf("Zeitstempel");
@@ -7241,7 +7234,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       } else if (tage > 0) {
         int w = tageReifung / 7;
         newItem->setText(trUtf8("%1. Woche").arg(w + 1) + ", " +
-                           trUtf8("noch %1 Tage").arg(tage));
+                           trUtf8("noch %1 Tag(e)").arg(tage));
         newItem->setTextColor(QColor::fromRgb(0, 0, 0));
         if (StyleDunkel)
           newItem->setBackground(QColor::fromRgb(FARBE_BierReift_DARK));
@@ -7266,11 +7259,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(d);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 5, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Menge")) {
+      if (comboBox_AuswahlL1->currentIndex() == 0) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Menge")) {
+      if (comboBox_AuswahlL2->currentIndex() == 1) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7282,11 +7275,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(sw);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 6, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Stammwürze")) {
+      if (comboBox_AuswahlL1->currentIndex() == 2) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Stammwürze")) {
+      if (comboBox_AuswahlL2->currentIndex() == 3) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7298,11 +7291,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(sha);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 7, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Sudhausausbeute")) {
+      if (comboBox_AuswahlL1->currentIndex() == 1) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Sudhausausbeute")) {
+      if (comboBox_AuswahlL2->currentIndex() == 2) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7314,11 +7307,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(msch);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 8, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Menge Schüttung")) {
+      if (comboBox_AuswahlL1->currentIndex() == 3) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Menge Schüttung")) {
+      if (comboBox_AuswahlL2->currentIndex() == 4) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7330,11 +7323,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(kost);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 9, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Kosten/Liter")) {
+      if (comboBox_AuswahlL1->currentIndex() == 4) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Kosten/Liter")) {
+      if (comboBox_AuswahlL2->currentIndex() == 5) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7351,11 +7344,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(abv);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 11, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Alkohol")) {
+      if (comboBox_AuswahlL1->currentIndex() == 5) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Alkohol")) {
+      if (comboBox_AuswahlL2->currentIndex() == 6) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7373,11 +7366,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(evg);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 12, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Scheinbarer EVG")) {
+      if (comboBox_AuswahlL1->currentIndex() == 6) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Scheinbarer EVG")) {
+      if (comboBox_AuswahlL2->currentIndex() == 7) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7389,11 +7382,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
       newItemNum = new MyTableWidgetItemNumeric(d);
       newItemNum->setTextAlignment(Qt::AlignCenter);
       tableWidget_Brauuebersicht->setItem(i, 13, newItemNum);
-      if (comboBox_AuswahlL1->currentText() == trUtf8("Effektive Ausbeute")) {
+      if (comboBox_AuswahlL1->currentIndex() == 7) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte1);
       }
-      if (comboBox_AuswahlL2->currentText() == trUtf8("Effektive Ausbeute")) {
+      if (comboBox_AuswahlL2->currentIndex() == 8) {
         newItemNum->setTextColor(QColor::fromRgb(0, 0, 0));
         newItemNum->setBackground(ColorBrauUebersicht_Spalte2);
       }
@@ -7415,13 +7408,13 @@ void MainWindowImpl::FuelleBrauuebersicht() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         while (query.next()) {
           FeldNr = query.record().indexOf("ID");
           widget_DiaBrauUebersicht->Ids.append(query.value(FeldNr).toInt());
           // Menge
-          if (comboBox_AuswahlL1->currentText() == trUtf8("Menge")) {
+          if (comboBox_AuswahlL1->currentIndex() == 0) {
             FeldNr = query.record().indexOf("erg_AbgefuellteBiermenge");
             double d = query.value(FeldNr).toDouble();
             d = qRound(d * 100);
@@ -7431,8 +7424,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("L");
           }
           // Sudhausausbeute
-          else if (comboBox_AuswahlL1->currentText() ==
-                   trUtf8("Sudhausausbeute")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 1) {
             FeldNr = query.record().indexOf("erg_Sudhausausbeute");
             widget_DiaBrauUebersicht->L1Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7440,7 +7432,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("%");
           }
           // Stammwürze
-          else if (comboBox_AuswahlL1->currentText() == trUtf8("Stammwürze")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 2) {
             FeldNr = query.record().indexOf("SWAnstellen");
             widget_DiaBrauUebersicht->L1Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7448,8 +7440,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("°P");
           }
           // Menge Schüttung
-          else if (comboBox_AuswahlL1->currentText() ==
-                   trUtf8("Menge Schüttung")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 3) {
             FeldNr = query.record().indexOf("erg_S_Gesammt");
             widget_DiaBrauUebersicht->L1Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7457,8 +7448,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("kg");
           }
           // Kosten / Liter
-          else if (comboBox_AuswahlL1->currentText() ==
-                   trUtf8("Kosten/Liter")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 4) {
             FeldNr = query.record().indexOf("erg_Preis");
             widget_DiaBrauUebersicht->L1Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7466,16 +7456,15 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("€");
           }
           // Alkohol
-          else if (comboBox_AuswahlL1->currentText() == trUtf8("Alkohol")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 5) {
             FeldNr = query.record().indexOf("erg_Alkohol");
             widget_DiaBrauUebersicht->L1Daten.append(
                 query.value(FeldNr).toDouble());
-            widget_DiaBrauUebersicht->BezeichnungL1 = trUtf8("%vol");
+            widget_DiaBrauUebersicht->BezeichnungL1 = trUtf8("Vol.%");
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("%");
           }
           // Scheinbarer EVG
-          else if (comboBox_AuswahlL1->currentText() ==
-                   trUtf8("Scheinbarer EVG")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 6) {
             FeldNr = query.record().indexOf("SWAnstellen");
             double sw = query.value(FeldNr).toDouble();
             // wenn keine Schnellgärprobe gemacht wurde restextrakt nehmen
@@ -7493,8 +7482,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL1 = trUtf8("%");
           }
           // Effektive Ausbeute
-          else if (comboBox_AuswahlL1->currentText() ==
-                   trUtf8("Effektive Ausbeute")) {
+          else if (comboBox_AuswahlL1->currentIndex() == 7) {
             FeldNr = query.record().indexOf("erg_EffektiveAusbeute");
             double d = query.value(FeldNr).toDouble();
             d = qRound(d * 100);
@@ -7520,11 +7508,11 @@ void MainWindowImpl::FuelleBrauuebersicht() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       } else {
         while (query.next()) {
           // Menge
-          if (comboBox_AuswahlL2->currentText() == trUtf8("Menge")) {
+          if (comboBox_AuswahlL2->currentIndex() == 1) {
             FeldNr = query.record().indexOf("erg_AbgefuellteBiermenge");
             double d = query.value(FeldNr).toDouble();
             d = qRound(d * 100);
@@ -7534,8 +7522,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("L");
           }
           // Sudhausausbeute
-          else if (comboBox_AuswahlL2->currentText() ==
-                   trUtf8("Sudhausausbeute")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 2) {
             FeldNr = query.record().indexOf("erg_Sudhausausbeute");
             widget_DiaBrauUebersicht->L2Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7543,7 +7530,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("%");
           }
           // Stammwürze
-          else if (comboBox_AuswahlL2->currentText() == trUtf8("Stammwürze")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 3) {
             FeldNr = query.record().indexOf("SWAnstellen");
             widget_DiaBrauUebersicht->L2Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7551,8 +7538,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("°P");
           }
           // Menge Schüttung
-          else if (comboBox_AuswahlL2->currentText() ==
-                   trUtf8("Menge Schüttung")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 4) {
             FeldNr = query.record().indexOf("erg_S_Gesammt");
             widget_DiaBrauUebersicht->L2Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7560,8 +7546,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("kg");
           }
           // Kosten / Liter
-          else if (comboBox_AuswahlL2->currentText() ==
-                   trUtf8("Kosten/Liter")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 5) {
             FeldNr = query.record().indexOf("erg_Preis");
             widget_DiaBrauUebersicht->L2Daten.append(
                 query.value(FeldNr).toDouble());
@@ -7569,16 +7554,15 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("€");
           }
           // Alkohol
-          else if (comboBox_AuswahlL2->currentText() == trUtf8("Alkohol")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 6) {
             FeldNr = query.record().indexOf("erg_Alkohol");
             widget_DiaBrauUebersicht->L2Daten.append(
                 query.value(FeldNr).toDouble());
-            widget_DiaBrauUebersicht->BezeichnungL2 = trUtf8("vol%");
+            widget_DiaBrauUebersicht->BezeichnungL2 = trUtf8("Vol.%");
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("%");
           }
           // Scheinbarer EVG
-          else if (comboBox_AuswahlL2->currentText() ==
-                   trUtf8("Scheinbarer EVG")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 7) {
             FeldNr = query.record().indexOf("SWAnstellen");
             double sw = query.value(FeldNr).toDouble();
             // wenn keine Schnellgärprobe gemacht wurde restextrakt nehmen
@@ -7596,8 +7580,7 @@ void MainWindowImpl::FuelleBrauuebersicht() {
             widget_DiaBrauUebersicht->KurzbezeichnungL2 = trUtf8("%");
           }
           // Effektive Ausbeute
-          else if (comboBox_AuswahlL2->currentText() ==
-                   trUtf8("Effektive Ausbeute")) {
+          else if (comboBox_AuswahlL2->currentIndex() == 8) {
             FeldNr = query.record().indexOf("erg_EffektiveAusbeute");
             double d = query.value(FeldNr).toDouble();
             d = qRound(d * 100);
@@ -7667,7 +7650,7 @@ void MainWindowImpl::BerEffektiveAusbeuteMittel() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     while (query.next()) {
       i++;
@@ -7693,20 +7676,20 @@ void MainWindowImpl::FuelleGaerverlauf() {
   dateTimeEdit_Nachgaerprobe->setDateTime(QDateTime::currentDateTime());
   widget_DiaSchnellgaerverlauf->BezeichnungL1 = trUtf8("Restextrakt °P");
   widget_DiaSchnellgaerverlauf->KurzbezeichnungL1 = trUtf8("°P");
-  widget_DiaSchnellgaerverlauf->BezeichnungL2 = trUtf8("Alkoholgehalt vol%");
+  widget_DiaSchnellgaerverlauf->BezeichnungL2 = trUtf8("Alkoholgehalt Vol.%");
   widget_DiaSchnellgaerverlauf->KurzbezeichnungL2 = trUtf8("%");
   widget_DiaSchnellgaerverlauf->BezeichnungL3 = trUtf8("Temperatur °C");
   widget_DiaSchnellgaerverlauf->KurzbezeichnungL3 = trUtf8("°C");
 
   widget_DiaHauptgaerverlauf->BezeichnungL1 = trUtf8("Restextrakt °P");
   widget_DiaHauptgaerverlauf->KurzbezeichnungL1 = trUtf8("°P");
-  widget_DiaHauptgaerverlauf->BezeichnungL2 = trUtf8("Alkoholgehalt vol%");
+  widget_DiaHauptgaerverlauf->BezeichnungL2 = trUtf8("Alkoholgehalt Vol.%");
   widget_DiaHauptgaerverlauf->KurzbezeichnungL2 = trUtf8("%");
   widget_DiaHauptgaerverlauf->BezeichnungL3 = trUtf8("Temperatur °C");
   widget_DiaHauptgaerverlauf->KurzbezeichnungL3 = trUtf8("°C");
 
-  widget_DiaNachgaerverlauf->BezeichnungL1 = trUtf8("CO2 Gehalt g/L");
-  widget_DiaNachgaerverlauf->KurzbezeichnungL1 = trUtf8("g/L");
+  widget_DiaNachgaerverlauf->BezeichnungL1 = trUtf8("CO₂-Gehalt g/l");
+  widget_DiaNachgaerverlauf->KurzbezeichnungL1 = trUtf8("g/l");
   widget_DiaNachgaerverlauf->BezeichnungL2 = trUtf8("Temperatur °C");
   widget_DiaNachgaerverlauf->KurzbezeichnungL2 = trUtf8("°C");
 }
@@ -7771,7 +7754,7 @@ void MainWindowImpl::SchreibeSchnellgaerverlaufDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Tabelleninhalt schreiben
@@ -7793,7 +7776,7 @@ void MainWindowImpl::SchreibeSchnellgaerverlaufDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -7811,7 +7794,7 @@ void MainWindowImpl::LeseSchnellgaerverlaufDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Schnellgaerverlauf->clearContents();
@@ -7972,7 +7955,7 @@ void MainWindowImpl::SchreibeHauptgaerverlaufDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
 
     // Tabelleninhalt schreiben
@@ -7994,7 +7977,7 @@ void MainWindowImpl::SchreibeHauptgaerverlaufDB() {
         errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                   trUtf8("Rückgabe:\n") +
                                       query.lastError().databaseText() +
-                                      trUtf8("\nSQL Befehl:\n") + sql);
+                                      trUtf8("\nSQL-Befehl:\n") + sql);
       }
     }
     AenderungHauptgaerverlauf = false;
@@ -8014,7 +7997,7 @@ void MainWindowImpl::LeseHauptgaerverlaufDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Hauptgaerverlauf->clearContents();
@@ -8128,7 +8111,7 @@ void MainWindowImpl::on_pushButton_AddNachgaerMessung_clicked() {
   newItem2->setData(Qt::DisplayRole, druck);
   temp = doubleSpinBox_Nachgaertemp->value();
   newItem3->setData(Qt::DisplayRole, temp);
-  // CO2 Gehalt berechnen
+  // CO₂-Gehalt berechnen
   co2 = Berechnungen.BerCO2Gehalt(druck, temp);
   co2 = double(qRound(co2 * 100)) / 100;
   newItem4->setData(Qt::DisplayRole, co2);
@@ -8166,7 +8149,7 @@ void MainWindowImpl::SchreibeNachgaerverlaufDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   // Tabelleninhalt schreiben
@@ -8188,7 +8171,7 @@ void MainWindowImpl::SchreibeNachgaerverlaufDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -8206,7 +8189,7 @@ void MainWindowImpl::LeseNachgaerverlaufDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int i = 0;
     tableWidget_Nachgaerverlauf->clearContents();
@@ -8237,7 +8220,7 @@ void MainWindowImpl::LeseNachgaerverlaufDB() {
       temp = query.value(FeldNr).toDouble();
       newItem3->setData(Qt::DisplayRole, temp);
       tableWidget_Nachgaerverlauf->setItem(i, 2, newItem3);
-      // Co2 Gehalt
+      // CO₂-Gehalt
       FeldNr = query.record().indexOf("CO2");
       co2 = query.value(FeldNr).toDouble();
       newItem4->setData(Qt::DisplayRole, co2);
@@ -8931,7 +8914,7 @@ void MainWindowImpl::on_tableWidget_Hauptgaerverlauf_itemChanged(
 void MainWindowImpl::on_tableWidget_Nachgaerverlauf_itemChanged(
     QTableWidgetItem *item) {
   if (Gestartet && !AmLaden) {
-    // CO2 Gehalt dieser Zeile Neu berechnen
+    // CO₂-Gehalt dieser Zeile Neu berechnen
     int zeile;
     double druck, temp, co2;
     zeile = item->row();
@@ -8985,7 +8968,7 @@ bool MainWindowImpl::CheckDBNeuBerechnen() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   } else {
     if (!query.first()) {
@@ -8994,7 +8977,7 @@ bool MainWindowImpl::CheckDBNeuBerechnen() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
       return false;
     } else {
       NeuBerechnen = query.value(0).toInt();
@@ -9022,7 +9005,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     double effausbeute;
     double sudhausausbeute;
@@ -9064,7 +9047,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     QObject::trUtf8("Rückgabe:\n") +
                                         query2.lastError().databaseText() +
-                                        QObject::trUtf8("\nSQL Befehl:\n") +
+                                        QObject::trUtf8("\nSQL-Befehl:\n") +
                                         sql2);
         }
       }
@@ -9090,7 +9073,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     QObject::trUtf8("Rückgabe:\n") +
                                         query2.lastError().databaseText() +
-                                        QObject::trUtf8("\nSQL Befehl:\n") +
+                                        QObject::trUtf8("\nSQL-Befehl:\n") +
                                         sql2);
         }
       }
@@ -9154,7 +9137,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     QObject::trUtf8("Rückgabe:\n") +
                                         query2.lastError().databaseText() +
-                                        QObject::trUtf8("\nSQL Befehl:\n") +
+                                        QObject::trUtf8("\nSQL-Befehl:\n") +
                                         sql2);
         }
       }
@@ -9166,7 +9149,7 @@ void MainWindowImpl::DBErgebnisseNeuBerechnen() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 QObject::trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    QObject::trUtf8("\nSQL Befehl:\n") + sql);
+                                    QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
   QSqlDatabase::database().commit();
@@ -9301,7 +9284,7 @@ void MainWindowImpl::slot_ResetBierWurdeGebraut() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "UPDATE Sud SET BierWurdeAbgefuellt=0 WHERE ID=" +
         QString::number(AktuelleSudID) + ";";
@@ -9311,7 +9294,7 @@ void MainWindowImpl::slot_ResetBierWurdeGebraut() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "UPDATE Sud SET BierWurdeVerbraucht=0 WHERE ID=" +
         QString::number(AktuelleSudID) + ";";
@@ -9321,7 +9304,7 @@ void MainWindowImpl::slot_ResetBierWurdeGebraut() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   LadeSudDB(true);
 }
@@ -9336,7 +9319,7 @@ void MainWindowImpl::slot_ResetAbgefuellt() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "UPDATE Sud SET BierWurdeVerbraucht=0 WHERE ID=" +
         QString::number(AktuelleSudID) + ";";
@@ -9346,7 +9329,7 @@ void MainWindowImpl::slot_ResetAbgefuellt() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   LadeSudDB(true);
 }
@@ -9368,7 +9351,7 @@ void MainWindowImpl::slot_ResetBierVerbraucht() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   LadeSudDB(true);
 }
@@ -9434,7 +9417,7 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
   }
   s = QFileDialog::getOpenFileName(
       this, trUtf8("Suddatei öffnen"), p,
-      trUtf8("Sud Export Dateien (*.xsud);; Maische Malz und Mehr (*.json)"),
+      trUtf8("Sud Export Dateien (*.xsud);; Maische, Malz und Mehr (*.json)"),
       0);
   if (!s.isEmpty()) {
     QFileInfo fileinfo(s);
@@ -9507,7 +9490,7 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
       LeseRohstoffeDB();
       AenderungRohstofftabelle = true;
       Gestartet = true;
-      QMessageBox::information(this, "", trUtf8("Sud wurde Importiert"));
+      QMessageBox::information(this, "", trUtf8("Sud wurde importiert"));
     }
   }
 }
@@ -9722,7 +9705,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     QString letzeAuswahl;
     QString sudid;
@@ -9742,7 +9725,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql2);
+                                        trUtf8("\nSQL-Befehl:\n") + sql2);
         } else {
           if ((ok) && (query2.first())) {
             // Dialog mit Rohstoffauswahl zum Austauschen des zu löschenden
@@ -9752,8 +9735,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
             // Text für Dialog erstellen
             QString text =
                 trUtf8("Der Rohstoff <b>") + del_name +
-                trUtf8("</b> den Du löschen möchtest, wird in den Weiteren "
-                       "Zutaten in dem noch nicht gebrauten Sud <b>");
+                trUtf8("</b> den Du löschen möchtest, wird in den \"Weitere Zutaten\" in dem noch nicht gebrauten Sud <b>");
             int FeldNr = query.record().indexOf("Sudname");
             text += query.value(FeldNr).toString() +
                     "</b> verwendet.\n\nSoll dieser Eintrag mit der folgenden "
@@ -9784,7 +9766,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
                 errorMessage->showMessage(
                     ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                     trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                        trUtf8("\nSQL Befehl:\n") + sql);
+                        trUtf8("\nSQL-Befehl:\n") + sql);
               } else {
                 // Bit setzen das dieser Sud neu Berechnet werden muss da die
                 // Berechneten wert nun nicht mehr stimmen.
@@ -9795,7 +9777,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
                   errorMessage->showMessage(
                       ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                       trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                          trUtf8("\nSQL Befehl:\n") + sql2);
+                          trUtf8("\nSQL-Befehl:\n") + sql2);
                 }
               }
             }
@@ -10110,7 +10092,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_EwZutat.count(); i++) {
@@ -10140,7 +10122,7 @@ void MainWindowImpl::SchreibeErweiterteZutatenDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
@@ -10314,7 +10296,7 @@ void MainWindowImpl::BerWeitereZutaten() {
     sw_kochen = sw_schuettung + sw_ewz_kochen;
   }
 
-  // Stammwürze beim Kochen mit High Gravity Faktor verrechnen
+  // Stammwürze beim Kochen mit High-Gravity-Faktor verrechnen
   sw_kochen = sw_kochen * highGravityFaktor;
 }
 
@@ -10488,7 +10470,7 @@ void MainWindowImpl::on_pushButton_BewertungNeu_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   queryN.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sqlN);
+                                  trUtf8("\nSQL-Befehl:\n") + sqlN);
   } else {
     if (queryN.first()) {
       int FeldNr = queryN.record().indexOf("Zeitstempel");
@@ -11397,7 +11379,7 @@ void MainWindowImpl::on_tableWidget_Malz_cellChanged(int row, int column) {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           // Sud Speichern da der geladene vielleicht geändert wird
           save();
@@ -11417,7 +11399,7 @@ void MainWindowImpl::on_tableWidget_Malz_cellChanged(int row, int column) {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             }
           }
           // Sud wieder laden da er evetuell geändert wurde.
@@ -11473,7 +11455,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_cellChanged(int row, int column) {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           // Sud Speichern da der geladene vielleicht geändert wird
           save();
@@ -11493,7 +11475,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_cellChanged(int row, int column) {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             }
             sql2 = "UPDATE WeitereZutatenGaben SET Name='" +
                    newItem->text().replace("'", "''") + "' WHERE Name='" +
@@ -11505,7 +11487,7 @@ void MainWindowImpl::on_tableWidget_Hopfen_cellChanged(int row, int column) {
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             }
           }
           // Sud wieder laden da er evetuell geändert wurde.
@@ -11563,7 +11545,7 @@ void MainWindowImpl::on_tableWidget_Hefe_cellChanged(int row, int column) {
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           // Sud wieder laden da er evetuell geändert wurde.
           LadeSudDB(false);
@@ -11616,7 +11598,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellChanged(int row,
           errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                     trUtf8("Rückgabe:\n") +
                                         query.lastError().databaseText() +
-                                        trUtf8("\nSQL Befehl:\n") + sql);
+                                        trUtf8("\nSQL-Befehl:\n") + sql);
         } else {
           // Sud Speichern da der geladene vielleicht geändert wird
           save();
@@ -11636,7 +11618,7 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellChanged(int row,
               errorMessage->showMessage(
                   ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                   trUtf8("Rückgabe:\n") + query.lastError().databaseText() +
-                      trUtf8("\nSQL Befehl:\n") + sql2);
+                      trUtf8("\nSQL-Befehl:\n") + sql2);
             }
           }
           // Sud wieder laden da er evetuell geändert wurde.
@@ -12078,7 +12060,7 @@ void MainWindowImpl::on_hSlider_dAusbeuteSude_valueChanged(int) {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     while (query.next()) {
       i++;
@@ -12105,7 +12087,7 @@ void MainWindowImpl::setButtonsTextMerken() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     int anzahl = 0;
     while (query.next()) {
@@ -12131,7 +12113,7 @@ void MainWindowImpl::on_pushButton_merken_clicked() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     setButtonsTextMerken();
     FuelleSudauswahl();
@@ -12152,7 +12134,7 @@ void MainWindowImpl::on_pushButton_vergessen_clicked() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
     setButtonsTextMerken();
     FuelleSudauswahl();
@@ -12169,7 +12151,7 @@ void MainWindowImpl::on_pushButton_alleVergessen_clicked() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
   setButtonsTextMerken();
   FuelleSudauswahl();
@@ -12289,8 +12271,8 @@ void MainWindowImpl::on_tableWidget_WeitereZutaten_cellClicked(int row,
 }
 
 void MainWindowImpl::on_pushButton_CO2_Info_clicked() {
-  DialogInfo::Info(this, trUtf8("CO2 Gehalt"),
-                   trUtf8("<b>Typischer CO2 Gehalt in g/Liter:</b></br><table>\
+  DialogInfo::Info(this, trUtf8("CO₂-Gehalt"),
+                   trUtf8("<b>Typischer CO₂-Gehalt in g/l:</b></br><table>\
                                                       <tr><td>Lager, Pilsner </td><td>4,00 - 5,50</td></tr>\
                                                       <tr><td>Weizenbier </td><td>6,50 - 9,00</td></tr>\
                                                       <tr><td>Britische Ales </td><td>3,00 - 4,00</td></tr>\
@@ -12304,7 +12286,7 @@ void MainWindowImpl::on_pushButton_CO2_Info_clicked() {
 void MainWindowImpl::on_pushButton_IBU_Info_clicked() {
   DialogInfo::Info(this, trUtf8("Bittere"),
                    trUtf8("<b>Typische Bitterwerte in IBU:</b></br><table>\
-                                                   <tr><td>Weissbier </td><td>10-15</td></tr>\
+                                                   <tr><td>Weißbier </td><td>10-15</td></tr>\
                                                    <tr><td>Märzen </td><td>18 - 28</td></tr>\
                                                    <tr><td>Export </td><td>23 - 29</td></tr>\
                                                    <tr><td>Kölsch </td><td>20 - 34</td></tr>\
@@ -12327,14 +12309,14 @@ void MainWindowImpl::on_pushButton_SW_Info_clicked() {
                                                       <tr><td>Pilsener </td><td>11,3–12,3</td></tr>\
                                                       <tr><td>Weizenbier </td><td>11–13</td></tr>\
                                                       <tr><td>Helles </td><td>11–13</td></tr>\
-                                                      <tr><td>Berliner Weisse </td><td>7–8</td></tr>\
+                                                      <tr><td>Berliner Weiße </td><td>7–8</td></tr>\
                                                       </table>"));
 }
 
 void MainWindowImpl::on_pushButton_High_Gravity_Info_clicked() {
-  DialogInfo::Info(this, trUtf8("High Gravity Faktor"),
-                   trUtf8("Mit High Gravity kann die Ausschlagmenge \
-                                                               erhöht werden (wenn die Sudpfanne an ihre Grenze kommt) indem stärker \
+  DialogInfo::Info(this, trUtf8("High-Gravity-Faktor"),
+                   trUtf8("Mit High-Gravity kann die Ausschlagmenge \
+                                                               erhöht werden (wenn die Sudpfanne an ihre Grenze kommt), indem stärker \
                                                                eingebraut wird und dann vor der Hefezugabe wieder auf die gewünschte \
                                                                Stammwürze verdünnt wird."));
 }
@@ -12395,7 +12377,7 @@ void MainWindowImpl::LeseAnhangDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query_anhang.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   } else {
     // Erstmal Anhangliste leeren
     while (list_Anhang.count() > 0) {
@@ -12420,7 +12402,7 @@ void MainWindowImpl::SchreibeAnhangDB() {
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   for (int i = 0; i < list_Anhang.count(); i++) {
@@ -12433,7 +12415,7 @@ void MainWindowImpl::SchreibeAnhangDB() {
       errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
-                                    trUtf8("\nSQL Befehl:\n") + sql);
+                                    trUtf8("\nSQL-Befehl:\n") + sql);
     }
   }
 }
