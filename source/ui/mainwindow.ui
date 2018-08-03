@@ -1360,10 +1360,10 @@
                       </size>
                      </property>
                      <property name="minimum">
-                      <number>30</number>
+                      <number>1</number>
                      </property>
                      <property name="maximum">
-                      <number>120</number>
+                      <number>999</number>
                      </property>
                     </widget>
                    </item>
@@ -3050,8 +3050,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>360</width>
-               <height>388</height>
+               <width>349</width>
+               <height>367</height>
               </rect>
              </property>
              <property name="sizePolicy">
