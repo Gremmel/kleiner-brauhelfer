@@ -3201,7 +3201,25 @@ void QExport::convertJSON(QString json, QString xsud)
     xml += root["Kochzeit_Wuerze"].toString();
     xml += "</KochdauerNachBitterhopfung>";
 
-    xml += "<!--Faktor zum Berechnen der Hauptgussmenge (Schuettung * Faktor = Hauptgussmenge)--><FaktorHauptguss Einheit=\"Faktor\">0.8</FaktorHauptguss>";
+    int max_schuettung = findMax(root,"Malz%%");
+
+    float gesamt_schuettung = 0.0f;
+
+    for (int i = 1; i < max_schuettung; ++i) {
+        float kg = 0.0f;
+        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
+            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
+        } else {
+             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
+        }
+        gesamt_schuettung += kg;
+    }
+    float hauptguss = (float)root["Infusion_Hauptguss"].toDouble();
+    float hauptgussfaktor = hauptguss/gesamt_schuettung;
+
+    xml += "<!--Faktor zum Berechnen der Hauptgussmenge (Schuettung * Faktor = Hauptgussmenge)--><FaktorHauptguss Einheit=\"Faktor\">";
+    xml += QString::number(hauptgussfaktor);
+    xml += "</FaktorHauptguss>";
 
     xml += "<!--Name der Ausgewaehlten Hefe--><AuswahlHefe Einheit=\"Text\">";
     xml += root["Hefe"].toString();
@@ -3291,20 +3309,6 @@ void QExport::convertJSON(QString json, QString xsud)
 
     // save for later use
     QSet< QPair<QString,QString> > malze;
-
-    int max_schuettung = findMax(root,"Malz%%");
-
-    float gesamt_schuettung = 0.0f;
-
-    for (int i = 1; i < max_schuettung; ++i) {
-        float kg = 0.0f;
-        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
-            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
-        } else {
-             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
-        }
-        gesamt_schuettung += kg;
-    }
 
     for (int i = 1; i < max_schuettung; ++i) {
         xml += QString("<Anteil_%1>").arg(i);
