@@ -377,14 +377,14 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       }
       //Kilogramm
       if (einheit == EWZ_Einheit_Kg){
-        label_Mengeneinheit -> setText("g/L");
+        label_Mengeneinheit -> setText("g/l");
         ergWidget -> label_Einheit -> setText("kg");
         ergWidget -> label_Einheit2 -> setText("kg");
         ergWidget -> spinBox_Wert -> setDecimals(3);
       }
       //Gramm
       else if (einheit == EWZ_Einheit_g){
-        label_Mengeneinheit -> setText("g/L");
+        label_Mengeneinheit -> setText("g/l");
         ergWidget -> label_Einheit -> setText("g");
         ergWidget -> label_Einheit2 -> setText("g");
         ergWidget -> spinBox_Wert -> setDecimals(0);
@@ -395,7 +395,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       typ = EWZ_Typ_Hopfen;
       pixmapTyp.load(":/ewz/ewz_typ_100.svg");
       label_Icon -> setPixmap(pixmapTyp);
-      label_Mengeneinheit -> setText("g/L");
+      label_Mengeneinheit -> setText("g/l");
       ergWidget -> label_Einheit -> setText("g");
       ergWidget -> label_Einheit2 -> setText("g");
       ergWidget -> spinBox_Wert -> setDecimals(1);
@@ -411,7 +411,7 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
     ZugabezeitpunktListe.append(trUtf8("bei der Gärung"));
     // Alles ausser Hopfen
     if (typ == EWZ_Typ_Honig || typ == EWZ_Typ_Zucker){
-      ZugabezeitpunktListe.append(trUtf8("bei Kochbegin"));
+      ZugabezeitpunktListe.append(trUtf8("bei Kochbeginn"));
       ZugabezeitpunktListe.append(trUtf8("beim Maischen"));
     }
     else if (typ < EWZ_Typ_Hopfen){
@@ -519,7 +519,7 @@ void ErweiterteZutatImpl::setName(QString Name)
       raDia.setButtonCancelVisible(false);
 
       //Text für Dialog erstellen
-      QString text = trUtf8("Rohstoffeintrag in den Weiteren Zutaten ist nicht mehr vorhanden") + " <br><b>" + Name + "</b> ";
+      QString text = trUtf8("Rohstoffeintrag in \"Weitere Zutaten\" ist nicht mehr vorhanden") + " <br><b>" + Name + "</b> ";
       text += "<br>Bitte einen Ersatz auswählen?";
       raDia.SetText(text);
       //Auswahl für Ersetzung füllen

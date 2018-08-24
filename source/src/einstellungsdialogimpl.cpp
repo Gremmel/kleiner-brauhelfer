@@ -502,7 +502,7 @@ void EinstellungsdialogImpl::SchreibeKonfigDB()
     //Abfrage ob Datenbank zu dem Neuen Pfad verschoben werden soll
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, trUtf8("Datenbank verschieben?"),
-              trUtf8("Der Datenbankpfad wurde geändert!\nSoll die Datenbank an den neuen Ort Kopiert werden?\n\nDer kleine-brauhelfer wird nach dem Kopieren beendet und muss neu gestartet werden."),
+              trUtf8("Der Datenbankpfad wurde geändert!\nSoll die Datenbank an den neuen Ort kopiert werden?\n\nDas Programm wird nach dem Kopieren beendet und muss neu gestartet werden."),
               QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes){
       //Datenbank wird an den Neuen Ort verschoben

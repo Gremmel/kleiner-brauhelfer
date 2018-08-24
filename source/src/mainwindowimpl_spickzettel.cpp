@@ -92,11 +92,11 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "<p>" + trUtf8("°P") + "</p>";
   s += "</td>";
   s += "</tr>";
-  //High Gravity Faktor
+  //High-Gravity-Faktor
   if (spinBox_High_Gravity->value() > 0) {
     s += "<tr style=''>";
     s += "<td>";
-    s += "<p>" + trUtf8("High Gravity Faktor") + "</p>";
+    s += "<p>" + trUtf8("High-Gravity-Faktor") + "</p>";
     s += "</td>";
     s += "<td align='right'>";
     s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
@@ -121,7 +121,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Nachisomerisierungs-zeit
   s += "<tr style=''>";
   s += "<td>";
-  s += "<p>" + trUtf8("Nachisomerisierungs-Zeit") + "</p>";
+  s += "<p>" + trUtf8("Nachisomerisierungszeit") + "</p>";
   s += "</td>";
   s += "<td align='right'>";
   s += "<p class='value'>" + QString::number(spinBox_NachisomerisierungsZeit -> value()) + "</p>";
@@ -142,16 +142,16 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "<p>" + trUtf8("EBC") + "</p>";
   s += "</td>";
   s += "</tr>";
-  //CO2 Gehalt
+  //CO₂-Gehalt
   s += "<tr style=''>";
   s += "<td>";
-  s += "<p>" + trUtf8("CO2 Gehalt") + "</p>";
+  s += "<p>" + trUtf8("CO₂-Gehalt") + "</p>";
   s += "</td>";
   s += "<td align='right'>";
   s += "<p class='value'>" + QString::number(doubleSpinBox_CO2 -> value()) + "</p>";
   s += "</td>";
   s += "<td>";
-  s += "<p>" + trUtf8("g/Liter") + "</p>";
+  s += "<p>" + trUtf8("g/l") + "</p>";
   s += "</td>";
   s += "</tr>";
   //Brauanlage
@@ -210,7 +210,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   }
   //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
   else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
+    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.")+"</div>";
   }
   //Gesamt
   s += "<tr style=''>";
@@ -273,7 +273,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   }
   //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
   else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfenhaben konnten nicht richtig berechnet werden da die aufteilung nicht 100% entspricht!")+"</div>";
+    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfengaben konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.")+"</div>";
   }
   //Hopfengaben in den Weiteren Zutaten
   for (int i=0; i < list_EwZutat.count(); i++){
@@ -661,14 +661,14 @@ void MainWindowImpl::ErstelleSpickzettel()
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   else {
     int zaehler = 0;
     if (query.first()) {
       s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
       s += "<p><b>";
-      s += trUtf8("benötigte Gerätschaften");
+      s += trUtf8("Benötigte Gerätschaften");
       s += "</b></p>";
       s += "<table cellspacing=0 border=0><tbody>";
       if (zaehler == 0)
@@ -816,7 +816,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Vorderwürze Klarlaufen lassen
   s += "<tr>";
   s += "<td class='r' align=center colspan=2><p>";
-  s += trUtf8("Nach etwa 10 - 20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.");
+  s += trUtf8("Nach etwa 10-20 min Wartezeit solange Vorderwürze ablaufen lassen und wieder zurück in den Läutereimer schütten, bis Würze klar läuft.");
   s += "</p></td>";
   s += "</tr>";
 
@@ -826,7 +826,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += trUtf8("Läutern");
   s += "</p></td>";
   s += "<td class='' align=center><p>";
-  s += trUtf8("Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!!), bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.");
+  s += trUtf8("Würze langsam ablaufen lassen (Treber darf nicht trockenlaufen!). Bevor Treber trockenläuft immer etwas (ca. 2-3 Liter) Nachguss über Schaumlöffel nachgießen.");
   s += "</p></td>";
   s += "</tr>";
 
@@ -971,7 +971,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += trUtf8("Whirlpool");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
-  s += trUtf8("Kocher abschalten, wenn thermische Bewegung abgeflaut ist einen Whirlpool erzeugen");
+  s += trUtf8("Kocher abschalten. Wenn thermische Bewegung abgeflaut ist, einen Whirlpool erzeugen");
   s += "</p></td>";
   s += "</tr>";
   //Warten bis Trubkegel gebildet wurde
@@ -989,7 +989,7 @@ void MainWindowImpl::ErstelleSpickzettel()
 
   s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
   s += "<p><b>";
-  s += trUtf8("Abseihen / Anstellen");
+  s += trUtf8("Abseihen &amp; Anstellen");
   s += "</b></p>";
   s += "<table cellspacing=0 border=0 width='90%'><tbody>";
 
@@ -1006,7 +1006,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Würzemenge nach Kochende Eintragen
   s += "<tr>";
   s += "<td class='we' align=center><p>";
-  s += trUtf8("Würzemenge Eintragen");
+  s += trUtf8("Würzemenge eintragen");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
   s += trUtf8("Die Würzemenge ermitteln und im Tab (Brau & Gärdaten) in das Eingabefeld (Würzemenge nach dem Hopfenseihen) eintragen");
@@ -1016,7 +1016,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Stammwürze nach Kochende Eintragen
   s += "<tr>";
   s += "<td class='we' align=center><p>";
-  s += trUtf8("Stammwürze Eintragen");
+  s += trUtf8("Stammwürze eintragen");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
   s += trUtf8("Die Stammwürze messen und im Tab (Brau & Gärdaten) in das Eingabefeld (Stammwürze nach dem Hopfenseihen) eintragen");
@@ -1029,7 +1029,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += trUtf8("Verdünnen");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
-  s += trUtf8("Wenn gewünscht die Würze mit der berechneten Menge Wasser auf Sollstammwürze verdünnen");
+  s += trUtf8("Wenn gewünscht, die Würze mit der berechneten Menge Wasser auf Sollstammwürze verdünnen");
   s += "</p></td>";
   s += "</tr>";
 
@@ -1058,7 +1058,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Würzemenge beim Anstellen Eintragen
   s += "<tr>";
   s += "<td class='we' align=center><p>";
-  s += trUtf8("Würzemenge Eintragen");
+  s += trUtf8("Würzemenge eintragen");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
   s += trUtf8("Die Würzemenge ermitteln und im Tab (Brau & Gärdaten) in das Eingabefeld (Würzemenge beim Anstellen) eintragen");
@@ -1068,7 +1068,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   //Stammwürze beim Anstellen Eintragen
   s += "<tr>";
   s += "<td class='we' align=center><p>";
-  s += trUtf8("Stammwürze Eintragen");
+  s += trUtf8("Stammwürze eintragen");
   s += "</p></td>";
   s += "<td class='r' align=center><p>";
   s += trUtf8("Die Stammwürze messen und im Tab (Brau & Gärdaten) in das Eingabefeld (Stammwürze beim Anstellen) eintragen");

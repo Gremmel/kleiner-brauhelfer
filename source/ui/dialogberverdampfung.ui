@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Menge Pfanne Voll (Kochbeginn)</string>
+      <string>Menge Pfanne voll (Kochbeginn)</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -25,7 +25,7 @@
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Füllhöhe von Oberkannte aus gemessen</string>
+           <string>Füllhöhe von Oberkante aus gemessen</string>
           </property>
          </widget>
         </item>
@@ -211,7 +211,7 @@
         <item>
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Füllhöhe von Oberkannte aus gemessen</string>
+           <string>Füllhöhe von Oberkante aus gemessen</string>
           </property>
          </widget>
         </item>

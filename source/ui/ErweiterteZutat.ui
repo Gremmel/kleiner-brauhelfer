@@ -253,7 +253,7 @@
         <item>
          <widget class="QPushButton" name="buttonZugeben">
           <property name="toolTip">
-           <string>Zutat als hinzugegeben Markieren</string>
+           <string>Zutat als hinzugegeben markieren</string>
           </property>
           <property name="statusTip">
            <string/>
@@ -282,7 +282,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Festlegen ob Zutat wieder entnommen werden soll</string>
+           <string>Festlegen, ob Zutat wieder entnommen werden soll</string>
           </property>
           <property name="statusTip">
            <string/>
@@ -325,7 +325,7 @@
         <item>
          <widget class="QPushButton" name="buttonEntnehmen">
           <property name="toolTip">
-           <string>Zutat als Entnommen Markieren</string>
+           <string>Zutat als entnommen markieren</string>
           </property>
           <property name="statusTip">
            <string/>

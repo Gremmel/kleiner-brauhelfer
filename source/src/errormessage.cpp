@@ -56,7 +56,7 @@ QString ErrorMessage::getErrorText(int number) {
 	QString errorText = "";
 	switch (number) {
 		case ERR_SQL_DB_USER_KOPIE:
-			errorText = trUtf8("Vorlagendatenbank konnte nicht Kopiert werden");
+			errorText = trUtf8("Vorlagendatenbank konnte nicht kopiert werden");
 			break;
 		case ERR_SQL_DB_VORLAGE:
 			errorText = trUtf8("Vorlagendatenbank ist nicht vorhanden");
@@ -68,7 +68,7 @@ QString ErrorMessage::getErrorText(int number) {
 			errorText = trUtf8("Kann Datenbank nicht öffnen");
 			break;
 		case ERR_DB_KOPIE_NEU_ORT:
-			errorText = trUtf8("Kann Datenbank nicht an neuen Ort Kopieren, wahrscheinlich keine ausreichende Berechtigung oder es ist schon eine Datenbankdatei vorhanden.\nDer Pfad wird nicht geändert");
+			errorText = trUtf8("Kann Datenbank nicht an neuen Ort kopieren. Wahrscheinlich keine ausreichende Berechtigung oder es ist schon eine Datenbankdatei vorhanden.\nDer Pfad wird nicht geändert");
 			break;
 		case ERR_DB_DEL_ALT:
 			errorText = trUtf8("Kann Datenbank am alten Platz nicht löschen, Die Datei sollte von Hand entfernt werden.");
@@ -77,13 +77,13 @@ QString ErrorMessage::getErrorText(int number) {
 			errorText = trUtf8("Kann Version der Datenbank nicht abfragen");
 			break;
 		case ERR_SQL_DB_PROG_VERALTET:
-			errorText = trUtf8("Die Datenbank-version ist neuer als das Programm lesen kann. Das Programm muss upgedatet werden.");
+			errorText = trUtf8("Die Datenbankversion ist zu neu für das Programm. Das Programm muss upgedatet werden.");
 			break;
 		case ERR_SQL_DB_ABFRAGE:
-			errorText = trUtf8("Fehler bei SQL Abfrage");
+			errorText = trUtf8("Fehler bei SQL-Abfrage");
 			break;
 		case ERR_VERSION_SUD_V1:
-			errorText = trUtf8("Sud Dateien der Version 1 können leider nicht Importiert werden. Bitte Speichern Sie die Suddaten vorher noch mit der Vorgängerversion (0.9.4.2) vom kleinen-brauhelfer ab.");
+			errorText = trUtf8("Dateien der Sude in Version 1 können leider nicht importiert werden. Bitte speichern Sie die Suddaten vorher noch mit der Vorgängerversion (0.9.4.2) ab.");
 			break;
 		case ERR_SQL_DB_UPDATE_V1_V2:
 			errorText = trUtf8("Konnte Datenbank nicht von Version 1 auf Version 2 updaten");
@@ -143,7 +143,7 @@ QString ErrorMessage::getErrorText(int number) {
       errorText = trUtf8("Konnte Datenbank nicht von Version 19 auf Version 20 updaten");
       break;
     case ERR_VERSION_UNBEKANNT:
-			errorText = trUtf8("Die Datei ist keine gültige Sud Datei");
+			errorText = trUtf8("Die Datei ist keine gültige Suddatei");
 			break;
 		case ERR_XML_OPEN:
 			errorText = trUtf8("Die Datei konnte nicht geöffnet werden");
@@ -164,7 +164,7 @@ QString ErrorMessage::getErrorText(int number) {
 			errorText = trUtf8("Die Vorlagendatei für die Rohstoffe konnte nicht kopiert werden.");
 			break;
 		case ERR_DB_PFAD_NIO:
-			errorText = trUtf8("Kann Datenbankpfad nicht mehr finden! Der Pfad wird auf den Defaultpfad umgestellt und die Vorlagendatenbank angelegt.\nBitte den Pfad zur Datenbankdatei in dein Einstellungen korrigieren.");
+			errorText = trUtf8("Kann Datenbankpfad nicht mehr finden! Der Pfad wird auf den Standardpfad umgestellt und die Vorlagendatenbank angelegt.\nBitte den Pfad zur Datenbankdatei in dein Einstellungen korrigieren.");
 			break;
 
 

@@ -28,28 +28,28 @@ void CheckDB(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "DELETE FROM 'Hopfen' WHERE Beschreibung = \"\"";
   if (!query.exec(sql)) {
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "DELETE FROM 'Hefe' WHERE Beschreibung = \"\"";
   if (!query.exec(sql)) {
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
   }
   sql = "DELETE FROM 'WeitereZutaten' WHERE Beschreibung = \"\"";
   if (!query.exec(sql)) {
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
   }
 
   QSqlDatabase::database().commit();
@@ -140,7 +140,7 @@ static bool UpdateDB_v1_v2(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Tabelle für Hauptgärverlauf hinzufügen
@@ -149,7 +149,7 @@ static bool UpdateDB_v1_v2(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Tabelle für Nachgärverlauf hinzufügen
@@ -158,7 +158,7 @@ static bool UpdateDB_v1_v2(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Versionsstand auf 2 setzen
@@ -167,7 +167,7 @@ static bool UpdateDB_v1_v2(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -183,7 +183,7 @@ static bool UpdateDB_v2_v3(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Versionsstand auf 3 setzen
@@ -192,7 +192,7 @@ static bool UpdateDB_v2_v3(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -208,7 +208,7 @@ static bool UpdateDB_v3_v4(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Versionsstand auf 4 setzen
@@ -217,7 +217,7 @@ static bool UpdateDB_v3_v4(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -233,7 +233,7 @@ static bool UpdateDB_v4_v5(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Versionsstand auf 5 setzen
@@ -242,7 +242,7 @@ static bool UpdateDB_v4_v5(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -258,7 +258,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -268,7 +268,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -278,7 +278,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -288,7 +288,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag Durchmesser Maischebottich Hinzufügen
@@ -297,7 +297,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag Maximale Füllhöge Maischebottich Hinzufügen
@@ -306,7 +306,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -316,7 +316,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag Durchmesser Sudpfanne Hinzufügen
@@ -325,7 +325,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag Maximale Füllhöge Sudpfanne Hinzufügen
@@ -334,7 +334,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -344,7 +344,7 @@ static bool UpdateDB_v5_v6(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -360,7 +360,7 @@ static bool UpdateDB_v6_v7(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag für Flag das DB Ergebnisse Neu Berechnet werden müssen
@@ -369,7 +369,7 @@ static bool UpdateDB_v6_v7(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Flag setzen das DB neu Berechnet werden muss
@@ -378,7 +378,7 @@ static bool UpdateDB_v6_v7(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -388,7 +388,7 @@ static bool UpdateDB_v6_v7(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -405,7 +405,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -415,7 +415,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -425,7 +425,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -435,7 +435,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("UPDATE 'Rastauswahl' SET 'Text' ='Gummirast (35°-40°)' WHERE ID=2");
@@ -443,7 +443,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("UPDATE 'Rastauswahl' SET 'Text' ='Weizenrast (45°)' WHERE ID=3");
@@ -451,7 +451,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("UPDATE 'Rastauswahl' SET 'Text' ='Eiweißrast (57°)' WHERE ID=4");
@@ -459,7 +459,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("UPDATE 'Rastauswahl' SET 'Text' ='Maltoserast (60°-65°)' WHERE ID=5");
@@ -467,7 +467,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("UPDATE 'Rastauswahl' SET 'Text' ='Kombirast (66°-69°)' WHERE ID=6");
@@ -475,7 +475,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("INSERT INTO 'Rastauswahl'  ('Text') VALUES ('Verzuckerung (70°-75°)')");
@@ -483,7 +483,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   sql = QObject::trUtf8("INSERT INTO 'Rastauswahl'  ('Text') VALUES ('Abmaischen (78°)')");
@@ -491,7 +491,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Eintrag vorderwürzerast in Hopfengaben hinzufügen
@@ -500,7 +500,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -512,7 +512,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   else {
@@ -540,7 +540,7 @@ static bool UpdateDB_v7_v8(){
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
         return false;
       }
       else {
@@ -565,7 +565,7 @@ static bool UpdateDB_v7_v8(){
             ErrorMessage *errorMessage = new ErrorMessage();
             errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
               CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-              + QObject::trUtf8("\nSQL Befehl:\n") + sql3);
+              + QObject::trUtf8("\nSQL-Befehl:\n") + sql3);
             return false;
           }
           i++;
@@ -580,7 +580,7 @@ static bool UpdateDB_v7_v8(){
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql3);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql3);
         return false;
       }
     }
@@ -592,7 +592,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   while (query.next()){
@@ -602,7 +602,7 @@ static bool UpdateDB_v7_v8(){
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       return false;
     }
   }
@@ -613,7 +613,7 @@ static bool UpdateDB_v7_v8(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -632,7 +632,7 @@ static bool UpdateDB_v8_v9(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   while (query.next()){
@@ -644,7 +644,7 @@ static bool UpdateDB_v8_v9(){
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     }
     else {
       if (!query2.first()){
@@ -655,7 +655,7 @@ static bool UpdateDB_v8_v9(){
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
             CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-            + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+            + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
         }
         else {
           if (query2.last()){
@@ -667,7 +667,7 @@ static bool UpdateDB_v8_v9(){
               ErrorMessage *errorMessage = new ErrorMessage();
               errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                 CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-                + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+                + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
             }
           }
         }
@@ -681,7 +681,7 @@ static bool UpdateDB_v8_v9(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   QSqlDatabase::database().commit();
@@ -700,7 +700,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -711,7 +711,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //WaldHonig
@@ -720,7 +720,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Ingwer
@@ -729,7 +729,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Orangenschalen
@@ -738,7 +738,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Zuckercouleur
@@ -747,7 +747,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -768,7 +768,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -778,7 +778,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -788,7 +788,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -799,7 +799,7 @@ static bool UpdateDB_v9_v10(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -820,7 +820,7 @@ static bool UpdateDB_v10_v11(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -830,7 +830,7 @@ static bool UpdateDB_v10_v11(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -840,7 +840,7 @@ static bool UpdateDB_v10_v11(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -861,7 +861,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -871,7 +871,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -881,7 +881,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   while (query.next()){
@@ -893,7 +893,7 @@ static bool UpdateDB_v11_v12(){
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
     }
     if (!query2.first()){
       sql2 = "DELETE FROM Hauptgaerverlauf WHERE ID=" + query.value(0).toString();
@@ -902,7 +902,7 @@ static bool UpdateDB_v11_v12(){
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
       }
     }
   }
@@ -913,7 +913,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   while (query.next()){
@@ -925,7 +925,7 @@ static bool UpdateDB_v11_v12(){
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
     }
     if (!query2.first()){
       sql2 = "DELETE FROM Schnellgaerverlauf WHERE ID=" + query.value(0).toString();
@@ -934,7 +934,7 @@ static bool UpdateDB_v11_v12(){
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
       }
     }
   }
@@ -945,7 +945,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   while (query.next()){
@@ -957,7 +957,7 @@ static bool UpdateDB_v11_v12(){
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
     }
     if (!query2.first()){
       sql2 = "DELETE FROM Nachgaerverlauf WHERE ID=" + query.value(0).toString();
@@ -966,7 +966,7 @@ static bool UpdateDB_v11_v12(){
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query2.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql2);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql2);
       }
     }
   }
@@ -977,7 +977,7 @@ static bool UpdateDB_v11_v12(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -998,7 +998,7 @@ static bool UpdateDB_v12_v13(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1008,7 +1008,7 @@ static bool UpdateDB_v12_v13(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1018,7 +1018,7 @@ static bool UpdateDB_v12_v13(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1039,7 +1039,7 @@ static bool UpdateDB_v13_v14(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
   //Tabelle für die Bewertungen
@@ -1070,7 +1070,7 @@ static bool UpdateDB_v13_v14(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1080,7 +1080,7 @@ static bool UpdateDB_v13_v14(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1101,7 +1101,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1111,7 +1111,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1121,7 +1121,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1131,7 +1131,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1141,7 +1141,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1151,7 +1151,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1161,7 +1161,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1171,7 +1171,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1181,7 +1181,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1193,7 +1193,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1203,7 +1203,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1213,7 +1213,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1223,7 +1223,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1233,7 +1233,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1243,7 +1243,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1253,7 +1253,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1263,7 +1263,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1273,7 +1273,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1283,7 +1283,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1293,7 +1293,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1303,7 +1303,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1313,7 +1313,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1323,7 +1323,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1334,7 +1334,7 @@ static bool UpdateDB_v14_v15(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1355,7 +1355,7 @@ static bool UpdateDB_v15_v16(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1367,7 +1367,7 @@ static bool UpdateDB_v15_v16(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1377,7 +1377,7 @@ static bool UpdateDB_v15_v16(){
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
       CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-      + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+      + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
     return false;
   }
 
@@ -1493,7 +1493,7 @@ static bool ErstelleVerbindung() {
 //		ErrorMessage *errorMessage = new ErrorMessage();
 //		errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
 //			CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-//			+ QObject::trUtf8("\nSQL Befehl:\n") + "VACUUM");
+//			+ QObject::trUtf8("\nSQL-Befehl:\n") + "VACUUM");
 //	}
 
   //Überprüfungen Druchführen
@@ -2460,13 +2460,13 @@ static bool ErstelleVerbindung() {
     bool io = true;
     int brauanlagenID = 0;
     QSqlDatabase::database().transaction();
-    //Spalte High Gravity Faktor einfügen
+    //Spalte High-Gravity-Faktor einfügen
     QString sql = "ALTER TABLE 'Sud' ADD COLUMN 'highGravityFaktor' NUMERIC DEFAULT 0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte AuswahlBrauanlage einfügen
@@ -2475,7 +2475,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte AuswahlBrauanlage Name einfügen
@@ -2484,7 +2484,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Sud bei der durchschnittlichen Ausbeute berechnung berücksichtigen
@@ -2493,7 +2493,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte MerklistenID einfügen
@@ -2502,7 +2502,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Neue Tabelle Ausrüstung erstellen
@@ -2512,7 +2512,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Daten von der Alten in die neue kopieren
@@ -2521,7 +2521,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     else {
@@ -2576,7 +2576,7 @@ static bool ErstelleVerbindung() {
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
             CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-            + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+            + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
           io = false;
         }
 
@@ -2589,7 +2589,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Neue wieder zur alten umbenennen
@@ -2598,7 +2598,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Brauanlagen ID bei allen Suden eintragen
@@ -2607,7 +2607,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Versionsstand auf 17 setzen
@@ -2616,7 +2616,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
@@ -2633,13 +2633,13 @@ static bool ErstelleVerbindung() {
   if (updateNr == 17) {
     bool io = true;
     QSqlDatabase::database().transaction();
-    //Spalte High Gravity Faktor einfügen
+    //Spalte High-Gravity-Faktor einfügen
     QString sql = "ALTER TABLE 'Ausruestung' ADD COLUMN 'Kosten' NUMERIC DEFAULT 0";
     if (!query.exec(sql)) {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Versionsstand auf 18 setzen
@@ -2648,7 +2648,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
@@ -2671,7 +2671,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Brauanlagen ID in Geräteliste einfügen und mit ID der ersten Brauanlage füllen
@@ -2680,7 +2680,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Geräte mit einer ID von den Ausrüstungen füllen
@@ -2689,7 +2689,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (query.first()) {
@@ -2699,7 +2699,7 @@ static bool ErstelleVerbindung() {
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
           CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-          + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+          + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
         io = false;
       }
     }
@@ -2709,7 +2709,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
@@ -2732,7 +2732,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Link in Tabelle Hopfen
@@ -2741,7 +2741,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Link in Tabelle Hefe
@@ -2750,7 +2750,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Link in Tabelle WeitereZutaten
@@ -2759,7 +2759,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Tabelle für Anhänge hinzufügen
@@ -2768,7 +2768,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       return false;
     }
     //Versionsstand auf 20 setzen
@@ -2777,7 +2777,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
@@ -2800,7 +2800,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Datum Zugabezeitpunkt Weitere Zutaten bis
@@ -2809,7 +2809,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Zugabestatus
@@ -2818,7 +2818,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Spalte Keine Entnahme
@@ -2827,7 +2827,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Versionsstand auf 21 setzen
@@ -2836,7 +2836,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
@@ -2859,7 +2859,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     //Versionsstand auf 22 setzen
@@ -2868,7 +2868,7 @@ static bool ErstelleVerbindung() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
         CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-        + QObject::trUtf8("\nSQL Befehl:\n") + sql);
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
       io = false;
     }
     if (!io){
