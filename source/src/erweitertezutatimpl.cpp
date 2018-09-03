@@ -504,7 +504,7 @@ void ErweiterteZutatImpl::setErg_Menge(double value)
 
 void ErweiterteZutatImpl::setName(QString Name)
 {
-  if (!BierWurdeGebraut){
+  if (!BierWurdeAbgefuellt){
     bool gefunden = false;
     for (int i=0; i < comboBox_Zutat -> count(); i++){
       if (comboBox_Zutat -> itemText(i) == Name){

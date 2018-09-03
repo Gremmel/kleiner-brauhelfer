@@ -3628,7 +3628,7 @@ void MainWindowImpl::LeseSuddatenDB() {
                   SLOT(slot_HopfenGetMenge(QString)));
           connect(ewz, SIGNAL(sig_getEwzMenge(QString)), this,
                   SLOT(slot_EwzGetMenge(QString)));
-          if (BierWurdeGebraut) {
+          if (BierWurdeAbgefuellt) {
             // Da Bier schon gebraut wurde die daten aus der Datenbank benutzten
             // und nicht aus den Rohstoffdaten
             // da der Rohstoff unter umständen nicht mehr existiert oder
