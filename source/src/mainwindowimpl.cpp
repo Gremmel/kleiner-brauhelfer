@@ -3836,7 +3836,7 @@ void MainWindowImpl::LeseSuddatenDB() {
 
 void MainWindowImpl::FuelleRezeptComboAuswahlen() {
   // Wenn Bier schon gebraut wurde nicht neu einlesen
-  if (!BierWurdeGebraut) {
+ if (!BierWurdeGebraut || AmLaden) {
     // Merker setzten das in der Zeit in der die Comboauswahlen neu
     // gefüllt werden keine berechnungen gemacht werden
     // da sonnst alle Malz werte Auf Null gesetzt werden
@@ -7100,12 +7100,12 @@ void MainWindowImpl::BerKosten() {
          QString::number(round(kostenAnlage * 100) / 100) + trUtf8(" €") + "\n";
   str += trUtf8("Gesamt: ") + QString::number(round(summe * 100) / 100) +
          trUtf8(" €") + " / " +
-         QString::number(spinBox_JungbiermengeAbfuellen->value()) + " Liter";
+         QString::number(spinBox_BiermengeAbfuellen->value()) + " Liter";
 
   if (KostenrechnungIO) {
     spinBox_Preis->setToolTip(str);
     spinBox_Preis->setPalette(paletteN);
-    spinBox_Preis->setValue(summe / spinBox_JungbiermengeAbfuellen->value());
+    spinBox_Preis->setValue(summe / spinBox_BiermengeAbfuellen->value());
   } else {
     str += trUtf8("\n\nKosten konnten nicht berechnet werden, da die Angaben im "
                   "Rezept unvollständig sind\noder die Auswahl in den Rohstoffdaten "
