@@ -403,16 +403,14 @@ void hopfengabe::on_spinBox_Kochdauer_valueChanged(int )
 	emit sig_Aenderung();
 }
 
-void hopfengabe::on_dsb_MengeGramm_valueChanged(double )
+void hopfengabe::on_dsb_MengeGramm_valueChanged(double value)
 {
-}
-
-void hopfengabe::on_dsb_MengeGramm_editingFinished()
-{
-	if (ui->dsb_MengeGramm->value() != MengeGrammWertAlt){
-		MengeGrammWertAlt = ui->dsb_MengeGramm->value();
-		//qDebug() << "dsb_MengeGramm" << ui->dsb_MengeGramm->value();
-		if (berIBUProzent)
-			ui->dsb_Menge->setValue(ui->dsb_MengeGramm->value()/Menge100Prozent*100);
-	}
+    if (ui->dsb_MengeGramm->hasFocus()) {
+      if (value != MengeGrammWertAlt){
+        MengeGrammWertAlt = value;
+        //qDebug() << "dsb_MengeGramm" << value;
+        if (berIBUProzent)
+          ui->dsb_Menge->setValue(value/Menge100Prozent*100);
+      }
+    }
 }

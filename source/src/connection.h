@@ -1,7 +1,7 @@
-
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
+#include <QApplication>
 #include <QSqlDatabase>
 #include <QFile>
 #include <QString>
@@ -56,51 +56,39 @@ void CheckDB(){
 }
 
 //Macht eine Sicherheitskopie der Datenbank
-bool BackupDatenbank(){
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+bool BackupDatenbank(const QString& src, const QString& dst){
 
-  settings.beginGroup("DB");
-  QString dbPfadOhneDateiName = settings.value("DB_Pfad").toString();
-  settings.endGroup();
-
-  QString dbPfad = dbPfadOhneDateiName + "/" + DB_USER_NAME;
+  if (src.isEmpty() || dst.isEmpty() || src == dst)
+    return false;
 
   //Wenn Backupdatei schon existiert löschen
-  if (QFile::exists(dbPfad + "~")) {
-    QFile::remove(dbPfad + "~");
+  if (QFile::exists(dst)) {
+    QFile::remove(dst);
   }
 
   //Datenbank kopieren
-  QFile file(dbPfad);
-  if (file.copy(dbPfad + "~")) {
+  QFile file(src);
+  if (file.copy(dst)) {
     return true;
   }
   else {
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_DB_KOPIE_BACKUP, TYPE_KRITISCH,
-      CANCEL_PROGRAM, QObject::tr("Betroffener Kopierpfad:\n") + dbPfad + "~");
+      CANCEL_PROGRAM, QObject::tr("Betroffener Kopierpfad:\n") + dst);
     return false;
   }
 }
 
 //Datenbanksicherungskopie löschen
-bool RemoveDatenbanksicherung(){
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
-
-  settings.beginGroup("DB");
-  QString dbPfadOhneDateiName = settings.value("DB_Pfad").toString();
-  settings.endGroup();
-
-  QString dbPfad = dbPfadOhneDateiName + "/" + DB_USER_NAME;
-
-  //Wenn Backupdatei schon existiert löschen
-  if (QFile::exists(dbPfad + "~")) {
-    QFile::remove(dbPfad + "~");
+bool RemoveDatenbanksicherung(const QString& file){
+  if (QFile::exists(file)) {
+    QFile::remove(file);
   }
   return true;
 }
 
 //Stellt die Kopierte Datenbank wieder her (wenn sie vorhanden ist)
+/*
 bool RestorDatenbank(){
   QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
 
@@ -130,6 +118,7 @@ bool RestorDatenbank(){
   }
   return true;
 }
+*/
 
 static bool UpdateDB_v1_v2(){
   QSqlDatabase::database().transaction();
@@ -1390,7 +1379,7 @@ static bool ErstelleVerbindung() {
   //Datenbank ist vorhanden
   //bool dbVorhanden = false;
   // Pfad zur Datenbank
-  QString dbPfad;
+  QString dbPfad, dbPfadBackup;
   // Dateiname Datenbankvorlage
   QString dbNameVorlage = DB_VORLAGE;
   // Dateiname der Datenbank Benutzer
@@ -1398,13 +1387,15 @@ static bool ErstelleVerbindung() {
   // Verbindung zu SQLite
   QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
-  qApp->addLibraryPath("./");
+  QApplication::addLibraryPath("./");
 
   QString dbPfadOhneDateiName;
   QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
 
   settings.beginGroup("DB");
   dbPfadOhneDateiName = settings.value("DB_Pfad").toString();
+  if (settings.value("DB_BckEn").toBool())
+    dbPfadBackup = settings.value("DB_BckPfad").toString();
 
   if (dbPfadOhneDateiName != ""){
     dbPfad = dbPfadOhneDateiName + "/" + dbNameUser;
@@ -1471,9 +1462,6 @@ static bool ErstelleVerbindung() {
     return false;
   }
 
-  //Backup der Datenbank anlegen
-  BackupDatenbank();
-
   // Setzte Datenbank
   db.setDatabaseName(dbPfad);
   // Datenbank öffnen
@@ -1496,9 +1484,6 @@ static bool ErstelleVerbindung() {
 //			+ QObject::trUtf8("\nSQL-Befehl:\n") + "VACUUM");
 //	}
 
-  //Überprüfungen Druchführen
-  CheckDB();
-
   int updateNr = 0;
   //Überprüfung Versionstand Datenbank
   if (!query.exec("SELECT db_Version FROM Global;")) {
@@ -1517,8 +1502,15 @@ static bool ErstelleVerbindung() {
       return false;
     }
     else {
+      int updateNr = query.value(0).toInt();
+
+      //Backup der Datenbank anlegen für update
+      if (updateNr < DB_VERSION) {
+        BackupDatenbank(dbPfad, dbPfad+"~");
+      }
+
       //Wenn Version der Datenbank 1 ist dann auf versionstand 2 Updaten
-      if (query.value(0).toInt() == 1){
+      if (updateNr == 1){
         if (!UpdateDB_v1_v2()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -1627,7 +1619,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 2 ist dann auf versionstand 3 Updaten
-      if (query.value(0).toInt() == 2){
+      else if (updateNr == 2){
         if (!UpdateDB_v2_v3()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -1729,7 +1721,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 3 ist dann auf versionstand 4 Updaten
-      if (query.value(0).toInt() == 3){
+      else if (updateNr == 3){
         if (!UpdateDB_v3_v4()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -1824,7 +1816,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 4 ist dann auf versionstand 5 Updaten
-      if (query.value(0).toInt() == 4){
+      else if (updateNr == 4){
         if (!UpdateDB_v4_v5()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -1912,7 +1904,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 5 ist dann auf versionstand 6 Updaten
-      if (query.value(0).toInt() == 5){
+      else if (updateNr == 5){
         if (!UpdateDB_v5_v6()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -1993,7 +1985,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 6 ist dann auf versionstand 6 Updaten
-      if (query.value(0).toInt() == 6){
+      else if (updateNr == 6){
         if (!UpdateDB_v6_v7()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2067,7 +2059,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 7 ist dann auf versionstand 8 Updaten
-      if (query.value(0).toInt() == 7){
+      else if (updateNr == 7){
         if (!UpdateDB_v7_v8()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2134,7 +2126,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 8 ist dann auf versionstand 9 Updaten
-      if (query.value(0).toInt() == 8){
+      else if (updateNr == 8){
         if (!UpdateDB_v8_v9()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2194,7 +2186,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 9 ist dann auf versionstand 10 Updaten
-      if (query.value(0).toInt() == 9){
+      else if (updateNr == 9){
         if (!UpdateDB_v9_v10()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2247,7 +2239,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 10 ist dann auf versionstand 11 Updaten
-      if (query.value(0).toInt() == 10){
+      else if (updateNr == 10){
         if (!UpdateDB_v10_v11()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2293,7 +2285,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 11 ist dann auf versionstand 12 Updaten
-      if (query.value(0).toInt() == 11){
+      else if (updateNr == 11){
         if (!UpdateDB_v11_v12()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2332,7 +2324,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 12 ist dann auf versionstand 13 Updaten
-      if (query.value(0).toInt() == 12){
+      else if (updateNr == 12){
         if (!UpdateDB_v12_v13()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2364,7 +2356,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 13 ist dann auf versionstand 14 Updaten
-      if (query.value(0).toInt() == 13){
+      else if (updateNr == 13){
         if (!UpdateDB_v13_v14()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2389,7 +2381,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 14 ist dann auf versionstand 15 Updaten
-      if (query.value(0).toInt() == 14){
+      else if (updateNr == 14){
         if (!UpdateDB_v14_v15()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2407,7 +2399,7 @@ static bool ErstelleVerbindung() {
         updateNr = 16;
       }
       //Wenn Version der Datenbank 15 ist dann auf versionstand 16 Updaten
-      if (query.value(0).toInt() == 15){
+      else if (updateNr == 15){
         if (!UpdateDB_v15_v16()){
           // Fehlermeldung Konnte Datenbank nicht updaten
           ErrorMessage *errorMessage = new ErrorMessage();
@@ -2417,33 +2409,8 @@ static bool ErstelleVerbindung() {
         }
         updateNr = 16;
       }
-      //Wenn Version der Datenbank 16 ist dann auf versionstand 17 Updaten
-			if (query.value(0).toInt() == 16){
-        updateNr = 16;
-			}
-      //Wenn Version der Datenbank 17 ist dann auf versionstand 18 Updaten
-      if (query.value(0).toInt() == 17){
-        updateNr = 17;
-      }
-      //Wenn Version der Datenbank 18 ist dann auf versionstand 19 Updaten
-      if (query.value(0).toInt() == 18){
-        updateNr = 18;
-      }
-      //Wenn Version der Datenbank 19 ist dann auf versionstand 20 Updaten
-      if (query.value(0).toInt() == 19){
-        updateNr = 19;
-      }
-      //Wenn Version der Datenbank 20 ist dann auf versionstand 21 Updaten
-      if (query.value(0).toInt() == 20){
-        updateNr = 20;
-      }
-      //Wenn Version der Datenbank 21 ist dann auf versionstand 22 Updaten
-      if (query.value(0).toInt() == 21){
-        updateNr = 21;
-      }
-
-			//wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
-      else if (query.value(0).toInt() > DB_VERSION) {
+      //wenn Version der Datenbank > der aktuellen ist dann ist das Programm hier veraltet
+      else if (updateNr > DB_VERSION) {
         //Fehlermeldung Die Software ist veraltet.
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_PROG_VERALTET, TYPE_KRITISCH,
@@ -2881,6 +2848,17 @@ static bool ErstelleVerbindung() {
     QSqlDatabase::database().commit();
     //updateNr = 21;
   }
+
+  //Sicherungsdatei löschen
+  RemoveDatenbanksicherung(dbPfad + "~");
+
+  //Backup der Datenbank anlegen
+  if (!dbPfadBackup.isEmpty())
+    BackupDatenbank(dbPfad, dbPfadBackup);
+
+  //Überprüfungen Druchführen
+  CheckDB();
+
   return true;
 }
 

@@ -95,6 +95,39 @@
           </widget>
          </item>
          <item>
+          <widget class="QGroupBox" name="groupBox_DBBackup">
+           <property name="title">
+            <string>Sicherungskopie beim Start anlegen</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_21">
+            <item>
+             <widget class="QLabel" name="label_Datenbankpfad_2">
+              <property name="text">
+               <string>Pfad zur Sicherungskopie</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <item>
+               <widget class="QLineEdit" name="lineEdit_BackupPfad"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_GetBackupPfad">
+                <property name="text">
+                 <string notr="true">...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

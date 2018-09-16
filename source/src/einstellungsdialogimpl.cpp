@@ -438,11 +438,14 @@ void EinstellungsdialogImpl::on_pushButton_GetColorDia_B_L2_clicked()
 
 void EinstellungsdialogImpl::LeseKonfigDB()
 {
-  QString s;
+  bool bckEn;
+  QString s, sbck;
   QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
 
   settings.beginGroup("DB");
   s = settings.value("DB_Pfad").toString();
+  bckEn = settings.value("DB_BckEn").toBool();
+  sbck = settings.value("DB_BckPfad").toString();
   settings.endGroup();
 
   if (s == ""){
@@ -451,14 +454,14 @@ void EinstellungsdialogImpl::LeseKonfigDB()
   else {
 
   }
-  lineEdit_Datenbankpfad -> setText(s);
+  lineEdit_Datenbankpfad->setText(s);
+  groupBox_DBBackup->setChecked(bckEn);
+  lineEdit_BackupPfad->setText(sbck);
 }
 
 
 void EinstellungsdialogImpl::on_pushButton_GetPfad_clicked()
 {
-
-
   DBDirVorher = lineEdit_Datenbankpfad -> text();
   //QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly		| QFileDialog::DontUseNativeDialog;
   QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
@@ -479,6 +482,15 @@ void EinstellungsdialogImpl::on_pushButton_GetPfad_clicked()
   }
 }
 
+void EinstellungsdialogImpl::on_pushButton_GetBackupPfad_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this, trUtf8("Sicherungspfad Auswählen"),
+                        lineEdit_BackupPfad->text().isEmpty() ? lineEdit_Datenbankpfad->text() : lineEdit_BackupPfad->text());
+    if (!filename.isEmpty())
+      lineEdit_BackupPfad->setText(filename);
+}
+
+
 void EinstellungsdialogImpl::on_buttonBox_accepted()
 {
   //Einstellungen Speichern
@@ -497,6 +509,9 @@ void EinstellungsdialogImpl::on_buttonBox_rejected()
 
 void EinstellungsdialogImpl::SchreibeKonfigDB()
 {
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  settings.beginGroup("DB");
+
   if (NeuerDBPfad) {
     bool b = true;
     //Abfrage ob Datenbank zu dem Neuen Pfad verschoben werden soll
@@ -527,12 +542,12 @@ void EinstellungsdialogImpl::SchreibeKonfigDB()
 
     if (b){
       //Neuen Pfad Speichern
-      QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
-      settings.beginGroup("DB");
       settings.setValue("DB_Pfad", lineEdit_Datenbankpfad -> text());
-      settings.endGroup();
     }
   }
+  settings.setValue("DB_BckEn", groupBox_DBBackup->isChecked());
+  settings.setValue("DB_BckPfad", lineEdit_BackupPfad->text());
+  settings.endGroup();
 }
 
 

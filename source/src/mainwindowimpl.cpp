@@ -11858,7 +11858,7 @@ void MainWindowImpl::on_pushButton_SudinfoPDF_clicked() {
     settings.setValue("recentPDFPath", fi.absolutePath());
 
     // open PDF
-    qDebug() << "file:///" + fileName;
+    //qDebug() << "file:///" + fileName;
     QDesktopServices::openUrl(QUrl("file:///" + fileName));
   }
 

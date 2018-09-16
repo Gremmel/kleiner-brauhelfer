@@ -57,9 +57,7 @@ private slots:
 
 	void on_pushButton_KorrekturMenge_clicked();
 
-	void on_dsb_MengeGramm_valueChanged(double arg1);
-
-	void on_dsb_MengeGramm_editingFinished();
+    void on_dsb_MengeGramm_valueChanged(double value);
 
 	void on_comboBox_Zutat_currentIndexChanged(const QString &arg1);
 

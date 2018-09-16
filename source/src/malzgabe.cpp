@@ -278,14 +278,11 @@ void malzgabe::berMenge()
   setErgMenge(GesamtMenge / 100 * ui->dsb_Menge->value());
 }
 
-void malzgabe::on_dsb_MengeGramm_valueChanged(double )
-{
-}
-
-void malzgabe::on_dsb_MengeGramm_editingFinished()
+void malzgabe::on_dsb_MengeGramm_valueChanged(double value)
 {
   //Anhand der veränderten Menge den Prozentualen wert errechnen
-  ui->dsb_Menge->setValue(ui->dsb_MengeGramm->value()/GesamtMenge*100);
+  if (ui->dsb_MengeGramm->hasFocus())
+    ui->dsb_Menge->setValue(value/GesamtMenge*100);
 }
 
 void malzgabe::on_comboBox_Zutat_currentIndexChanged(const QString &)

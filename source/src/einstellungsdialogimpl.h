@@ -48,6 +48,7 @@ private slots:
   void on_comboBox_Farbgebung_currentIndexChanged(int index);
   void on_pushButton_GetColorStyleAuswahl_clicked();
   void on_checkBox_FontSystem_clicked();
+  void on_pushButton_GetBackupPfad_clicked();
 };
 #endif
 
