@@ -2322,7 +2322,7 @@ void MainWindowImpl::on_pushButton_MalzDel_clicked() {
                     tableWidget_Malz->item(i, TableMalzColName)->text());
               }
             }
-            raDia.setAktAuswahl(letzeAuswahl);
+            raDia.setNearest(del_name);
             raDia.exec();
             ok = raDia.b_ok;
             letzeAuswahl = raDia.GetAktAuswahl();
@@ -2431,7 +2431,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                     tableWidget_Hopfen->item(i, TableHopfenColName)->text());
               }
             }
-            raDia.setAktAuswahl(letzeAuswahl);
+            raDia.setNearest(del_name);
             raDia.exec();
             ok = raDia.b_ok;
             letzeAuswahl = raDia.GetAktAuswahl();
@@ -2496,7 +2496,7 @@ void MainWindowImpl::on_pushButton_HopfenDel_clicked() {
                     tableWidget_Hopfen->item(i, TableHopfenColName)->text());
               }
             }
-            raDia.setAktAuswahl(letzeAuswahl);
+            raDia.setNearest(del_name);
             raDia.exec();
             ok = raDia.b_ok;
             letzeAuswahl = raDia.GetAktAuswahl();
@@ -2595,7 +2595,7 @@ void MainWindowImpl::on_pushButton_HefeDel_clicked() {
                   tableWidget_Hefe->item(i, TableHefeColName)->text());
             }
           }
-          raDia.setAktAuswahl(letzeAuswahl);
+          raDia.setNearest(del_name);
           raDia.exec();
           ok = raDia.b_ok;
           letzeAuswahl = raDia.GetAktAuswahl();
@@ -9751,7 +9751,7 @@ void MainWindowImpl::on_pushButton_WeitereZutatenDel_clicked() {
                         ->text());
               }
             }
-            raDia.setAktAuswahl(letzeAuswahl);
+            raDia.setNearest(del_name);
             raDia.exec();
             ok = raDia.b_ok;
             letzeAuswahl = raDia.GetAktAuswahl();
@@ -12441,7 +12441,7 @@ void MainWindowImpl::on_pushButton_GaerungEwzZugeben_clicked() {
 }
 
 void MainWindowImpl::on_pushButton_GaerungEwzEntnehmen_clicked() {
-  int id =  comboBox_GaerungEwzAuswahl->currentData().toInt();
+  int id =  comboBox_GaerungEwzAuswahlEntnahme->currentData().toInt();
   for (int i = 0; i < list_EwZutat.count(); i++) {
     if (list_EwZutat[i]->getID() == id) {
       list_EwZutat[i]->zutatEntnehmen();

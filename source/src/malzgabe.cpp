@@ -159,7 +159,7 @@ void malzgabe::setName(QString Name)
           raDia.addAuswahlEintrag(ui->comboBox_Zutat -> itemText(i) );
         }
       }
-      //raDia.setAktAuswahl(letzeAuswahl);
+      raDia.setNearest(Name);
       raDia.exec();
       //Austauschen
       QString auswahl = raDia.GetAktAuswahl();

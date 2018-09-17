@@ -528,7 +528,7 @@ void ErweiterteZutatImpl::setName(QString Name)
           raDia.addAuswahlEintrag(comboBox_Zutat -> itemText(i) );
         }
       }
-      //raDia.setAktAuswahl(letzeAuswahl);
+      raDia.setNearest(Name);
       raDia.exec();
       //Austauschen
       QString auswahl = raDia.GetAktAuswahl();

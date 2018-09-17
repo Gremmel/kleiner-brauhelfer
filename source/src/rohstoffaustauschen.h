@@ -14,10 +14,11 @@ class RohstoffAustauschen : public QDialog
 public:
 	explicit RohstoffAustauschen(QWidget *parent = 0);
 	~RohstoffAustauschen();
-	void SetText(QString text);
-	void addAuswahlEintrag(QString value);
+    void SetText(const QString &text);
+    void addAuswahlEintrag(const QString &value);
 	QString GetAktAuswahl();
-	void setAktAuswahl(QString value);
+    void setAktAuswahl(const QString& value);
+    void setNearest(const QString& value);
 	void setButtonCancelVisible(bool value);
 	void setButtonRohstoffUebernehmenVisible(bool value);
 	bool b_ok;
@@ -26,9 +27,9 @@ public:
 private slots:
 	void on_pushButton_ok_clicked();
 	void on_pushButton_cancel_clicked();
-
 	void on_pushButton_RohstoffUebernehmen_clicked();
-
+private:
+    int levenshtein_distance(const QString& s1, const QString& s2);
 private:
 	Ui::RohstoffAustauschen *ui;
 };
