@@ -174,18 +174,10 @@ int main(int argc, char ** argv)
     }
   }
 
-  //Wenn die Datenbanksicherung noch vorhanden ist ist bei einem vorherigen start
-  //etwas schiefgelaufen, also erst die Sicherung wieder zurücksichern
-  RestorDatenbank();
-
   //Mit Datenbank verbinden
   if (!ErstelleVerbindung()) {
     return 1;
   }
-
-  //Das verbinden/Updaten der Datenbank war erfolgreich somit kann die Sicherungsdatei
-  //gelöscht werden
-  RemoveDatenbanksicherung();
 
   MainWindowImpl win;
   win.show();

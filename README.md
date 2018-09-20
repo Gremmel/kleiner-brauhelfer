@@ -7,6 +7,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 - Min Max werte gesamte Kochdauer auf 1 - 999 min geändert
+- Möglichkeit eine Sicherungskopie beim Start anzulegen
 ### Version 1.4.4.2
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
 - ~~Windows Versionen für 32bit und 64bit Architektur~~

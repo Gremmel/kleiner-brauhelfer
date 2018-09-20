@@ -31,7 +31,7 @@ QExport::QExport(  )
 //
 
 //Exportiert einen Sud in eine xsud XML Datei
-int QExport::ExportSudXML(int SudNr, QString Dateiname)
+int QExport::ExportSudXML(int SudNr, const QString& Dateiname)
 {
   //Sud aus Datenbank abfragen
   QSqlQuery query_sud;
@@ -2183,7 +2183,7 @@ int QExport::ExportSudXML(int SudNr, QString Dateiname)
   return 0;
 }
 
-int QExport::ExportBeerXML(int SudNr, QString Dateiname)
+int QExport::ExportBeerXML(int SudNr, const QString& Dateiname)
 {
   //Sud aus Datenbank abfragen
   QSqlQuery query_sud;
@@ -3056,7 +3056,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
       //das muss leider hier so gemacht werden weil die funktion createTextNote ansonsten die & zeichen
       //in &amp; umwandelt
 
-      strXml = encodeHtml(strXml);
+      encodeHtml(strXml);
       out << strXml;
     }
   }
@@ -3064,7 +3064,7 @@ int QExport::ExportBeerXML(int SudNr, QString Dateiname)
 }
 
 
-int QExport::IfXmlOK(QString cDateiname)
+int QExport::IfXmlOK(const QString& cDateiname)
 {
   QDomDocument doc("mydoc");
   QFile file(cDateiname);
@@ -3126,7 +3126,7 @@ int findMax(QJsonObject jsn, QString s, int MAX=20)
     return i;
 }
 
-void QExport::convertJSON(QString json, QString xsud)
+void QExport::convertJSON(const QString& json, const QString& xsud)
 {
     QFile json_file(json);
     QFile xsud_file(xsud);
@@ -3455,7 +3455,7 @@ void QExport::convertJSON(QString json, QString xsud)
 }
 
 
-int QExport::ImportSudXML(QString cDateiname)
+int QExport::ImportSudXML(const QString& cDateiname)
 {
   QDomDocument doc("mydoc");
   Dateiname = cDateiname;
@@ -4690,7 +4690,7 @@ int QExport::ImportSudXML(QString cDateiname)
 }
 
 //Überprüft ob der Malzeintrag in der Datenbank vorhanden ist
-void QExport::CheckMalzEintrag(QString Name)
+void QExport::CheckMalzEintrag(const QString& Name)
 {
   //
   QSqlQuery query;
@@ -4716,7 +4716,7 @@ void QExport::CheckMalzEintrag(QString Name)
   }
 }
 
-void QExport::CheckHopfenEintrag(QString Name)
+void QExport::CheckHopfenEintrag(const QString& Name)
 {
   //
   QSqlQuery query;
@@ -4741,7 +4741,7 @@ void QExport::CheckHopfenEintrag(QString Name)
   }
 }
 
-void QExport::CheckHefeEintrag(QString Name)
+void QExport::CheckHefeEintrag(const QString& Name)
 {
   //
   QSqlQuery query;
@@ -4767,7 +4767,7 @@ void QExport::CheckHefeEintrag(QString Name)
 }
 
 
-void QExport::CheckWeitereZutatEintrag(QString Name)
+void QExport::CheckWeitereZutatEintrag(const QString& Name)
 {
   //
   QSqlQuery query;
@@ -4795,7 +4795,7 @@ void QExport::CheckWeitereZutatEintrag(QString Name)
 //Rückgabe
 //false=Rohstoff gegen vorhandenen Tauschen
 //true=Rohstoff der Datenbank aus xml Datei hinzufügen
-bool QExport::AbfrageRohstoffuebernahme(QString str, QString rohstoff)
+bool QExport::AbfrageRohstoffuebernahme(const QString& str, const QString& rohstoff)
 {
   //Dialog mit Rohstoffauswahl zum Austauschen des zu löschenden Rohstoffes anzeigen
   RohstoffAustauschen raDia;
@@ -4825,7 +4825,7 @@ bool QExport::AbfrageRohstoffuebernahme(QString str, QString rohstoff)
       raDia.addAuswahlEintrag(query.value(FeldNr).toString());
     }
   }
-
+  raDia.setNearest(str);
   raDia.exec();
   QCoreApplication::processEvents();
 
@@ -4840,7 +4840,7 @@ bool QExport::AbfrageRohstoffuebernahme(QString str, QString rohstoff)
 
 }
 
-void QExport::HinweisAusgeben(QString Text)
+void QExport::HinweisAusgeben(const QString& Text)
 {
   QMessageBox msgBox;
   msgBox.setWindowTitle(trUtf8("Hinweis"));
@@ -4853,7 +4853,7 @@ void QExport::HinweisAusgeben(QString Text)
   QCoreApplication::processEvents();
 }
 
-QString QExport::encodeHtml(QString str)
+void QExport::encodeHtml(QString& str)
 {
   str.replace("Ä","&#196;");
   str.replace("ä","&#228;");
@@ -4871,11 +4871,10 @@ QString QExport::encodeHtml(QString str)
 
   str.replace("®","&#174;");
   str.replace("©","&#169;");
-  return str;
 }
 
 
-void QExport::RohstoffMalzUebernehmen(QString Name)
+void QExport::RohstoffMalzUebernehmen(const QString& Name)
 {
   QDomDocument doc("mydoc");
   QFile file(Dateiname);
@@ -4987,7 +4986,7 @@ void QExport::RohstoffMalzUebernehmen(QString Name)
   }
 }
 
-void QExport::RohstoffWeitereZutatUebernehmen(QString Name)
+void QExport::RohstoffWeitereZutatUebernehmen(const QString& Name)
 {
   QDomDocument doc("mydoc");
   QFile file(Dateiname);
@@ -5093,7 +5092,7 @@ void QExport::RohstoffWeitereZutatUebernehmen(QString Name)
 
 
 
-void QExport::RohstoffHopfenUebernehmen(QString Name)
+void QExport::RohstoffHopfenUebernehmen(const QString& Name)
 {
   QDomDocument doc("mydoc");
   QFile file(Dateiname);
@@ -5215,7 +5214,7 @@ void QExport::RohstoffHopfenUebernehmen(QString Name)
 
 
 
-void QExport::RohstoffHefeUebernehmen(QString Name)
+void QExport::RohstoffHefeUebernehmen(const QString &Name)
 {
   QDomDocument doc("mydoc");
   QFile file(Dateiname);

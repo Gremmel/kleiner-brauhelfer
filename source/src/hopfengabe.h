@@ -77,9 +77,7 @@ private slots:
 
 	void on_spinBox_Kochdauer_valueChanged(int arg1);
 
-	void on_dsb_MengeGramm_valueChanged(double arg1);
-	
-	void on_dsb_MengeGramm_editingFinished();
+    void on_dsb_MengeGramm_valueChanged(double value);
 	
 private:
 	bool NativStyle;
