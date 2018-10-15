@@ -14,6 +14,7 @@ http://www.joerum.de/kleiner-brauhelfer/
   - Windows: C:\\Users\\&lt;benutzer&gt;\\AppData\\Roaming\\Gremmelsoft
   - Linux: /home/&lt;benutzer&gt;/.config/Gremmelsoft/
   - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
+- Zusammenfassung enthält auch Rezeptwerte
 ### Version 1.4.4.2
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
