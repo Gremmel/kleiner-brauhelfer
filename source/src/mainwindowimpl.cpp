@@ -17,6 +17,7 @@
 #include <QTableWidgetItem>
 #include <QTemporaryFile>
 #include <QUrl>
+#include <QDirIterator>
 #include <time.h>
 
 #include "brauanlage.h"
@@ -61,6 +62,9 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   // Windowicon setzten
   appIcon.addFile(":/global/logo.svg", QSize(64, 64));
   setWindowIcon(appIcon);
+
+  // Ressourcen lokal kopieren
+  KopiereRessourcen();
 
   //Überprüfen ob ergebnisse in der Datenbank neu berechnet werden müssen
   if (CheckDBNeuBerechnen()) {
@@ -314,7 +318,7 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   // letzte Suddaten laden
   if (AktuelleSudID == 0)
     AktuelleSudID = 1;
-  LadeSudDB(true);
+  LadeSudDB(false);
 }
 
 void MainWindowImpl::initUi() {
@@ -5940,6 +5944,13 @@ void MainWindowImpl::LadeSudDB(bool aktivateTab) {
   AmLaden = false;
   BerAlles();
   setAenderung(false);
+  for (int i = 0; i < tableWidget_Sudauswahl->rowCount(); ++i) {
+    int SudID = tableWidget_Sudauswahl->item(i, 0)->text().toInt();
+    if (SudID == AktuelleSudID) {
+      tableWidget_Sudauswahl->setCurrentCell(i, 0);
+      break;
+    }
+  }
   if (aktivateTab) {
     if (BierWurdeAbgefuellt)
       tabWidged->setCurrentWidget(tab_Spickzettel);
@@ -11764,7 +11775,6 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index) {
   // Zusammenfassung / Spickzettel
   else if (currentTab == tab_Spickzettel) {
     // Seite Spickzettel erstellen
-    horizontalSlider_ScalePDF->setValue(100);
     ErstelleTabSpickzettel();
   }
   // Brau && Gärdaten
@@ -12541,5 +12551,22 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked() {
       }
     }
     delete dlg;
+  }
+}
+
+void MainWindowImpl::KopiereRessourcen() {
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
+  QDirIterator it(":/data", QDirIterator::Subdirectories);
+  while (it.hasNext()) {
+    it.next();
+    if (it.fileName() == "vorlage.sqlite" || it.fileName() == "ueber.html")
+      continue;
+    QFile file(settingsPath + it.fileName());
+    if (!file.exists()) {
+      QFile file2(it.filePath());
+      if (file2.copy(file.fileName()))
+        QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
+    }
   }
 }

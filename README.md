@@ -10,6 +10,10 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 - Min Max werte gesamte Kochdauer auf 1 - 999 min geändert
 - Möglichkeit eine Sicherungskopie beim Start anzulegen
+- Formatierung von Spickzettel & Zusammenfassung lässt sich über HTML Datei anpassen
+  - Windows: C:\Users\<benutzer>\AppData\Roaming\Gremmelsoft
+  - Linux: /home/<benutzer>/.config/Gremmelsoft/
+  - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
 ### Version 1.4.4.2
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)

@@ -32,6 +32,11 @@ bool MyWebPage::acceptNavigationRequest(const QUrl& url, QWebEnginePage::Navigat
     return true;
 }
 
+void MyWebView::clearMemoryCaches()
+{
+    //dummy
+}
+
 MyWebView::MyWebView(QWidget* parent) :
     QWebEngineView(parent)
 {
@@ -65,6 +70,11 @@ void MyWebView::printToPdf(const QString& filePath)
 #else
 
 #include <QPrinter>
+
+void MyWebView::clearMemoryCaches()
+{
+    QWebSettings::clearMemoryCaches();
+}
 
 MyWebView::MyWebView(QWidget* parent) :
     QWebView(parent),

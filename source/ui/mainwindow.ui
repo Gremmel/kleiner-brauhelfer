@@ -33,7 +33,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_Sudauswahl">
        <attribute name="title">
@@ -267,11 +267,6 @@
                    <width>400</width>
                    <height>0</height>
                   </size>
-                 </property>
-                 <property name="url" stdset="0">
-                  <url>
-                   <string>about:blank</string>
-                  </url>
                  </property>
                 </widget>
                </item>
@@ -5619,7 +5614,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                           <item>
                            <widget class="QLabel" name="label_StammwuerzeEWZAnteil">
                             <property name="text">
-                             <string>Anteil Stammwürze "Weitere Zutaten"</string>
+                             <string>Anteil Stammwürze &quot;Weitere Zutaten&quot;</string>
                             </property>
                            </widget>
                           </item>
@@ -5714,7 +5709,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                           <item>
                            <widget class="QLabel" name="label_StammwuerzeEWZ">
                             <property name="text">
-                             <string>Stammwürze Gesamt inklusive "Weitere Zutaten"</string>
+                             <string>Stammwürze Gesamt inklusive &quot;Weitere Zutaten&quot;</string>
                             </property>
                            </widget>
                           </item>
@@ -8276,19 +8271,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <number>0</number>
            </property>
            <item>
-            <widget class="MyWebView" name="webView_Zusammenfassung" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="url" stdset="0">
-              <url>
-               <string>about:blank</string>
-              </url>
-             </property>
-            </widget>
+            <widget class="MyWebView" name="webView_Zusammenfassung" native="true"/>
            </item>
           </layout>
          </widget>
@@ -12373,7 +12356,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
   <tabstop>pushButton_merken</tabstop>
   <tabstop>pushButton_vergessen</tabstop>
   <tabstop>pushButton_alleVergessen</tabstop>
-  <tabstop>webView_Info</tabstop>
   <tabstop>pushButton_SudinfoPDF</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>lineEdit_Sudname</tabstop>
