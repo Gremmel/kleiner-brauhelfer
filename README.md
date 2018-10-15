@@ -5,7 +5,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 [Version 1.4.4.2](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.3 (in Entwicklung)
-- Deutsch überarbeitet (grossen Dank an Radulph)
+- Deutsch überarbeitet (grossen Dank an **Radulph**)
 - Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 - Min Max werte gesamte Kochdauer auf 1 - 999 min geändert
@@ -15,6 +15,7 @@ http://www.joerum.de/kleiner-brauhelfer/
   - Linux: /home/&lt;benutzer&gt;/.config/Gremmelsoft/
   - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
 - Zusammenfassung enthält auch Rezeptwerte
+- Spalte Bewertung in Sudauswahl
 ### Version 1.4.4.2
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)

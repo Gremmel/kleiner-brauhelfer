@@ -11,6 +11,8 @@ StarView::StarView(QWidget *parent) :
 	list_Sterne.clear();
 
 	setScene(myscene);
+    setFrameShape(QFrame::NoFrame);
+    setStyleSheet("background: transparent");
 }
 
 void StarView::setStyleDunkel(bool value)

@@ -150,6 +150,14 @@
                 <set>AlignCenter</set>
                </property>
               </column>
+              <column>
+               <property name="text">
+                <string>Bewertung</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </column>
              </widget>
             </item>
             <item>
@@ -8471,14 +8479,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </widget>
              </item>
              <item>
-              <widget class="StarView" name="graphicsView_bewStar">
-               <property name="styleSheet">
-                <string notr="true">background: transparent</string>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-              </widget>
+              <widget class="StarView" name="graphicsView_bewStar"/>
              </item>
              <item>
               <widget class="QPushButton" name="pushButton_addStar">
