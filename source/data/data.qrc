@@ -5,5 +5,11 @@
         <file>Hopfen.csv</file>
         <file>Hefe.csv</file>
         <file>WeitereZutaten.csv</file>
+        <file>zusammenfassung.html</file>
+        <file>ueber.html</file>
+        <file>spickzettel.html</file>
+        <file>sudinfo.html</file>
+        <file>style_hell.css</file>
+        <file>style_dunkel.css</file>
     </qresource>
 </RCC>

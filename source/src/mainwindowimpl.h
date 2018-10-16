@@ -295,6 +295,7 @@ private:
 	void setFensterTitel();
   void SchreibeAnhangDB();
   void LeseAnhangDB();
+  void KopiereRessourcen();
   QMenu *geladenerSudMenu;
   QMenu *extrasMenu;
   QMenu *sprachMenu;

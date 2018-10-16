@@ -1,80 +1,22 @@
 #include "mainwindowimpl.h"
 
+#include <QFile>
 #include <QSettings>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include "mustache.h"
 #include "definitionen.h"
 #include "errormessage.h"
 
 void MainWindowImpl::ErstelleSudInfo()
 {
-    // Seitenkopf
-    QString seite, kopf, ende, style, s, SudnameFehler;
-    int NeuBerechnen = 0;
+    QVariantHash contextVariables;
+    contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
 
-    kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-    if (StyleDunkel){
-      style = "<style type='text/css'>";
-      //Style für P
-      style += "p{color:#fff;font-size:10pt;padding:0px;margin:0px;}";
-      //Style für Variable
-      style += "p.value{color:#eee;margin-left:5px;margin-right:5px;}";
-      //Style für div Kommentar
-      style += ".koment{}";
-      //Style für ul
-      style += "ul{color:#fff;font-size:10pt;}";
-      //Style für Überschrift h1
-      style += "p.h1{color:#fff;font-size:12pt;}";
-      //Style für Überschrift h2
-      style += "p.h2{color:#fff;font-size:11pt;margin-bottom:5px;}";
-      //Style für Div Box bewertung
-      style += "div.bew{border:0px solid #fff; border-radius: 5px; padding:0px;background-color:#222222;}";
-      //Style für Div Box ohne Rahmen
-      style += "div.r{border:0px solid #444444; border-radius: 10px; padding:5px;background-color:#444444;}";
-      //Style für Div Box mit Rahmen
-      style += "div.rm{border:2px solid #444444; border-radius: 10px; padding:5px;background-color:#222222;font-size:12pt;}";
-      //Style für Div Box mit Rahmen für Hinweis
-      style += "div.rmh{border:2px solid #ff0000; border-radius: 10px; padding:5px;background-color:#222222;font-size:12pt;}";
-      //Style für Tabelle
-      style += "td{padding:2px;margin:0px;font-size:10pt;}";
-      style += "td.r{padding:2px;margin:0px;border-bottom-color:#aaaaaa;border-bottom-style:solid;border-width:1px;}";
-      style += "tr{padding:0px;margin:0px;}";
-      style += "body{font-family:Ubuntu,Arial; font-size:10pt; font-style:normal; background-color:#222222; color:#fff;}";
-      style += "</style>";
-    }
-    else {
-      style = "<style type='text/css'>";
-      //Style für P
-      style += "p{color:black;font-size:10pt;padding:0px;margin:0px;}";
-      //Style für Variable
-      style += "p.value{color:blue;margin-left:5px;margin-right:5px;}";
-      //Style für div Kommentar
-      style += ".koment{}";
-      //Style für ul
-      style += "ul{color:black;font-size:10pt;}";
-      //Style für Überschrift h1
-      style += "p.h1{color:black;font-size:12pt;}";
-      //Style für Überschrift h2
-      style += "p.h2{color:black;font-size:11pt;margin-bottom:5px;}";
-      //Style für Div Box bewertung
-      style += "div.bew{border:0px solid #fff; border-radius: 5px; padding:0px;background-color:#fff;}";
-      //Style für Div Box ohne Rahmen
-      style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
-      //Style für Div Box mit Rahmen
-      style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;font-size:12pt;}";
-      //Style für Div Box mit Rahmen für Hinweis
-      style += "div.rmh{border:2px solid #ff0000; border-radius: 10px; padding:5px;background-color:#ffffff;font-size:12pt;}";
-      //Style für Tabelle
-      style += "td{padding:2px;margin:0px;font-size:10pt;}";
-      style += "td.r{padding:2px;margin:0px;border-bottom-color:#aaaaaa;border-bottom-style:solid;border-width:1px;}";
-      style += "tr{padding:0px;margin:0px;}";
-      style += "body{font-family:Ubuntu,Arial; font-size:10pt; font-style:normal; background-color:#fff;}";
-      style += "</style>";
-    }
-    kopf += style;
-    kopf += "</head><body>";
-    seite = kopf;
+    // Seitenkopf
+    QString s, SudnameFehler;
+    int NeuBerechnen = 0;
 
     //Liste der SudIds
     QList<int> ListSudID;
@@ -115,22 +57,19 @@ void MainWindowImpl::ErstelleSudInfo()
           else {
             //Überschrift
             FeldNr = query_sud.record().indexOf("Sudname");
-            seite += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + query_sud.value(FeldNr).toString() + "</b></p></div>";
+            contextVariables["Sudname"] = query_sud.value(FeldNr).toString();
 
             //bild mit entsprechender Bierfarbe
-            QColor farbe;
             FeldNr = query_sud.record().indexOf("erg_Farbe");
-            farbe = Berechnungen.GetFarbwert(query_sud.value(FeldNr).toDouble());
+            QColor farbe = Berechnungen.GetFarbwert(query_sud.value(FeldNr).toDouble());
             FeldNr = query_sud.record().indexOf("Bewertung");
             int bewertung = query_sud.value(FeldNr).toInt();
 
-            //Solldaten des Rezeptes
-            s += "<div class='rm' style='margin-top:10px;margin-bottom:5px;' align='center'>";
             //Bewertung
             if (bewertung > 0){
               if (bewertung > MaxAnzahlSterne)
                 bewertung = MaxAnzahlSterne;
-              s += "<div class='bew' style='' align='center'>";
+              s = "";
               for (int i = 0; i<bewertung; i++){
                 s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_24.png' width='24' border=0>";
               }
@@ -140,93 +79,61 @@ void MainWindowImpl::ErstelleSudInfo()
                 else
                   s += "<img style='padding:0px;margin:0px;' src='qrc:/global/star_gr_24.png' width='24' border=0>";
               }
-              s += "</div>";
+              contextVariables["Sterne"] = s;
             }
-            s += "<table cellspacing=0 border=0><tbody>";
-            //Menge
-            FeldNr = query_sud.record().indexOf("Menge");
-            s += "<tr style=''>";
-            s += "<td rowspan=5>";
-            s += "<div class='r' style='background-color:" + farbe.name() +
-                ";width:100px;height:100px;margin:0px;padding:0px;'>";
+
+            // Glas
+            s = "<div style='background-color:" + farbe.name() +";padding:0px;margin:0px;width:100%;height:100%'>";
             if (StyleDunkel)
-              s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_dark_200x200.png' alt='Bierfarbe' width='100' height='100' border=0>";
+              s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_dark_200x200.png' alt='Bierfarbe'>";
             else
-              s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_200x200.png' alt='Bierfarbe' width='100' height='100' border=0>";
+              s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_200x200.png' alt='Bierfarbe'>";
             s += "</div>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("Menge") + "</p>";
-            s += "</td>";
-            s += "<td align='right'>";
-            s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</p>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("Liter") + "</p>";
-            s += "</td>";
+            contextVariables["Glas"] = s;
+
+            //Solldaten des Rezeptes
+            s = "<table><tbody>";
+            FeldNr = query_sud.record().indexOf("Menge");
+            s += "<tr>";
+            s += "<td>" + trUtf8("Menge") + "</td>";
+            s += "<td class='value' align='right'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</td>";
+            s += "<td>" + trUtf8("Liter") + "</td>";
             s += "</tr>";
-            //Stammwürze
             FeldNr = query_sud.record().indexOf("SW");
-            s += "<tr style=''>";
-            s += "<td>";
-            s += "<p>" + trUtf8("Stammwürze") + "</p>";
-            s += "</td>";
-            s += "<td align='right'>";
-            s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("°P") + "</p>";
-            s += "</td>";
+            s += "<tr>";
+            s += "<td>" + trUtf8("Stammwürze") + "</td>";
+            s += "<td class='value' align='right'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</td>";
+            s += "<td>" + trUtf8("°P") + "</td>";
             s += "</tr>";
-            //Bittere
             FeldNr = query_sud.record().indexOf("IBU");
-            s += "<tr style=''>";
-            s += "<td>";
-            s += "<p>" + trUtf8("Bittere") + "</p>";
-            s += "</td>";
-            s += "<td align='right'>";
-            s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</p>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("IBU") + "</p>";
-            s += "</td>";
+            s += "<tr>";
+            s += "<td>" + trUtf8("Bittere") + "</td>";
+            s += "<td class='value' align='right'>" + QString::number(query_sud.value(FeldNr).toInt()) + "</td>";
+            s += "<td>" + trUtf8("IBU") + "</td>";
             s += "</tr>";
-            //Farbe
             FeldNr = query_sud.record().indexOf("erg_Farbe");
-            s += "<tr style=''>";
-            s += "<td>";
-            s += "<p>" + trUtf8("Farbe") + "</p>";
-            s += "</td>";
-            s += "<td align='right'>";
-            s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("EBC") + "</p>";
-            s += "</td>";
+            s += "<tr>";
+            s += "<td>" + trUtf8("Farbe") + "</td>";
+            s += "<td class='value' align='right'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</td>";
+            s += "<td>" + trUtf8("EBC") + "</td>";
             s += "</tr>";
-            //CO₂-Gehalt
             FeldNr = query_sud.record().indexOf("CO2");
-            s += "<tr style=''>";
-            s += "<td>";
-            s += "<p>" + trUtf8("CO₂-Gehalt") + "</p>";
-            s += "</td>";
-            s += "<td align='right'>";
-            s += "<p class='value'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</p>";
-            s += "</td>";
-            s += "<td>";
-            s += "<p>" + trUtf8("g/l") + "</p>";
-            s += "</td>";
+            s += "<tr>";
+            s += "<td>" + trUtf8("CO₂-Gehalt") + "</td>";
+            s += "<td class='value' align='right'>" + QString::number(query_sud.value(FeldNr).toDouble()) + "</td>";
+            s += "<td>" + trUtf8("g/l") + "</td>";
             s += "</tr>";
             s += "</tbody></table>";
-            s += "</div>";
+            contextVariables["Rezept"] = s;
+
+            // Kommentar
+            FeldNr = query_sud.record().indexOf("Kommentar");
+            contextVariables["Kommentar"] = query_sud.value(FeldNr).toString();
           }
         }
       }
     }
     else {
-      //Überschrift Auswahl
-      //s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Auswahl") + "</b></p></div>";
-      //s += "<div class='rm' style='margin-bottom:10px;'>";
       QList<int> row_merker;
       //Bei Mehrfachauswahl alle Sudnamen anzeigen
       for (int i = 0; i < sList.size(); ++i) {
@@ -262,16 +169,9 @@ void MainWindowImpl::ErstelleSudInfo()
           }
         }
       }
-      //s += "</div>";
     }
 
-    if (NeuBerechnen > 0){
-      //Meldung ausgeben das der Sud zum Neu Berechnen geladen werden muss.
-      seite += "<div class='rmh' style='margin-bottom:10px;' align='center'>";
-      seite += trUtf8("Bei dem Sud &gt;") + SudnameFehler + trUtf8("&lt; wurde ein Rohstoff verändert. Die berechneten Werte stimmen  nicht mehr. Zum Neuberechnen bitte den Sud laden und wieder speichern.");
-      seite += "</div>";
-    }
-    else {
+    if (NeuBerechnen <= 0){
       //Benötigte Rohstoffe mit Vorhandenen verechnen
 
       //Alle Malzeinträge abrfuen
@@ -653,146 +553,132 @@ void MainWindowImpl::ErstelleSudInfo()
       }
 
       //Überschrift Benötigte Rohstoffe
-      s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Rohstoffe") + "</b></p></div>";
+      contextVariables["Rohstoffe"] = trUtf8("Rohstoffe");
 
-      //Malz Mengen anzeigen
-      //Bild für getreide anzeigen
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt (kg)") + "</td><td align='center'>" + trUtf8("übrig (kg)") + "</td>";
-      for (int i = 0; i < ListMalz.size(); ++i){
-        double ist = 0;
-        //Vorhandene Menge von diesem Malz
-        bool gefunden = false;
-        for (int o=0; o < tableWidget_Malz -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_Malz -> item(o, TableMalzColName) -> text() == ListMalz.at(i).Name){
-            QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,TableMalzColMenge);
-            ist = dsbMenge ->value();
-            gefunden = true;
+      //Malz
+      if (ListMalz.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + " (" + trUtf8("kg") + ")" + "</td><td align='center'>" + trUtf8("vorhanden") + " (" + trUtf8("kg") + ")" + "</td>";
+          for (int i = 0; i < ListMalz.size(); ++i){
+            double ist = 0;
+            //Vorhandene Menge von diesem Malz
+            bool gefunden = false;
+            for (int o=0; o < tableWidget_Malz -> rowCount(); o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Malz -> item(o, TableMalzColName) -> text() == ListMalz.at(i).Name){
+                QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,TableMalzColMenge);
+                ist = dsbMenge ->value();
+                gefunden = true;
+              }
+            }
+            //double rest = ist - ListMalz.at(i).Menge;
+            s += "<tr valign='middle'>";
+            if (ist < ListMalz.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden){
+              s += "<td align='left'>" + ListMalz.at(i).Name + "</td>";
+            }
+            //Rohstoff ist nicht vorhanden
+            else {
+              s += "<td align='left' style='color: grey;'>" + ListMalz.at(i).Name + "</td>";
+            }
+            s += "<td align='center'>" + QString::number(ListMalz.at(i).Menge) + "</td>";
+            if (ist < ListMalz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b></td>";
+            s += "</tr>";
           }
-        }
-        double rest = ist - ListMalz.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0){
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        }
-        else {
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        }
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListMalz.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListMalz.at(i).Name + "</td>";
-        }
-        s += "<td align='center'>" + QString::number(ListMalz.at(i).Menge) + "</td>";
-        if (rest < 0)
-          s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-        else
-          s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-        s += "</tr>";
+          s += "</table>";
+          contextVariables["Malz"] = s;
       }
-      s += "</table>";
-      s += "</div>";
 
 
       //Hopfen Mengen anzeigen
       //Bild für Hopfen anzeigen
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt (g)") + "</td><td align='center'>" + trUtf8("übrig (g)") + "</td>";
-      for (int i = 0; i < ListHopfen.size(); ++i){
-        double ist = 0;
-        bool gefunden = false;
-        //Vorhandene Menge von diesem Hopfen
-        for (int o=0; o < tableWidget_Hopfen -> rowCount(); o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_Hopfen -> item(o,TableHopfenColName) -> text() == ListHopfen.at(i).Name){
-            QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,TableHopfenColMenge);
-            ist = spinBox->value();
-            gefunden = true;
+      if (ListHopfen.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + " (" + trUtf8("g") + ")" + "</td><td align='center'>" + trUtf8("vorhanden") + " (" + trUtf8("g") + ")" + "</td>";
+          for (int i = 0; i < ListHopfen.size(); ++i){
+            double ist = 0;
+            bool gefunden = false;
+            //Vorhandene Menge von diesem Hopfen
+            for (int o=0; o < tableWidget_Hopfen -> rowCount(); o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Hopfen -> item(o,TableHopfenColName) -> text() == ListHopfen.at(i).Name){
+                QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,TableHopfenColMenge);
+                ist = spinBox->value();
+                gefunden = true;
+              }
+            }
+            s += "<tr valign='middle'>";
+            if (ist < ListHopfen.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden)
+              s += "<td align='left'>" + ListHopfen.at(i).Name + "</td>";
+            else
+              s += "<td align='left' style='color: grey;'>" + ListHopfen.at(i).Name + "</td>";
+            s += "<td align='center'>" + QString::number(ListHopfen.at(i).Menge) + "</td>";
+            if (ist < ListHopfen.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b></td>";
+            s += "</tr>";
           }
-        }
-        double rest = ist - ListHopfen.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListHopfen.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListHopfen.at(i).Name + "</td>";
-        }
-        s += "<td align='center'>" + QString::number(ListHopfen.at(i).Menge) + "</td>";
-        if (rest < 0)
-          s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-        else
-          s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-        s += "</tr>";
+          s += "</table>";
+          contextVariables["Hopfen"] = s;
       }
-      s += "</table>";
-      s += "</div>";
-
 
       //Hefe Mengen anzeigen
       //Bild für Hefe anzeigen
-      s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/zutaten/hefe_50.png' alt='Hefe' width='50px' border=0></div>";
-      s += "<div align='center' style='font-size:12pt;'>";
-      s += "<table border=0 cellspacing=0 >";
-      s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
-      for (int i = 0; i < ListHefe.size(); ++i){
-        double ist;
-        bool gefunden = false;
-        int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
-        for (int o=0; o < AnzahlHefeEintraege; o++){
-          //wenn Eintrag übereinstimmt
-          if (tableWidget_Hefe -> item(o,TableHefeColName) -> text() == ListHefe.at(i).Name){
-            gefunden = true;
+      if (ListHefe.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
+          for (int i = 0; i < ListHefe.size(); ++i){
+            double ist;
+            bool gefunden = false;
+            int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
+            for (int o=0; o < AnzahlHefeEintraege; o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Hefe -> item(o,TableHefeColName) -> text() == ListHefe.at(i).Name){
+                gefunden = true;
+              }
+            }
+            //Vorhandene Menge von diesem Hopfen
+            ist = ListHefe.at(i).MengeIst;
+            s += "<tr valign='middle'>";
+            if (ist < ListHefe.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden)
+              s += "<td align='left'>" + ListHefe.at(i).Name + "</td>";
+            else
+              s += "<td align='left' style='color: grey;'>" + ListHefe.at(i).Name + "</td>";
+            s += "<td align='center'>" + QString::number(ListHefe.at(i).Menge) + "</td>";
+            if (ist < ListHefe.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b></td>";
+            s += "</tr>";
           }
-        }
-        //Vorhandene Menge von diesem Hopfen
-        ist = ListHefe.at(i).MengeIst;
-        double rest = ist - ListHefe.at(i).Menge;
-        s += "<tr valign='middle'>";
-        if (rest < 0)
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
-        else
-          s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
-        //Rohstoff ist aufgeführt
-        if (gefunden){
-          s += "<td align='left'>" + ListHefe.at(i).Name + "</td>";
-        }
-        //Rohstoff ist nicht vorhanden
-        else {
-          s += "<td align='left' style='color: grey;'>" + ListHefe.at(i).Name + "</td>";
-        }
-        s += "<td align='center'>" + QString::number(ListHefe.at(i).Menge) + "</td>";
-        if (rest < 0)
-          s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b></td>";
-        else
-          s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b></td>";
-        s += "</tr>";
+          s += "</table>";
+          contextVariables["Hefe"] = s;
       }
-      s += "</table>";
-      s += "</div>";
 
       //WeitereZutaten Honig Mengen anzeigen
       //Bild für Honig anzeigen
       if (ListWeitereZutatenHonig.count() > 0){
         int Einheit=0;
-        s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_0_50.png' alt='Honig' width='50px' border=0></div>";
-        s += "<div align='center' style='font-size:12pt;'>";
-        s += "<table border=0 cellspacing=0 >";
-        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
         for (int i = 0; i < ListWeitereZutatenHonig.size(); ++i){
           double ist=0;
           bool gefunden = false;
@@ -810,48 +696,42 @@ void MainWindowImpl::ErstelleSudInfo()
               gefunden = true;
             }
           }
-          double rest = ist - ListWeitereZutatenHonig.at(i).Menge;
           s += "<tr valign='middle'>";
-          if (rest < 0)
+          if (ist < ListWeitereZutatenHonig.at(i).Menge)
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
           else
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
           //Rohstoff ist aufgeführt
-          if (gefunden){
+          if (gefunden)
             s += "<td align='left'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
-          }
-          //Rohstoff ist nicht vorhanden
-          else {
+          else
             s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
-          }
           if (Einheit == EWZ_Einheit_Kg){
             s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge / 1000) + " kg</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+            if (ist < ListWeitereZutatenHonig.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
           }
           else {
             s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge) + " g</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
+            if (ist < ListWeitereZutatenHonig.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b> g</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b> g</td>";
           }
 
           s += "</tr>";
         }
         s += "</table>";
-        s += "</div>";
+        contextVariables["Honig"] = s;
       }
       //WeitereZutaten Zucker Mengen anzeigen
       //Bild für Zucker anzeigen
       if (ListWeitereZutatenZucker.count() > 0){
         int Einheit=0;
-        s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_1_50.png' alt='Honig' width='50px' border=0></div>";
-        s += "<div align='center' style='font-size:12pt;'>";
-        s += "<table border=0 cellspacing=0 >";
-        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
         for (int i = 0; i < ListWeitereZutatenZucker.size(); ++i){
           double ist=0;
           bool gefunden = false;
@@ -869,48 +749,42 @@ void MainWindowImpl::ErstelleSudInfo()
               gefunden = true;
             }
           }
-          double rest = ist - ListWeitereZutatenZucker.at(i).Menge;
           s += "<tr valign='middle'>";
-          if (rest < 0)
+          if (ist < ListWeitereZutatenZucker.at(i).Menge)
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
           else
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
           //Rohstoff ist aufgeführt
-          if (gefunden){
+          if (gefunden)
             s += "<td align='left'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
-          }
-          //Rohstoff ist nicht vorhanden
-          else {
+          else
             s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
-          }
           if (Einheit == 0){
             s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge / 1000) + " kg</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+            if (ist < ListWeitereZutatenZucker.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
           }
           else {
             s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge) + " g</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
+            if (ist < ListWeitereZutatenZucker.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b> g</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b> g</td>";
           }
 
           s += "</tr>";
         }
         s += "</table>";
-        s += "</div>";
+        contextVariables["Zucker"] = s;
       }
       //WeitereZutaten Gewuerz Mengen anzeigen
       //Bild für Gewuerz anzeigen
       if (ListWeitereZutatenGewuerz.count() > 0){
         int Einheit=0;
-        s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_2_50.png' alt='Honig' width='50px' border=0></div>";
-        s += "<div align='center' style='font-size:12pt;'>";
-        s += "<table border=0 cellspacing=0 >";
-        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
         for (int i = 0; i < ListWeitereZutatenGewuerz.size(); ++i){
           double ist=0;
           bool gefunden = false;
@@ -928,48 +802,42 @@ void MainWindowImpl::ErstelleSudInfo()
               gefunden = true;
             }
           }
-          double rest = ist - ListWeitereZutatenGewuerz.at(i).Menge;
           s += "<tr valign='middle'>";
-          if (rest < 0)
+          if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
           else
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
           //Rohstoff ist aufgeführt
-          if (gefunden){
+          if (gefunden)
             s += "<td align='left'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
-          }
-          //Rohstoff ist nicht vorhanden
-          else {
+          else
             s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
-          }
           if (Einheit == 0){
             s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge / 1000) + " kg</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+            if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
           }
           else {
             s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge) + " g</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
+            if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b> g</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b> g</td>";
           }
 
           s += "</tr>";
         }
         s += "</table>";
-        s += "</div>";
+        contextVariables["Gewuerz"] = s;
       }
       //WeitereZutaten Frucht Mengen anzeigen
       //Bild für Frucht anzeigen
       if (ListWeitereZutatenFrucht.count() > 0){
         int Einheit=0;
-        s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_3_50.png' alt='Honig' width='50px' border=0></div>";
-        s += "<div align='center' style='font-size:12pt;'>";
-        s += "<table border=0 cellspacing=0 >";
-        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
         for (int i = 0; i < ListWeitereZutatenFrucht.size(); ++i){
           double ist=0;
           bool gefunden = false;
@@ -987,48 +855,42 @@ void MainWindowImpl::ErstelleSudInfo()
               gefunden = true;
             }
           }
-          double rest = ist - ListWeitereZutatenFrucht.at(i).Menge;
           s += "<tr valign='middle'>";
-          if (rest < 0)
+          if (ist < ListWeitereZutatenFrucht.at(i).Menge)
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
           else
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
           //Rohstoff ist aufgeführt
-          if (gefunden){
+          if (gefunden)
             s += "<td align='left'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
-          }
-          //Rohstoff ist nicht vorhanden
-          else {
+          else
             s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
-          }
           if (Einheit == 0){
             s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge / 1000) + " kg</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+            if (ist < ListWeitereZutatenFrucht.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
           }
           else {
             s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge) + " g</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
+            if (ist < ListWeitereZutatenFrucht.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b> g</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b> g</td>";
           }
 
           s += "</tr>";
         }
         s += "</table>";
-        s += "</div>";
+      contextVariables["Frucht"] = s;
       }
       //WeitereZutaten Sonstiges Mengen anzeigen
       //Bild für Sonstiges anzeigen
       if (ListWeitereZutatenSonstiges.count() > 0){
         int Einheit=0;
-        s += "<div align='center'><img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_4_50.png' alt='Honig' width='50px' border=0></div>";
-        s += "<div align='center' style='font-size:12pt;'>";
-        s += "<table border=0 cellspacing=0 >";
-        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("übrig") + "</td>";
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("vorhanden") + "</td>";
         for (int i = 0; i < ListWeitereZutatenSonstiges.size(); ++i){
           double ist=0;
           bool gefunden = false;
@@ -1046,39 +908,35 @@ void MainWindowImpl::ErstelleSudInfo()
               gefunden = true;
             }
           }
-          double rest = ist - ListWeitereZutatenSonstiges.at(i).Menge;
           s += "<tr valign='middle'>";
-          if (rest < 0)
+          if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
           else
             s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
           //Rohstoff ist aufgeführt
-          if (gefunden){
+          if (gefunden)
             s += "<td align='left'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
-          }
-          //Rohstoff ist nicht vorhanden
-          else {
+          else
             s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
-          }
           if (Einheit == 0){
             s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge / 1000) + " kg</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+            if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest/1000) + "</b> kg</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist/1000) + "</b> kg</td>";
           }
           else {
             s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge) + " g</td>";
-            if (rest < 0)
-              s += "<td align='center' style='color: red;'><b>" + QString::number(rest) + "</b> g</td>";
+            if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist) + "</b> g</td>";
             else
-              s += "<td align='center' style='color: green;'><b>" + QString::number(rest) + "</b> g</td>";
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist) + "</b> g</td>";
           }
 
           s += "</tr>";
         }
         s += "</table>";
-        s += "</div>";
+        contextVariables["Sonstiges"] = s;
       }
     }
 
@@ -1086,7 +944,8 @@ void MainWindowImpl::ErstelleSudInfo()
     settings.beginGroup("DB");
     QDir dbpfad = QDir(settings.value("DB_Pfad").toString());
     settings.endGroup();
-    bool kopzeile = false;
+    contextVariables["AnhangTitel"] = trUtf8("Anhänge");
+    s = "";
     for (int sid = 0; sid < ListSudID.size(); ++sid){
       QString sql = "SELECT * FROM Anhang WHERE SudID=" + QString::number(ListSudID.at(sid));
       QSqlQuery query_anhang;
@@ -1099,11 +958,6 @@ void MainWindowImpl::ErstelleSudInfo()
       }
       else {
         while (query_anhang.next()){
-          if (!kopzeile) {
-            s += "<div class='r' style='margin-bottom:10px;' align='center'><p class='h1'><b>" + trUtf8("Anhänge") + "</b></p></div>";
-            s += "<div align='center'>";
-            kopzeile = true;
-          }
           int FeldNr = query_anhang.record().indexOf("Pfad");
           QString pfad = query_anhang.value(FeldNr).toString();
           if (QDir::isRelativePath(pfad))
@@ -1113,16 +967,21 @@ void MainWindowImpl::ErstelleSudInfo()
           else
             s += "<a href=\"file:///" + pfad + "\">" + pfad + "</a></br></br>";
         }
-        if (kopzeile) {
-            s += "</div>";
-        }
       }
     }
+    contextVariables["Anhang"] = s;
 
-    seite += s;
-    //Seitenende
-    ende = "</body></html>";
-    seite += ende;
+    QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
+    QFile file(settingsPath + "sudinfo.html");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+    QString html_template = file.readAll();
+    file.close();
 
-    webView_Info -> setHtml(seite, QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + "/"));
+    Mustache::Renderer renderer;
+    Mustache::QtVariantContext context(contextVariables);
+    QString seite = renderer.render(html_template, &context);
+    if (webView_Info->url().isEmpty())
+        MyWebView::clearMemoryCaches();
+    webView_Info->setHtml(seite, QUrl::fromLocalFile(settingsPath));
 }

@@ -77,16 +77,7 @@ void GetRohstoffVorlage::viewImpl(int art)
         break;
     }
 
-    // copy list from resources to settings directory
     QFile file(getFileName(true));
-    if (!file.exists())
-    {
-        QFile file2(dbPath);
-        if (file2.copy(file.fileName()))
-            QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
-    }
-
-    // open list from settings directory
     MyDsvTableModel* model = new MyDsvTableModel(this);
     model->loadFromFile(file.fileName(), true, ';');
     QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel();

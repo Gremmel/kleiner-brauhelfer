@@ -1,14 +1,23 @@
 # kleiner-brauhelfer
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
+## Download letzte Version
+[Version 1.4.4.2](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.3 (in Entwicklung)
-- Deutsch überarbeitet (grossen Dank an Radulph)
+- Deutsch überarbeitet (grossen Dank an **Radulph**)
 - Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 - Min Max werte gesamte Kochdauer auf 1 - 999 min geändert
 - Möglichkeit eine Sicherungskopie beim Start anzulegen
+- Formatierung von Spickzettel & Zusammenfassung lässt sich über HTML Datei anpassen
+  - Windows: C:\\Users\\&lt;benutzer&gt;\\AppData\\Roaming\\Gremmelsoft
+  - Linux: /home/&lt;benutzer&gt;/.config/Gremmelsoft/
+  - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
+- Zusammenfassung enthält auch Rezeptwerte
+- Spalte Bewertung in Sudauswahl
 ### Version 1.4.4.2
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
 - ~~Windows Versionen für 32bit und 64bit Architektur~~
 - Rohstofftabellen neu organisiert
@@ -25,6 +34,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Tabelle "Rohstoffvorlage" lässt sich sortieren (keine numerische Sortierung)
 - Textfilter für den Sudname in der Sudauswahl
 ### Version 1.4.4.1
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.1)
 - Zustand der Tabellen werden gespeichert
 - Gewünschte Restalkalität kann auch negativ sein
 - Rohstoffvorlagen für "Weitere Zutaten"
@@ -34,6 +44,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Rohstofftabellen: farbliche Kennung, wenn Haltbarkeitsdatum vorbei
 - Fix: Brauanlage bei Sudimport
 ### Version 1.4.4.0
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.0)
 - Übersetzung ins Englische (Danke an **freibadschwimmer** & **stikkx**)
 - Importieren von "Maische Malz und Mehr" Rezepte (Danke an **bitwave**)
 - Bessere Anzeige, ob ein Rohstoff noch vorhanden ist

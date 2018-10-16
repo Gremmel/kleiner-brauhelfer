@@ -17,6 +17,7 @@
 #include <QTableWidgetItem>
 #include <QTemporaryFile>
 #include <QUrl>
+#include <QDirIterator>
 #include <time.h>
 
 #include "brauanlage.h"
@@ -61,6 +62,9 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   // Windowicon setzten
   appIcon.addFile(":/global/logo.svg", QSize(64, 64));
   setWindowIcon(appIcon);
+
+  // Ressourcen lokal kopieren
+  KopiereRessourcen();
 
   //Überprüfen ob ergebnisse in der Datenbank neu berechnet werden müssen
   if (CheckDBNeuBerechnen()) {
@@ -314,7 +318,7 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   // letzte Suddaten laden
   if (AktuelleSudID == 0)
     AktuelleSudID = 1;
-  LadeSudDB(true);
+  LadeSudDB(false);
 }
 
 void MainWindowImpl::initUi() {
@@ -342,6 +346,7 @@ void MainWindowImpl::initUi() {
   tableWidget_Sudauswahl->horizontalHeader()->resizeSection(2, 150);
   tableWidget_Sudauswahl->horizontalHeader()->resizeSection(3, 150);
   tableWidget_Sudauswahl->horizontalHeader()->resizeSection(4, 150);
+  tableWidget_Sudauswahl->horizontalHeader()->resizeSection(5, 150);
   tableWidget_Sudauswahl->horizontalHeader()->setSectionResizeMode(
       1, QHeaderView::Stretch);
   tableWidget_Sudauswahl->sortByColumn(2, Qt::DescendingOrder);
@@ -5940,6 +5945,13 @@ void MainWindowImpl::LadeSudDB(bool aktivateTab) {
   AmLaden = false;
   BerAlles();
   setAenderung(false);
+  for (int i = 0; i < tableWidget_Sudauswahl->rowCount(); ++i) {
+    int SudID = tableWidget_Sudauswahl->item(i, 0)->text().toInt();
+    if (SudID == AktuelleSudID) {
+      tableWidget_Sudauswahl->setCurrentCell(i, 0);
+      break;
+    }
+  }
   if (aktivateTab) {
     if (BierWurdeAbgefuellt)
       tabWidged->setCurrentWidget(tab_Spickzettel);
@@ -6383,87 +6395,95 @@ void MainWindowImpl::FuelleSudauswahl() {
           query.value(query.record().indexOf("BierWurdeAbgefuellt")).toBool();
       bool verbraucht =
           query.value(query.record().indexOf("BierWurdeVerbraucht")).toBool();
-      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem2 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem4 = new QTableWidgetItem("");
-      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
-      tableWidget_Sudauswahl->setRowCount(tableWidget_Sudauswahl->rowCount() +
-                                          1);
+
+      QBrush color;
+      if (verbraucht) {
+        if (StyleDunkel)
+          color = QBrush(QColor(50, 50, 50));
+        else
+          color = QBrush(QColor(200, 200, 200));
+      } else if (abgefuellt) {
+        if (StyleDunkel)
+          color = QBrush(QColor(99, 125, 21));
+        else
+          color = QBrush(QColor(193, 225, 178));
+      } else if (gebraut) {
+        if (StyleDunkel)
+          color = QBrush(QColor(125, 99, 21));
+        else
+          color = QBrush(QColor(225, 216, 184));
+      }
+
+      tableWidget_Sudauswahl->setRowCount(tableWidget_Sudauswahl->rowCount() + 1);
+
       // ID
       FeldNr = query.record().indexOf("ID");
-      newItem1->setText(query.value(FeldNr).toString());
+      QTableWidgetItem *newItem1 = new QTableWidgetItem(query.value(FeldNr).toString());
       tableWidget_Sudauswahl->setItem(i, 0, newItem1);
+
       // Sudname
       FeldNr = query.record().indexOf("Sudname");
-      newItem2->setText(query.value(FeldNr).toString());
+      QTableWidgetItem *newItem2 = new QTableWidgetItem(query.value(FeldNr).toString());
+      newItem2->setBackground(color);
       tableWidget_Sudauswahl->setItem(i, 1, newItem2);
-      // Braudatum (wenn schon gebraut)
+
+      // Braudatum
+      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       if (gebraut) {
-        newItem2->setBackgroundColor(Qt::green);
         FeldNr = query.record().indexOf("Braudatum");
         newItem3->setData(
             Qt::DisplayRole,
             QDate::fromString(query.value(FeldNr).toString(), Qt::ISODate));
       }
+      newItem3->setBackground(color);
+      newItem3->setTextAlignment(Qt::AlignCenter);
       tableWidget_Sudauswahl->setItem(i, 2, newItem3);
+
       // Erstellt
+      QTableWidgetItem *newItem4 = new QTableWidgetItem("");
       FeldNr = query.record().indexOf("Erstellt");
       newItem4->setData(
           Qt::DisplayRole,
           QDateTime::fromString(query.value(FeldNr).toString(), Qt::ISODate));
+      newItem4->setBackground(color);
+      newItem4->setTextAlignment(Qt::AlignCenter);
       tableWidget_Sudauswahl->setItem(i, 3, newItem4);
+
       // Gespeichert
+      QTableWidgetItem *newItem5 = new QTableWidgetItem("");
       FeldNr = query.record().indexOf("Gespeichert");
       newItem5->setData(
           Qt::DisplayRole,
           QDateTime::fromString(query.value(FeldNr).toString(), Qt::ISODate));
+      newItem5->setBackground(color);
+      newItem5->setTextAlignment(Qt::AlignCenter);
       tableWidget_Sudauswahl->setItem(i, 4, newItem5);
+
+      // Bewertung
+      QTableWidgetItem *newItem6 = new QTableWidgetItem("");
+      FeldNr = query.record().indexOf("Bewertung");
+      int bewertung = query.value(FeldNr).toInt();
+      if (bewertung > 0) {
+        StarView* starItem = new StarView();
+        starItem->init(StyleDunkel);
+        starItem->setMaxStar(MaxAnzahlSterne);
+        starItem->setAnzahlStar(bewertung);
+        newItem6->setData(Qt::DisplayRole, bewertung);
+        newItem6->setTextAlignment(Qt::AlignCenter);
+        tableWidget_Sudauswahl->setCellWidget(i, 5, starItem);
+      }
+      newItem6->setBackground(color);
+      tableWidget_Sudauswahl->setItem(i, 5, newItem6);
+
       // in Merkliste
       FeldNr = query.record().indexOf("MerklistenID");
-      int MerklistenID = query.value(FeldNr).toInt();
+      if (query.value(FeldNr).toInt() == 1) {
+        if (StyleDunkel)
+          newItem2->setBackground(QBrush(QColor(80,120,188)));
+        else
+          newItem2->setBackground(QBrush(QColor(122,163,233)));
+      }
 
-      // Mittig ausrichten
-      newItem3->setTextAlignment(Qt::AlignCenter);
-      newItem4->setTextAlignment(Qt::AlignCenter);
-      newItem5->setTextAlignment(Qt::AlignCenter);
-      // Farbe setzen wenn gebraut
-      QColor color;
-      if (verbraucht) {
-        if (StyleDunkel)
-          color.setRgb(50, 50, 50);
-        else
-          color.setRgb(200, 200, 200);
-        newItem2->setBackgroundColor(color);
-        newItem3->setBackgroundColor(color);
-        newItem4->setBackgroundColor(color);
-        newItem5->setBackgroundColor(color);
-      } else if (abgefuellt) {
-        if (StyleDunkel)
-          color.setRgb(99, 125, 21);
-        else
-          color.setRgb(193, 225, 178);
-        newItem2->setBackgroundColor(color);
-        newItem3->setBackgroundColor(color);
-        newItem4->setBackgroundColor(color);
-        newItem5->setBackgroundColor(color);
-      } else if (gebraut) {
-        if (StyleDunkel)
-          color.setRgb(125, 99, 21);
-        else
-          color.setRgb(225, 216, 184);
-        newItem2->setBackgroundColor(color);
-        newItem3->setBackgroundColor(color);
-        newItem4->setBackgroundColor(color);
-        newItem5->setBackgroundColor(color);
-      }
-      if (MerklistenID == 1) {
-        if (StyleDunkel)
-          color.setRgb(80, 120, 188);
-        else
-          color.setRgb(122, 163, 233);
-        newItem2->setBackgroundColor(color);
-      }
       i++;
     }
   }
@@ -9658,8 +9678,8 @@ void MainWindowImpl::on_tableWidget_Brauuebersicht_cellDoubleClicked(int, int) {
 void MainWindowImpl::on_tableWidget_Sudauswahl_itemSelectionChanged() {
   ErstelleSudInfo();
   // Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Sudauswahl->selectedItems().count() == 4 ||
-      tableWidget_Sudauswahl->selectedItems().count() == 5) {
+  if (tableWidget_Sudauswahl->selectedItems().count() == 5 ||
+      tableWidget_Sudauswahl->selectedItems().count() == 6) {
     // Alle Buttons enablen
     pushButton_SudDel->setDisabled(false);
     pushButton_SudExport->setDisabled(false);
@@ -11764,7 +11784,6 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index) {
   // Zusammenfassung / Spickzettel
   else if (currentTab == tab_Spickzettel) {
     // Seite Spickzettel erstellen
-    horizontalSlider_ScalePDF->setValue(100);
     ErstelleTabSpickzettel();
   }
   // Brau && Gärdaten
@@ -11820,8 +11839,8 @@ void MainWindowImpl::on_pushButton_EingabeHVerdampfungsziffer_clicked() {
 
 void MainWindowImpl::on_pushButton_SudinfoPDF_clicked() {
   QString defaultFileName;
-  if (tableWidget_Sudauswahl->selectedItems().count() == 4 ||
-      tableWidget_Sudauswahl->selectedItems().count() == 5)
+  if (tableWidget_Sudauswahl->selectedItems().count() == 5 ||
+      tableWidget_Sudauswahl->selectedItems().count() == 6)
     defaultFileName =
         tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(), 1)
             ->text() +
@@ -12157,7 +12176,9 @@ void MainWindowImpl::on_pushButton_alleVergessen_clicked() {
   FuelleSudauswahl();
 }
 
-void MainWindowImpl::on_checkBox_MerklisteMengen_clicked() { BerAlles(); }
+void MainWindowImpl::on_checkBox_MerklisteMengen_clicked() {
+  BerAlles();
+}
 
 void MainWindowImpl::on_spinBox_NachisomerisierungsZeit_valueChanged(int arg1) {
   // Maximalen wert für Hopfenzeiten Setzten
@@ -12541,5 +12562,22 @@ void MainWindowImpl::on_pushButton_SudTeilen_clicked() {
       }
     }
     delete dlg;
+  }
+}
+
+void MainWindowImpl::KopiereRessourcen() {
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
+  QDirIterator it(":/data", QDirIterator::Subdirectories);
+  while (it.hasNext()) {
+    it.next();
+    if (it.fileName() == "vorlage.sqlite" || it.fileName() == "ueber.html")
+      continue;
+    QFile file(settingsPath + it.fileName());
+    if (!file.exists()) {
+      QFile file2(it.filePath());
+      if (file2.copy(file.fileName()))
+        QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
+    }
   }
 }

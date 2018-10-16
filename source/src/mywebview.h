@@ -27,6 +27,7 @@ class MyWebView : public QWebEngineView
     Q_OBJECT
 
 public:
+    static void clearMemoryCaches();
     MyWebView(QWidget* parent = Q_NULLPTR);
     ~MyWebView();
     void setLinksExternal(bool external);
@@ -44,6 +45,7 @@ class MyWebView : public QWebView
     Q_OBJECT
 
 public:
+    static void clearMemoryCaches();
     MyWebView(QWidget* parent = 0);
     void setLinksExternal(bool external);
     void printToPdf(const QString& filePath);

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{Style}}">
+</head>
+<body>
+
+{{#Sudname}}
+<div class="r" style="margin-bottom:10px;" align="center">
+<p class="h1"><b>{{{Sudname}}}</b></p>
+</div>
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<table>
+<tbody>
+<tr>
+<td></td>
+<td>{{{Sterne}}}</td>
+</tr>
+<tr>
+<td valign="center">
+<div style="width:100px;height:100px;">
+{{{Glas}}}
+</div>
+</td>
+<td valign="top">
+{{{Rezept}}}
+</td>
+</tr>
+</tbody>
+</table>
+<p>{{{Kommentar}}}</p>
+</div>
+{{/Sudname}}
+
+{{#Rohstoffe}}
+<div class="r" style="margin-bottom:10px;" align="center">
+<p class="h1"><b>{{Rohstoffe}}</b></p>
+</div>
+{{#Malz}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/zutaten/getreide_300.png" alt="Getreide" width="300px" border=0>
+<br>
+{{{Malz}}}
+</div>
+{{/Malz}}
+{{#Hopfen}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/zutaten/hopfen_100.png" alt="Hopfen" width="100px" border=0>
+<br>
+{{{Hopfen}}}
+</div>
+{{/Hopfen}}
+{{#Hefe}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/zutaten/hefe_50.png" alt="Hefe" width="50px" border=0>
+<br>
+{{{Hefe}}}
+</div>
+{{/Hefe}}
+{{#Honig}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/ewz/ewz_typ_0_50.png" alt="Honig" width="50px" border=0>
+<br>
+{{{Honig}}}
+</div>
+{{/Honig}}
+{{#Zucker}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/ewz/ewz_typ_1_50.png" alt="Honig" width="50px" border=0>
+<br>
+{{{Zucker}}}
+</div>
+{{/Zucker}}
+{{#Gewuerz}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/ewz/ewz_typ_2_50.png" alt="Honig" width="50px" border=0>
+<br>
+{{{Gewuerz}}}
+</div>
+{{/Gewuerz}}
+{{#Frucht}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/ewz/ewz_typ_3_50.png" alt="Honig" width="50px" border=0>
+<br>
+{{{Frucht}}}
+</div>
+{{/Frucht}}
+{{#Sonstiges}}
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+<img style="padding:0px;margin:0px;" src="qrc:/ewz/ewz_typ_4_50.png" alt="Honig" width="50px" border=0>
+<br>
+{{{Sonstiges}}}
+</div>
+{{/Sonstiges}}
+{{/Rohstoffe}}
+
+{{#Anhang}}
+<div class="r" style="margin-bottom:10px;" align="center">
+<p class="h1"><b>{{AnhangTitel}}</b></p>
+</div>
+<div class="rm" style="margin-top:10px;margin-bottom:5px;" align="center">
+{{{Anhang}}}
+</div>
+{{/Anhang}}
+
+</body>
+</html>

@@ -6,6 +6,8 @@
 #include <QSqlRecord>
 #include "definitionen.h"
 #include "errormessage.h"
+#include <QFile>
+#include "mustache.h"
 
 QString MainWindowImpl::GetWertString(double value)
 {
@@ -14,369 +16,171 @@ QString MainWindowImpl::GetWertString(double value)
 
 void MainWindowImpl::ErstelleSpickzettel()
 {
-  double factor = horizontalSlider_ScalePDF->value() / 100.0;
+  QString _seite;
 
-  // Seitenkopf
-  QString seite, kopf, ende, style;
+  QString s;
+  QVariantHash contextVariables;
+  contextVariables["AppName"] = APP_NAME;
+  contextVariables["AppVersion"] = VERSION;
+  contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
+  contextVariables["Sudname"] = lineEdit_Sudname->text();
 
-  kopf = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0//EN' 'http://www.w3.org/TR/REC-html40/strict.dtd'> <html><head><meta name='qrichtext' content='1' />";
-  style = "<style type='text/css'>";
-  //Style für P
-  style += "p{color:black;font-size:" + QString::number(10 * factor) + "pt;padding:0px;margin:0px;}";
-  //Style für Variable
-  style += ".value{color:blue;margin-left:5px;margin-right:5px;}";
-  //Style für div Kommentar
-  style += ".koment{}";
-  //Style für ul
-  style += "ul{color:black;font-size:" + QString::number(10 * factor) + "pt;}";
-  //Style für Überschrift h1
-  style += "p.h1{color:black;font-size:" + QString::number(12 * factor) + "pt;}";
-  //Style für Überschrift h2
-  style += "p.h2{color:black;font-size:" + QString::number(11 * factor) + "pt;margin-bottom:5px;}";
-  style += "p.version{color:#999999;font-size:" + QString::number(11 * factor) + "pt;margin-top:5px;}";
-  //Style für Div Box ohne Rahmen
-  style += "div.r{border:0px solid #dddddd; border-radius: 10px; padding:5px;background-color:#dddddd;}";
-  //Style für Div Box mit Rahmen
-  style += "div.rm{border:2px solid #dddddd; border-radius: 10px; padding:5px;background-color:#ffffff;}";
-  //Style für Hinweis
-  style += ".hinweis{color:#d47209;}";
-  //Style für Tabelle
-  style += "td{padding:2px;margin:0px;}";
-  style += "td.r{padding:2px;margin:0px;border-bottom-color:#dddddd;border-bottom-style:solid;border-width:1px;}";
-  //Style für Hinweis Wert in Brau und Gärdaten eintragen
-  style += "td.we{background-color: #eba328;}";
-  style += "tr{padding:0px;margin:0px;}";
-  style += "</style>";
-  kopf += style;
-  kopf += "</head><body align='center' style=' font-family:Ubuntu,Arial; font-size:" + QString::number(10 * factor) + "pt;font-style:normal;background-color:#fff;'>";
-  seite = kopf;
-
-  QString s = "";
-
-  //Tabelle für Bild und Zutaten
-  s += "<div class='' width='99%' style='' align='center'>";
-
-  s += "<table width='50%' summary='testtabelle' border='0' cellspacing='5'>";
-  s += "<tr >";
-  s += "<td valign='middle' style=''>";
-  //Solldaten des Rezeptes
-  s += "<div class='rm' style='margin-top:10px;margin-bottom:5px;' align='center'>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Name
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p class='h1'><b>" + lineEdit_Sudname -> text() + "</b></p>";
-  s += "</td>";
-  s += "</tr>";
-  //Menge
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Menge") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_Menge -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Stammwürze
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Stammwürze") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_SW -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("°P") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //High-Gravity-Faktor
-  if (spinBox_High_Gravity->value() > 0) {
-    s += "<tr style=''>";
-    s += "<td>";
-    s += "<p>" + trUtf8("High-Gravity-Faktor") + "</p>";
-    s += "</td>";
-    s += "<td align='right'>";
-    s += "<p class='value'>" + QString::number(spinBox_High_Gravity -> value()) + "</p>";
-    s += "</td>";
-    s += "<td>";
-    s += "<p>" + trUtf8("%") + "</p>";
-    s += "</td>";
-    s += "</tr>";
-  }
-  //Bittere
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Bittere") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_IBU -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("IBU") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Nachisomerisierungs-zeit
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Nachisomerisierungszeit") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(spinBox_NachisomerisierungsZeit -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("min") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Farbe
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Farbe") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_EBC -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("EBC") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //CO₂-Gehalt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("CO₂-Gehalt") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_CO2 -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("g/l") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  //Brauanlage
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Brauanlage") + "</p>";
-  s += "</td>";
-  s += "<td colspan=2 align='right'>";
-  s += "<p class='value'>" + comboBox_AuswahlBrauanlage->currentText() + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</table>";
-
-  s += "<table width='90%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='bottom' style=''>";
-  //Schüttung
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/getreide_300.png' alt='Getreide' width='300px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Malzgaben
-  double fehlprozent = 0;
-  if (list_Malzgaben.count()>0) {
-    fehlprozent = list_Malzgaben[0]->getFehlProzent();
-  }
-  if (fehlprozent == 0) {
-    for (int i=0; i < list_Malzgaben.count(); i++){
-      s += "<tr style=''>";
-      s += "<td>";
-      s += "<p>" + list_Malzgaben[i]->getName() + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("kg") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("%") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("EBC") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
-  else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.")+"</div>";
-  }
-  //Gesamt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Gesamt") + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("kg") + "</p>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-
-
-  s += "<td valign='top' style=''>";
-  //bild mit entsprechender Bierfarbe
-  QColor farbe;
-  farbe = Berechnungen.GetFarbwert(doubleSpinBox_EBC -> value());
-  s += "<div class='' style='background-color:" + farbe.name() + ";width:210px;height:210px;margin:0px;padding:0px;'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/global/bier_420x420.png' alt='Bierfarbe' width='210px' height='210px' border=0>";
-  s += "</div>";
-  s += "</td>";
-  s += "<td valign='top' style=''>";
-  //Hopfen
-  s += "<div class='rm' style='margin:0px;margin-bottom:5px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hopfen_100.png' alt='Hopfen' width='100px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Alle Hopfengaben
-  fehlprozent = 0;
-  if (list_Hopfengaben.count()>0) {
-    fehlprozent = list_Hopfengaben[0]->getFehlProzent();
-  }
-  if (fehlprozent == 0) {
-    for (int i=0; i < list_Hopfengaben.count(); i++){
-      s += "<tr style=''>";
-      s += "<td>";
-      if (list_Hopfengaben[i]->getVWH())
-        s += "<p>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-      else
-        s += "<p>" + list_Hopfengaben[i]->getErgebnistext() + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("g") + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("min") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  //Wenn die Porzentuale aufteilung der schüttung nicht stimmt
-  else {
-    s += "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfengaben konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.")+"</div>";
-  }
-  //Hopfengaben in den Weiteren Zutaten
-  for (int i=0; i < list_EwZutat.count(); i++){
-    //Nur Hopfengaben
-    if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Hopfen){
-      s += "<tr style=''>";
-      s += "<td>";
-      s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
-      s += "</td>";
-      s += "<td align='right'>";
-      s += "<p class='value'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</p>";
-      s += "</td>";
-      s += "<td>";
-      s += "<p>" + trUtf8("g") + "</p>";
-      s += "</td>";
-      s += "<td align='right' colspan='2'>";
-      if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
-        s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
-      else
-        s += "<p class='value'>" + trUtf8("Anstellen") + "</p>";
-      s += "</td>";
-      s += "</tr>";
-    }
-  }
-  s += "</tbody></table>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-  s += "</table>";
-
-  s += "<table width='70%' summary='tabelle' border='0' cellspacing='3'>";
-  s += "<tr style=''>";
-  s += "<td valign='top' style=''>";
-  //Wasser
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/wasser_100x107.png' alt='Hefe' width='50px' border=0>";
-  s += "<table cellspacing=0 border=0><tbody>";
-  //Hauptguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Hauptguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WHauptguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
+  // Rezept
+  s = "<table><tbody>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Menge") + "</td>";
+  s += "<td class='value' align='right'>" + spinBox_Menge -> text() + "</td>";
+  s += "<td>" + trUtf8("Liter") + "</td>";
   s += "</tr>";
   s += "<tr>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureHG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
+  s += "<td>" + trUtf8("Stammwürze") + "</td>";
+  s += "<td class='value' align='right'>" + spinBox_SW -> text() + "</td>";
+  s += "<td>" + trUtf8("°P") + "</td>";
   s += "</tr>";
-  //Nachguss
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Nachguss") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(doubleSpinBox_WNachguss -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
+  if (spinBox_High_Gravity->value() > 0) {
+    s += "<tr>";
+    s += "<td>" + trUtf8("High-Gravity-Faktor") + "</td>";
+    s += "<td class='value' align='right'>" + spinBox_High_Gravity -> text() + "</td>";
+    s += "<td>" + trUtf8("%") + "</td>";
+    s += "</tr>";
+  }
+  s += "<tr>";
+  s += "<td>" + trUtf8("Bittere") + "</td>";
+  s += "<td class='value' align='right'>" + spinBox_IBU -> text() + "</td>";
+  s += "<td>" + trUtf8("IBU") + "</td>";
   s += "</tr>";
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Milchsäure (80%)") + "</p>";
-  s += "</td>";
-  s += "<td align='right'>";
-  s += "<p class='value'>" + QString::number(SpinBox_waMilchsaeureNG_ml -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("ml") + "</p>";
-  s += "</td>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Nachisomerisierungszeit") + "</td>";
+  s += "<td class='value' align='right'>" + spinBox_NachisomerisierungsZeit -> text() + "</td>";
+  s += "<td>" + trUtf8("min") + "</td>";
   s += "</tr>";
-  //Gesammt
-  s += "<tr style=''>";
-  s += "<td>";
-  s += "<p>" + label_37 -> text() + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p class='value' style='font-weight:bold;'>" + QString::number(doubleSpinBox_W_Gesammt -> value()) + "</p>";
-  s += "</td>";
-  s += "<td>";
-  s += "<p>" + trUtf8("Liter") + "</p>";
-  s += "</td>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Farbe") + "</td>";
+  s += "<td class='value' align='right'>" + doubleSpinBox_EBC -> text() + "</td>";
+  s += "<td>" + trUtf8("EBC") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("CO₂-Gehalt") + "</td>";
+  s += "<td class='value' align='right'>" + doubleSpinBox_CO2 -> text() + "</td>";
+  s += "<td>" + trUtf8("g/l") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Brauanlage") + "</td>";
+  s += "<td colspan=2  class='value' align='center'>" + comboBox_AuswahlBrauanlage->currentText() + "</td>";
   s += "</tr>";
   s += "</tbody></table>";
+  contextVariables["Rezept"] = s;
+
+  // Glas
+  QColor farbe = Berechnungen.GetFarbwert(doubleSpinBox_EBC -> value());
+  s = "<div style='background-color:" + farbe.name() + ";padding:0px;margin:0px;width:100%;height:100%'>";
+  if (StyleDunkel)
+    s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_dark_420x420.png' alt='Bierfarbe'>";
+  else
+    s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_420x420.png' alt='Bierfarbe'>";
   s += "</div>";
-  s += "</td>";
-  //Hefe
-  s += "<td valign='top' style=''>";
-  s += "<div class='rm' style='margin:0px;' align='center'>";
-  s += "<img style='padding:0px;margin:0px;' src='qrc:/zutaten/hefe_50.png' alt='Hefe' width='50px' border=0>";
-  s += "<p>" + comboBox_AuswahlHefe -> currentText() + "</p>";
+  contextVariables["Glas"] = s;
+
+  // Malz
+  double fehlprozent = list_Malzgaben.count() > 0 ? list_Malzgaben[0]->getFehlProzent() : 0.0;
+  if (fehlprozent == 0.0) {
+    s = "<table><tbody>";
+    for (int i=0; i < list_Malzgaben.count(); i++){
+      s += "<tr>";
+      s += "<td>" + list_Malzgaben[i]->getName() + "</td>";
+      s += "<td class='value' align='right'>" + QString::number(list_Malzgaben[i]->getErgMenge()) + "</td>";
+      s += "<td>" + trUtf8("kg") + "</td>";
+      s += "<td class='value' align='right'>" + QString::number(list_Malzgaben[i]->getMengeProzent()) + "</td>";
+      s += "<td>" + trUtf8("%") + "</td>";
+      s += "<td class='value' align='right'>" + QString::number(list_Malzgaben[i]->getFarbe()) + "</td>";
+      s += "<td>" + trUtf8("EBC") + "</td>";
+      s += "</tr>";
+    }
+    s += "<tr>";
+    s += "<td>" + trUtf8("Gesamt") + "</td>";
+    s += "<td class='value' style='font-weight:bold;' align='right'>" + QString::number(doubleSpinBox_S_Gesammt -> value()) + "</td>";
+    s += "<td>" + trUtf8("kg") + "</td>";
+    s += "</tr>";
+    s += "</tbody></table>";
+  }
+  else {
+    s = "<div class='hinweis'>" + trUtf8("Die einzelnen Schüttungen konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.") + "</div>";
+  }
+  contextVariables["Malz"] = s;
+
+  // Hopfen
+  fehlprozent = fehlprozent = list_Hopfengaben.count() > 0 ? list_Hopfengaben[0]->getFehlProzent() : 0.0;
+  if (fehlprozent == 0.0) {
+    s = "<table><tbody>";
+    for (int i=0; i < list_Hopfengaben.count(); i++){
+      s += "<tr>";
+      if (list_Hopfengaben[i]->getVWH())
+        s += "<td>" + trUtf8("VWH ") + list_Hopfengaben[i]->getErgebnistext() + "</td>";
+      else
+        s += "<td>" + list_Hopfengaben[i]->getErgebnistext() + "</td>";
+      s += "<td class='value' align='right'>" + QString::number(list_Hopfengaben[i]->getErgMenge()) + "</td>";
+      s += "<td>" + trUtf8("g") + "</td>";
+      s += "<td class='value' align='right'>" + QString::number(list_Hopfengaben[i]->getKochzeit()) + "</td>";
+      s += "<td>" + trUtf8("min") + "</td>";
+      s += "</tr>";
+    }
+    for (int i=0; i < list_EwZutat.count(); i++){
+      if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Hopfen){
+        s += "<tr>";
+        s += "<td>" + list_EwZutat[i] -> getName() + "</td>";
+        s += "<td class='value' align='right'>" + QString::number(list_EwZutat[i] -> getErg_Menge()) + "</td>";
+        s += "<td>" + trUtf8("g") + "</td>";
+        if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
+          s += "<td class='value' align='right' colspan='2'>" + trUtf8("Gärung") + "</td>";
+        else
+          s += "<td class='value' align='right' colspan='2'>" + trUtf8("Anstellen") + "</td>";
+        s += "</tr>";
+        if (list_EwZutat[i]->getBemerkung() != "") {
+          s += "<tr>";
+          s += "<td colspan='5' class='kommentar'>" + list_EwZutat[i]->getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
+      }
+    }
+    s += "</tbody></table>";
+  }
+  else {
+    s = "<div class='hinweis'>" + trUtf8("Die einzelnen Hopfengaben konnten nicht richtig berechnet werden, da die Aufteilung nicht 100% entspricht.")+"</div>";
+  }
+  contextVariables["Hopfen"] = s;
+
+  // Wasser
+  s = "<table><tbody>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Hauptguss") + "</td>";
+  s += "<td class='value' align='right'>" + doubleSpinBox_WHauptguss -> text() + "</td>";
+  s += "<td>" + trUtf8("Liter") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Milchsäure (80%)") + "</td>";
+  s += "<td class='value' align='right'>" + SpinBox_waMilchsaeureHG_ml -> text() + "</td>";
+  s += "<td>" + trUtf8("ml") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Nachguss") + "</td>";
+  s += "<td class='value' align='right'>" + doubleSpinBox_WNachguss -> text() + "</td>";
+  s += "<td>" + trUtf8("Liter") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Milchsäure (80%)") + "</td>";
+  s += "<td class='value' align='right'>" + SpinBox_waMilchsaeureNG_ml -> text() + "</td>";
+  s += "<td>" + trUtf8("ml") + "</td>";
+  s += "</tr>";
+  s += "<tr>";
+  s += "<td>" + trUtf8("Gesamt") + "</td>";
+  s += "<td class='value' style='font-weight:bold;' align='right'>" + doubleSpinBox_W_Gesammt -> text() + "</td>";
+  s += "<td>" + trUtf8("Liter") + "</td>";
+  s += "</tr>";
+  s += "</tbody></table>";
+  contextVariables["Wasser"] = s;
+
+  // Hefe
+  s = "<p>" + comboBox_AuswahlHefe -> currentText() + "</p>";
   QString sEinheiten;
   sEinheiten = trUtf8("Anzahl Einheiten:") + " <span class='value'>" + QString::number(spinBox_AnzahlHefeEinheiten->value()) +"</span>";
   //Verpackungsgrösse aus den Rohstoffdaten auslesen
@@ -395,18 +199,8 @@ void MainWindowImpl::ErstelleSpickzettel()
   if (!verpMenge.isEmpty()) {
     sEinheiten += trUtf8(" zu ") + verpMenge;
   }
-  s += "<p>" + sEinheiten +"</p>";
-  s += "</div>";
-  s += "</td>";
-  s += "</tr>";
-
-  s += "</table>";
-  //s += "</div>";
-  //s += "</div>";
-
-  //Tabelle Weitere Zutaten
-  s += "<table width='80%' summary='testtabelle' border='0' cellspacing='5'>";
-  s += "<tr >";
+  s += "<p>" + sEinheiten + "</p>";
+  contextVariables["Hefe"] = s;
 
   //Honig
   bool HonigVorhanden = false;
@@ -416,13 +210,10 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (HonigVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_0_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
+    s = "<table><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Honig){
-        s += "<tr style=''>";
+        s += "<tr>";
         s += "<td>";
         s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
         s += "</td>";
@@ -447,12 +238,19 @@ void MainWindowImpl::ErstelleSpickzettel()
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
         s += "</tr>";
+        if (list_EwZutat[i] -> getBemerkung() != ""){
+          s += "<tr>";
+          s += "<td colspan='4' class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
       }
     }
     s += "</table>";
-    s += "</div>";
-    s += "</td>";
   }
+  else {
+    s = "";
+  }
+  contextVariables["Honig"] = s;
 
   //Zucker
   bool ZuckerVorhanden = false;
@@ -462,13 +260,10 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (ZuckerVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_1_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
+    s = "<table><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Zucker){
-        s += "<tr style=''>";
+        s += "<tr>";
         s += "<td>";
         s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
         s += "</td>";
@@ -493,12 +288,19 @@ void MainWindowImpl::ErstelleSpickzettel()
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
         s += "</tr>";
+        if (list_EwZutat[i] -> getBemerkung() != ""){
+          s += "<tr>";
+          s += "<td colspan='4' class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
       }
     }
     s += "</table>";
-    s += "</div>";
-    s += "</td>";
   }
+  else {
+    s = "";
+  }
+  contextVariables["Zucker"] = s;
 
   //Gewürz
   bool GewuerzVorhanden = false;
@@ -508,13 +310,10 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (GewuerzVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_2_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
+    s = "<table><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Gewuerz){
-        s += "<tr style=''>";
+        s += "<tr>";
         s += "<td>";
         s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
         s += "</td>";
@@ -534,17 +333,24 @@ void MainWindowImpl::ErstelleSpickzettel()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
         s += "</tr>";
+        if (list_EwZutat[i] -> getBemerkung() != ""){
+          s += "<tr>";
+          s += "<td colspan='4' class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
       }
     }
     s += "</table>";
-    s += "</div>";
-    s += "</td>";
   }
+  else {
+    s = "";
+  }
+  contextVariables["Gewuerz"] = s;
 
   //Frucht
   bool FruchtVorhanden = false;
@@ -554,13 +360,10 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (FruchtVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_3_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
+    s = "<table><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Frucht){
-        s += "<tr style=''>";
+        s += "<tr>";
         s += "<td>";
         s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
         s += "</td>";
@@ -580,17 +383,24 @@ void MainWindowImpl::ErstelleSpickzettel()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
         s += "</tr>";
+        if (list_EwZutat[i] -> getBemerkung() != ""){
+          s += "<tr>";
+          s += "<td colspan='4' class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
       }
     }
     s += "</table>";
-    s += "</div>";
-    s += "</td>";
   }
+  else {
+    s = "";
+  }
+  contextVariables["Frucht"] = s;
 
   //Sonstiges
   bool SonstigesVorhanden = false;
@@ -600,13 +410,10 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (SonstigesVorhanden){
-    s += "<td valign='middle' style=''>";
-    s += "<div class='rm' style='margin:0px;' align='center'>";
-    s += "<img style='padding:0px;margin:0px;' src='qrc:/ewz/ewz_typ_4_50.png' alt='Honig' width='50px' border=0>";
-    s += "<table cellspacing=0 border=0><tbody>";
+    s = "<table><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getTyp() == EWZ_Typ_Sonstiges){
-        s += "<tr style=''>";
+        s += "<tr>";
         s += "<td>";
         s += "<p>" + list_EwZutat[i] -> getName() + "</p>";
         s += "</td>";
@@ -626,28 +433,27 @@ void MainWindowImpl::ErstelleSpickzettel()
         if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung)
           s += "<p class='value'>" + trUtf8("Gärung") + "</p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Kochbeginn)
-          s += "<p class='value'>" + trUtf8("Kochen") + "</p>";
+          s += "<p class='value'>" + trUtf8("Kochen") + " (" + QString::number(list_EwZutat[i]->getDauerMinuten()) + "min) </p>";
         else if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Maischen)
           s += "<p class='value'>" + trUtf8("Maischen") + "</p>";
         s += "</td>";
         s += "</tr>";
+        if (list_EwZutat[i] -> getBemerkung() != ""){
+          s += "<tr>";
+          s += "<td colspan='4' class='kommentar'>" + list_EwZutat[i] -> getBemerkung().replace("\n","<br>") + "</td>";
+          s += "</tr>";
+        }
       }
     }
     s += "</table>";
-    s += "</div>";
-    s += "</td>";
   }
-
-  s += "</tr >";
-  s += "</table>";
-
-  //s += "<div class='r' width='99%' style='' align='center'>";
-  //Kommentar
-  if (textEdit_Kommentar -> toPlainText() != "") {
-    s += "<div class='rm' style='margin-top:10px;width:90%'>";
-    s += textEdit_Kommentar -> toHtml();
-    s += "</div>";
+  else {
+    s = "";
   }
+  contextVariables["Sonstiges"] = s;
+
+  // Kommentar
+  contextVariables["Kommentar"] = textEdit_Kommentar->toPlainText();
 
 
   //Geräte und Zubehör
@@ -666,11 +472,8 @@ void MainWindowImpl::ErstelleSpickzettel()
   else {
     int zaehler = 0;
     if (query.first()) {
-      s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-      s += "<p><b>";
-      s += trUtf8("Benötigte Gerätschaften");
-      s += "</b></p>";
-      s += "<table cellspacing=0 border=0><tbody>";
+      contextVariables["GeraeteTitel"] = trUtf8("Benötigte Gerätschaften");
+      s = "<table><tbody>";
       if (zaehler == 0)
         s += "<tr>";
       s += "<td align=center><p>";
@@ -696,17 +499,14 @@ void MainWindowImpl::ErstelleSpickzettel()
       if (zaehler != 0)
         s += "</tr>";
       s += "</tbody></table>";
-      s += "</div>";
+      contextVariables["Geraete"] = s;
     }
   }
 
   //Brauablauf
   //-------------------------------------------------------------
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Maischen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
+  contextVariables["MaischenTitel"] = trUtf8("Maischen");
+  s = "<table width='90%'><tbody>";
 
   //Einmaischen
   s += "<tr>";
@@ -758,9 +558,9 @@ void MainWindowImpl::ErstelleSpickzettel()
           s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
+        s += "<br><span class='kommentar'>";
         s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
+        s += "</span></p></td>";
         s += "</tr>";
       }
     }
@@ -785,13 +585,10 @@ void MainWindowImpl::ErstelleSpickzettel()
   //s += "</tr>";
 
   s += "</tbody></table>";
-  s += "</div>";
+  contextVariables["Maischen"] = s;
 
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Läutern");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
+  contextVariables["LaeuternTitel"] = trUtf8("Läutern");
+  s = "<table width='90%'><tbody>";
 
   //Maische in den Läutereimer
   s += "<tr>";
@@ -832,13 +629,10 @@ void MainWindowImpl::ErstelleSpickzettel()
 
 
   s += "</tbody></table>";
-  s += "</div>";
+  contextVariables["Laeutern"] = s;
 
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Würze kochen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
+  contextVariables["KochenTitel"] = trUtf8("Würze kochen");
+  s = "<table width='90%'><tbody>";
 
   //Vorderwürzehopfung
   for (int i=0; i < list_Hopfengaben.count(); i++){
@@ -947,9 +741,9 @@ void MainWindowImpl::ErstelleSpickzettel()
           s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
+        s += "<br><span class='kommentar'>";
         s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
+        s += "</span></p></td>";
         s += "</tr>";
       }
     }
@@ -985,13 +779,10 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "</tr>";
 
   s += "</tbody></table>";
-  s += "</div>";
+  contextVariables["Kochen"] = s;
 
-  s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-  s += "<p><b>";
-  s += trUtf8("Abseihen &amp; Anstellen");
-  s += "</b></p>";
-  s += "<table cellspacing=0 border=0 width='90%'><tbody>";
+  contextVariables["AnstellenTitel"] = trUtf8("Abseihen & Anstellen");
+  s = "<table width='90%'><tbody>";
 
   //Hopfenseihen
   s += "<tr>";
@@ -1093,7 +884,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "</tr>";
 
   s += "</tbody></table>";
-  s += "</div>";
+  contextVariables["Anstellen"] = s;
 
   //Weitere Zutaten bei der Gärung
   bool GaerungVorhanden = false;
@@ -1103,11 +894,9 @@ void MainWindowImpl::ErstelleSpickzettel()
     }
   }
   if (GaerungVorhanden) {
-    s += "<div align='center' class='rm' style='margin-top:10px;width:90%'>";
-    s += "<p><b>";
-    s += trUtf8("Bei der Gärung");
-    s += "</b></p>";
-    s += "<table cellspacing=0 border=0 width='90%'><tbody>";
+    contextVariables["GaerungTitel"] = trUtf8("Bei der Gärung");
+    s = "</b></p>";
+    s += "<table width='90%'><tbody>";
     for (int i=0; i < list_EwZutat.count(); i++){
       if (list_EwZutat[i] -> getZeitpunkt() == EWZ_Zeitpunkt_Gaerung){
         s += "<tr>";
@@ -1125,26 +914,31 @@ void MainWindowImpl::ErstelleSpickzettel()
           s += "<span>" + trUtf8(" kg") + "</span>";
         else
           s += "<span>" + trUtf8(" g") + "</span>";
-        s += "<br>";
+        s += "<br><span class='kommentar'>";
         s += list_EwZutat[i] -> getBemerkung();
-        s += "</p></td>";
+        s += "</span></p></td>";
         s += "</tr>";
       }
     }
     s += "</tbody></table>";
-    s += "</div>";
+    contextVariables["Gaerung"] = s;
   }
 
-  s += "<div><p class='version'>" APP_NAME " v";
-  s += VERSION;
-  s += "</p></div>";
 
-  seite += s;
-  //Seitenende
-  ende = "</body></html>";
-  seite += ende;
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
 
-  //textEdit -> setPlainText(seite);
+  QFile file(settingsPath + "spickzettel.html");
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+      return;
+  QString html_template = file.readAll();
+  file.close();
 
-  webView_Zusammenfassung -> setHtml(seite,QUrl::fromLocalFile(QCoreApplication::applicationDirPath()+"/"));
+  Mustache::Renderer renderer;
+  Mustache::QtVariantContext context(contextVariables);
+  QString seite = renderer.render(html_template, &context);
+  if (webView_Zusammenfassung->url().isEmpty())
+      MyWebView::clearMemoryCaches();
+  webView_Zusammenfassung->setHtml(seite, QUrl::fromLocalFile(settingsPath));
+  webView_Zusammenfassung->setZoomFactor(horizontalSlider_ScalePDF->value() / 100.0);
 }

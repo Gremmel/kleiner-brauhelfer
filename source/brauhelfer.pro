@@ -56,7 +56,6 @@ HEADERS = src/mainwindowimpl.h \
  src/connection.h \
  src/definitionen.h \
  src/errormessage.h \
- src/qwidgetid.h \
  src/mydiagrammview.h \
  src/einstellungsdialogimpl.h \
  src/dialog_berschuettungimpl.h \
@@ -89,13 +88,13 @@ HEADERS = src/mainwindowimpl.h \
  src/dialogeinmaischetemp.h \
  src/dialogsudteilen.h \
  src/database.h \
- src/dialogstammwuerze.h
+ src/dialogstammwuerze.h \
+ src/mustache.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
  src/bierfarbe.cpp \
  src/errormessage.cpp \
- src/qwidgetid.cpp \
  src/mydiagrammview.cpp \
  src/einstellungsdialogimpl.cpp \
  src/dialog_berschuettungimpl.cpp \
@@ -132,6 +131,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/mainwindowimpl_ueber.cpp \
  src/dialogsudteilen.cpp \
  src/database.cpp \
- src/dialogstammwuerze.cpp
+ src/dialogstammwuerze.cpp \
+ src/mustache.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc
