@@ -9458,6 +9458,7 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage->showMessage(ERR_XML_OPEN, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Dateiname: ") + s);
+      return;
     }
     // Fehler beim Parsen der Datei
     else if (r == 2) {
@@ -9468,6 +9469,7 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
               Export.errMsg + "\n" + trUtf8("Zeile: ") +
               QString::number(Export.errLine) + "\n" + trUtf8("Spalte: ") +
               QString::number(Export.errCol) + "\n");
+      return;
     }
     // Fehler beim Auslesen der Verionen
     else if (r == 3) {
@@ -9475,6 +9477,7 @@ void MainWindowImpl::on_pushButton_SudImport_clicked() {
       errorMessage->showMessage(ERR_XML_PARSEN, TYPE_WARNUNG, CANCEL_NO,
                                 trUtf8("Dateiname: ") + s + "\n" +
                                     trUtf8("Message: ") + Export.errMsg + "\n");
+      return;
     }
 
     // Importieren starten

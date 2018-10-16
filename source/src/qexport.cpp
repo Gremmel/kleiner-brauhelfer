@@ -3126,6 +3126,38 @@ int findMax(QJsonObject jsn, QString s, int MAX=20)
     return i;
 }
 
+static double toDouble(const QJsonValueRef& value)
+{
+    QString s;
+    switch (value.type())
+    {
+    case QJsonValue::Double:
+        return value.toDouble();
+    case QJsonValue::String:
+        s = value.toString();
+        if (s.startsWith("\""))
+            s.truncate(1);
+        if (s.endsWith("\""))
+            s.chop(1);
+        return s.toDouble();
+    default:
+        return 0.0;
+    }
+}
+
+static QString toString(const QJsonValueRef& value)
+{
+    switch (value.type())
+    {
+    case QJsonValue::Double:
+        return QString::number(value.toDouble());
+    case QJsonValue::String:
+        return value.toString();
+    default:
+        return QString();
+    }
+}
+
 void QExport::convertJSON(const QString& json, const QString& xsud)
 {
     QFile json_file(json);
@@ -3156,7 +3188,7 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "<Sud>";
 
     xml += "<!--Bezeichner fuer den Sud--><Sudname>";
-    xml += root["Name"].toString();
+    xml += toString(root["Name"]);
     xml += "</Sudname>";
 
     xml += "<!--Zeitstempel fuer Erstellungsdatum in der Datenbank--><Erstellt Einheit=\"Qt::ISODate\">";
@@ -3168,19 +3200,19 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "</Gespeichert>";
 
     xml += "<!--Soll Wuerze-Anstellmenge--><Menge Einheit=\"Liter\">";
-    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += toString(root["Ausschlagswuerze"]);
     xml += "</Menge>";
 
     xml += "<!--Soll Stammwuerze--><SW Einheit=\"Grad Plato\">";
-    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += toString(root["Stammwuerze"]);
     xml += "</SW>";
 
     xml += "<!--Soll CO₂-Gehalt--><CO2 Einheit=\"Gramm/Liter\">";
-    xml += root["Karbonisierung"].toString();
+    xml += toString(root["Karbonisierung"]);
     xml += "</CO2>";
 
     xml += "<!--Soll Bittere--><IBU Einheit=\"IBU\">";
-    xml += QString::number(root["Bittere"].toInt());
+    xml += toString(root["Bittere"]);
     xml += "</IBU>";
 
     xml += "<!--Angepeilte Reifezeit--><Reifezeit Einheit=\"Wochen\">";
@@ -3188,59 +3220,57 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "</Reifezeit>";
 
     xml += "<!--Allgemeiner Kommentar--><Kommentar><![CDATA[";
-    xml += root["Anmerkung_Autor"].toString();
+    xml += toString(root["Kurzbeschreibung"]) + "\n\n";
+    xml += toString(root["Anmerkung_Autor"]);
     xml += "]]></Kommentar>";
 
     xml += "<!--Datum an dem der Sud gebraut wurde--><Braudatum Einheit=\"Qt::ISODate\">";
     xml += today;
     xml += "</Braudatum>";
 
-    xml += "<!--Flag ob Sud gebraut wurde--><BierWurdeGebraut Einheit=\"Bool\">0</BierWurdeGebraut><!--Flag ob Sud abgefuellt wurde--><BierWurdeAbgefuellt Einheit=\"Bool\">0</BierWurdeAbgefuellt><!--Flag ob Sud verbraucht wurde--><BierWurdeVerbraucht Einheit=\"Bool\">0</BierWurdeVerbraucht>";
+    xml += "<!--Flag ob Sud gebraut wurde--><BierWurdeGebraut Einheit=\"Bool\">0</BierWurdeGebraut>";
+    xml += "<!--Flag ob Sud abgefuellt wurde--><BierWurdeAbgefuellt Einheit=\"Bool\">0</BierWurdeAbgefuellt>";
+    xml += "<!--Flag ob Sud verbraucht wurde--><BierWurdeVerbraucht Einheit=\"Bool\">0</BierWurdeVerbraucht>";
 
     xml += "<!--Kochdauer nach der ersten Hopfengabe--><KochdauerNachBitterhopfung Einheit=\"Minuten\">";
-    xml += root["Kochzeit_Wuerze"].toString();
+    xml += toString(root["Kochzeit_Wuerze"]);
     xml += "</KochdauerNachBitterhopfung>";
 
     int max_schuettung = findMax(root,"Malz%%");
-
-    float gesamt_schuettung = 0.0f;
-
+    double gesamt_schuettung = 0.0;
     for (int i = 1; i < max_schuettung; ++i) {
-        float kg = 0.0f;
-        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
-            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
-        } else {
-             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
-        }
+        double kg = 0.0;
+        if (toString(root[QString("Malz%1_Einheit").arg(i)]) == "g")
+            kg = toDouble(root[QString("Malz%1_Menge").arg(i)]) / 1000.0;
+        else
+            kg = toDouble(root[QString("Malz%1_Menge").arg(i)]);
         gesamt_schuettung += kg;
     }
-    float hauptguss = (float)root["Infusion_Hauptguss"].toDouble();
-    float hauptgussfaktor = hauptguss/gesamt_schuettung;
 
     xml += "<!--Faktor zum Berechnen der Hauptgussmenge (Schuettung * Faktor = Hauptgussmenge)--><FaktorHauptguss Einheit=\"Faktor\">";
-    xml += QString::number(hauptgussfaktor);
+    xml += QString::number(toDouble(root["Infusion_Hauptguss"]) / gesamt_schuettung);
     xml += "</FaktorHauptguss>";
 
     xml += "<!--Name der Ausgewaehlten Hefe--><AuswahlHefe Einheit=\"Text\">";
-    xml += root["Hefe"].toString();
+    xml += toString(root["Hefe"]);
     xml += "</AuswahlHefe>";
 
     xml += "<!--Anzahl verwendeter Hefe Einheiten--><HefeAnzahlEinheiten Einheit=\"Integer\">1</HefeAnzahlEinheiten>";
 
     xml += "<!--Wuerzemenge vor dem Hopfenseihen--><WuerzemengeVorHopfenseihen Einheit=\"Liter\">";
-    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += toString(root["Ausschlagswuerze"]);
     xml += "</WuerzemengeVorHopfenseihen>";
 
     xml += "<!--Stammwuerze vor dem Hopfenseihen--><SWVorHopfenseihen Einheit=\"Grad Plato\">";
-    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += toString(root["Stammwuerze"]);
     xml += "</SWVorHopfenseihen>";
 
     xml += "<!--Wuerzemenge nach dem Hopfenseihen--><WuerzemengeKochende Einheit=\"Liter\">";
-    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += toString(root["Ausschlagswuerze"]);
     xml += "</WuerzemengeKochende>";
 
     xml += "<!--Stammwuerze nach dem Hopfenseihen--><SWKochende Einheit=\"Grad Plato\">";
-    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += toString(root["Stammwuerze"]);
     xml += "</SWKochende>";
 
     xml += "<!--Abgefuellte Speisemenge--><Speisemenge Einheit=\"Liter\">0</Speisemenge>";
@@ -3250,11 +3280,11 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "</Anstelldatum>";
 
     xml += "<WuerzemengeAnstellen Einheit=\"Liter\">";
-    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += toString(root["Ausschlagswuerze"]);
     xml += "</WuerzemengeAnstellen>";
 
     xml += "<!--Stammwuerze bei der Hefezugabe--><SWAnstellen Einheit=\"Grad Plato\">";
-    xml += QString::number(root["Stammwuerze"].toDouble());
+    xml += toString(root["Stammwuerze"]);
     xml += "</SWAnstellen>";
 
     xml += "<!--Abfuelldatum--><Abfuelldatum Einheit=\"Qt::ISODate\">";
@@ -3268,7 +3298,7 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "<!--Temperatur Jungbier beim Abfuellen--><TemperaturJungbier Einheit=\"Grad Celsius\">12</TemperaturJungbier>";
 
     xml += "<!--Temperatur Einmaischen--><EinmaischenTemp Einheit=\"Grad Celsius\">";
-    xml += QString::number(root["Infusion_Einmaischtemperatur"].toDouble());
+    xml += toString(root["Infusion_Einmaischtemperatur"]);
     xml += "</EinmaischenTemp>";
 
     xml += "<!--Kosten fuer Wasser / Strom / Gas etc.--><KostenWasserStrom Einheit=\"Euro\">0</KostenWasserStrom>";
@@ -3283,125 +3313,186 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "<!--Bierfarbe--><erg_Farbe Einheit=\"EBC\">1</erg_Farbe>";
 
     xml += "<!--Jungbiermenge beim Abfuellen--><JungbiermengeAbfuellen Einheit=\"Liter\">";
-    xml += QString::number(root["Ausschlagswuerze"].toDouble());
+    xml += toString(root["Ausschlagswuerze"]);
     xml += "</JungbiermengeAbfuellen>";
 
     xml += "<!--Beste Bewertung (Anzahl Sterne)--><Bewertung Einheit=\"Integer\">0</Bewertung><!--Reifewoche der Besten Bewertung--><BewertungText Einheit=\"Text\"></BewertungText><!--Maximale Anzahl Sterne bei diesem Sud--><BewertungMaxSterne Einheit=\"Integer\">5</BewertungMaxSterne><!--Art der Hopfenberechnung--><berechnungsArtHopfen Einheit=\"Integer\">0</berechnungsArtHopfen><!--High-Gravity-Faktor--><highGravityFaktor Einheit=\"Integer\">0</highGravityFaktor>";
 
     // Rasten
     xml += "<Rasten>";
-
     int max_rast = findMax(root, "Infusion_Rasttemperatur%%");
-
     for (int i = 1; i < max_rast; ++i) {
         xml += QString("<Rast_%1>").arg(i);
         xml += "<!--1 = Rast ist Aktiv--><RastAktiv Einheit=\"Bool\">1</RastAktiv>";
-
         xml += QString("<!--Berschreibung der Rast--><RastName Einheit=\"Text\">%1. Rast</RastName>").arg(i);
-        xml += QString("<!--Temperatur der Rast--><RastTemp Einheit=\"Grad Celsius\">%1</RastTemp>").arg(root[QString("Infusion_Rasttemperatur%1").arg(i)].toString());
-        xml += QString("<!--Rastdauer--><RastDauer Einheit=\"Minuten\">%1</RastDauer>").arg(root[QString("Infusion_Rastzeit%1").arg(i)].toString());
-
+        xml += QString("<!--Temperatur der Rast--><RastTemp Einheit=\"Grad Celsius\">%1</RastTemp>").arg(toString(root[QString("Infusion_Rasttemperatur%1").arg(i)]));
+        xml += QString("<!--Rastdauer--><RastDauer Einheit=\"Minuten\">%1</RastDauer>").arg(toString(root[QString("Infusion_Rastzeit%1").arg(i)]));
         xml += QString("</Rast_%1>").arg(i);
     }
-
+    xml += QString("<Rast_%1>").arg(max_rast);
+    xml += "<!--1 = Rast ist Aktiv--><RastAktiv Einheit=\"Bool\">1</RastAktiv>";
+    xml += "<!--Berschreibung der Rast--><RastName Einheit=\"Text\">Abmaischen</RastName>";
+    xml += QString("<!--Temperatur der Rast--><RastTemp Einheit=\"Grad Celsius\">%1</RastTemp>").arg(toString(root["Abmaischtemperatur"]));
+    xml += "<!--Rastdauer--><RastDauer Einheit=\"Minuten\">10</RastDauer>";
+    xml += QString("</Rast_%1>").arg(max_rast);
     xml += "</Rasten>";
+
     xml += "<Schuettung>";
-
-    // save for later use
-    QSet< QPair<QString,QString> > malze;
-
+    QSet<QString> malze;
     for (int i = 1; i < max_schuettung; ++i) {
         xml += QString("<Anteil_%1>").arg(i);
-
-        xml += QString("<!--Malzbeschreibung (Name)--><Name Einheit=\"Text\">%1</Name>").arg(root[QString("Malz%1").arg(i)].toString());
-        float kg = 0.0f;
-        if (root[QString("Malz%1_Einheit").arg(i)].toString() == "g") {
-            kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble()/1000.0f;
+        xml += QString("<!--Malzbeschreibung (Name)--><Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("Malz%1").arg(i)]));
+        double kg = 0.0;
+        if (toString(root[QString("Malz%1_Einheit").arg(i)]) == "g") {
+            kg = toDouble(root[QString("Malz%1_Menge").arg(i)]) / 1000.0;
         } else {
-             kg = (float)root[QString("Malz%1_Menge").arg(i)].toDouble();
+            kg = toDouble(root[QString("Malz%1_Menge").arg(i)]);
         }
-        xml += QString("<!--Prozentualer Anteil der Schuettung--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg((kg/gesamt_schuettung)*100.0f);
+        xml += QString("<!--Prozentualer Anteil der Schuettung--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg(kg/gesamt_schuettung*100.0);
         xml += QString("<!--Berechneter Gewichtsanteil der Schuettung--><erg_Menge Einheit=\"kg\">%1</erg_Menge>").arg(kg);
         xml += "<!--Malz - Farbwert--><Farbe Einheit=\"EBC\">1</Farbe>";
 
-        QPair<QString, QString> malz(root[QString("Malz%1").arg(i)].toString(),QString::number(kg));
-        malze += malz;
-
+        malze += toString(root[QString("Malz%1").arg(i)]);
         xml += QString("</Anteil_%1>").arg(i);
     }
-
     xml += "</Schuettung>";
+
     xml += "<Hopfengaben>";
-
-    // save for later use
     QSet< QPair<QString,QString> > hopfen;
-
+    double gesamt_hopfen = 0.0;
+    int max_hopfen_vwh = findMax(root, "Hopfen_VWH_%%_Sorte");
+    for (int i = 1; i < max_hopfen_vwh; ++i)
+        gesamt_hopfen += toDouble(root[QString("Hopfen_VWH_%1_Menge").arg(i)]);
     int max_hopfen = findMax(root, "Hopfen_%%_Sorte");
-
-    float gesamt_hopfen = 0.0f;
-    for (int i = 1; i < max_hopfen; ++i) {
-        gesamt_hopfen += root[QString("Hopfen_%1_Menge").arg(i)].toString().toFloat();
-    }
-
-    for (int i = 1; i < max_hopfen; ++i) {
+    for (int i = 1; i < max_hopfen; ++i)
+        gesamt_hopfen += toDouble(root[QString("Hopfen_%1_Menge").arg(i)]);
+    for (int i = 1; i < max_hopfen_vwh; ++i) {
         xml += QString("<Anteil_%1>").arg(i);
         xml += "<!--1 = Hopfengabe Aktiv--><Aktiv Einheit=\"Bool\">1</Aktiv>";
-        xml += QString("<!--Berschreibung Hopfen (Name)--><Name Einheit=\"Text\">%1</Name>").arg(root[QString("Hopfen_%1_Sorte").arg(i)].toString());
-        xml += QString("<!--Zeit nach Hopfengabe 1--><Zeit Einheit=\"Minuten\">%1</Zeit>").arg(root[QString("Hopfen_%1_Kochzeit").arg(i)].toString());
-        xml += QString("<!--Prozentualer Gewichts-anteil der Hopfengabe--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg((root[QString("Hopfen_%1_Menge").arg(i)].toString().toFloat()/gesamt_hopfen)*100.0f);
-        xml += QString("<!--Berechnete Gewichtsmenge--><erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(root[QString("Hopfen_%1_Menge").arg(i)].toString());
-        xml += QString("<!--Beschreibungstext--><erg_Hopfentext Einheit=\"Text\">%1 %2 %% Alpha</erg_Hopfentext>").arg(root[QString("Hopfen_%1_Sorte").arg(i)].toString()).arg(root[QString("Hopfen_%1_alpha").arg(i)].toString());
-        xml += QString("<!--Alphaprozent gehalt des Hopfens--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(root[QString("Hopfen_%1_alpha").arg(i)].toString());
+        xml += QString("<!--Berschreibung Hopfen (Name)--><Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("Hopfen_VWH_%1_Sorte").arg(i)]));
+        xml += QString("<!--Zeit nach Hopfengabe 1--><Zeit Einheit=\"Minuten\">%1</Zeit>").arg(toString(root["Kochzeit_Wuerze"]));
+        xml += QString("<!--Prozentualer Gewichts-anteil der Hopfengabe--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg(toDouble(root[QString("Hopfen_VWH_%1_Menge").arg(i)])/gesamt_hopfen*100.0);
+        xml += QString("<!--Berechnete Gewichtsmenge--><erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toString(root[QString("Hopfen_VWH_%1_Menge").arg(i)]));
+        xml += QString("<!--Beschreibungstext--><erg_Hopfentext Einheit=\"Text\">%1 %2 %% Alpha</erg_Hopfentext>").arg(toString(root[QString("Hopfen_VWH_%1_Sorte").arg(i)])).arg(toString(root[QString("Hopfen_VWH_%1_alpha").arg(i)]));
+        xml += QString("<!--Alphaprozent gehalt des Hopfens--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(toString(root[QString("Hopfen_VWH_%1_alpha").arg(i)]));
+        xml += "<!--Hopfenart 1 = Pellets--><Pellets Einheit=\"Bool\">1</Pellets>";
+        xml += "<!--Wen diese Gabe eine Vorderwuerzehopfung ist dann = 1--><Vorderwuerze Einheit=\"Bool\">1</Vorderwuerze>";
+        xml += QString("</Anteil_%1>").arg(i);
+        QPair<QString, QString> hop(toString(root[QString("Hopfen_%1_Sorte").arg(i)]),toString(root[QString("Hopfen_%1_alpha").arg(i)]));
+        hopfen += hop;
+    }
+    for (int i = 1; i < max_hopfen; ++i) {
+        xml += QString("<Anteil_%1>").arg(i + max_hopfen_vwh);
+        xml += "<!--1 = Hopfengabe Aktiv--><Aktiv Einheit=\"Bool\">1</Aktiv>";
+        xml += QString("<!--Berschreibung Hopfen (Name)--><Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("Hopfen_%1_Sorte").arg(i)]));
+        xml += QString("<!--Zeit nach Hopfengabe 1--><Zeit Einheit=\"Minuten\">%1</Zeit>").arg(toString(root[QString("Hopfen_%1_Kochzeit").arg(i)]));
+        xml += QString("<!--Prozentualer Gewichts-anteil der Hopfengabe--><Prozent Einheit=\"Prozent\">%1</Prozent>").arg(toDouble(root[QString("Hopfen_%1_Menge").arg(i)])/gesamt_hopfen*100.0);
+        xml += QString("<!--Berechnete Gewichtsmenge--><erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toString(root[QString("Hopfen_%1_Menge").arg(i)]));
+        xml += QString("<!--Beschreibungstext--><erg_Hopfentext Einheit=\"Text\">%1 %2 %% Alpha</erg_Hopfentext>").arg(toString(root[QString("Hopfen_%1_Sorte").arg(i)])).arg(toString(root[QString("Hopfen_%1_alpha").arg(i)]));
+        xml += QString("<!--Alphaprozent gehalt des Hopfens--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(toString(root[QString("Hopfen_%1_alpha").arg(i)]));
         xml += "<!--Hopfenart 1 = Pellets--><Pellets Einheit=\"Bool\">1</Pellets>";
         xml += "<!--Wen diese Gabe eine Vorderwuerzehopfung ist dann = 1--><Vorderwuerze Einheit=\"Bool\">0</Vorderwuerze>";
-
-        QPair<QString, QString> hop(root[QString("Hopfen_%1_Sorte").arg(i)].toString(),root[QString("Hopfen_%1_alpha").arg(i)].toString());
+        xml += QString("</Anteil_%1>").arg(i + max_hopfen_vwh);
+        QPair<QString, QString> hop(toString(root[QString("Hopfen_%1_Sorte").arg(i)]),toString(root[QString("Hopfen_%1_alpha").arg(i)]));
         hopfen += hop;
-
-        xml += QString("</Anteil_%1>").arg(i);
     }
-
     xml += "</Hopfengaben>";
-    xml += "<WeitereZutatenGaben/><Schnellgaerverlauf/><Hauptgaerverlauf/><Nachgaerverlauf/><Bewertungen/>";
+
+    QSet<QString> weitereZutaten;
+    int cnt = 1;
+    double menge = toDouble(root["Ausschlagswuerze"]);
+    xml += "<WeitereZutatenGaben>";
+    int max_wz_wuerze = findMax(root, "WeitereZutat_Wuerze_%%_Name");
+    for (int i = 1; i < max_wz_wuerze; ++i) {
+        xml += QString("<Anteil_%1>").arg(cnt);
+        xml += QString("<Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("WeitereZutat_Wuerze_%1_Name").arg(i)]));
+        xml += QString("<Menge Einheit=\"Gramm/Liter\">%1</Menge>").arg(toDouble(root[QString("WeitereZutat_Wuerze_%1_Menge").arg(i)])/menge);
+        if (toString(root[QString("WeitereZutat_Wuerze_%1_Einheit").arg(i)]) == "g") {
+            xml += "<Einheit Einheit=\"Integer\">1</Einheit>";
+            xml += QString("<erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toString(root[QString("WeitereZutat_Wuerze_%1_Menge").arg(i)]));
+        }
+        else {
+            xml += "<Einheit Einheit=\"Integer\">0</Einheit>";
+            xml += QString("<erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toDouble(root[QString("WeitereZutat_Wuerze_%1_Menge").arg(i)])*1000);
+        }
+        xml += "<Typ Einheit=\"Integer\">4</Typ>";
+        xml += "<Zeitpunkt Einheit=\"Integer\">2</Zeitpunkt>";
+        xml += "<Bemerkung Einheit=\"Text\"></Bemerkung>";
+        xml += "<Ausbeute Einheit=\"Prozent\">0</Ausbeute>";
+        xml += "<Farbe Einheit=\"EBC\">0</Farbe>";
+        xml += QString("</Anteil_%1>").arg(cnt);
+        ++cnt;
+        weitereZutaten += toString(root[QString("WeitereZutat_Wuerze_%1_Name").arg(i)]);
+    }
+    int max_wz_gaerung = findMax(root, "WeitereZutat_Gaerung_%%_Name");
+    for (int i = 1; i < max_wz_gaerung; ++i) {
+        xml += QString("<Anteil_%1>").arg(cnt);
+        xml += QString("<Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("WeitereZutat_Gaerung_%1_Name").arg(i)]));
+        xml += QString("<Menge Einheit=\"Gramm/Liter\">%1</Menge>").arg(toDouble(root[QString("WeitereZutat_Gaerung_%1_Menge").arg(i)])/menge);
+        if (toString(root[QString("WeitereZutat_Gaerung_%1_Einheit").arg(i)]) == "g") {
+            xml += "<Einheit Einheit=\"Integer\">1</Einheit>";
+            xml += QString("<erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toString(root[QString("WeitereZutat_Gaerung_%1_Menge").arg(i)]));
+        }
+        else {
+            xml += "<Einheit Einheit=\"Integer\">0</Einheit>";
+            xml += QString("<erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toDouble(root[QString("WeitereZutat_Gaerung_%1_Menge").arg(i)])*1000);
+        }
+        xml += "<Typ Einheit=\"Integer\">4</Typ>";
+        xml += "<Zeitpunkt Einheit=\"Integer\">0</Zeitpunkt>";
+        xml += "<Bemerkung Einheit=\"Text\"></Bemerkung>";
+        xml += "<Ausbeute Einheit=\"Prozent\">0</Ausbeute>";
+        xml += "<Farbe Einheit=\"EBC\">0</Farbe>";
+        xml += QString("</Anteil_%1>").arg(cnt);
+        ++cnt;
+        weitereZutaten += toString(root[QString("WeitereZutat_Gaerung_%1_Name").arg(i)]);
+    }
+    int max_hopfen_stopf = findMax(root, "Stopfhopfen_%%_Sorte");
+    for (int i = 1; i < max_hopfen_stopf; ++i) {
+        xml += QString("<Anteil_%1>").arg(cnt);
+        xml += QString("<Name Einheit=\"Text\">%1</Name>").arg(toString(root[QString("Stopfhopfen_%1_Sorte").arg(i)]));
+        xml += QString("<Menge Einheit=\"Gramm/Liter\">%1</Menge>").arg(toDouble(root[QString("Stopfhopfen_%1_Menge").arg(i)])/menge);
+        xml += "<Einheit Einheit=\"Integer\">1</Einheit>";
+        xml += QString("<erg_Menge Einheit=\"Gramm\">%1</erg_Menge>").arg(toString(root[QString("Stopfhopfen_%1_Menge").arg(i)]));
+        xml += "<Typ Einheit=\"Integer\">100</Typ>";
+        xml += "<Zeitpunkt Einheit=\"Integer\">0</Zeitpunkt>";
+        xml += "<Bemerkung Einheit=\"Text\"></Bemerkung>";
+        xml += "<Ausbeute Einheit=\"Prozent\">0</Ausbeute>";
+        xml += "<Farbe Einheit=\"EBC\">0</Farbe>";
+        xml += QString("</Anteil_%1>").arg(cnt);
+        ++cnt;
+        QPair<QString, QString> hop(toString(root[QString("Stopfhopfen_%1_Sorte").arg(i)]),"0.0");
+        hopfen += hop;
+    }
+    xml += "</WeitereZutatenGaben>";
+
+    xml += "<Schnellgaerverlauf/><Hauptgaerverlauf/><Nachgaerverlauf/><Bewertungen/>";
     xml += "</Sud>";
 
-    xml += "<!--Hier sind die Rohstoffe aufgelistet die Im Sud verwendet wurden--><Rohstoffe>";
+    xml += "<Rohstoffe>";
 
     xml += "<Malz>";
-
-    QList< QPair<QString,QString> > malze_list = malze.toList();
-
+    QList<QString> malze_list = malze.toList();
     for (int i = 0; i < malze_list.size(); ++i) {
-        QString m_name = malze_list[i].first;
-        QString m_gew = malze_list[i].second;
-
         xml += QString("<Eintrag_%1>").arg(i+1);
-
-        xml += QString("<!--Malzbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(m_name);
+        xml += QString("<!--Malzbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(malze_list[i]);
         xml += "<!--Malzfarbwert--><Farbe Einheit=\"EBU\">1</Farbe>";
         xml += "<!--Maximal empfohlener Schuettungsanteil--><MaxProzent Einheit=\"Prozent\">100</MaxProzent>";
-
-        xml += QString("<!--Vorhandene Rohstoffmenge--><Menge Einheit=\"kg\">%1</Menge>").arg(m_gew);
+        xml += "<!--Vorhandene Rohstoffmenge--><Menge Einheit=\"kg\">0</Menge>";
         xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/kg\">0</Preis>";
         xml += "<!--Bemerkung--><Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
         xml += "<!--Anwendung--><Anwendung Einheit=\"Text\"><![CDATA[]]></Anwendung>";
         xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
         xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
-
         xml += QString("</Eintrag_%1>").arg(i+1);
     }
-
     xml += "</Malz>";
+
     xml += "<Hopfen>";
-
     QList< QPair<QString,QString> > hopfen_list = hopfen.toList();
-
     for (int i = 0; i < hopfen_list.size(); ++i) {
         QString h_sorte = hopfen_list[i].first;
         QString h_alpha = hopfen_list[i].second;
-
         xml += QString("<Eintrag_%1>").arg(i+1);
-
         xml += QString("<!--Hopfenbeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(h_sorte);
         xml += QString("<!--Alphaprozentgehalt--><Alpha Einheit=\"Alpha Prozent\">%1</Alpha>").arg(h_alpha);
         xml += "<!--Vorhandene Menge--><Menge Einheit=\"Gramm\">0</Menge>";
@@ -3412,17 +3503,12 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
         xml += "<!--Typ 1=Aroma 2=Bitter 3=Universal--><Typ Einheit=\"Integer\">3</Typ>";
         xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
         xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
-
         xml += QString("</Eintrag_%1>").arg(i+1);
     }
-
     xml += "</Hopfen>";
 
     xml += "<Hefe>";
-
-    QString hefe = root["Hefe"].toString();
-
-    xml += QString("<Eintrag_1><!--Hefebeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(hefe);
+    xml += QString("<Eintrag_1><!--Hefebeschreibung (Name)--><Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(toString(root["Hefe"]));
     xml += "<!--Vorhandene Menge--><Menge Einheit=\"Einheiten\">0</Menge>";
     xml += "<!--Benoetigte Einheiten--><Einheiten Einheit=\"Einheiten\"></Einheiten>";
     xml += "<!--Einkaufspreis--><Preis Einheit=\"Euro/Einheit\">0</Preis>";
@@ -3437,12 +3523,27 @@ void QExport::convertJSON(const QString& json, const QString& xsud)
     xml += "<!--Temperatur--><Temperatur Einheit=\"Text\"></Temperatur>";
     xml += QString("<!--Datum Eingelagert--><Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
     xml += QString("<!--Datum Mindesthaltbar--><Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
-
     xml += "</Eintrag_1>";
-
     xml += "</Hefe>";
-    // todo add here more code
-    xml += "<WeitereZutaten/>";
+
+    xml += "<WeitereZutaten>";
+    QList<QString> weitereZutaten_list = weitereZutaten.toList();
+    for (int i = 0; i < weitereZutaten_list.size(); ++i) {
+        xml += QString("<Eintrag_%1>").arg(i+1);
+        xml += QString("<Beschreibung Einheit=\"Text\">%1</Beschreibung>").arg(weitereZutaten_list[i]);
+        xml += "<Menge Einheit=\"kg/g\">0</Menge>";
+        xml += "<Einheiten Einheit=\"Integer\">1</Einheiten>";
+        xml += "<Typ Einheit=\"Integer\">4</Typ>";
+        xml += "<Ausbeute Einheit=\"Prozent\">0</Ausbeute>";
+        xml += "<EBC Einheit=\"Prozent\">0</EBC>";
+        xml += "<Preis Einheit=\"Euro/kg\">0</Preis>";
+        xml += "<Bemerkung Einheit=\"Text\"><![CDATA[]]></Bemerkung>";
+        xml += QString("<Eingelagert Einheit=\"Qt::ISODate\">%1</Eingelagert>").arg(today);
+        xml += QString("<Mindesthaltbar Einheit=\"Qt::ISODate\">%1</Mindesthaltbar>").arg(today);
+        xml += QString("</Eintrag_%1>").arg(i+1);
+    }
+    xml += "</WeitereZutaten>";
+
     xml += "</Rohstoffe>";
     xml += "</xsud>";
 
