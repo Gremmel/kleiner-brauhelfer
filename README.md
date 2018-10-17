@@ -16,6 +16,7 @@ http://www.joerum.de/kleiner-brauhelfer/
   - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
 - Zusammenfassung enthält auch Rezeptwerte
 - Spalte Bewertung in Sudauswahl
+- Import von "Maische Malz und Mehr" Rezepte unterstütz "Weitere Zutaten" und VorderwürzeHopfung
 ### Version 1.4.4.2
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
 - ~~Umstellung auf Qt 5.10~~ (weiterhin Qt5.3)
