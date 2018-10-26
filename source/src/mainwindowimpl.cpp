@@ -353,8 +353,11 @@ void MainWindowImpl::initUi() {
   for (int i = 0; i < tableWidget_Sudauswahl->columnCount(); ++i) {
     QVariant var =
         settings.value("tableWidget_Sudauswahl_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_Sudauswahl->horizontalHeader()->resizeSection(i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_Sudauswahl->horizontalHeader()->resizeSection(i, width);
+    }
   }
 
   // tableWidget_Schnellgaerverlauf
@@ -376,9 +379,12 @@ void MainWindowImpl::initUi() {
   for (int i = 0; i < tableWidget_Brauuebersicht->columnCount(); ++i) {
     QVariant var =
         settings.value("tableWidget_Brauuebersicht_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_Brauuebersicht->horizontalHeader()->resizeSection(
-          i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_Brauuebersicht->horizontalHeader()->resizeSection(
+          i, width);
+    }
   }
 
   // tableWidget_Malz
@@ -393,8 +399,11 @@ void MainWindowImpl::initUi() {
   tableWidget_Malz->horizontalHeader()->setMinimumSectionSize(80);
   for (int i = 0; i < tableWidget_Malz->columnCount(); ++i) {
     QVariant var = settings.value("tableWidget_Malz_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_Malz->horizontalHeader()->resizeSection(i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_Malz->horizontalHeader()->resizeSection(i, width);
+    }
   }
 
   // tableWidget_Hopfen
@@ -412,8 +421,11 @@ void MainWindowImpl::initUi() {
   for (int i = 0; i < tableWidget_Hopfen->columnCount(); ++i) {
     QVariant var =
         settings.value("tableWidget_Hopfen_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_Hopfen->horizontalHeader()->resizeSection(i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_Hopfen->horizontalHeader()->resizeSection(i, width);
+    }
   }
 
   // tableWidget_Hefe
@@ -428,8 +440,11 @@ void MainWindowImpl::initUi() {
   tableWidget_Hefe->horizontalHeader()->setMinimumSectionSize(80);
   for (int i = 0; i < tableWidget_Hefe->columnCount(); ++i) {
     QVariant var = settings.value("tableWidget_Hefe_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_Hefe->horizontalHeader()->resizeSection(i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_Hefe->horizontalHeader()->resizeSection(i, width);
+    }
   }
 
   // tableWidget_WeitereZutaten
@@ -445,9 +460,12 @@ void MainWindowImpl::initUi() {
   for (int i = 0; i < tableWidget_WeitereZutaten->columnCount(); ++i) {
     QVariant var =
         settings.value("tableWidget_WeitereZutaten_col" + QString::number(i));
-    if (var.isValid())
-      tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(
-          i, var.toInt());
+    if (var.isValid()) {
+      int width = var.toInt();
+      if (width > 10)
+        tableWidget_WeitereZutaten->horizontalHeader()->resizeSection(
+          i, width);
+    }
   }
 
   settings.endGroup();
@@ -6387,6 +6405,7 @@ void MainWindowImpl::FuelleSudauswahl() {
     tableWidget_Sudauswahl->clearContents();
     tableWidget_Sudauswahl->setRowCount(0);
     tableWidget_Sudauswahl->setSortingEnabled(false);
+    tableWidget_Sudauswahl->setColumnHidden(5, true);
     while (query.next()) {
       // Auslesen ob Bier schon gebraut wurde
       bool gebraut =
@@ -6471,8 +6490,10 @@ void MainWindowImpl::FuelleSudauswahl() {
         newItem6->setData(Qt::DisplayRole, bewertung);
         newItem6->setTextAlignment(Qt::AlignCenter);
         tableWidget_Sudauswahl->setCellWidget(i, 5, starItem);
+        tableWidget_Sudauswahl->setColumnHidden(5, false);
       }
       newItem6->setBackground(color);
+      newItem6->setForeground(color);
       tableWidget_Sudauswahl->setItem(i, 5, newItem6);
 
       // in Merkliste
@@ -9681,8 +9702,7 @@ void MainWindowImpl::on_tableWidget_Brauuebersicht_cellDoubleClicked(int, int) {
 void MainWindowImpl::on_tableWidget_Sudauswahl_itemSelectionChanged() {
   ErstelleSudInfo();
   // Buttons zum Laden etc. ein/Ausblenden
-  if (tableWidget_Sudauswahl->selectedItems().count() == 5 ||
-      tableWidget_Sudauswahl->selectedItems().count() == 6) {
+  if (tableWidget_Sudauswahl->selectedItems().count() <= tableWidget_Sudauswahl->columnCount()) {
     // Alle Buttons enablen
     pushButton_SudDel->setDisabled(false);
     pushButton_SudExport->setDisabled(false);
@@ -11842,8 +11862,7 @@ void MainWindowImpl::on_pushButton_EingabeHVerdampfungsziffer_clicked() {
 
 void MainWindowImpl::on_pushButton_SudinfoPDF_clicked() {
   QString defaultFileName;
-  if (tableWidget_Sudauswahl->selectedItems().count() == 5 ||
-      tableWidget_Sudauswahl->selectedItems().count() == 6)
+  if (tableWidget_Sudauswahl->selectedItems().count() <= tableWidget_Sudauswahl->columnCount())
     defaultFileName =
         tableWidget_Sudauswahl->item(tableWidget_Sudauswahl->currentRow(), 1)
             ->text() +

@@ -2,9 +2,10 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Download letzte Version
-[Version 1.4.4.2](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.2)
+[Version 1.4.4.3](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 ## Änderungen & Erweiterungen
-### Version 1.4.4.3 (in Entwicklung)
+### Version 1.4.4.3
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - Deutsch überarbeitet (grossen Dank an **Radulph**)
 - Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
