@@ -2,11 +2,12 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Download letzte Version
-[Version 1.4.4.3](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
+- [Version 1.4.4.3](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
+- [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.3
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
-- Deutsch überarbeitet (grossen Dank an **Radulph**)
+- Deutsch überarbeitet (grosser Dank an **Radulph**)
 - Fix: Windows SSL Bibliotheken für Anleitung integriert
 - Fix: Absturz in "Bewertung" bei Sprachumschaltung
 - Min Max werte gesamte Kochdauer auf 1 - 999 min geändert
