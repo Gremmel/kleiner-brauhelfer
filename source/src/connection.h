@@ -1502,7 +1502,7 @@ static bool ErstelleVerbindung() {
       return false;
     }
     else {
-      int updateNr = query.value(0).toInt();
+      updateNr = query.value(0).toInt();
 
       //Backup der Datenbank anlegen für update
       if (updateNr < DB_VERSION) {
