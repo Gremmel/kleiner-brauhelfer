@@ -81,6 +81,16 @@ void MainWindowImpl::ErstelleSpickzettel()
   s += "</div>";
   contextVariables["Glas"] = s;
 
+  s = "<div style='background-color:" + farbe.name() + ";padding:0px;margin:0px;width:100%;height:100%'>";
+  s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_420x420.png' alt='Bierfarbe'>";
+  s += "</div>";
+  contextVariables["Glas-hell"] = s;
+
+  s = "<div style='background-color:" + farbe.name() + ";padding:0px;margin:0px;width:100%;height:100%'>";
+  s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_dark_420x420.png' alt='Bierfarbe'>";
+  s += "</div>";
+  contextVariables["Glas-dunkel"] = s;
+
   // Malz
   double fehlprozent = list_Malzgaben.count() > 0 ? list_Malzgaben[0]->getFehlProzent() : 0.0;
   if (fehlprozent == 0.0) {
