@@ -5,6 +5,11 @@ http://www.joerum.de/kleiner-brauhelfer/
 - [Version 1.4.4.3](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
 ## Änderungen & Erweiterungen
+### Version 1.4.4.4 (in Entwicklung)
+- Fix: Datenbank update bei Erstinstallation
+- HTML Tags Glas-hell und Glas-dunkel
+- HTML Tags Malz-rest, Hopfen-rest, etc.
+- HTML Templates direkt unter Einstellungen editierbar
 ### Version 1.4.4.3
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - Deutsch überarbeitet (grosser Dank an **Radulph**)
@@ -15,6 +20,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Formatierung von Spickzettel & Zusammenfassung lässt sich über HTML Datei anpassen
   - Windows: C:\\Users\\&lt;benutzer&gt;\\AppData\\Roaming\\Gremmelsoft
   - Linux: /home/&lt;benutzer&gt;/.config/Gremmelsoft/
+  - macOS: /Users/&lt;benutzer&gt;/.kleiner-brauhelfer
   - Templatesystem von Robert Knight (https://github.com/robertknight/qt-mustache)
 - Zusammenfassung enthält auch Rezeptwerte
 - Spalte Bewertung in Sudauswahl

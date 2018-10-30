@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>756</width>
-    <height>585</height>
+    <width>800</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,8 +154,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>568</width>
-              <height>663</height>
+              <width>622</width>
+              <height>540</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -1296,8 +1296,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>574</width>
-              <height>941</height>
+              <width>632</width>
+              <height>581</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -1765,6 +1765,59 @@
              </item>
             </layout>
            </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_HtmlTemplates">
+        <layout class="QVBoxLayout" name="verticalLayout_26">
+         <item>
+          <widget class="QGroupBox" name="groupBox_15">
+           <property name="title">
+            <string>HTML Template</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_27">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_24">
+              <item>
+               <widget class="QLabel" name="label_htmltemplate">
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_htmltemplate">
+                <item>
+                 <property name="text">
+                  <string notr="true">sudinfo.html</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">spickzettel.html</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">zusammenfassung.html</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_htmltemplate">
+                <property name="text">
+                 <string>Speichern</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTextEdit" name="textEdit_htmltemplate"/>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QMessageBox>
+#include <QTextStream>
 
 //
 EinstellungsdialogImpl::EinstellungsdialogImpl( QWidget * parent, Qt::WindowFlags f)
@@ -13,11 +14,18 @@ EinstellungsdialogImpl::EinstellungsdialogImpl( QWidget * parent, Qt::WindowFlag
 {
   NeuerDBPfad = false;
   setupUi(this);
+  htmlHightLighter = new HtmlHighLighter(textEdit_htmltemplate->document());
 
   label_Datenbankpfad -> setText(trUtf8("Pfad zur Datenbank: ") + DB_USER_NAME);
+  textEdit_htmltemplate->setCurrentFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
   ErstelleIcons();
 
   LeseKonfig();
+}
+
+EinstellungsdialogImpl::~EinstellungsdialogImpl()
+{
+  delete htmlHightLighter;
 }
 //
 
@@ -47,6 +55,12 @@ void EinstellungsdialogImpl::ErstelleIcons()
   AnsichtButton->setText(trUtf8("Ansicht"));
   AnsichtButton->setTextAlignment(Qt::AlignHCenter);
   AnsichtButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+  QListWidgetItem *HtmlTemplatesButton = new QListWidgetItem(listWidget);
+  HtmlTemplatesButton->setIcon(QIcon(":/dlg_einstellungen/htmltemplates.png"));
+  HtmlTemplatesButton->setText(trUtf8("HTML Templates"));
+  HtmlTemplatesButton->setTextAlignment(Qt::AlignHCenter);
+  HtmlTemplatesButton->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
   connect(listWidget,
           SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
@@ -314,6 +328,7 @@ void EinstellungsdialogImpl::LeseKonfig()
   LeseKonfigFarben();
   LeseKonfigErweitert();
   LeseKonfigAnsicht();
+  LeseKonfigHtmlTemplates();
 }
 
 
@@ -1032,5 +1047,35 @@ void EinstellungsdialogImpl::on_checkBox_FontSystem_clicked()
   }
   else {
     widget_font->setEnabled(true);
+  }
+}
+
+void EinstellungsdialogImpl::LeseKonfigHtmlTemplates()
+{
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + QDir::separator();
+  label_htmltemplate->setText(settingsPath);
+  on_comboBox_htmltemplate_currentIndexChanged(comboBox_htmltemplate->currentText());
+}
+
+void EinstellungsdialogImpl::on_comboBox_htmltemplate_currentIndexChanged(const QString &filename)
+{
+  QFile file(label_htmltemplate->text() + filename);
+  if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    textEdit_htmltemplate->setPlainText(file.readAll());
+    file.close();
+  }
+  else {
+    textEdit_htmltemplate->setText("");
+  }
+}
+
+void EinstellungsdialogImpl::on_pushButton_htmltemplate_clicked()
+{
+  QFile file(label_htmltemplate->text() + comboBox_htmltemplate->currentText());
+  if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    QTextStream stream(&file);
+    stream << textEdit_htmltemplate->toPlainText();
+    file.close();
   }
 }

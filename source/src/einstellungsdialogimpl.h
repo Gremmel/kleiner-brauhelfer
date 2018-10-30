@@ -3,6 +3,7 @@
 //
 #include <QDialog>
 #include "ui_einstellungen.h"
+#include "HTMLHighLighter.h"
 //
 class EinstellungsdialogImpl : public QDialog, public Ui::Dialog
 {
@@ -17,12 +18,15 @@ private:
   void LeseKonfigDB();
   void LeseKonfig();
   void LeseKonfigFarben();
+  void LeseKonfigHtmlTemplates();
   void ErstelleIcons();
   QString DBDirVorher;
   void StyleFelderEinausblenden();
 public:
   bool NeuerDBPfad;
+  HtmlHighLighter* htmlHightLighter;
   EinstellungsdialogImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
+  ~EinstellungsdialogImpl();
 private slots:
   void on_pushButton_SetDefaultErweitert_clicked();
   void on_comboBox_FormelBrixPlato_currentIndexChanged(QString );
@@ -49,6 +53,8 @@ private slots:
   void on_pushButton_GetColorStyleAuswahl_clicked();
   void on_checkBox_FontSystem_clicked();
   void on_pushButton_GetBackupPfad_clicked();
+  void on_comboBox_htmltemplate_currentIndexChanged(const QString &filename);
+  void on_pushButton_htmltemplate_clicked();
 };
 #endif
 
