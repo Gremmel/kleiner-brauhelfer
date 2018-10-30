@@ -470,34 +470,12 @@ void MainWindowImpl::ErstelleSpickzettel()
                                 + trUtf8("\nSQL-Befehl:\n") + sql);
   }
   else {
-    int zaehler = 0;
     if (query.first()) {
       contextVariables["GeraeteTitel"] = trUtf8("Benötigte Gerätschaften");
       s = "<table><tbody>";
-      if (zaehler == 0)
-        s += "<tr>";
-      s += "<td align=center><p>";
-      s += query.value(0).toString();
-      s += "</p></td>";
-      if (zaehler == 2)
-        s += "</tr>";
-      zaehler ++;
-      if (zaehler == 3)
-        zaehler = 0;
-      while (query.next()){
-        if (zaehler == 0)
-          s += "<tr>";
-        s += "<td align=center><p>";
-        s += query.value(0).toString();
-        s += "</p></td>";
-        if (zaehler == 2)
-          s += "</tr>";
-        zaehler ++;
-        if (zaehler == 3)
-          zaehler = 0;
-      }
-      if (zaehler != 0)
-        s += "</tr>";
+      s += "<tr><td align=center>" + query.value(0).toString() + "</td></tr>";
+      while (query.next())
+        s += "<tr><td align=center>" + query.value(0).toString() + "</td></tr>";
       s += "</tbody></table>";
       contextVariables["Geraete"] = s;
     }

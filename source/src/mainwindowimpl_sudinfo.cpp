@@ -25,7 +25,7 @@ void MainWindowImpl::ErstelleSudInfo()
     QList<QTableWidgetItem *> sList;
     sList = tableWidget_Sudauswahl -> selectedItems();
 
-    if (sList.count() == 4 || sList.count() == 5) {
+    if (sList.count() > 0 && sList.count() <= tableWidget_Sudauswahl->columnCount()) {
 
       //Sud ID ermitteln
       int row = sList.first() -> row();
