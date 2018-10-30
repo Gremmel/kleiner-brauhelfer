@@ -1803,12 +1803,29 @@
                   <string notr="true">zusammenfassung.html</string>
                  </property>
                 </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">style_hell.css</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">style_dunkel.css</string>
+                 </property>
+                </item>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_htmltemplate">
+               <widget class="QPushButton" name="pushButton_htmltemplate_save">
                 <property name="text">
                  <string>Speichern</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_htmltemplate_restore">
+                <property name="text">
+                 <string>Wiederherstellen</string>
                 </property>
                </widget>
               </item>

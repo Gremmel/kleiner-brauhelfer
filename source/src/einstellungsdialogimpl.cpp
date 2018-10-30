@@ -1068,14 +1068,36 @@ void EinstellungsdialogImpl::on_comboBox_htmltemplate_currentIndexChanged(const 
   else {
     textEdit_htmltemplate->setText("");
   }
+  pushButton_htmltemplate_save->setEnabled(false);
 }
 
-void EinstellungsdialogImpl::on_pushButton_htmltemplate_clicked()
+void EinstellungsdialogImpl::on_pushButton_htmltemplate_save_clicked()
 {
   QFile file(label_htmltemplate->text() + comboBox_htmltemplate->currentText());
   if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
     QTextStream stream(&file);
     stream << textEdit_htmltemplate->toPlainText();
     file.close();
+  }
+  pushButton_htmltemplate_save->setEnabled(false);
+}
+
+void EinstellungsdialogImpl::on_textEdit_htmltemplate_textChanged()
+{
+  pushButton_htmltemplate_save->setEnabled(true);
+}
+
+void EinstellungsdialogImpl::on_pushButton_htmltemplate_restore_clicked()
+{
+  QMessageBox::StandardButton res = QMessageBox::question(this, APP_NAME,
+    trUtf8("Soll das standard HTML Template wiederhergestellt werden?"),
+    QMessageBox::Yes | QMessageBox::No);
+  if (res == QMessageBox::Yes) {
+    QFile file(label_htmltemplate->text() + comboBox_htmltemplate->currentText());
+    QFile file2(":/data/" + comboBox_htmltemplate->currentText());
+    file.remove();
+    if (file2.copy(file.fileName()))
+      QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
+    on_comboBox_htmltemplate_currentIndexChanged(comboBox_htmltemplate->currentText());
   }
 }

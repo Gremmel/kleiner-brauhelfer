@@ -54,7 +54,9 @@ private slots:
   void on_checkBox_FontSystem_clicked();
   void on_pushButton_GetBackupPfad_clicked();
   void on_comboBox_htmltemplate_currentIndexChanged(const QString &filename);
-  void on_pushButton_htmltemplate_clicked();
+  void on_pushButton_htmltemplate_save_clicked();
+  void on_textEdit_htmltemplate_textChanged();
+  void on_pushButton_htmltemplate_restore_clicked();
 };
 #endif
 

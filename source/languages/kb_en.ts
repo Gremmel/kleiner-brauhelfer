@@ -471,9 +471,14 @@
         <translation>HTML Template</translation>
     </message>
     <message>
-        <location filename="../ui/einstellungen.ui" line="1811"/>
+        <location filename="../ui/einstellungen.ui" line="1821"/>
         <source>Speichern</source>
         <translation>Save</translation>
+    </message>
+    <message>
+        <location filename="../ui/einstellungen.ui" line="1828"/>
+        <source>Wiederherstellen</source>
+        <translation>Restore</translation>
     </message>
 </context>
 <context>
@@ -887,6 +892,11 @@ The programme will exit after copying is finished and need to be restarted.</tra
 </source>
         <translation>Affected file:
 </translation>
+    </message>
+    <message>
+        <location filename="../src/einstellungsdialogimpl.cpp" line="1093"/>
+        <source>Soll das standard HTML Template wiederhergestellt werden?</source>
+        <translation>Restore default HTML template?</translation>
     </message>
 </context>
 <context>

@@ -297,8 +297,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/einstellungen.ui" line="1811"/>
+        <location filename="../ui/einstellungen.ui" line="1821"/>
         <source>Speichern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/einstellungen.ui" line="1828"/>
+        <source>Wiederherstellen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -946,6 +951,11 @@ Das Programm wird nach dem Kopieren beendet und muss neu gestartet werden.</sour
         <location filename="../src/einstellungsdialogimpl.cpp" line="554"/>
         <source>Betroffene Datei:
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/einstellungsdialogimpl.cpp" line="1093"/>
+        <source>Soll das standard HTML Template wiederhergestellt werden?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
