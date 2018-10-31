@@ -3,7 +3,7 @@
 //
 #include <QDialog>
 #include "ui_einstellungen.h"
-#include "HTMLHighLighter.h"
+#include "htmlhighlighter.h"
 //
 class EinstellungsdialogImpl : public QDialog, public Ui::Dialog
 {

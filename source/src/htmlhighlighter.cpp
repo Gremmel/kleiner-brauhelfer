@@ -1,4 +1,4 @@
-#include "HTMLHighLighter.h"
+#include "htmlhighlighter.h"
 #include <QTextCharFormat>
 #include <QBrush>
 #include <QColor>
