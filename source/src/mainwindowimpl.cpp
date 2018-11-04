@@ -5257,7 +5257,7 @@ void MainWindowImpl::CheckRohstoffeVorhanden() {
     if (checkBox_MerklisteMengen->isChecked()) {
       QSqlQuery query;
       QString sql;
-      sql = "SELECT * FROM 'Sud' WHERE MerklistenID=1 AND AuswahlHefe='" + s +
+      sql = "SELECT * FROM 'Sud' WHERE MerklistenID=1 AND AuswahlHefe='" + s.replace("'", "''") +
             "'";
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage
