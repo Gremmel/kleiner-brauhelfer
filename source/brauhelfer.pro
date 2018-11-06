@@ -13,9 +13,9 @@ lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 5) {
 
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
-VERSION = 1.4.4.3
+VERSION = 1.4.4.4
 VERSION_SUFFIX =
-VERSION_INT = 1040403
+VERSION_INT = 1040404
 
 DEFINES += TARGET=\\\"$${TARGET}\\\" \
            VERSION=\\\"$${VERSION}$${VERSION_SUFFIX}\\\" \
@@ -89,7 +89,8 @@ HEADERS = src/mainwindowimpl.h \
  src/dialogsudteilen.h \
  src/database.h \
  src/dialogstammwuerze.h \
- src/mustache.h
+ src/mustache.h \
+ src/htmlhighlighter.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -132,6 +133,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/dialogsudteilen.cpp \
  src/database.cpp \
  src/dialogstammwuerze.cpp \
- src/mustache.cpp
+ src/mustache.cpp \
+ src/htmlhighlighter.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

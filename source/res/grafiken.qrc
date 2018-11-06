@@ -39,6 +39,7 @@
         <file>erweitert.png</file>
         <file>farbauswahl.png</file>
         <file>auge.png</file>
+        <file>htmltemplates.png</file>
     </qresource>
     <qresource prefix="/ewz">
         <file>close_button.svg</file>

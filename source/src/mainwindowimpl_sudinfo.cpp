@@ -91,6 +91,17 @@ void MainWindowImpl::ErstelleSudInfo()
             s += "</div>";
             contextVariables["Glas"] = s;
 
+            s = "<div style='background-color:" + farbe.name() +";padding:0px;margin:0px;width:100%;height:100%'>";
+              s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_200x200.png' alt='Bierfarbe'>";
+            s += "</div>";
+            contextVariables["Glas-hell"] = s;
+
+            // Glas
+            s = "<div style='background-color:" + farbe.name() +";padding:0px;margin:0px;width:100%;height:100%'>";
+            s += "<img style='padding:0px;margin:0px;width:100%;height:100%' src='qrc:/global/bier_dark_200x200.png' alt='Bierfarbe'>";
+            s += "</div>";
+            contextVariables["Glas-dunkel"] = s;
+
             //Solldaten des Rezeptes
             s = "<table><tbody>";
             FeldNr = query_sud.record().indexOf("Menge");
@@ -174,7 +185,7 @@ void MainWindowImpl::ErstelleSudInfo()
     if (NeuBerechnen <= 0){
       //Benötigte Rohstoffe mit Vorhandenen verechnen
 
-      //Alle Malzeinträge abrfuen
+      //Alle Malzeinträge abrufen
       QList<Rohstoff> ListMalz;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
         //Schüttung Abfragen
@@ -595,6 +606,46 @@ void MainWindowImpl::ErstelleSudInfo()
           s += "</table>";
           contextVariables["Malz"] = s;
       }
+      //Malz mit Restanzeige
+      if (ListMalz.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + " (" + trUtf8("kg") + ")" + "</td><td align='center'>" + trUtf8("rest") + " (" + trUtf8("kg") + ")" + "</td>";
+          for (int i = 0; i < ListMalz.size(); ++i){
+            double ist = 0;
+            //Vorhandene Menge von diesem Malz
+            bool gefunden = false;
+            for (int o=0; o < tableWidget_Malz -> rowCount(); o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Malz -> item(o, TableMalzColName) -> text() == ListMalz.at(i).Name){
+                QDoubleSpinBox* dsbMenge = (QDoubleSpinBox*)tableWidget_Malz -> cellWidget(o,TableMalzColMenge);
+                ist = dsbMenge ->value();
+                gefunden = true;
+              }
+            }
+            //double rest = ist - ListMalz.at(i).Menge;
+            s += "<tr valign='middle'>";
+            if (ist < ListMalz.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden){
+              s += "<td align='left'>" + ListMalz.at(i).Name + "</td>";
+            }
+            //Rohstoff ist nicht vorhanden
+            else {
+              s += "<td align='left' style='color: grey;'>" + ListMalz.at(i).Name + "</td>";
+            }
+            s += "<td align='center'>" + QString::number(ListMalz.at(i).Menge) + "</td>";
+            if (ist < ListMalz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListMalz.at(i).Menge) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListMalz.at(i).Menge) + "</b></td>";
+            s += "</tr>";
+          }
+          s += "</table>";
+          contextVariables["Malz-rest"] = s;
+      }
 
 
       //Hopfen Mengen anzeigen
@@ -635,6 +686,44 @@ void MainWindowImpl::ErstelleSudInfo()
           contextVariables["Hopfen"] = s;
       }
 
+      //Hopfen Mengen mit Rest anzeigen
+      //Bild für Hopfen anzeigen
+      if (ListHopfen.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + " (" + trUtf8("g") + ")" + "</td><td align='center'>" + trUtf8("rest") + " (" + trUtf8("g") + ")" + "</td>";
+          for (int i = 0; i < ListHopfen.size(); ++i){
+            double ist = 0;
+            bool gefunden = false;
+            //Vorhandene Menge von diesem Hopfen
+            for (int o=0; o < tableWidget_Hopfen -> rowCount(); o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Hopfen -> item(o,TableHopfenColName) -> text() == ListHopfen.at(i).Name){
+                QDoubleSpinBox *spinBox = (QDoubleSpinBox*)tableWidget_Hopfen -> cellWidget(o,TableHopfenColMenge);
+                ist = spinBox->value();
+                gefunden = true;
+              }
+            }
+            s += "<tr valign='middle'>";
+            if (ist < ListHopfen.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden)
+              s += "<td align='left'>" + ListHopfen.at(i).Name + "</td>";
+            else
+              s += "<td align='left' style='color: grey;'>" + ListHopfen.at(i).Name + "</td>";
+            s += "<td align='center'>" + QString::number(ListHopfen.at(i).Menge) + "</td>";
+            if (ist < ListHopfen.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListHopfen.at(i).Menge) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListHopfen.at(i).Menge) + "</b></td>";
+            s += "</tr>";
+          }
+          s += "</table>";
+          contextVariables["Hopfen-rest"] = s;
+      }
+
       //Hefe Mengen anzeigen
       //Bild für Hefe anzeigen
       if (ListHefe.count() > 0){
@@ -671,6 +760,44 @@ void MainWindowImpl::ErstelleSudInfo()
           }
           s += "</table>";
           contextVariables["Hefe"] = s;
+      }
+
+      //Hefe Mengen mit Rest anzeigen
+      //Bild für Hefe anzeigen
+      if (ListHefe.count() > 0){
+          s = "<table width='100%'>";
+          s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+          for (int i = 0; i < ListHefe.size(); ++i){
+            double ist;
+            bool gefunden = false;
+            int AnzahlHefeEintraege = tableWidget_Hefe -> rowCount();
+            for (int o=0; o < AnzahlHefeEintraege; o++){
+              //wenn Eintrag übereinstimmt
+              if (tableWidget_Hefe -> item(o,TableHefeColName) -> text() == ListHefe.at(i).Name){
+                gefunden = true;
+              }
+            }
+            //Vorhandene Menge von diesem Hopfen
+            ist = ListHefe.at(i).MengeIst;
+            s += "<tr valign='middle'>";
+            if (ist < ListHefe.at(i).Menge)
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+            else
+              s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+            //Rohstoff ist aufgeführt
+            if (gefunden)
+              s += "<td align='left'>" + ListHefe.at(i).Name + "</td>";
+            else
+              s += "<td align='left' style='color: grey;'>" + ListHefe.at(i).Name + "</td>";
+            s += "<td align='center'>" + QString::number(ListHefe.at(i).Menge) + "</td>";
+            if (ist < ListHefe.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListHefe.at(i).Menge) + "</b></td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListHefe.at(i).Menge) + "</b></td>";
+            s += "</tr>";
+          }
+          s += "</table>";
+          contextVariables["Hefe-rest"] = s;
       }
 
       //WeitereZutaten Honig Mengen anzeigen
@@ -726,6 +853,63 @@ void MainWindowImpl::ErstelleSudInfo()
         s += "</table>";
         contextVariables["Honig"] = s;
       }
+
+
+      //WeitereZutaten Honig rest Mengen anzeigen
+      //Bild für Honig anzeigen
+      if (ListWeitereZutatenHonig.count() > 0){
+        int Einheit=0;
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+        for (int i = 0; i < ListWeitereZutatenHonig.size(); ++i){
+          double ist=0;
+          bool gefunden = false;
+          //Vorhandene Menge von diesem Honig
+          for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+            //wenn Eintrag übereinstimmt
+            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenHonig.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+              ist = dsbMenge -> value();
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              Einheit = comboEinheit -> currentIndex();
+              if (Einheit == EWZ_Einheit_Kg){
+                ist = ist * 1000;
+              }
+              gefunden = true;
+            }
+          }
+          s += "<tr valign='middle'>";
+          if (ist < ListWeitereZutatenHonig.at(i).Menge)
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+          else
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+          //Rohstoff ist aufgeführt
+          if (gefunden)
+            s += "<td align='left'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
+          else
+            s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenHonig.at(i).Name + "</td>";
+          if (Einheit == EWZ_Einheit_Kg){
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge / 1000) + " kg</td>";
+            if (ist < ListWeitereZutatenHonig.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number((ist - ListWeitereZutatenHonig.at(i).Menge)/1000) + "</b> kg</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number((ist - ListWeitereZutatenHonig.at(i).Menge)/1000) + "</b> kg</td>";
+          }
+          else {
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenHonig.at(i).Menge) + " g</td>";
+            if (ist < ListWeitereZutatenHonig.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListWeitereZutatenHonig.at(i).Menge) + "</b> g</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListWeitereZutatenHonig.at(i).Menge) + "</b> g</td>";
+          }
+
+          s += "</tr>";
+        }
+        s += "</table>";
+        contextVariables["Honig-rest"] = s;
+      }
+
+
       //WeitereZutaten Zucker Mengen anzeigen
       //Bild für Zucker anzeigen
       if (ListWeitereZutatenZucker.count() > 0){
@@ -779,6 +963,62 @@ void MainWindowImpl::ErstelleSudInfo()
         s += "</table>";
         contextVariables["Zucker"] = s;
       }
+
+      //WeitereZutaten Zucker Mengen mit Rest anzeigen
+      //Bild für Zucker anzeigen
+      if (ListWeitereZutatenZucker.count() > 0){
+        int Einheit=0;
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+        for (int i = 0; i < ListWeitereZutatenZucker.size(); ++i){
+          double ist=0;
+          bool gefunden = false;
+          //Vorhandene Menge von diesem Honig
+          for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+            //wenn Eintrag übereinstimmt
+            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenZucker.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+              ist = dsbMenge -> value();
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              Einheit = comboEinheit -> currentIndex();
+              if (Einheit == 0){
+                ist = ist * 1000;
+              }
+              gefunden = true;
+            }
+          }
+          s += "<tr valign='middle'>";
+          if (ist < ListWeitereZutatenZucker.at(i).Menge)
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+          else
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+          //Rohstoff ist aufgeführt
+          if (gefunden)
+            s += "<td align='left'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
+          else
+            s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenZucker.at(i).Name + "</td>";
+          if (Einheit == 0){
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge / 1000) + " kg</td>";
+            if (ist < ListWeitereZutatenZucker.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number((ist - ListWeitereZutatenZucker.at(i).Menge)/1000) + "</b> kg</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number((ist - ListWeitereZutatenZucker.at(i).Menge)/1000) + "</b> kg</td>";
+          }
+          else {
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenZucker.at(i).Menge) + " g</td>";
+            if (ist < ListWeitereZutatenZucker.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListWeitereZutatenZucker.at(i).Menge) + "</b> g</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListWeitereZutatenZucker.at(i).Menge) + "</b> g</td>";
+          }
+
+          s += "</tr>";
+        }
+        s += "</table>";
+        contextVariables["Zucker-rest"] = s;
+      }
+
+
       //WeitereZutaten Gewuerz Mengen anzeigen
       //Bild für Gewuerz anzeigen
       if (ListWeitereZutatenGewuerz.count() > 0){
@@ -832,6 +1072,62 @@ void MainWindowImpl::ErstelleSudInfo()
         s += "</table>";
         contextVariables["Gewuerz"] = s;
       }
+
+      //WeitereZutaten Gewuerz mit Rest Mengen anzeigen
+      //Bild für Gewuerz anzeigen
+      if (ListWeitereZutatenGewuerz.count() > 0){
+        int Einheit=0;
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+        for (int i = 0; i < ListWeitereZutatenGewuerz.size(); ++i){
+          double ist=0;
+          bool gefunden = false;
+          //Vorhandene Menge von diesem Honig
+          for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+            //wenn Eintrag übereinstimmt
+            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenGewuerz.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+              ist = dsbMenge -> value();
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              Einheit = comboEinheit -> currentIndex();
+              if (Einheit == 0){
+                ist = ist * 1000;
+              }
+              gefunden = true;
+            }
+          }
+          s += "<tr valign='middle'>";
+          if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+          else
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+          //Rohstoff ist aufgeführt
+          if (gefunden)
+            s += "<td align='left'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
+          else
+            s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenGewuerz.at(i).Name + "</td>";
+          if (Einheit == 0){
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge / 1000) + " kg</td>";
+            if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number((ist - ListWeitereZutatenGewuerz.at(i).Menge)/1000) + "</b> kg</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number((ist - ListWeitereZutatenGewuerz.at(i).Menge)/1000) + "</b> kg</td>";
+          }
+          else {
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenGewuerz.at(i).Menge) + " g</td>";
+            if (ist < ListWeitereZutatenGewuerz.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListWeitereZutatenGewuerz.at(i).Menge) + "</b> g</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListWeitereZutatenGewuerz.at(i).Menge) + "</b> g</td>";
+          }
+
+          s += "</tr>";
+        }
+        s += "</table>";
+        contextVariables["Gewuerz-rest"] = s;
+      }
+
+
       //WeitereZutaten Frucht Mengen anzeigen
       //Bild für Frucht anzeigen
       if (ListWeitereZutatenFrucht.count() > 0){
@@ -885,6 +1181,62 @@ void MainWindowImpl::ErstelleSudInfo()
         s += "</table>";
       contextVariables["Frucht"] = s;
       }
+
+      //WeitereZutaten Frucht mit Rest Mengen anzeigen
+      //Bild für Frucht anzeigen
+      if (ListWeitereZutatenFrucht.count() > 0){
+        int Einheit=0;
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+        for (int i = 0; i < ListWeitereZutatenFrucht.size(); ++i){
+          double ist=0;
+          bool gefunden = false;
+          //Vorhandene Menge von diesem Honig
+          for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+            //wenn Eintrag übereinstimmt
+            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenFrucht.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+              ist = dsbMenge -> value();
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              Einheit = comboEinheit -> currentIndex();
+              if (Einheit == 0){
+                ist = ist * 1000;
+              }
+              gefunden = true;
+            }
+          }
+          s += "<tr valign='middle'>";
+          if (ist < ListWeitereZutatenFrucht.at(i).Menge)
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+          else
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+          //Rohstoff ist aufgeführt
+          if (gefunden)
+            s += "<td align='left'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
+          else
+            s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenFrucht.at(i).Name + "</td>";
+          if (Einheit == 0){
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge / 1000) + " kg</td>";
+            if (ist < ListWeitereZutatenFrucht.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number((ist - ListWeitereZutatenFrucht.at(i).Menge)/1000) + "</b> kg</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number((ist - ListWeitereZutatenFrucht.at(i).Menge)/1000) + "</b> kg</td>";
+          }
+          else {
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenFrucht.at(i).Menge) + " g</td>";
+            if (ist < ListWeitereZutatenFrucht.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListWeitereZutatenFrucht.at(i).Menge) + "</b> g</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListWeitereZutatenFrucht.at(i).Menge) + "</b> g</td>";
+          }
+
+          s += "</tr>";
+        }
+        s += "</table>";
+      contextVariables["Frucht-rest"] = s;
+      }
+
+
       //WeitereZutaten Sonstiges Mengen anzeigen
       //Bild für Sonstiges anzeigen
       if (ListWeitereZutatenSonstiges.count() > 0){
@@ -938,7 +1290,64 @@ void MainWindowImpl::ErstelleSudInfo()
         s += "</table>";
         contextVariables["Sonstiges"] = s;
       }
+
+
+      //WeitereZutaten Sonstiges Mengen mit Rest anzeigen
+      //Bild für Sonstiges anzeigen
+      if (ListWeitereZutatenSonstiges.count() > 0){
+        int Einheit=0;
+        s = "<table width='100%'>";
+        s += "<td></td><td></td><td align='center'>" + trUtf8("benötigt") + "</td><td align='center'>" + trUtf8("rest") + "</td>";
+        for (int i = 0; i < ListWeitereZutatenSonstiges.size(); ++i){
+          double ist=0;
+          bool gefunden = false;
+          //Vorhandene Menge von diesem Honig
+          for (int o=0; o < tableWidget_WeitereZutaten -> rowCount(); o++){
+            //wenn Eintrag übereinstimmt
+            if (tableWidget_WeitereZutaten -> item(o,TableWZutatColName) -> text() == ListWeitereZutatenSonstiges.at(i).Name){
+              QDoubleSpinBox* dsbMenge=(QDoubleSpinBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColMenge);
+              ist = dsbMenge -> value();
+              QComboBox* comboEinheit=(QComboBox*)tableWidget_WeitereZutaten -> cellWidget(o,TableWZutatColEinheit);
+              Einheit = comboEinheit -> currentIndex();
+              if (Einheit == 0){
+                ist = ist * 1000;
+              }
+              gefunden = true;
+            }
+          }
+          s += "<tr valign='middle'>";
+          if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/nio_32x32.png' alt='IO' width='16px' border=0></td>";
+          else
+            s += "<td><img style='padding:0px;margin:0px;' src='qrc:/global/io_32x32.png' alt='IO' width='16px' border=0></td>";
+          //Rohstoff ist aufgeführt
+          if (gefunden)
+            s += "<td align='left'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
+          else
+            s += "<td align='left' style='color: grey;'>" + ListWeitereZutatenSonstiges.at(i).Name + "</td>";
+          if (Einheit == 0){
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge / 1000) + " kg</td>";
+            if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number((ist - ListWeitereZutatenSonstiges.at(i).Menge)/1000) + "</b> kg</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number((ist - ListWeitereZutatenSonstiges.at(i).Menge)/1000) + "</b> kg</td>";
+          }
+          else {
+            s += "<td align='center'>" + QString::number(ListWeitereZutatenSonstiges.at(i).Menge) + " g</td>";
+            if (ist < ListWeitereZutatenSonstiges.at(i).Menge)
+              s += "<td align='center' style='color: red;'><b>" + QString::number(ist - ListWeitereZutatenSonstiges.at(i).Menge) + "</b> g</td>";
+            else
+              s += "<td align='center' style='color: green;'><b>" + QString::number(ist - ListWeitereZutatenSonstiges.at(i).Menge) + "</b> g</td>";
+          }
+
+          s += "</tr>";
+        }
+        s += "</table>";
+        contextVariables["Sonstiges-rest"] = s;
+      }
+
     }
+
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
     settings.beginGroup("DB");
