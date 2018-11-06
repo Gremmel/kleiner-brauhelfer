@@ -471,13 +471,14 @@ void MainWindowImpl::ErstelleSpickzettel()
   QSqlQuery query;
 
   int id = getBrauanlagenIDRezept();
-  QString sql = "SELECT Bezeichnung FROM Geraete WHERE AusruestungAnlagenID = " + QString::number(id);
-  if (!query.exec(sql)) {
+  query.prepare("SELECT Bezeichnung FROM Geraete WHERE AusruestungAnlagenID = :anlagenid");
+  query.bindValue(":anlagenid", id);
+  if (!query.exec()) {
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                 CANCEL_NO, trUtf8("Rückgabe:\n") + query.lastError().databaseText()
-                                + trUtf8("\nSQL-Befehl:\n") + sql);
+                                + trUtf8("\nSQL-Befehl:\n") + query.lastQuery());
   }
   else {
     if (query.first()) {
