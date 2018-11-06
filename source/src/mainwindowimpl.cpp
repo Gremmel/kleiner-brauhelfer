@@ -319,6 +319,10 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   if (AktuelleSudID == 0)
     AktuelleSudID = 1;
   LadeSudDB(false);
+
+  //todo
+  ErstelleFlaschenlabel();
+
 }
 
 void MainWindowImpl::initUi() {
@@ -11817,6 +11821,11 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index) {
     // Seite Spickzettel erstellen
     ErstelleTabSpickzettel();
   }
+  // Flaschenlabel
+  else if (currentTab == tab_Flaschenlabel) {
+    // Seite Spickzettel erstellen
+    ErstelleFlaschenlabel();
+  }
   // Brau && Gärdaten
   else if (currentTab == tab_Gaerverlauf) {
     // Datum setzten
@@ -12610,4 +12619,32 @@ void MainWindowImpl::KopiereRessourcen() {
         QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
     }
   }
+}
+
+void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
+{
+  QString Sudname = lineEdit_Sudname->text() + "_label";
+
+  // letzten Pfad einlesen
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER,
+                     APP_KONFIG);
+  settings.beginGroup("PDF");
+  QString p = settings.value("recentPDFPath", QDir::homePath()).toString();
+
+  QString fileName =
+      QFileDialog::getSaveFileName(this, trUtf8("PDF speichern unter"),
+                                   p + "/" + Sudname + ".pdf", "PDF (*.pdf)");
+  if (!fileName.isEmpty()) {
+    // pdf speichern
+    webView_Flaschenlabel->printToPdf(fileName);
+
+    // Pfad abspeichern
+    QFileInfo fi(fileName);
+    settings.setValue("recentPDFPath", fi.absolutePath());
+
+    // open PDF
+    QDesktopServices::openUrl(QUrl("file:///" + fileName));
+  }
+
+  settings.endGroup();
 }

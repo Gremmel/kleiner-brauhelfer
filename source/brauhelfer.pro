@@ -134,6 +134,7 @@ SOURCES = src/mainwindowimpl.cpp \
  src/database.cpp \
  src/dialogstammwuerze.cpp \
  src/mustache.cpp \
- src/htmlhighlighter.cpp
+ src/htmlhighlighter.cpp \
+    src/mainwindowimpl_flaschenlabel.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc
