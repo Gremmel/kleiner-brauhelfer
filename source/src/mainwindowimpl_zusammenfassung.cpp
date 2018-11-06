@@ -81,15 +81,15 @@ void MainWindowImpl::ErstelleZusammenfassung()
     //Bei mehr als einem Eintrag im Nachgärverlauf wird der CO₂-Gehalt aus dem
     //Nachgärverlauf entnommen ansonsten der Teoretische
     double d = 0.0;
-    QString sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID="
-        + QString::number(AktuelleSudID) + " ORDER BY Zeitstempel DESC;";
     QSqlQuery queryN;
-    if (!queryN.exec(sqlN)) {
+    queryN.prepare("SELECT * FROM Nachgaerverlauf WHERE SudID=:sudid ORDER BY Zeitstempel DESC;");
+    queryN.bindValue(":sudid", AktuelleSudID);
+    if (!queryN.exec()) {
       // Fehlermeldung Datenbankabfrage
       ErrorMessage *errorMessage = new ErrorMessage();
       errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                   CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                  + trUtf8("\nSQL-Befehl:\n") + sqlN);
+                                  + trUtf8("\nSQL-Befehl:\n") + queryN.lastQuery());
     }
     else {
       if (queryN.first()){
@@ -148,15 +148,15 @@ void MainWindowImpl::ErstelleZusammenfassung()
         s += "<td>" + trUtf8("Angepeiltes Reifezeitende") + "</td>";
         //Start der Reifung ermitteln indem das letzte Datum vom
         //Nachgärverlauf benutzt wird
-        sqlN = "SELECT * FROM Nachgaerverlauf WHERE SudID="
-            + QString::number(AktuelleSudID) + " ORDER BY Zeitstempel DESC;";
+        queryN.prepare("SELECT * FROM Nachgaerverlauf WHERE SudID=:sudid ORDER BY Zeitstempel DESC;");
+        queryN.bindValue(":sudid", AktuelleSudID);
         QDate date = dateEdit_Abfuelldatum -> date();
-        if (!queryN.exec(sqlN)) {
+        if (!queryN.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + queryN.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sqlN);
+                                      + trUtf8("\nSQL-Befehl:\n") + queryN.lastQuery());
         }
         else {
           if (queryN.first()){

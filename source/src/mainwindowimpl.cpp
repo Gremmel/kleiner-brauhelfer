@@ -6385,21 +6385,29 @@ void MainWindowImpl::FuelleSudauswahl() {
     sql += " WHERE MerklistenID=1";
   if (!lineEdit_FilterText->text().isEmpty())
   {
-      if (sql == "SELECT * FROM Sud")
-          sql += " WHERE ";
-      else
-          sql += " AND ";
-      sql += "Sudname LIKE '%" + lineEdit_FilterText->text().replace("'", "''") + "%'";
+    if (sql == "SELECT * FROM Sud")
+      sql += " WHERE (";
+    else
+      sql += " AND (";
+    sql += "Sudname LIKE :textFilter";
+    sql += " OR ID IN (SELECT SudID FROM Malzschuettung WHERE Name LIKE :textFilter)";
+    sql += " OR ID IN (SELECT SudID FROM Hopfengaben WHERE Name LIKE :textFilter)";
+    sql += " OR ID IN (SELECT SudID FROM WeitereZutatenGaben WHERE Name LIKE :textFilter)";
+    sql += " OR AuswahlHefe LIKE :textFilter";
+    sql += " OR Kommentar LIKE :textFilter";
+    sql += ")";
   }
   sql += " ORDER BY Braudatum DESC";
 
-  if (!query.exec(sql)) {
+  query.prepare(sql);
+  query.bindValue(":textFilter", "%" + lineEdit_FilterText->text() + "%");
+  if (!query.exec()) {
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
     errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
                               trUtf8("Rückgabe:\n") +
                                   query.lastError().databaseText() +
-                                  trUtf8("\nSQL-Befehl:\n") + sql);
+                                  trUtf8("\nSQL-Befehl:\n") + query.lastQuery());
   } else {
     int i = 0;
     tableWidget_Sudauswahl->clearContents();
