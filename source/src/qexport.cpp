@@ -2739,7 +2739,7 @@ int QExport::ExportBeerXML(int SudNr, const QString& Dateiname)
       komentar = doc.createComment("May be Liquid, Dry, Slant or Culture");
       yeast.appendChild(komentar);
       element = doc.createElement("FORM");
-      sql = "SELECT TypTrFl FROM Hefe WHERE Beschreibung='" + AuswahlHefe.toHtmlEscaped() + "';";
+      sql = "SELECT TypTrFl FROM Hefe WHERE Beschreibung='" + AuswahlHefe.replace("'","''") + "';";
       QSqlQuery query;
       if (!query.exec(sql)) {
         // Fehlermeldung Datenbankabfrage

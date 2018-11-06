@@ -10,6 +10,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - HTML Tags Glas-hell und Glas-dunkel
 - HTML Tags Malz-rest, Hopfen-rest, etc.
 - HTML Templates direkt unter Einstellungen editierbar
+- Textfilter für Sudauswahl sucht auch in Malzschüttungen, Hopfengaben, weitere Zutaten Gaben, Hefeauswahl und Kommentar
 ### Version 1.4.4.3
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - Deutsch überarbeitet (grosser Dank an **Radulph**)

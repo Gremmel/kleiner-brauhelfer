@@ -190,13 +190,14 @@ void MainWindowImpl::ErstelleSudInfo()
       for (int sid = 0; sid < ListSudID.size(); ++sid){
         //Schüttung Abfragen
         QSqlQuery query_Malz;
-        QString sql = "SELECT * FROM Malzschuettung WHERE SudID=" + QString::number(ListSudID.at(sid)) + ";";
-        if (!query_Malz.exec(sql)) {
+        query_Malz.prepare("SELECT * FROM Malzschuettung WHERE SudID=:sudid");
+        query_Malz.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_Malz.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Malz.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_Malz.lastQuery());
         }
         else {
           while (query_Malz.next()){
@@ -233,13 +234,14 @@ void MainWindowImpl::ErstelleSudInfo()
       for (int sid = 0; sid < ListSudID.size(); ++sid){
         //Hopfen Abfragen
         QSqlQuery query_Hopfen;
-        QString sql = "SELECT * FROM Hopfengaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + ";";
-        if (!query_Hopfen.exec(sql)) {
+        query_Hopfen.prepare("SELECT * FROM Hopfengaben WHERE SudID=:sudid");
+        query_Hopfen.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_Hopfen.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_Hopfen.lastQuery());
         }
         else {
           while (query_Hopfen.next()){
@@ -272,13 +274,14 @@ void MainWindowImpl::ErstelleSudInfo()
           }
         }
         //Alle Hopfengaben aus den Weiteren Zutaten abfragen
-        sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=100;";
-        if (!query_Hopfen.exec(sql)) {
+        query_Hopfen.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=100;");
+        query_Hopfen.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_Hopfen.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hopfen.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_Hopfen.lastQuery());
         }
         else {
           while (query_Hopfen.next()){
@@ -313,13 +316,14 @@ void MainWindowImpl::ErstelleSudInfo()
       for (int sid = 0; sid < ListSudID.size(); ++sid){
         //Hefe Abfragen
         QSqlQuery query_Hefe;
-        QString sql = "SELECT AuswahlHefe,HefeAnzahlEinheiten FROM Sud WHERE ID=" + QString::number(ListSudID.at(sid)) + ";";
-        if (!query_Hefe.exec(sql)) {
+        query_Hefe.prepare("SELECT AuswahlHefe,HefeAnzahlEinheiten FROM Sud WHERE ID=:sudid");
+        query_Hefe.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_Hefe.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_Hefe.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_Hefe.lastQuery());
         }
         else {
           while (query_Hefe.next()){
@@ -365,14 +369,15 @@ void MainWindowImpl::ErstelleSudInfo()
       //Honig
       QList<Rohstoff> ListWeitereZutatenHonig;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
-        QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=0;";
         QSqlQuery query_weitereZutaten;
-        if (!query_weitereZutaten.exec(sql)) {
+        query_weitereZutaten.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=0;");
+        query_weitereZutaten.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_weitereZutaten.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_weitereZutaten.lastQuery());
         }
         else {
           while (query_weitereZutaten.next()){
@@ -404,14 +409,15 @@ void MainWindowImpl::ErstelleSudInfo()
       //Zucker
       QList<Rohstoff> ListWeitereZutatenZucker;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
-        QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=1;";
         QSqlQuery query_weitereZutaten;
-        if (!query_weitereZutaten.exec(sql)) {
+        query_weitereZutaten.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=1;");
+        query_weitereZutaten.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_weitereZutaten.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_weitereZutaten.lastQuery());
         }
         else {
           while (query_weitereZutaten.next()){
@@ -444,14 +450,15 @@ void MainWindowImpl::ErstelleSudInfo()
       //Gewuerz
       QList<Rohstoff> ListWeitereZutatenGewuerz;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
-        QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=2;";
         QSqlQuery query_weitereZutaten;
-        if (!query_weitereZutaten.exec(sql)) {
+        query_weitereZutaten.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=2;");
+        query_weitereZutaten.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_weitereZutaten.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_weitereZutaten.lastQuery());
         }
         else {
           while (query_weitereZutaten.next()){
@@ -485,14 +492,15 @@ void MainWindowImpl::ErstelleSudInfo()
       //Frucht
       QList<Rohstoff> ListWeitereZutatenFrucht;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
-        QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=3;";
         QSqlQuery query_weitereZutaten;
-        if (!query_weitereZutaten.exec(sql)) {
+        query_weitereZutaten.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=3;");
+        query_weitereZutaten.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_weitereZutaten.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_weitereZutaten.lastQuery());
         }
         else {
           while (query_weitereZutaten.next()){
@@ -526,14 +534,15 @@ void MainWindowImpl::ErstelleSudInfo()
       //Sonstiges
       QList<Rohstoff> ListWeitereZutatenSonstiges;
       for (int sid = 0; sid < ListSudID.size(); ++sid){
-        QString sql = "SELECT * FROM WeitereZutatenGaben WHERE SudID=" + QString::number(ListSudID.at(sid)) + " AND Typ=4;";
         QSqlQuery query_weitereZutaten;
-        if (!query_weitereZutaten.exec(sql)) {
+        query_weitereZutaten.prepare("SELECT * FROM WeitereZutatenGaben WHERE SudID=:sudid AND Typ=4;");
+        query_weitereZutaten.bindValue(":sudid", ListSudID.at(sid));
+        if (!query_weitereZutaten.exec()) {
           // Fehlermeldung Datenbankabfrage
           ErrorMessage *errorMessage = new ErrorMessage();
           errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                       CANCEL_NO, trUtf8("Rückgabe:\n") + query_weitereZutaten.lastError().databaseText()
-                                      + trUtf8("\nSQL-Befehl:\n") + sql);
+                                      + trUtf8("\nSQL-Befehl:\n") + query_weitereZutaten.lastQuery());
         }
         else {
           while (query_weitereZutaten.next()){
@@ -1356,14 +1365,15 @@ void MainWindowImpl::ErstelleSudInfo()
     contextVariables["AnhangTitel"] = trUtf8("Anhänge");
     s = "";
     for (int sid = 0; sid < ListSudID.size(); ++sid){
-      QString sql = "SELECT * FROM Anhang WHERE SudID=" + QString::number(ListSudID.at(sid));
       QSqlQuery query_anhang;
-      if (!query_anhang.exec(sql)) {
+      query_anhang.prepare("SELECT * FROM Anhang WHERE SudID=:sudid");
+      query_anhang.bindValue(":sudid", ListSudID.at(sid));
+      if (!query_anhang.exec()) {
         // Fehlermeldung Datenbankabfrage
         ErrorMessage *errorMessage = new ErrorMessage();
         errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
                                     CANCEL_NO, trUtf8("Rückgabe:\n") + query_anhang.lastError().databaseText()
-                                    + trUtf8("\nSQL-Befehl:\n") + sql);
+                                    + trUtf8("\nSQL-Befehl:\n") + query_anhang.lastQuery());
       }
       else {
         while (query_anhang.next()){
