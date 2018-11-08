@@ -107,15 +107,17 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
     qreal widthPagePx = printer.width();
     qreal faktorPxPerMM = widthPagePx / widthPageMM;
 
-    qreal breiteMM = spinBox_BreiteLabel->value() + spinBox_AbstandLabel->value();
+    qreal breiteMM = spinBox_BreiteLabel->value();
     qreal SVGhoeheMM = (breiteMM / seitenverhaeltnisSVG);
     qreal hoehePx = SVGhoeheMM * faktorPxPerMM;
+    qreal abstandMM = spinBox_AbstandLabel->value();
+    qreal abstandPx = abstandMM * faktorPxPerMM;
 
     //Gewünschte Anzahl
     int totalCount = spinBox_AnzahlLabels->value();
 
     //Anzahl der Streifen pro Seite
-    int countPerPage = int(heightPageMM / SVGhoeheMM);
+    int countPerPage = int(heightPageMM / (SVGhoeheMM + abstandMM));
 
     QPainter painter(&printer); // create a painter which will paint 'on printer'.
     int zaehler = 0;
@@ -128,7 +130,7 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
           i = countPerPage;
         }
         else {
-          FLabel_svgView->renderer()->render(&painter,QRectF(0,hoehePx*i,breiteMM * faktorPxPerMM,hoehePx));
+          FLabel_svgView->renderer()->render(&painter,QRectF(0,hoehePx*i+abstandPx*i,breiteMM * faktorPxPerMM,hoehePx));
           zaehler++;
         }
       }

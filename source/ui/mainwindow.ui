@@ -8352,14 +8352,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_FLabelAuswahl">
-               <property name="minimumSize">
-                <size>
-                 <width>300</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="comboBox_FLabelAuswahl"/>
              </item>
             </layout>
            </widget>
