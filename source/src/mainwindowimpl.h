@@ -277,6 +277,7 @@ private:
   bool BierWurdeVerbraucht;
   void ErstelleSpickzettel();
   void ErstelleFlaschenlabel();
+  void LadeFlaschenlabel();
   void ErstelleTabSpickzettel();
   void ErstelleUeber();
   void BerHopfen();
@@ -671,6 +672,8 @@ private slots:
   void on_checkBox_BrauuebersichtAuswahlAlle_stateChanged(int);
   void on_horizontalSlider_ScalePDF_valueChanged(int);
   void on_pushButton_FlaschenlabelPDF_clicked();
+  void on_checkBox_FLabelSVGViewKontur_stateChanged(int arg1);
+  void on_comboBox_FLabelAuswahl_activated(const QString &arg1);
 };
 #endif
 

@@ -12621,30 +12621,3 @@ void MainWindowImpl::KopiereRessourcen() {
   }
 }
 
-void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
-{
-  QString Sudname = lineEdit_Sudname->text() + "_label";
-
-  // letzten Pfad einlesen
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER,
-                     APP_KONFIG);
-  settings.beginGroup("PDF");
-  QString p = settings.value("recentPDFPath", QDir::homePath()).toString();
-
-  QString fileName =
-      QFileDialog::getSaveFileName(this, trUtf8("PDF speichern unter"),
-                                   p + "/" + Sudname + ".pdf", "PDF (*.pdf)");
-  if (!fileName.isEmpty()) {
-    // pdf speichern
-    webView_Flaschenlabel->printToPdf(fileName);
-
-    // Pfad abspeichern
-    QFileInfo fi(fileName);
-    settings.setValue("recentPDFPath", fi.absolutePath());
-
-    // open PDF
-    QDesktopServices::openUrl(QUrl("file:///" + fileName));
-  }
-
-  settings.endGroup();
-}
