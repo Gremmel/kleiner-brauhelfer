@@ -11,5 +11,6 @@
         <file>sudinfo.html</file>
         <file>style_hell.css</file>
         <file>style_dunkel.css</file>
+        <file>streifen_vorlage.svg</file>
     </qresource>
 </RCC>

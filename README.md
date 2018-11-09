@@ -11,6 +11,9 @@ http://www.joerum.de/kleiner-brauhelfer/
 - HTML Tags Malz-rest, Hopfen-rest, etc.
 - HTML Templates direkt unter Einstellungen editierbar
 - Textfilter für Sudauswahl sucht auch in Malzschüttungen, Hopfengaben, weitere Zutaten Gaben, Hefeauswahl und Kommentar
+- Erstellen von Flaschenlabels integriert. 
+  - Es können SVG Bilder aus den Anhängen ausgewählt werden. 
+  - Tags werden wie beim Spickzettel etc. ersetzt.
 ### Version 1.4.4.3
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - Deutsch überarbeitet (grosser Dank an **Radulph**)

@@ -90,7 +90,8 @@ HEADERS = src/mainwindowimpl.h \
  src/database.h \
  src/dialogstammwuerze.h \
  src/mustache.h \
- src/htmlhighlighter.h
+ src/htmlhighlighter.h \
+   src/svgview.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -134,6 +135,12 @@ SOURCES = src/mainwindowimpl.cpp \
  src/database.cpp \
  src/dialogstammwuerze.cpp \
  src/mustache.cpp \
- src/htmlhighlighter.cpp
+ src/htmlhighlighter.cpp \
+ src/mainwindowimpl_flaschenlabel.cpp \
+   src/svgview.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc
+
+qtHaveModule(opengl): QT += opengl
+
+QMAKE_CXXFLAGS += -std=c++0x
