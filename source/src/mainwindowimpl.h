@@ -278,6 +278,7 @@ private:
   void ErstelleSpickzettel();
   void ErstelleFlaschenlabel();
   void LadeFlaschenlabel();
+  QString ErsetzeFlaschenlabeTags(QString value);
   void ErstelleTabSpickzettel();
   void ErstelleUeber();
   void BerHopfen();
@@ -297,6 +298,8 @@ private:
 	void setFensterTitel();
   void SchreibeAnhangDB();
   void LeseAnhangDB();
+  void SchreibeFlaschenlabelDB();
+  void LeseFlaschenlabelDB();
   void KopiereRessourcen();
   QMenu *geladenerSudMenu;
   QMenu *extrasMenu;
@@ -322,6 +325,7 @@ private:
   bool AmLaden;
   bool NichtBerechnen;
   bool fuelleGeraeteliste;
+  bool fuelleFlaschenlabelTags;
   //Beschreibung für Malzeintrag merken in Rohstoffliste
   QString Malz_Bezeichnung_Merker;
   QString Hopfen_Bezeichnung_Merker;
@@ -359,6 +363,8 @@ private:
     double Menge;
     double MengeIst;
   };
+  //Neuer FlaschenlabelTag wird erstellt (nicht auf änderung reagieren)
+  bool NewFLabelTag;
 
 public:
   MainWindowImpl( QWidget * parent = 0,  Qt::WindowFlags f = 0 );
@@ -674,6 +680,9 @@ private slots:
   void on_pushButton_FlaschenlabelPDF_clicked();
   void on_checkBox_FLabelSVGViewKontur_stateChanged(int arg1);
   void on_comboBox_FLabelAuswahl_activated(const QString &arg1);
+  void on_pushButton_FLabelTagNeu_clicked();
+  void on_pushButton_FLabelTagDel_clicked();
+  void on_tableWidget_FLabelTags_itemChanged(QTableWidgetItem *item);
 };
 #endif
 

@@ -48,6 +48,7 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   NeuBerechnen = 0;
   Aenderung = false;
   reconnect = false;
+  NewFLabelTag = false;
 
   setupUi(this);
   initUi();
@@ -226,6 +227,20 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
   connect(spinBox_JungbiermengeAbfuellen, SIGNAL(valueChanged(double)), this,
           SLOT(slot_spinBoxValueChanged(double)));
 
+  connect(spinBox_BreiteLabel, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_AnzahlLabels, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_FLabel_RandOben, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_FLabel_RandLinks, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_FLabel_RandRechts, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_FLabel_RandUnten, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
+
+
   connect(spinBox_MaischebottichHoehe, SIGNAL(valueChanged(double)), this,
           SLOT(slot_spinBoxValueChanged(double)));
   connect(spinBox_MaischebottichDurchmesser, SIGNAL(valueChanged(double)), this,
@@ -320,8 +335,6 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
     AktuelleSudID = 1;
   LadeSudDB(false);
 
-  //todo
-  ErstelleFlaschenlabel();
 
 }
 
@@ -3204,6 +3217,7 @@ void MainWindowImpl::SchreibeSuddatenDB() {
 
     SchreibeBewertungenDB();
     SchreibeAnhangDB();
+    SchreibeFlaschenlabelDB();
 
     FuelleSudauswahl();
   }
@@ -3841,6 +3855,11 @@ void MainWindowImpl::LeseSuddatenDB() {
 
       // Anhang Abfragen
       LeseAnhangDB();
+
+
+      //Flaschenlabel Abfragen
+      ErstelleFlaschenlabel();
+      LeseFlaschenlabelDB();
 
       // Gespeichertes Tab wiederherstellen
       // FeldNr = query_sud.record().indexOf("AktivTab");
@@ -11823,8 +11842,9 @@ void MainWindowImpl::on_tabWidged_currentChanged(int index) {
   }
   // Flaschenlabel
   else if (currentTab == tab_Flaschenlabel) {
-    // Seite Spickzettel erstellen
+    //Flaschenlabel laden
     ErstelleFlaschenlabel();
+    LadeFlaschenlabel();
   }
   // Brau && Gärdaten
   else if (currentTab == tab_Gaerverlauf) {
@@ -12476,6 +12496,116 @@ void MainWindowImpl::SchreibeAnhangDB() {
                                 trUtf8("Rückgabe:\n") +
                                     query.lastError().databaseText() +
                                     trUtf8("\nSQL-Befehl:\n") + sql);
+    }
+  }
+}
+
+void MainWindowImpl::SchreibeFlaschenlabelDB()
+{
+  QSqlQuery query;
+  QString sql = "DELETE FROM FlaschenlabelTags WHERE SudID =" + QString::number(AktuelleSudID);
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                              trUtf8("Rückgabe:\n") +
+                              query.lastError().databaseText() +
+                              trUtf8("\nSQL-Befehl:\n") + sql);
+  }
+
+  for (int i = 0; i < tableWidget_FLabelTags->rowCount(); i++) {
+    sql = "INSERT into FlaschenlabelTags(SudID, Tagname, Value) VALUES(" +
+        QString::number(AktuelleSudID) + "," + "'" +
+        tableWidget_FLabelTags->item(i, 0)->text().replace("'", "''") + "', '" +
+        tableWidget_FLabelTags->item(i, 1)->text().replace("'", "''") + "' " +
+        ")";
+    if (!query.exec(sql)) {
+      // Fehlermeldung Datenbankabfrage
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                                trUtf8("Rückgabe:\n") +
+                                query.lastError().databaseText() +
+                                trUtf8("\nSQL-Befehl:\n") + sql);
+    }
+  }
+
+  sql = "DELETE FROM Flaschenlabel WHERE SudID =" + QString::number(AktuelleSudID);
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                              trUtf8("Rückgabe:\n") +
+                              query.lastError().databaseText() +
+                              trUtf8("\nSQL-Befehl:\n") + sql);
+  }
+  sql = "INSERT into Flaschenlabel(SudID, Auswahl, BreiteLabel, AnzahlLabels, Abstandlabels, SRandOben, SRandLinks, SRandRechts, SRandUnten) VALUES(" +
+      QString::number(AktuelleSudID) + "," + "'" +
+      comboBox_FLabelAuswahl->currentText().replace("'", "''") + "', " +
+      QString::number(spinBox_BreiteLabel->value()) + ", " +
+      QString::number(spinBox_AnzahlLabels->value()) + ", " +
+      QString::number(spinBox_AbstandLabel->value()) + ", " +
+      QString::number(spinBox_FLabel_RandOben->value()) + ", " +
+      QString::number(spinBox_FLabel_RandLinks->value()) + ", " +
+      QString::number(spinBox_FLabel_RandRechts->value()) + ", " +
+      QString::number(spinBox_FLabel_RandUnten->value()) + " " +
+      ")";
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                              trUtf8("Rückgabe:\n") +
+                              query.lastError().databaseText() +
+                              trUtf8("\nSQL-Befehl:\n") + sql);
+  }
+
+}
+
+void MainWindowImpl::LeseFlaschenlabelDB()
+{
+  QSqlQuery query;
+  fuelleFlaschenlabelTags = true;
+
+  QString sql = "SELECT * FROM FlaschenlabelTags WHERE SudID =" + QString::number(AktuelleSudID) + " ORDER BY Tagname ASC";
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                              trUtf8("Rückgabe:\n") +
+                              query.lastError().databaseText() +
+                              trUtf8("\nSQL-Befehl:\n") + sql);
+  } else {
+    int i = 0;
+    tableWidget_FLabelTags->clearContents();
+    tableWidget_FLabelTags->setRowCount(0);
+    while (query.next()) {
+      tableWidget_FLabelTags->setRowCount(tableWidget_FLabelTags->rowCount() + 1);
+      // Tag
+      QTableWidgetItem *newItem1 = new QTableWidgetItem("");
+      newItem1->setText(query.value(2).toString());
+      tableWidget_FLabelTags->setItem(i, 0, newItem1);
+      // Value
+      QTableWidgetItem *newItem2 = new QTableWidgetItem("");
+      newItem2->setText(query.value(3).toString());
+      tableWidget_FLabelTags->setItem(i, 1, newItem2);
+      i++;
+    }
+  }
+  fuelleFlaschenlabelTags = false;
+  sql = "SELECT * FROM Flaschenlabel WHERE SudID =" + QString::number(AktuelleSudID);
+  if (!query.exec(sql)) {
+    // Fehlermeldung Datenbankabfrage
+    ErrorMessage *errorMessage = new ErrorMessage();
+    errorMessage->showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG, CANCEL_NO,
+                              trUtf8("Rückgabe:\n") +
+                              query.lastError().databaseText() +
+                              trUtf8("\nSQL-Befehl:\n") + sql);
+  }
+  else {
+    if (query.first()) {
+      // Auswahl
+      int FeldNr = query.record().indexOf("Auswahl");
+      QString s = query.value(FeldNr).toString();
+      comboBox_FLabelAuswahl->setCurrentText(query.value(FeldNr).toString());
     }
   }
 }
