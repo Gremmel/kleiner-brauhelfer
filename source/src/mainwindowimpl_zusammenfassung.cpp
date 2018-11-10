@@ -13,10 +13,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
 {
     QString s;
     QVariantHash contextVariables;
-    contextVariables["AppName"] = APP_NAME;
-    contextVariables["AppVersion"] = VERSION;
-    contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
-    contextVariables["Sudname"] = lineEdit_Sudname->text();
+    contextVariables = ErstelleTagListe(contextVariables);
 
     double menge= 0.0;
     double mengeFaktor = 1.0;
@@ -665,3 +662,4 @@ void MainWindowImpl::ErstelleZusammenfassung()
     webView_Zusammenfassung->setHtml(seite, QUrl::fromLocalFile(settingsPath));
     webView_Zusammenfassung->setZoomFactor(horizontalSlider_ScalePDF->value() / 100.0);
 }
+

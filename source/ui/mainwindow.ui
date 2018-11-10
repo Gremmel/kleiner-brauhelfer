@@ -128,6 +128,14 @@
               </column>
               <column>
                <property name="text">
+                <string>Nr.</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
+               </property>
+              </column>
+              <column>
+               <property name="text">
                 <string>Braudatum</string>
                </property>
                <property name="textAlignment">
@@ -365,6 +373,16 @@
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_Sudnummer">
+                     <property name="prefix">
+                      <string>Nr. </string>
+                     </property>
+                     <property name="maximum">
+                      <number>999999</number>
                      </property>
                     </widget>
                    </item>
@@ -1634,7 +1652,7 @@ p, li { white-space: pre-wrap; }
                           <x>0</x>
                           <y>0</y>
                           <width>434</width>
-                          <height>141</height>
+                          <height>140</height>
                          </rect>
                         </property>
                         <property name="sizePolicy">
@@ -1829,8 +1847,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>98</width>
-                       <height>28</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1897,8 +1915,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>98</width>
-                       <height>28</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_80" stretch="0,1">

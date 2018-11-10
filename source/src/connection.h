@@ -2892,6 +2892,40 @@ static bool ErstelleVerbindung() {
     QSqlDatabase::database().commit();
     updateNr = 23;
   }
+  //Update von 23 auf 24
+  if (updateNr == 23) {
+    bool io = true;
+    QSqlDatabase::database().transaction();
+
+    //Sudnummer hinzufügen
+    QString sql = "ALTER TABLE 'Sud' ADD COLUMN 'Sudnummer' NUMERIC DEFAULT 0";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
+      io = false;
+    }
+
+    //Versionsstand auf 24 setzen
+    sql = "UPDATE 'Global' SET 'db_Version'=24";
+    if (!query.exec(sql)) {
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_ABFRAGE, TYPE_WARNUNG,
+        CANCEL_NO, QObject::trUtf8("Rückgabe:\n") + query.lastError().databaseText()
+        + QObject::trUtf8("\nSQL-Befehl:\n") + sql);
+      io = false;
+    }
+    if (!io){
+      // Fehlermeldung Konnte Datenbank nicht updaten
+      ErrorMessage *errorMessage = new ErrorMessage();
+      errorMessage -> showMessage(ERR_SQL_DB_UPDATE_V21_V22, TYPE_KRITISCH,
+        CANCEL_PROGRAM, QObject::tr("Betroffene Datei:\n") + dbPfad);
+      return false;
+    }
+    QSqlDatabase::database().commit();
+    updateNr = 24;
+  }
 
   //Sicherungsdatei löschen
   RemoveDatenbanksicherung(dbPfad + "~");

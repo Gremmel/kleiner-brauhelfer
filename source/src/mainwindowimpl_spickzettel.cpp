@@ -20,10 +20,7 @@ void MainWindowImpl::ErstelleSpickzettel()
 
   QString s;
   QVariantHash contextVariables;
-  contextVariables["AppName"] = APP_NAME;
-  contextVariables["AppVersion"] = VERSION;
-  contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
-  contextVariables["Sudname"] = lineEdit_Sudname->text();
+  contextVariables = ErstelleTagListe(contextVariables);
 
   // Rezept
   s = "<table><tbody>";

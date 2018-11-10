@@ -12,7 +12,7 @@
 void MainWindowImpl::ErstelleSudInfo()
 {
     QVariantHash contextVariables;
-    contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
+    contextVariables = ErstelleTagListe(contextVariables);
 
     // Seitenkopf
     QString s, SudnameFehler;

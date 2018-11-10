@@ -135,8 +135,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.8229466"
-     inkscape:cx="213.16813"
-     inkscape:cy="40.375565"
+     inkscape:cx="145.81171"
+     inkscape:cy="39.852408"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -233,19 +233,19 @@
          id="tspan3218"
          x="295.20605"
          y="1016.3618"
-         style="font-size:29.13498306px;fill:#000000;stroke:#ffffff">{{Sudname}}</tspan></text>
+         style="{{schriftgroesse}};{{farbe}};stroke:#ffffff">{{Sudname}}</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.56759262px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       x="128.7045"
-       y="896.57733"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.56749916px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="148.99637"
+       y="897.18066"
        id="text3220"
        sodipodi:linespacing="125%"
        transform="scale(0.87176547,1.1470975)"><tspan
          sodipodi:role="line"
-         x="128.7045"
-         y="896.57733"
-         style="font-size:24.13559341px"
+         x="148.99637"
+         y="897.18066"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.56749916px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:center;writing-mode:lr-tb;text-anchor:middle"
          id="tspan3037">{{Nr}}</tspan></text>
     <text
        xml:space="preserve"

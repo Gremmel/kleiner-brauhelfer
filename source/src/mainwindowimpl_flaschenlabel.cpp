@@ -83,39 +83,8 @@ QString MainWindowImpl::ErsetzeFlaschenlabeTags(QString value)
 {
   QVariantHash contextVariables;
 
-  double menge= 0.0;
-  double mengeFaktor = 1.0;
-  if (BierWurdeAbgefuellt) {
-    menge = spinBox_BiermengeAbfuellen->value();
-    mengeFaktor = spinBox_MengeSollNachHopfenseihen->value() / spinBox_BiermengeAbfuellen->value() * highGravityFaktor;
-  }
-  else if (BierWurdeGebraut) {
-    menge = spinBox_WuerzemengeAnstellen->value();
-    mengeFaktor = spinBox_MengeSollNachHopfenseihen->value() / spinBox_WuerzemengeAnstellen->value() * highGravityFaktor;
-  }
+  contextVariables = ErstelleTagListe(contextVariables);
 
-  //Tagliste füllen
-  contextVariables["Sudname"] = lineEdit_Sudname->text();
-  contextVariables["Stammwuerze"] = spinBox_SWSollGesammt->text();
-  contextVariables["AlcVol"] = spinBox_AlkoholVol->text();
-  contextVariables["IBU"] = spinBox_IBU->text();
-  contextVariables["CO2"] = doubleSpinBox_CO2->text();
-  contextVariables["EBC"] = QString::number(doubleSpinBox_EBC->value() * mengeFaktor, 'f', doubleSpinBox_EBC->decimals());
-  contextVariables["Braudatum"] = dateEdit_Braudatum->text();
-  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
-  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
-
-  contextVariables["Nr"] = "123";
-
-  //Eigene Tags
-  QString t, v;
-  for (int i = 0; i < tableWidget_FLabelTags->rowCount(); i++) {
-    t = tableWidget_FLabelTags->item(i, 0)->text();
-    v = tableWidget_FLabelTags->item(i, 1)->text();
-    if (!(t.isEmpty() || v.isEmpty())) {
-      contextVariables[t] = v;
-    }
-  }
 
   Mustache::Renderer renderer;
   Mustache::QtVariantContext context(contextVariables);

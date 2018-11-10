@@ -180,6 +180,8 @@ MainWindowImpl::MainWindowImpl(QWidget *parent, Qt::WindowFlags f)
           SLOT(slot_spinBoxValueChanged(int)));
   connect(spinBox_AnzahlHefeEinheiten, SIGNAL(valueChanged(int)), this,
           SLOT(slot_spinBoxValueChanged(int)));
+  connect(spinBox_Sudnummer, SIGNAL(valueChanged(int)), this,
+          SLOT(slot_spinBoxValueChanged(int)));
 
   connect(checkBox_SchnellgaerprobeAktiv, SIGNAL(stateChanged(int)), this,
           SLOT(slot_spinBoxValueChanged(int)));
@@ -3004,6 +3006,9 @@ void MainWindowImpl::SchreibeSuddatenDB() {
   // Sudname
   sql += "Sudname='";
   sql += lineEdit_Sudname->text().replace("'", "''") + "', ";
+  // Sudnummer
+  sql += "Sudnummer='";
+  sql += QString::number(spinBox_Sudnummer->value()) + "', ";
   // Menge
   sql += "Menge='";
   sql += QString::number(spinBox_Menge->value()) + "', ";
@@ -3299,6 +3304,9 @@ void MainWindowImpl::LeseSuddatenDB() {
       // Sudname
       FeldNr = query_sud.record().indexOf("Sudname");
       lineEdit_Sudname->setText(query_sud.value(FeldNr).toString());
+      // Sudnummer
+      FeldNr = query_sud.record().indexOf("Sudnummer");
+      spinBox_Sudnummer->setValue(query_sud.value(FeldNr).toInt());
       // Menge
       FeldNr = query_sud.record().indexOf("Menge");
       spinBox_Menge->setValue(query_sud.value(FeldNr).toDouble());
@@ -6436,7 +6444,7 @@ void MainWindowImpl::FuelleSudauswahl() {
     tableWidget_Sudauswahl->clearContents();
     tableWidget_Sudauswahl->setRowCount(0);
     tableWidget_Sudauswahl->setSortingEnabled(false);
-    tableWidget_Sudauswahl->setColumnHidden(5, true);
+    tableWidget_Sudauswahl->setColumnHidden(6, true);
     while (query.next()) {
       // Auslesen ob Bier schon gebraut wurde
       bool gebraut =
@@ -6477,6 +6485,13 @@ void MainWindowImpl::FuelleSudauswahl() {
       newItem2->setBackground(color);
       tableWidget_Sudauswahl->setItem(i, 1, newItem2);
 
+      // Sudnummer
+      FeldNr = query.record().indexOf("Sudnummer");
+      QTableWidgetItem *newItemNr = new QTableWidgetItem(query.value(FeldNr).toString().rightJustified(5,' '));
+      newItemNr->setBackground(color);
+      newItemNr->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+      tableWidget_Sudauswahl->setItem(i, 2, newItemNr);
+
       // Braudatum
       QTableWidgetItem *newItem3 = new QTableWidgetItem("");
       if (gebraut) {
@@ -6487,7 +6502,7 @@ void MainWindowImpl::FuelleSudauswahl() {
       }
       newItem3->setBackground(color);
       newItem3->setTextAlignment(Qt::AlignCenter);
-      tableWidget_Sudauswahl->setItem(i, 2, newItem3);
+      tableWidget_Sudauswahl->setItem(i, 3, newItem3);
 
       // Erstellt
       QTableWidgetItem *newItem4 = new QTableWidgetItem("");
@@ -6497,7 +6512,7 @@ void MainWindowImpl::FuelleSudauswahl() {
           QDateTime::fromString(query.value(FeldNr).toString(), Qt::ISODate));
       newItem4->setBackground(color);
       newItem4->setTextAlignment(Qt::AlignCenter);
-      tableWidget_Sudauswahl->setItem(i, 3, newItem4);
+      tableWidget_Sudauswahl->setItem(i, 4, newItem4);
 
       // Gespeichert
       QTableWidgetItem *newItem5 = new QTableWidgetItem("");
@@ -6507,7 +6522,7 @@ void MainWindowImpl::FuelleSudauswahl() {
           QDateTime::fromString(query.value(FeldNr).toString(), Qt::ISODate));
       newItem5->setBackground(color);
       newItem5->setTextAlignment(Qt::AlignCenter);
-      tableWidget_Sudauswahl->setItem(i, 4, newItem5);
+      tableWidget_Sudauswahl->setItem(i, 5, newItem5);
 
       // Bewertung
       QTableWidgetItem *newItem6 = new QTableWidgetItem("");
@@ -6520,12 +6535,12 @@ void MainWindowImpl::FuelleSudauswahl() {
         starItem->setAnzahlStar(bewertung);
         newItem6->setData(Qt::DisplayRole, bewertung);
         newItem6->setTextAlignment(Qt::AlignCenter);
-        tableWidget_Sudauswahl->setCellWidget(i, 5, starItem);
-        tableWidget_Sudauswahl->setColumnHidden(5, false);
+        tableWidget_Sudauswahl->setCellWidget(i, 6, starItem);
+        tableWidget_Sudauswahl->setColumnHidden(6, false);
       }
       newItem6->setBackground(color);
       newItem6->setForeground(color);
-      tableWidget_Sudauswahl->setItem(i, 5, newItem6);
+      tableWidget_Sudauswahl->setItem(i, 6, newItem6);
 
       // in Merkliste
       FeldNr = query.record().indexOf("MerklistenID");
@@ -6541,6 +6556,8 @@ void MainWindowImpl::FuelleSudauswahl() {
   }
   tableWidget_Sudauswahl->setSortingEnabled(true);
   tableWidget_Sudauswahl->setCurrentCell(SelZeile, 0);
+//  tableWidget_Sudauswahl->resizeColumnToContents(6);
+//  tableWidget_Sudauswahl->resizeColumnsToContents();
 }
 
 // Legt einen Neuen Sud mit Defaultwerten an
@@ -12749,5 +12766,47 @@ void MainWindowImpl::KopiereRessourcen() {
         QFile::setPermissions(file.fileName(), QFile::ReadOwner | QFile::WriteOwner);
     }
   }
+}
+
+QVariantHash MainWindowImpl::ErstelleTagListe(QVariantHash contextVariables)
+{
+  double menge= 0.0;
+  double mengeFaktor = 1.0;
+  if (BierWurdeAbgefuellt) {
+    menge = spinBox_BiermengeAbfuellen->value();
+    mengeFaktor = spinBox_MengeSollNachHopfenseihen->value() / spinBox_BiermengeAbfuellen->value() * highGravityFaktor;
+  }
+  else if (BierWurdeGebraut) {
+    menge = spinBox_WuerzemengeAnstellen->value();
+    mengeFaktor = spinBox_MengeSollNachHopfenseihen->value() / spinBox_WuerzemengeAnstellen->value() * highGravityFaktor;
+  }
+
+  //Tagliste füllen
+  contextVariables["AppName"] = APP_NAME;
+  contextVariables["AppVersion"] = VERSION;
+  contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
+  contextVariables["Sudname"] = lineEdit_Sudname->text();
+  contextVariables["Stammwuerze"] = spinBox_SWSollGesammt->text();
+  contextVariables["AlcVol"] = spinBox_AlkoholVol->text();
+  contextVariables["IBU"] = spinBox_IBU->text();
+  contextVariables["CO2"] = doubleSpinBox_CO2->text();
+  contextVariables["EBC"] = QString::number(doubleSpinBox_EBC->value() * mengeFaktor, 'f', doubleSpinBox_EBC->decimals());
+  contextVariables["Braudatum"] = dateEdit_Braudatum->text();
+  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
+  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
+
+  contextVariables["Nr"] = QString::number(spinBox_Sudnummer->value());
+
+  //Eigene Tags
+  QString t, v;
+  for (int i = 0; i < tableWidget_FLabelTags->rowCount(); i++) {
+    t = tableWidget_FLabelTags->item(i, 0)->text();
+    v = tableWidget_FLabelTags->item(i, 1)->text();
+    if (!(t.isEmpty() || v.isEmpty())) {
+      contextVariables[t] = v;
+    }
+  }
+
+  return contextVariables;
 }
 
