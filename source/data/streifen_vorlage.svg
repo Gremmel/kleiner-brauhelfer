@@ -135,8 +135,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.8229466"
-     inkscape:cx="145.81171"
-     inkscape:cy="39.852408"
+     inkscape:cx="533.79766"
+     inkscape:cy="39.329251"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -232,8 +232,7 @@
          sodipodi:role="line"
          id="tspan3218"
          x="295.20605"
-         y="1016.3618"
-         style="{{schriftgroesse}};{{farbe}};stroke:#ffffff">{{Sudname}}</tspan></text>
+         y="1016.3618">{{{Sudname}}}</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.56749916px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
@@ -246,7 +245,7 @@
          x="148.99637"
          y="897.18066"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.56749916px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:center;writing-mode:lr-tb;text-anchor:middle"
-         id="tspan3037">{{Nr}}</tspan></text>
+         id="tspan3037">{{{Nr}}}</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:144px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.001;stroke-miterlimit:4;stroke-dasharray:none"
@@ -258,7 +257,7 @@
          id="tspan3228"
          x="299.68445"
          y="1041.0757"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#ffffff;stroke:none;stroke-width:0.001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">SW{{Stammwuerze}}       Alc {{AlcVol}}Vol      {{IBU}}IBU     {{EBC}}EBC     CO2 {{CO2}}g/L</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#ffffff;stroke:none;stroke-width:0.001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">SW{{{Stammwuerze}}}       Alc {{{AlcVol}}}Vol      {{{IBU}}}IBU     {{{EBC}}}EBC     CO2 {{CO2}}g/L</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
@@ -283,7 +282,7 @@
          id="tspan3041"
          x="547.73285"
          y="1015.5084"
-         style="fill:#000000;stroke:none;stroke-width:1.37607431">B {{Braudatum}}</tspan></text>
+         style="fill:#000000;stroke:none;stroke-width:1.37607431">B {{{Braudatum}}}</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.78376007px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.37607431;stroke-miterlimit:4;stroke-dasharray:none"
@@ -296,6 +295,6 @@
          id="tspan3041-5"
          x="547.78168"
          y="1027.6453"
-         style="fill:#000000;stroke:none;stroke-width:1.37607431">A {{Abfuelldatum}}</tspan></text>
+         style="fill:#000000;stroke:none;stroke-width:1.37607431">A {{{Abfuelldatum}}}</tspan></text>
   </g>
 </svg>
