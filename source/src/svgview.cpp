@@ -66,9 +66,9 @@
 SvgView::SvgView(QWidget *parent)
     : QGraphicsView(parent)
     , m_renderer(Native)
-    , m_svgItem(nullptr)
-    , m_backgroundItem(nullptr)
-    , m_outlineItem(nullptr)
+    , m_svgItem(Q_NULLPTR)
+    , m_backgroundItem(Q_NULLPTR)
+    , m_outlineItem(Q_NULLPTR)
 {
     setScene(new QGraphicsScene(this));
     setTransformationAnchor(AnchorUnderMouse);
@@ -211,5 +211,5 @@ QSvgRenderer *SvgView::renderer() const
 {
     if (m_svgItem)
         return m_svgItem->renderer();
-    return nullptr;
+    return Q_NULLPTR;
 }

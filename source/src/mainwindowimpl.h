@@ -211,7 +211,7 @@ private:
   bool CheckDBNeuBerechnen();
   void SetDisabledVerbraucht(bool status);
   void ErstelleZusammenfassung();
-  QVariantHash ErstelleTagListe(QVariantHash contextVariables);
+  void ErstelleTagListe(QVariantHash &contextVariables);
   QColor ColorBrauUebersicht_Spalte1;
   QColor ColorBrauUebersicht_Spalte2;
   QColor ColorBierReift;

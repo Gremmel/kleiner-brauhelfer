@@ -67,11 +67,11 @@ class SvgView : public QGraphicsView
 public:
     enum RendererType { Native, OpenGL, Image };
 
-    explicit SvgView(QWidget *parent = nullptr);
+    explicit SvgView(QWidget *parent = 0);
 
     bool openFile(const QString &fileName);
     void setRenderer(RendererType type = Native);
-    void drawBackground(QPainter *p, const QRectF &rect) override;
+    void drawBackground(QPainter *p, const QRectF &rect) Q_DECL_OVERRIDE;
 
     QSize svgSize() const;
     QSvgRenderer *renderer() const;
@@ -82,8 +82,8 @@ public slots:
     void setViewOutline(bool enable);
 
 protected:
-    void wheelEvent(QWheelEvent *event) override;
-    void paintEvent(QPaintEvent *event) override;
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
     RendererType m_renderer;

@@ -82,9 +82,7 @@ void MainWindowImpl::LadeFlaschenlabel()
 QString MainWindowImpl::ErsetzeFlaschenlabeTags(QString value)
 {
   QVariantHash contextVariables;
-
-  contextVariables = ErstelleTagListe(contextVariables);
-
+  ErstelleTagListe(contextVariables);
 
   Mustache::Renderer renderer;
   Mustache::QtVariantContext context(contextVariables);

@@ -11,6 +11,8 @@ lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 5) {
  QT += webenginewidgets
 }
 
+qtHaveModule(opengl): QT += opengl
+
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
 VERSION = 1.4.4.4
@@ -140,7 +142,3 @@ SOURCES = src/mainwindowimpl.cpp \
    src/svgview.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc
-
-qtHaveModule(opengl): QT += opengl
-
-QMAKE_CXXFLAGS += -std=c++0x

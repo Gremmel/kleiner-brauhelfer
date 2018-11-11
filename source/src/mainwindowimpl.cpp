@@ -12768,7 +12768,7 @@ void MainWindowImpl::KopiereRessourcen() {
   }
 }
 
-QVariantHash MainWindowImpl::ErstelleTagListe(QVariantHash contextVariables)
+void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables)
 {
   double menge= 0.0;
   double mengeFaktor = 1.0;
@@ -12794,7 +12794,6 @@ QVariantHash MainWindowImpl::ErstelleTagListe(QVariantHash contextVariables)
   contextVariables["Braudatum"] = dateEdit_Braudatum->text();
   contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
   contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
-
   contextVariables["Nr"] = QString::number(spinBox_Sudnummer->value());
 
   //Eigene Tags
@@ -12806,7 +12805,5 @@ QVariantHash MainWindowImpl::ErstelleTagListe(QVariantHash contextVariables)
       contextVariables[t] = v;
     }
   }
-
-  return contextVariables;
 }
 

@@ -20,7 +20,7 @@ void MainWindowImpl::ErstelleSpickzettel()
 
   QString s;
   QVariantHash contextVariables;
-  contextVariables = ErstelleTagListe(contextVariables);
+  ErstelleTagListe(contextVariables);
 
   // Rezept
   s = "<table><tbody>";
