@@ -13,7 +13,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
 {
     QString s;
     QVariantHash contextVariables;
-    ErstelleTagListe(contextVariables);
+    ErstelleTagListe(contextVariables, true);
 
     double menge= 0.0;
     double mengeFaktor = 1.0;

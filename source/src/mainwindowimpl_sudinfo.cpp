@@ -12,7 +12,7 @@
 void MainWindowImpl::ErstelleSudInfo()
 {
     QVariantHash contextVariables;
-    ErstelleTagListe(contextVariables);
+    ErstelleTagListe(contextVariables, false);
 
     // Seitenkopf
     QString s, SudnameFehler;

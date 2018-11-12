@@ -12768,7 +12768,7 @@ void MainWindowImpl::KopiereRessourcen() {
   }
 }
 
-void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables)
+void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables, bool sudDaten)
 {
   double menge= 0.0;
   double mengeFaktor = 1.0;
@@ -12785,16 +12785,18 @@ void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables)
   contextVariables["AppName"] = APP_NAME;
   contextVariables["AppVersion"] = VERSION;
   contextVariables["Style"] = StyleDunkel ? "style_dunkel.css" : "style_hell.css";
-  contextVariables["Sudname"] = lineEdit_Sudname->text();
-  contextVariables["Stammwuerze"] = spinBox_SWSollGesammt->text();
-  contextVariables["AlcVol"] = spinBox_AlkoholVol->text();
-  contextVariables["IBU"] = spinBox_IBU->text();
-  contextVariables["CO2"] = doubleSpinBox_CO2->text();
-  contextVariables["EBC"] = QString::number(doubleSpinBox_EBC->value() * mengeFaktor, 'f', doubleSpinBox_EBC->decimals());
-  contextVariables["Braudatum"] = dateEdit_Braudatum->text();
-  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
-  contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
-  contextVariables["Nr"] = QString::number(spinBox_Sudnummer->value());
+  if (sudDaten) {
+    contextVariables["Sudname"] = lineEdit_Sudname->text();
+    contextVariables["Stammwuerze"] = spinBox_SWSollGesammt->text();
+    contextVariables["AlcVol"] = spinBox_AlkoholVol->text();
+    contextVariables["IBU"] = spinBox_IBU->text();
+    contextVariables["CO2"] = doubleSpinBox_CO2->text();
+    contextVariables["EBC"] = QString::number(doubleSpinBox_EBC->value() * mengeFaktor, 'f', doubleSpinBox_EBC->decimals());
+    contextVariables["Braudatum"] = dateEdit_Braudatum->text();
+    contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
+    contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
+    contextVariables["Nr"] = QString::number(spinBox_Sudnummer->value());
+  }
 
   //Eigene Tags
   QString t, v;
