@@ -8561,6 +8561,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
                    <string>Wert</string>
                   </property>
                  </column>
+                 <column>
+                  <property name="text">
+                   <string>Global</string>
+                  </property>
+                 </column>
                 </widget>
                </item>
                <item>
