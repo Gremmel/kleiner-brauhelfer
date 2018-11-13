@@ -18,6 +18,7 @@ EinstellungsdialogImpl::EinstellungsdialogImpl( QWidget * parent, Qt::WindowFlag
 
   label_Datenbankpfad -> setText(trUtf8("Pfad zur Datenbank: ") + DB_USER_NAME);
   textEdit_htmltemplate->setCurrentFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+  textEdit_htmltemplate->setTabStopWidth(2 * QFontMetrics(textEdit_htmltemplate->currentFont()).width(' '));
   ErstelleIcons();
 
   LeseKonfig();

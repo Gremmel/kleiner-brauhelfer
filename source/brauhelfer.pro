@@ -11,6 +11,8 @@ lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 5) {
  QT += webenginewidgets
 }
 
+qtHaveModule(opengl): QT += opengl
+
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
 VERSION = 1.4.4.4
@@ -90,7 +92,8 @@ HEADERS = src/mainwindowimpl.h \
  src/database.h \
  src/dialogstammwuerze.h \
  src/mustache.h \
- src/htmlhighlighter.h
+ src/htmlhighlighter.h \
+   src/svgview.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/berechnungen.cpp \
@@ -134,6 +137,8 @@ SOURCES = src/mainwindowimpl.cpp \
  src/database.cpp \
  src/dialogstammwuerze.cpp \
  src/mustache.cpp \
- src/htmlhighlighter.cpp
+ src/htmlhighlighter.cpp \
+ src/mainwindowimpl_flaschenlabel.cpp \
+   src/svgview.cpp
 TRANSLATIONS += languages/kb_de.ts languages/kb_pl.ts languages/kb_de_CH.ts languages/kb_en.ts
 RESOURCES += res/grafiken.qrc data/data.qrc

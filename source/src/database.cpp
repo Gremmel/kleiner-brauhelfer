@@ -79,8 +79,11 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "erg_Preis,";
     sql += "erg_Alkohol,";
     sql += "KostenWasserStrom,";
-    sql += "Bewertung,";
-    sql += "BewertungText,";
+    if (full) {
+      sql += "Bewertung,";
+      sql += "BewertungText,";
+      sql += "MerklistenID,";
+    }
     sql += "AktivTab_Gaerverlauf,";
     sql += "Reifezeit,";
     sql += "BierWurdeVerbraucht,";
@@ -100,7 +103,6 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "AuswahlBrauanlage,";
     sql += "AuswahlBrauanlageName,";
     sql += "AusbeuteIgnorieren,";
-    sql += "MerklistenID,";
     sql += "Spunden";
     sql += ")SELECT ";
     sql += "'" + name + "',";
@@ -138,8 +140,11 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "erg_Preis,";
     sql += "erg_Alkohol,";
     sql += "KostenWasserStrom,";
-    sql += "Bewertung,";
-    sql += "BewertungText,";
+    if (full) {
+      sql += "Bewertung,";
+      sql += "BewertungText,";
+      sql += "MerklistenID,";
+    }
     sql += "AktivTab_Gaerverlauf,";
     sql += "Reifezeit,";
     sql += full ? "BierWurdeVerbraucht," : "0,";
@@ -159,7 +164,6 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "AuswahlBrauanlage,";
     sql += "AuswahlBrauanlageName,";
     sql += "AusbeuteIgnorieren,";
-    sql += "MerklistenID,";
     sql += "Spunden";
     sql += " FROM Sud WHERE ID=" + id;
     if (!query.exec(sql))

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1269</width>
-    <height>980</height>
+    <width>1366</width>
+    <height>1069</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,7 +26,7 @@
    <string notr="true">kleiner Brauhelfer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_27">
+   <layout class="QHBoxLayout" name="horizontalLayout_20">
     <item>
      <widget class="QTabWidget" name="tabWidged">
       <property name="styleSheet">
@@ -124,6 +124,14 @@
               <column>
                <property name="text">
                 <string>Sudname</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Nr.</string>
+               </property>
+               <property name="textAlignment">
+                <set>AlignCenter</set>
                </property>
               </column>
               <column>
@@ -312,8 +320,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>923</width>
-             <height>935</height>
+             <width>943</width>
+             <height>974</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -365,6 +373,16 @@
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_Sudnummer">
+                     <property name="prefix">
+                      <string>Nr. </string>
+                     </property>
+                     <property name="maximum">
+                      <number>999999</number>
                      </property>
                     </widget>
                    </item>
@@ -1501,7 +1519,7 @@ p, li { white-space: pre-wrap; }
                  </size>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="tab_bemerkung">
                  <property name="sizePolicy">
@@ -1633,8 +1651,8 @@ p, li { white-space: pre-wrap; }
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>100</width>
-                          <height>100</height>
+                          <width>434</width>
+                          <height>140</height>
                          </rect>
                         </property>
                         <property name="sizePolicy">
@@ -1736,8 +1754,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>421</width>
-                       <height>694</height>
+                       <width>441</width>
+                       <height>733</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1829,8 +1847,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>98</width>
-                       <height>28</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,1">
@@ -1897,8 +1915,8 @@ p, li { white-space: pre-wrap; }
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>98</width>
-                       <height>28</height>
+                       <width>66</width>
+                       <height>16</height>
                       </rect>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_80" stretch="0,1">
@@ -3059,8 +3077,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>349</width>
-               <height>367</height>
+               <width>375</width>
+               <height>431</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -3467,8 +3485,8 @@ p, li { white-space: pre-wrap; }
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1215</width>
-             <height>927</height>
+             <width>1326</width>
+             <height>974</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -7610,7 +7628,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
         <item>
          <widget class="QToolBox" name="toolBox_Gaerverlauf">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_Schnellgaerung">
            <property name="geometry">
@@ -7806,8 +7824,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1229</width>
-             <height>783</height>
+             <width>919</width>
+             <height>359</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8101,8 +8119,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>794</width>
-             <height>323</height>
+             <width>1326</width>
+             <height>872</height>
             </rect>
            </property>
            <attribute name="label">
@@ -8331,6 +8349,276 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_Flaschenlabel">
+       <attribute name="title">
+        <string>Flaschenlabel</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="0,0,1">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_27">
+          <item>
+           <widget class="QGroupBox" name="groupBox_FLabelAuswahl">
+            <property name="title">
+             <string>Flaschenlabel</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_24">
+             <item>
+              <widget class="QLabel" name="label_FLabelAuswahl">
+               <property name="text">
+                <string>Auswahl aus Anhänge im Rezept (svg)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_FLabelAuswahl"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_5">
+            <property name="title">
+             <string>PDF Ausgabe</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_28">
+             <item>
+              <widget class="QLabel" name="label_77">
+               <property name="text">
+                <string>Breite Label (mm)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spinBox_BreiteLabel">
+               <property name="maximum">
+                <number>210</number>
+               </property>
+               <property name="value">
+                <number>185</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_49">
+               <property name="text">
+                <string>Anzahl Labels</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spinBox_AnzahlLabels">
+               <property name="maximum">
+                <number>9999999</number>
+               </property>
+               <property name="value">
+                <number>25</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_76">
+               <property name="text">
+                <string>Abstand zwischen den Labels (mm)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spinBox_AbstandLabel"/>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_21">
+               <property name="title">
+                <string>Seitenränder</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_37">
+                <item>
+                 <widget class="QLabel" name="label_72">
+                  <property name="text">
+                   <string>Oben (mm)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBox_FLabel_RandOben">
+                  <property name="maximum">
+                   <number>297</number>
+                  </property>
+                  <property name="value">
+                   <number>10</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_73">
+                  <property name="text">
+                   <string>Links (mm)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBox_FLabel_RandLinks">
+                  <property name="maximum">
+                   <number>210</number>
+                  </property>
+                  <property name="value">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_74">
+                  <property name="text">
+                   <string>Rechts (mm)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBox_FLabel_RandRechts">
+                  <property name="maximum">
+                   <number>210</number>
+                  </property>
+                  <property name="value">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_75">
+                  <property name="text">
+                   <string>Unten (mm)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinBox_FLabel_RandUnten">
+                  <property name="maximum">
+                   <number>290</number>
+                  </property>
+                  <property name="value">
+                   <number>15</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_24">
+            <property name="title">
+             <string>SVG View einstellungen</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_69">
+             <item>
+              <widget class="QCheckBox" name="checkBox_FLabelSVGViewKontur">
+               <property name="text">
+                <string>Aussenkontur</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_70">
+          <item>
+           <widget class="QGroupBox" name="groupBox_25">
+            <property name="title">
+             <string>Eigene Tags</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_72">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_71">
+               <item>
+                <widget class="MyTableWidget" name="tableWidget_FLabelTags">
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Tag-Name</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Wert</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_44">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_FLabelTagNeu">
+                   <property name="text">
+                    <string>Neuer Eintrag</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_FLabelTagDel">
+                   <property name="text">
+                    <string>Lösche Eintrag</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_23">
+          <item>
+           <widget class="QFrame" name="frame_11">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_25">
+             <item>
+              <widget class="SvgView" name="FLabel_svgView"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_FlaschenlabelPDF">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>PDF speichern</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="tab_Bewertung">
        <property name="enabled">
         <bool>true</bool>
@@ -8351,8 +8639,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>345</width>
-               <height>845</height>
+               <width>373</width>
+               <height>934</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_124" stretch="0,10">
@@ -11187,8 +11475,8 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1229</width>
-             <height>715</height>
+             <width>1326</width>
+             <height>804</height>
             </rect>
            </property>
            <attribute name="label">
@@ -11303,7 +11591,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>520</width>
+             <width>532</width>
              <height>124</height>
             </rect>
            </property>
@@ -11424,7 +11712,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>520</width>
+             <width>532</width>
              <height>124</height>
             </rect>
            </property>
@@ -11565,7 +11853,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>520</width>
+             <width>532</width>
              <height>124</height>
             </rect>
            </property>
@@ -11686,7 +11974,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>652</width>
+             <width>655</width>
              <height>386</height>
             </rect>
            </property>
@@ -12308,7 +12596,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1269</width>
+     <width>1366</width>
      <height>25</height>
     </rect>
    </property>
@@ -12345,6 +12633,11 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
    <class>MyTableWidget</class>
    <extends>QTableWidget</extends>
    <header>./src/mytablewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SvgView</class>
+   <extends>QGraphicsView</extends>
+   <header>./src/svgview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

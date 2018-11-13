@@ -12,7 +12,9 @@
 //V20 Um Tabelle Anhänge erweitert und Link in Rohrstoffen
 //V21 Um Zugabezeitpunkt für Weitere Zutaten erweitert
 //V22 Um Zugabedauer für Weitere Zutate erweitert
-#define DB_VERSION 22
+//V23 Tabellen für Flaschenlabel erweiter
+//V24 Sudnummer hinzugefügt
+#define DB_VERSION 24
 //Version der XML Datei
 //Version 2 mit Weiteren Zutaten
 //Version 3 mit Temperaturen im Schnellgärverlauf/Hauptgärverlauf

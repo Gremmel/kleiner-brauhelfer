@@ -106,6 +106,15 @@ int QExport::ExportSudXML(int SudNr, const QString& Dateiname)
       element.appendChild(text);
       sud.appendChild(element);
 
+      //Sudnummer
+      komentar = doc.createComment("Sudnummer");
+      sud.appendChild(komentar);
+      FeldNr = query_sud.record().indexOf("Sudnummer");
+      element = doc.createElement("Sudnummer");
+      text = doc.createTextNode(query_sud.value(FeldNr).toString());
+      element.appendChild(text);
+      sud.appendChild(element);
+
       //Erstellungsdatum
       komentar = doc.createComment("Zeitstempel fuer Erstellungsdatum in der Datenbank");
       sud.appendChild(komentar);
@@ -3583,6 +3592,7 @@ int QExport::ImportSudXML(const QString& cDateiname)
       QString s;
       QString sql = "INSERT INTO Sud (";
       sql += "'Sudname',";
+      sql += "'Sudnummer' ,";
       sql += "'Erstellt' ,";
       sql += "'Gespeichert' ,";
       sql += "'Menge',";
@@ -3642,6 +3652,13 @@ int QExport::ImportSudXML(const QString& cDateiname)
       else
         s = "";
       sql += "'Import " + s + "',";
+      //Sudnummer
+      e = Sud.firstChildElement("Sudnummer");
+      if (!e.isNull())
+        s = e.text().replace("'","''");
+      else
+        s = "";
+      sql += "'" + s + "',";
       //Zeitstempel fuer Erstellungsdatum in der Datenbank
       e = Sud.firstChildElement("Erstellt");
       if (!e.isNull())
