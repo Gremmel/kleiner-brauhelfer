@@ -12520,7 +12520,7 @@ void MainWindowImpl::SchreibeAnhangDB() {
 void MainWindowImpl::SchreibeFlaschenlabelDB()
 {
   QSqlQuery query;
-  QString sql = "DELETE FROM FlaschenlabelTags WHERE SudID =" + QString::number(AktuelleSudID);
+  QString sql = "DELETE FROM FlaschenlabelTags WHERE (SudID =" + QString::number(AktuelleSudID) + " OR SudID < 0)";
   if (!query.exec(sql)) {
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
@@ -12532,7 +12532,7 @@ void MainWindowImpl::SchreibeFlaschenlabelDB()
 
   for (int i = 0; i < tableWidget_FLabelTags->rowCount(); i++) {
     sql = "INSERT into FlaschenlabelTags(SudID, Tagname, Value) VALUES(" +
-        QString::number(AktuelleSudID) + "," + "'" +
+        (tableWidget_FLabelTags->item(i, 2)->checkState() == Qt::Checked ? "-1" : QString::number(AktuelleSudID)) + "," + "'" +
         tableWidget_FLabelTags->item(i, 0)->text().replace("'", "''") + "', '" +
         tableWidget_FLabelTags->item(i, 1)->text().replace("'", "''") + "' " +
         ")";
@@ -12582,7 +12582,7 @@ void MainWindowImpl::LeseFlaschenlabelDB()
   QSqlQuery query;
   fuelleFlaschenlabelTags = true;
 
-  QString sql = "SELECT * FROM FlaschenlabelTags WHERE SudID =" + QString::number(AktuelleSudID) + " ORDER BY Tagname ASC";
+  QString sql = "SELECT * FROM FlaschenlabelTags WHERE (SudID =" + QString::number(AktuelleSudID) + " OR SudID < 0) ORDER BY Tagname ASC";
   if (!query.exec(sql)) {
     // Fehlermeldung Datenbankabfrage
     ErrorMessage *errorMessage = new ErrorMessage();
@@ -12604,6 +12604,10 @@ void MainWindowImpl::LeseFlaschenlabelDB()
       QTableWidgetItem *newItem2 = new QTableWidgetItem("");
       newItem2->setText(query.value(3).toString());
       tableWidget_FLabelTags->setItem(i, 1, newItem2);
+      // Global
+      QTableWidgetItem *newItem3 = new QTableWidgetItem("");
+      newItem3->setCheckState(query.value(1).toInt() < 0 ? Qt::Checked : Qt::Unchecked);
+      tableWidget_FLabelTags->setItem(i, 2, newItem3);
       i++;
     }
   }
@@ -12793,7 +12797,7 @@ void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables, bool sudDa
     contextVariables["CO2"] = doubleSpinBox_CO2->text();
     contextVariables["EBC"] = QString::number(doubleSpinBox_EBC->value() * mengeFaktor, 'f', doubleSpinBox_EBC->decimals());
     contextVariables["Braudatum"] = dateEdit_Braudatum->text();
-    contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
+    contextVariables["Anstelldatum"] = dateEdit_Anstelldatum->text();
     contextVariables["Abfuelldatum"] = dateEdit_Abfuelldatum->text();
     contextVariables["Nr"] = QString::number(spinBox_Sudnummer->value());
   }

@@ -193,11 +193,14 @@ void MainWindowImpl::on_pushButton_FLabelTagNeu_clicked()
   tableWidget_FLabelTags->setRowCount(i + 1);
   QTableWidgetItem *newItem1 = new QTableWidgetItem("");
   QTableWidgetItem *newItem2 = new QTableWidgetItem("");
+  QTableWidgetItem *newItem3 = new QTableWidgetItem("");
   // Beschreibung
   newItem1->setText("Tagname");
   newItem2->setText("Value");
+  newItem3->setCheckState(Qt::Unchecked);
   tableWidget_FLabelTags->setItem(i, 0, newItem1);
   tableWidget_FLabelTags->setItem(i, 1, newItem2);
+  tableWidget_FLabelTags->setItem(i, 2, newItem3);
   NewFLabelTag = false;
   setAenderung(true);
 }
