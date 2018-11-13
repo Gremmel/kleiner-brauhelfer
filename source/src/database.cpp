@@ -293,6 +293,46 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     if (!query.exec(sql))
         error(query);
 
+    // FlaschenlabelTags
+    sql = QString("INSERT INTO FlaschenlabelTags (\
+          SudID,\
+          Tagname,\
+          Value\
+          ) SELECT \
+          %1,\
+          Tagname,\
+          Value\
+          FROM FlaschenlabelTags WHERE SudID=%2"
+          ).arg(idNew).arg(id);
+    if (!query.exec(sql))
+        error(query);
+
+    // Flaschenlabel
+    sql = QString("INSERT INTO Flaschenlabel (\
+          SudID,\
+          Auswahl,\
+          BreiteLabel,\
+          AnzahlLabels,\
+          Abstandlabels,\
+          SRandOben,\
+          SRandLinks,\
+          SRandRechts,\
+          SRandUnten\
+          ) SELECT \
+          %1,\
+          Auswahl,\
+          BreiteLabel,\
+          AnzahlLabels,\
+          Abstandlabels,\
+          SRandOben,\
+          SRandLinks,\
+          SRandRechts,\
+          SRandUnten\
+          FROM Flaschenlabel WHERE SudID=%2"
+          ).arg(idNew).arg(id);
+    if (!query.exec(sql))
+        error(query);
+
     if (!full)
     {
         commit();
