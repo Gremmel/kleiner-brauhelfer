@@ -139,7 +139,7 @@ void MainWindowImpl::ErstelleSudInfo()
 
             // Kommentar
             FeldNr = query_sud.record().indexOf("Kommentar");
-            contextVariables["Kommentar"] = query_sud.value(FeldNr).toString();
+            contextVariables["Kommentar"] = Qt::convertFromPlainText(query_sud.value(FeldNr).toString());
           }
         }
       }

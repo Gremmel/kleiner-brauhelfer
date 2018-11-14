@@ -592,7 +592,7 @@ void MainWindowImpl::ErstelleZusammenfassung()
     contextVariables["Sonstiges"] = s;
 
     // Kommentar
-    contextVariables["Kommentar"] = textEdit_Kommentar->toPlainText();
+    contextVariables["Kommentar"] = textEdit_Kommentar->toHtml();
 
     // Rasten
     if (list_Rasten.count() > 0) {

@@ -460,7 +460,7 @@ void MainWindowImpl::ErstelleSpickzettel()
   contextVariables["Sonstiges"] = s;
 
   // Kommentar
-  contextVariables["Kommentar"] = textEdit_Kommentar->toPlainText();
+  contextVariables["Kommentar"] = textEdit_Kommentar->toHtml();
 
 
   //Geräte und Zubehör
