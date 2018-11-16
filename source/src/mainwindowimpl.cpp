@@ -2732,6 +2732,7 @@ void MainWindowImpl::SchreibeKonfig() {
   settings.setValue("FilterGebrautNichtAbgefuellt",
                     radioButton_FilterGebrautNichtAbgefuellt->isChecked());
   settings.setValue("FilterAbgefuellt", radioButton_Abgefuellt->isChecked());
+  settings.setValue("FilterNichtVerbraucht", radioButton_nichtVerbraucht->isChecked());
   settings.setValue("FilterMerkliste", radioButton_Merkliste->isChecked());
   settings.endGroup();
 
@@ -2774,6 +2775,7 @@ void MainWindowImpl::LeseKonfig() {
       settings.value("FilterGebrautNichtAbgefuellt").toBool());
   radioButton_Abgefuellt->setChecked(
       settings.value("FilterAbgefuellt").toBool());
+  radioButton_nichtVerbraucht->setChecked(settings.value("FilterNichtVerbraucht").toBool());
   radioButton_Merkliste->setChecked(settings.value("FilterMerkliste").toBool());
   settings.endGroup();
 
