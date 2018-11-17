@@ -93,7 +93,7 @@ void DialogStammwuerze::on_spinBox_S_Temperatur_valueChanged(double)
 {
     if (ui->spinBox_S_Temperatur->hasFocus())
     {
-        ui->spinBox_SwPlato->setValue(QBerechnungen::densityAtX(ui->spinBox_SwPlato->value(), ui->spinBox_S_Temperatur->value(), 20));
+        ui->spinBox_SwPlato->setValue(QBerechnungen::densityAtX(ui->spinBox_S_SwPlato->value(), ui->spinBox_S_Temperatur->value(), 20));
         ui->spinBox_R_SwBrix->setValue(SWAnstellen == 0.0 ? ui->spinBox_SwPlato->value() * ui->spinBox_R_Factor->value() : 0.0);
     }
 }
