@@ -14,6 +14,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - Erstellen von Flaschenlabels integriert. 
   - Es können SVG Bilder aus den Anhängen ausgewählt werden. 
   - Tags werden wie beim Spickzettel etc. ersetzt.
+- Fix: Berechnung Stammwürze bei einer änderung der Temperatur im Dialog "Berechnung Stammwürze"
 ### Version 1.4.4.3
 [Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.3)
 - Deutsch überarbeitet (grosser Dank an **Radulph**)

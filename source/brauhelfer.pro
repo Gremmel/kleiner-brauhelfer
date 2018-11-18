@@ -11,7 +11,7 @@ lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 5) {
  QT += webenginewidgets
 }
 
-qtHaveModule(opengl): QT += opengl
+
 
 TEMPLATE = app
 TARGET = kleiner-brauhelfer
