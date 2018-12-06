@@ -105,7 +105,12 @@ cp "${QT_DIR}/../translations/qtbase_pl.qm" "${LANGUAGES}/qt_pl.qm" || exit 1
 ###
 
 echo "* Creating self-contained bundle..."
-"${QT_DIR}/macdeployqt" ${BUNDLE} || exit 1
+
+"${QT_DIR}/macdeployqt" ${BUNDLE} \
+    -verbose=1 \
+    -executable="${BUNDLE}/Contents/MacOS/kleiner-brauhelfer" \
+    -executable="${BUNDLE}/Contents/Frameworks/QtWebEngineCore.framework/Versions/5/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess" \
+ || exit 1
 
 ###
 ### Create distribution archive
