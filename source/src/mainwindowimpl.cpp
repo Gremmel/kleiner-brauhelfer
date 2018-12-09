@@ -4989,6 +4989,7 @@ void MainWindowImpl::SetDisabledAbgefuellt(bool status) {
   }
 
   pushButton_SudAbgefuellt->setDisabled(status || !BierWurdeGebraut);
+  pushButton_SudTeilen->setDisabled(status);
 
   doubleSpinBox_CO2->setReadOnly(status);
   doubleSpinBox_CO2->setButtonSymbols(bs);
@@ -5991,7 +5992,6 @@ void MainWindowImpl::LadeSudDB(bool aktivateTab) {
   SetDisabledAbgefuellt(BierWurdeAbgefuellt);
   SetDisabledVerbraucht(BierWurdeVerbraucht || !BierWurdeAbgefuellt);
   setDatumsfelder();
-  pushButton_SudTeilen->setDisabled(BierWurdeVerbraucht);
   setRecentFile(AktuelleSudID);
   AmLaden = false;
   BerAlles();
