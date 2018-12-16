@@ -111,8 +111,8 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
     printer.setPageMargins (spinBox_FLabel_RandLinks->value(),spinBox_FLabel_RandOben->value(),spinBox_FLabel_RandRechts->value(),spinBox_FLabel_RandUnten->value(),QPrinter::Millimeter);
     printer.setFullPage(false);
     printer.setOutputFileName(fileName);
-//    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFormat(QPrinter::NativeFormat);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+//    printer.setOutputFormat(QPrinter::NativeFormat);
 
     const QSize sizeSVG = FLabel_svgView->svgSize();
 
