@@ -213,3 +213,4 @@ QSvgRenderer *SvgView::renderer() const
         return m_svgItem->renderer();
     return Q_NULLPTR;
 }
+

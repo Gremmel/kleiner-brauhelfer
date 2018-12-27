@@ -103,6 +103,20 @@
               <item>
                <widget class="QLineEdit" name="lineEdit_FilterText"/>
               </item>
+              <item>
+               <widget class="QPushButton" name="pushButton">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res/grafiken.qrc">
+                  <normaloff>:/global/close_blackwhite.svg</normaloff>:/global/close_blackwhite.svg</iconset>
+                </property>
+                <property name="flat">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -1651,8 +1665,8 @@ p, li { white-space: pre-wrap; }
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>434</width>
-                          <height>140</height>
+                          <width>88</width>
+                          <height>100</height>
                          </rect>
                         </property>
                         <property name="sizePolicy">
@@ -11979,7 +11993,7 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>655</width>
+             <width>635</width>
              <height>386</height>
             </rect>
            </property>

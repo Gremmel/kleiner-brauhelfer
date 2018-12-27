@@ -6,6 +6,11 @@ http://www.joerum.de/kleiner-brauhelfer/
 - [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.5 (in Entwicklung)
+- Fix: Umlaute in Flaschenlabel
+- Flaschenlabel Aussenkontur erscheint jetzt auch im PDF
+- "x" Button zum leeren der Sudinfo Filter auswahl
+- Sortierung und Auswahl in der Sudauswahl merken
+- url für meldungsabfrage auf https geändert.
 
 ### Version 1.4.4.4
 - Fix: Datenbank update bei Erstinstallation

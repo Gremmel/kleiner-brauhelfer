@@ -1,48 +1,44 @@
 #include "mainwindowimpl.h"
 
-#include <QFile>
-#include <QSettings>
-#include <QFileDialog>
-#include <QSvgRenderer>
-#include <QPrinter>
 #include <QDesktopServices>
-#include <QtMath>
-#include <QSqlQuery>
+#include <QFile>
+#include <QFileDialog>
+#include <QPrinter>
+#include <QSettings>
 #include <QSqlError>
+#include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSvgRenderer>
+#include <QtMath>
 
-
+#include "definitionen.h"
 #include "errormessage.h"
 #include "mustache.h"
-#include "definitionen.h"
 
 #include "svgview.h"
 
-void MainWindowImpl::ErstelleFlaschenlabel()
-{
+void MainWindowImpl::ErstelleFlaschenlabel() {
   QString current = comboBox_FLabelAuswahl->currentText();
   comboBox_FLabelAuswahl->clear();
   for (int i = 0; i < list_Anhang.count(); i++) {
-    //wenn SVG dann auch der Flaschenlabel auswahl hinzufügen
+    // wenn SVG dann auch der Flaschenlabel auswahl hinzufügen
     if (list_Anhang[i]->getPfad().indexOf(".svg") > 0) {
       comboBox_FLabelAuswahl->addItem(list_Anhang[i]->getPfad());
     }
   }
   comboBox_FLabelAuswahl->addItem("Beispiel Label");
   comboBox_FLabelAuswahl->setCurrentText(current);
-
 }
 
-void MainWindowImpl::LadeFlaschenlabel()
-{
+void MainWindowImpl::LadeFlaschenlabel() {
   QString FullPfad;
   QString auswahl = comboBox_FLabelAuswahl->currentText();
   if (auswahl == "Beispiel Label") {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+                       KONFIG_ORDNER, APP_KONFIG);
     QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
     FullPfad = settingsPath + "streifen_vorlage.svg";
-  }
-  else {
+  } else {
     for (int i = 0; i < list_Anhang.count(); i++) {
       if (list_Anhang[i]->getPfad() == comboBox_FLabelAuswahl->currentText()) {
         FullPfad = list_Anhang[i]->getFullPfad();
@@ -50,7 +46,8 @@ void MainWindowImpl::LadeFlaschenlabel()
     }
   }
 
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER, APP_KONFIG);
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope, KONFIG_ORDNER,
+                     APP_KONFIG);
   QString settingsPath = QFileInfo(settings.fileName()).absolutePath() + "/";
 
   QFile file(FullPfad);
@@ -73,15 +70,12 @@ void MainWindowImpl::LadeFlaschenlabel()
 
   if (checkBox_FLabelSVGViewKontur->isChecked()) {
     FLabel_svgView->setViewOutline(true);
-  }
-  else {
+  } else {
     FLabel_svgView->setViewOutline(false);
   }
-
 }
 
-QString MainWindowImpl::ErsetzeFlaschenlabeTags(QString value)
-{
+QString MainWindowImpl::ErsetzeFlaschenlabeTags(QString value) {
   QVariantHash contextVariables;
   ErstelleTagListe(contextVariables, true);
 
@@ -90,8 +84,7 @@ QString MainWindowImpl::ErsetzeFlaschenlabeTags(QString value)
   return renderer.render(value, &context);
 }
 
-void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
-{
+void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked() {
   QString Sudname = lineEdit_Sudname->text() + "_label";
 
   // letzten Pfad einlesen
@@ -109,15 +102,19 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
     printer.setPageSize(QPrinter::A4);
     printer.setOrientation(QPrinter::Portrait);
     printer.setColorMode(QPrinter::Color);
-    printer.setPageMargins (spinBox_FLabel_RandLinks->value(),spinBox_FLabel_RandOben->value(),spinBox_FLabel_RandRechts->value(),spinBox_FLabel_RandUnten->value(),QPrinter::Millimeter);
+    printer.setPageMargins(
+        spinBox_FLabel_RandLinks->value(), spinBox_FLabel_RandOben->value(),
+        spinBox_FLabel_RandRechts->value(), spinBox_FLabel_RandUnten->value(),
+        QPrinter::Millimeter);
     printer.setFullPage(false);
     printer.setOutputFileName(fileName);
     printer.setOutputFormat(QPrinter::PdfFormat);
-//    printer.setOutputFormat(QPrinter::NativeFormat);
+    //    printer.setOutputFormat(QPrinter::NativeFormat);
 
     const QSize sizeSVG = FLabel_svgView->svgSize();
 
-    qreal seitenverhaeltnisSVG = qreal(sizeSVG.width()) / qreal(sizeSVG.height());
+    qreal seitenverhaeltnisSVG =
+        qreal(sizeSVG.width()) / qreal(sizeSVG.height());
     qreal widthPageMM = printer.widthMM();
     qreal heightPageMM = printer.heightMM();
     qreal widthPagePx = printer.width();
@@ -129,24 +126,38 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
     qreal abstandMM = spinBox_AbstandLabel->value();
     qreal abstandPx = abstandMM * faktorPxPerMM;
 
-    //Gewünschte Anzahl
+    // Gewünschte Anzahl
     int totalCount = spinBox_AnzahlLabels->value();
 
-    //Anzahl der Streifen pro Seite
+    // Anzahl der Streifen pro Seite
     int countPerPage = int(heightPageMM / (SVGhoeheMM + abstandMM));
 
     QPainter painter(&printer);
     int zaehler = 0;
-    //Anzahl Seiten
-    int pageCount = int(round(double(totalCount)/double(countPerPage) + double(0.5)));
+    // Anzahl Seiten
+    int pageCount =
+        int(round(double(totalCount) / double(countPerPage) + double(0.5)));
 
     for (int seite = 0; seite < pageCount; seite++) {
-      for( int i = 0 ; i < countPerPage; i++) {
+      for (int i = 0; i < countPerPage; i++) {
         if (zaehler >= totalCount) {
           i = countPerPage;
-        }
-        else {
-          FLabel_svgView->renderer()->render(&painter,QRectF(0,hoehePx*i+abstandPx*i,breiteMM * faktorPxPerMM,hoehePx));
+        } else {
+          FLabel_svgView->renderer()->render(
+              &painter, QRectF(0, hoehePx * i + abstandPx * i,
+                               breiteMM * faktorPxPerMM, hoehePx));
+
+          if (checkBox_FLabelSVGViewKontur->isChecked()) {
+            QRectF rect = QRectF(0, hoehePx * i + abstandPx * i,
+                                 breiteMM * faktorPxPerMM, hoehePx);
+            QPen outline(Qt::black, 10, Qt::DashLine);
+            outline.setCosmetic(true);
+            outline.setColor(QColor(255, 0, 0));
+            painter.setPen(outline);
+            painter.setBrush(Qt::NoBrush);
+            painter.drawRect(rect);
+          }
+
           zaehler++;
         }
       }
@@ -167,28 +178,22 @@ void MainWindowImpl::on_pushButton_FlaschenlabelPDF_clicked()
   settings.endGroup();
 }
 
-
-void MainWindowImpl::on_checkBox_FLabelSVGViewKontur_stateChanged(int arg1)
-{
+void MainWindowImpl::on_checkBox_FLabelSVGViewKontur_stateChanged(int arg1) {
   FLabel_svgView->setViewOutline(arg1);
 }
 
-
-void MainWindowImpl::on_comboBox_FLabelAuswahl_activated(const QString &arg1)
-{
+void MainWindowImpl::on_comboBox_FLabelAuswahl_activated(const QString &arg1) {
   if (arg1.isEmpty()) {
     FLabel_svgView->scene()->clear();
     checkBox_FLabelSVGViewKontur->setDisabled(true);
-  }
-  else {
+  } else {
     LadeFlaschenlabel();
     checkBox_FLabelSVGViewKontur->setDisabled(false);
   }
   setAenderung(true);
 }
 
-void MainWindowImpl::on_pushButton_FLabelTagNeu_clicked()
-{
+void MainWindowImpl::on_pushButton_FLabelTagNeu_clicked() {
   NewFLabelTag = true;
   int i = tableWidget_FLabelTags->rowCount();
   tableWidget_FLabelTags->setRowCount(i + 1);
@@ -206,16 +211,14 @@ void MainWindowImpl::on_pushButton_FLabelTagNeu_clicked()
   setAenderung(true);
 }
 
-void MainWindowImpl::on_pushButton_FLabelTagDel_clicked()
-{
+void MainWindowImpl::on_pushButton_FLabelTagDel_clicked() {
   tableWidget_FLabelTags->removeRow(tableWidget_FLabelTags->currentRow());
   LadeFlaschenlabel();
   setAenderung(true);
 }
 
-
-void MainWindowImpl::on_tableWidget_FLabelTags_itemChanged(QTableWidgetItem *item)
-{
+void MainWindowImpl::on_tableWidget_FLabelTags_itemChanged(
+    QTableWidgetItem *item) {
   if (!fuelleFlaschenlabelTags) {
     if (!NewFLabelTag) {
       LadeFlaschenlabel();

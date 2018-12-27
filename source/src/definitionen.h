@@ -46,13 +46,13 @@
 
 //URL für die Meldungen beim Start
 #ifdef DEBUG
-  #define MSG_URL "http://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2_test"
+  #define MSG_URL "https://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2_test"
 #else
-  #define MSG_URL "http://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2"
+  #define MSG_URL "https://www.joerum.de/kleiner-brauhelfer/kb_meldungen_v2"
 #endif
 
 //URL Anleitung
-#define URL_ANLEITUNG "http://www.joerum.de/kleiner-brauhelfer/doku.php"
+#define URL_ANLEITUNG "https://www.joerum.de/kleiner-brauhelfer/doku.php"
 
 //Datenbankvorlage
 #define DB_VORLAGE	":/data/vorlage.sqlite"
