@@ -64,6 +64,7 @@ void MainWindowImpl::LadeFlaschenlabel()
   QFile filenew(settingsPath + "streifen.svg");
   if (filenew.open(QIODevice::WriteOnly | QIODevice::Text)) {
     QTextStream out(&filenew);
+    out.setCodec("UTF-8");
     out << svg << endl;
     filenew.close();
   }
