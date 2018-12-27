@@ -2,10 +2,12 @@
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
 ## Download letzte Version
-- [Version 1.4.4.4](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.4)
+- [Version 1.4.4.4](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.5)
 - [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
 ## Änderungen & Erweiterungen
-### Version 1.4.4.5 (in Entwicklung)
+### Version 1.4.4.6 (in Entwicklung)
+
+### Version 1.4.4.5
 - Fix: Umlaute in Flaschenlabel
 - Flaschenlabel Aussenkontur erscheint jetzt auch im PDF
 - "x" Button zum leeren der Sudinfo Filter auswahl
