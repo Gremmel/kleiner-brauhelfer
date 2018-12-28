@@ -368,7 +368,7 @@ void MainWindowImpl::initUi() {
   tableWidget_Sudauswahl->horizontalHeader()->resizeSection(5, 150);
   tableWidget_Sudauswahl->horizontalHeader()->setSectionResizeMode(
       1, QHeaderView::Stretch);
-  tableWidget_Sudauswahl->sortByColumn(2, Qt::DescendingOrder);
+//  tableWidget_Sudauswahl->sortByColumn(2, Qt::DescendingOrder);
   for (int i = 0; i < tableWidget_Sudauswahl->columnCount(); ++i) {
     QVariant var =
         settings.value("tableWidget_Sudauswahl_col" + QString::number(i));
@@ -2734,6 +2734,8 @@ void MainWindowImpl::SchreibeKonfig() {
   settings.setValue("FilterAbgefuellt", radioButton_Abgefuellt->isChecked());
   settings.setValue("FilterNichtVerbraucht", radioButton_nichtVerbraucht->isChecked());
   settings.setValue("FilterMerkliste", radioButton_Merkliste->isChecked());
+  settings.setValue("TableSortSection", tableWidget_Sudauswahl->horizontalHeader()->sortIndicatorSection());
+  settings.setValue("TableSortOrder", tableWidget_Sudauswahl->horizontalHeader()->sortIndicatorOrder());
   settings.endGroup();
 
   // Einstellungen Sonstiges
@@ -2777,6 +2779,12 @@ void MainWindowImpl::LeseKonfig() {
       settings.value("FilterAbgefuellt").toBool());
   radioButton_nichtVerbraucht->setChecked(settings.value("FilterNichtVerbraucht").toBool());
   radioButton_Merkliste->setChecked(settings.value("FilterMerkliste").toBool());
+  if (settings.value("TableSortOrder",true).toBool()) {
+    tableWidget_Sudauswahl->sortByColumn(settings.value("TableSortSection",2).toInt(), Qt::DescendingOrder);
+  }
+  else {
+    tableWidget_Sudauswahl->sortByColumn(settings.value("TableSortSection",2).toInt(), Qt::AscendingOrder);
+  }
   settings.endGroup();
 
   // Letzten Geladenen Datensatz auslesen
@@ -12815,3 +12823,8 @@ void MainWindowImpl::ErstelleTagListe(QVariantHash& contextVariables, bool sudDa
   }
 }
 
+
+void MainWindowImpl::on_pushButton_clicked()
+{
+  lineEdit_FilterText->clear();
+}

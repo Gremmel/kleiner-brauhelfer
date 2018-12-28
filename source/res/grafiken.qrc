@@ -23,6 +23,7 @@
         <file>star_24.png</file>
         <file>star_gr_24.png</file>
         <file>star_gr_dark_24.png</file>
+        <file>close_blackwhite.svg</file>
     </qresource>
     <qresource prefix="/zutaten">
         <file>hefe.svg</file>

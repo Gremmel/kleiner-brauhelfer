@@ -684,6 +684,7 @@ private slots:
   void on_pushButton_FLabelTagNeu_clicked();
   void on_pushButton_FLabelTagDel_clicked();
   void on_tableWidget_FLabelTags_itemChanged(QTableWidgetItem *item);
+  void on_pushButton_clicked();
 };
 #endif
 
