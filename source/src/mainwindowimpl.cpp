@@ -6355,9 +6355,9 @@ void MainWindowImpl::BerFarbe(double cEBC) {
     int anzahlWZAuswerten = 0;
     for (int i = 0; i < list_EwZutat.count(); i++) {
       if (list_EwZutat[i]->getFarbe() > 0) {
-        schuettung[i + list_Malzgaben.count()] =
+        schuettung[anzahlWZAuswerten + list_Malzgaben.count()] =
             list_EwZutat[i]->getErg_Menge() / 1000;
-        farbe[i + list_Malzgaben.count()] = list_EwZutat[i]->getFarbe();
+        farbe[anzahlWZAuswerten + list_Malzgaben.count()] = list_EwZutat[i]->getFarbe();
         gefunden++;
         anzahlWZAuswerten++;
       }

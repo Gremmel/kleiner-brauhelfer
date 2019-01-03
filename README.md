@@ -6,7 +6,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 - [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.6 (in Entwicklung)
-
+- Fix: Berechnung der Farbe mit weiteren Zutaten
 ### Version 1.4.4.5
 - Fix: Umlaute in Flaschenlabel
 - Flaschenlabel Aussenkontur erscheint jetzt auch im PDF
