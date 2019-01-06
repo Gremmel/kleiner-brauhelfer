@@ -437,67 +437,27 @@ void QBerechnungen::BerHopfenGewichtProzent(double* resultMenge,
 															double* Ausbeute,
 															double* IBUAnteil)
 {
-	//Differenz der GesammtIBU und der SollIBU
-	double diffIBU = 0;
-	//Zähler für ausstieg falls die berechnung fehlschlägt
-	int zaehler = 0;
-	//summe der IBUWerte
-	double summeIBU;
-	//erster Schleifendurchlauf
-	bool erster = true;
-	//IBU ausgleichswert
-	double ausgleich = 0;
-	
 	//Ausbeute in Array schreiben
 	for (int i = 0; i < ArrayAnzahl; i++){
-//		qDebug() << "Kochdauer[i] "<< i << " " << Kochdauer[i];
 		Ausbeute[i] = GetHopfenausbeute(Kochdauer[i], SollStammwuerze, Pellets[i]);
 		//Bei Vorderwürzehopfung die Ausbeute um 10% verrigern
 		if (Vorderwuerzehopfung[i]){
 			Ausbeute[i] = Ausbeute[i] * 0.9;
 		}
+        if (Ausbeute[i] < 0.1)
+            Ausbeute[i] = 0.1;
 	}
-
-	//Mengen solange berechnen bis IBU wert nahezu stimmt
-	while ( ((diffIBU > 0.01) || (diffIBU < -0.01) || (erster)) && (zaehler < 1000)){
-		erster = false;
-		zaehler++;
-		//Mengen ermitteln
-		summeIBU = 0;
-		for (int i = 0; i < ArrayAnzahl; i++){
-			if (i == 0)
-				resultMenge[i] = ((SollIBU - ausgleich) * Wunschmenge * 10) / (Alphaprozent[i] * Ausbeute[i]);
-			else {
-				resultMenge[i] = resultMenge[0] / Mengeprozent[0] * Mengeprozent[i];
-//				qDebug() << "reusltMenge " << i << "  " << resultMenge[i] << " resultMenge[0] " << resultMenge[0] << " Mengeprozent[0] " << Mengeprozent[0] << " prozent[i] " << Mengeprozent[i];
-			}
-		}
-		//IBU Anteile ermitteln
-//		qDebug() << "--------------------------------";
-//		qDebug() << "zaehler: " << zaehler;
-		for (int i = 0; i < ArrayAnzahl; i++){
-			IBUAnteil[i] = resultMenge[i] * Alphaprozent[i] * Ausbeute[i] / 10 / Wunschmenge;
-//			qDebug() << "index: " << i;
-//			qDebug() << "resultMenge: " << resultMenge[i];
-//			qDebug() << "IBU Anteil: " << IBUAnteil[i];
-			summeIBU += IBUAnteil[i];
-		}
-		diffIBU = summeIBU - SollIBU;
-//		qDebug() << "IBU Summe: " << summeIBU;
-//		qDebug() << "IBU Abweichung: " << diffIBU;
-//		qDebug() << "IBU ausgleich: " << ausgleich;
-		//IBU Korrekturwert für die Erste Gabe festlegen
-		if (diffIBU > 10)
-		  ausgleich += 1;
-		else if (diffIBU > 1)
-			ausgleich += 0.1;
-		else if (diffIBU > 0)
-		  ausgleich += 0.01;
-		else if (diffIBU < -0.1)
-		  ausgleich -= 0.001;
-		else if (diffIBU < -0.01)
-		  ausgleich -= 0.0001;
-	}
+    // Gesamtmenge ausrechnen
+    double summe = 0.0;
+    for (int i = 0; i < ArrayAnzahl; i++){
+        summe += Mengeprozent[i] * Alphaprozent[i] * Ausbeute[i];
+    }
+    double mengeTotal = SollIBU * 10 * Wunschmenge / summe;
+    // Menge und IBU Anteil ausrechnen
+    for (int i = 0; i < ArrayAnzahl; i++){
+        resultMenge[i] = mengeTotal * Mengeprozent[i];
+        IBUAnteil[i] = resultMenge[i] * Alphaprozent[i] * Ausbeute[i] / (10 * Wunschmenge);
+    }
 }
 
 void QBerechnungen::BerHopfenIBUProzent(double *resultMenge,
@@ -519,7 +479,7 @@ void QBerechnungen::BerHopfenIBUProzent(double *resultMenge,
 			Ausbeute[i] = Ausbeute[i] * 0.9;
 		}
 		if (Ausbeute[i] < 0.1)
-			Ausbeute[i]=0.1;
+            Ausbeute[i] = 0.1;
 	}
 	//IBU Anteil ausrechnen
 	for (int i = 0; i < ArrayAnzahl; i++){

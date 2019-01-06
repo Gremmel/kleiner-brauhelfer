@@ -139,7 +139,9 @@ void MainWindowImpl::ErstelleSudInfo()
 
             // Kommentar
             FeldNr = query_sud.record().indexOf("Kommentar");
-            contextVariables["Kommentar"] = Qt::convertFromPlainText(query_sud.value(FeldNr).toString());
+            QString kommentar = query_sud.value(FeldNr).toString();
+            kommentar.replace("\n", "<br>");
+            contextVariables["Kommentar"] = "<div style=\"word-wrap: break-word;\">" + kommentar + "</div>";
           }
         }
       }
