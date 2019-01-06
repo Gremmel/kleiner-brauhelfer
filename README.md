@@ -7,6 +7,7 @@ http://www.joerum.de/kleiner-brauhelfer/
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.6 (in Entwicklung)
 - Fix: Berechnung der Farbe mit weiteren Zutaten
+- Fix: Darstellungsproblem bei langen Texte in Sudauswahl
 ### Version 1.4.4.5
 - Fix: Umlaute in Flaschenlabel
 - Flaschenlabel Aussenkontur erscheint jetzt auch im PDF
