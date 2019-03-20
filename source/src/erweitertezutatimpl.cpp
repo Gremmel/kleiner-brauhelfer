@@ -401,6 +401,9 @@ void ErweiterteZutatImpl::on_comboBox_Zutat_currentIndexChanged(QString string)
       ergWidget -> spinBox_Wert -> setDecimals(1);
       //Einheit auf gramm festlegen
       einheit = 1;
+      ausbeute = 0.0;
+      farbe = 0.0;
+      preis = 0.0;
       if (!BierWurdeGebraut){
         preis = sig_getEwzPreisHopfen(string);
       }
