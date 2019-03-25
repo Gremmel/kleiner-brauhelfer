@@ -10061,6 +10061,12 @@ int MainWindowImpl::slot_getEwzTyp(QString zutat) {
       return comboTyp->currentIndex();
     }
   }
+  for (int i = 0; i < tableWidget_Hopfen->rowCount(); i++) {
+    if (tableWidget_Hopfen->item(i, TableHopfenColName)->text() ==
+        zutat) {
+      return EWZ_Typ_Hopfen;
+    }
+  }
   return -1;
 }
 
