@@ -12672,14 +12672,18 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
   <tabstop>pushButton_SudinfoPDF</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>lineEdit_Sudname</tabstop>
+  <tabstop>spinBox_Sudnummer</tabstop>
   <tabstop>spinBox_Menge</tabstop>
   <tabstop>spinBox_SW</tabstop>
   <tabstop>spinBox_High_Gravity</tabstop>
   <tabstop>doubleSpinBox_CO2</tabstop>
   <tabstop>spinBox_IBU</tabstop>
+  <tabstop>doubleSpinBox_FaktorHG</tabstop>
+  <tabstop>SpinBox_waSollRestalkalitaet_dh</tabstop>
   <tabstop>spinBox_Reifezeit</tabstop>
   <tabstop>comboBox_AuswahlBrauanlage</tabstop>
   <tabstop>spinBox_EinmaischenTemp</tabstop>
+  <tabstop>pushButton_CalcEinmaischeTemp</tabstop>
   <tabstop>scrollArea_7</tabstop>
   <tabstop>pushButton_NeueRast</tabstop>
   <tabstop>spinBox_Gesammtkochdauer</tabstop>
@@ -12691,12 +12695,10 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
   <tabstop>scrollArea_2</tabstop>
   <tabstop>pushButton_HopfenHinzufuegen</tabstop>
   <tabstop>scrollArea_8</tabstop>
-  <tabstop>pushButton_EWZ_Hinzufuegen</tabstop>
-  <tabstop>doubleSpinBox_FaktorHG</tabstop>
-  <tabstop>doubleSpinBox_FaktorHGEmpfehlung</tabstop>
   <tabstop>comboBox_AuswahlHefe</tabstop>
-  <tabstop>spinBox_empfohleneHefeEinheiten</tabstop>
   <tabstop>spinBox_AnzahlHefeEinheiten</tabstop>
+  <tabstop>pushButton_EWZ_Hinzufuegen</tabstop>
+  <tabstop>doubleSpinBox_FaktorHGEmpfehlung</tabstop>
   <tabstop>doubleSpinBox_W_Gesammt</tabstop>
   <tabstop>doubleSpinBox_WHauptguss</tabstop>
   <tabstop>doubleSpinBox_WNachguss</tabstop>
@@ -12707,7 +12709,6 @@ Diese Markierung kann nur mit einem Editor an der Suddatei selber rückgängig g
   <tabstop>doubleSpinBox_S_Gesammt</tabstop>
   <tabstop>doubleSpinBox_EBC</tabstop>
   <tabstop>graphicsView</tabstop>
-  <tabstop>SpinBox_waSollRestalkalitaet_dh</tabstop>
   <tabstop>SpinBox_waMilchsaeureHG_ml</tabstop>
   <tabstop>SpinBox_waSauermalz_g</tabstop>
   <tabstop>SpinBox_waSauermalz_pr</tabstop>
