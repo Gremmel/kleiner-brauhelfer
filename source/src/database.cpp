@@ -105,7 +105,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "AusbeuteIgnorieren,";
     sql += "Spunden";
     sql += ")SELECT ";
-    sql += "'" + name + "',";
+    sql += ":sudname,";
     sql += "Menge,";
     sql += "SW,";
     sql += "CO2,";
@@ -165,8 +165,12 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "AuswahlBrauanlageName,";
     sql += "AusbeuteIgnorieren,";
     sql += "Spunden";
-    sql += " FROM Sud WHERE ID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Sud WHERE ID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":sudid", id);
+    query.bindValue(":sudname", name);
+    if (!query.exec())
     {
         error(query);
         commit();
@@ -192,13 +196,17 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "RastDauer,";
     sql += "RastName";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "RastAktiv,";
     sql += "RastTemp,";
     sql += "RastDauer,";
     sql += "RastName";
-    sql += " FROM Rasten WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Rasten WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Malzschuettung
@@ -209,13 +217,17 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "erg_Menge,";
     sql += "Farbe";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Name,";
     sql += "Prozent,";
     sql += "erg_Menge,";
     sql += "Farbe";
-    sql += " FROM Malzschuettung WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Malzschuettung WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Hopfengaben
@@ -231,7 +243,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Pellets,";
     sql += "Vorderwuerze";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Aktiv,";
     sql += "Name,";
     sql += "Prozent,";
@@ -241,8 +253,12 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Alpha,";
     sql += "Pellets,";
     sql += "Vorderwuerze";
-    sql += " FROM Hopfengaben WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Hopfengaben WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // WeitereZutatenGaben
@@ -263,7 +279,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Entnahmeindex,";
     sql += "Zugabedauer";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Name,";
     sql += "Menge,";
     sql += "Einheit,";
@@ -278,8 +294,12 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += full ? "Zugabestatus," : "0,";
     sql += "Entnahmeindex,";
     sql += "Zugabedauer";
-    sql += " FROM WeitereZutatenGaben WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM WeitereZutatenGaben WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Anhang
@@ -287,28 +307,35 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "SudID,";
     sql += "Pfad";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Pfad";
-    sql += " FROM Anhang WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Anhang WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // FlaschenlabelTags
-    sql = QString("INSERT INTO FlaschenlabelTags (\
+    sql = "INSERT INTO FlaschenlabelTags (\
           SudID,\
           Tagname,\
           Value\
           ) SELECT \
-          %1,\
+          :idNew,\
           Tagname,\
           Value\
-          FROM FlaschenlabelTags WHERE SudID=%2"
-          ).arg(idNew).arg(id);
-    if (!query.exec(sql))
+          FROM FlaschenlabelTags WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Flaschenlabel
-    sql = QString("INSERT INTO Flaschenlabel (\
+    sql = "INSERT INTO Flaschenlabel (\
           SudID,\
           Auswahl,\
           BreiteLabel,\
@@ -319,7 +346,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
           SRandRechts,\
           SRandUnten\
           ) SELECT \
-          %1,\
+          :idNew,\
           Auswahl,\
           BreiteLabel,\
           AnzahlLabels,\
@@ -328,9 +355,12 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
           SRandLinks,\
           SRandRechts,\
           SRandUnten\
-          FROM Flaschenlabel WHERE SudID=%2"
-          ).arg(idNew).arg(id);
-    if (!query.exec(sql))
+          FROM Flaschenlabel WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     if (!full)
@@ -347,13 +377,16 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Alc,";
     sql += "Temp";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Zeitstempel,";
     sql += "SW,";
     sql += "Alc,";
     sql += "Temp";
-    sql += " FROM Schnellgaerverlauf WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Schnellgaerverlauf WHERE SudID=:sudid";
+
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Hauptgaerverlauf
@@ -364,13 +397,16 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Alc,";
     sql += "Temp";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Zeitstempel,";
     sql += "SW,";
     sql += "Alc,";
     sql += "Temp";
-    sql += " FROM Hauptgaerverlauf WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Hauptgaerverlauf WHERE SudID=:sudid";
+
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Nachgaerverlauf
@@ -381,13 +417,17 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Temp,";
     sql += "CO2";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Zeitstempel,";
     sql += "Druck,";
     sql += "Temp,";
     sql += "CO2";
-    sql += " FROM Nachgaerverlauf WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Nachgaerverlauf WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     // Bewertungen
@@ -414,7 +454,7 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "Gesamteindruck,";
     sql += "GesamteindruckBemerkung";
     sql += ")SElECT ";
-    sql += "'" + idNew + "',";
+    sql += ":idNew,";
     sql += "Woche,";
     sql += "Datum,";
     sql += "Sterne,";
@@ -435,8 +475,12 @@ int Database::SudKopieren(const QString& id, const QString& name, bool full)
     sql += "NachtrunkBemerkung,";
     sql += "Gesamteindruck,";
     sql += "GesamteindruckBemerkung";
-    sql += " FROM Bewertungen WHERE SudID=" + id;
-    if (!query.exec(sql))
+    sql += " FROM Bewertungen WHERE SudID=:sudid";
+
+    query.prepare(sql);
+    query.bindValue(":idNew", idNew);
+    query.bindValue(":sudid", id);
+    if (!query.exec())
         error(query);
 
     commit();
