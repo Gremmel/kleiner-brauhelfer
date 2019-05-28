@@ -1,6 +1,9 @@
 # kleiner-brauhelfer
 Brauplanungs-software
 http://www.joerum.de/kleiner-brauhelfer/
+
+**Nachfolgeprojekt:** [kleiner-brauhelfer v2.x.x](https://github.com/kleiner-brauhelfer/kleiner-brauhelfer-2)
+
 ## Download letzte Version
 - [Version 1.4.4.5](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.5)
 - [macOS](https://github.com/realholgi/kleiner-brauhelfer/releases) (Dank an **realholgi**)
