@@ -10,17 +10,20 @@ http://www.joerum.de/kleiner-brauhelfer/
 
 ## Änderungen & Erweiterungen
 ### Version 1.4.4.6
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.6)
 - Fix: Tab Reihenfolge im Rezept Reiter
 - Fix: Sonderzeichenproblem bei Sud kopieren
 - Fix: Berechnung der Farbe mit weiteren Zutaten
 - Fix: Darstellungsproblem bei langen Texte in Sudauswahl
 ### Version 1.4.4.5
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.5)
 - Fix: Umlaute in Flaschenlabel
 - Flaschenlabel Aussenkontur erscheint jetzt auch im PDF
 - "x" Button zum leeren der Sudinfo Filter auswahl
 - Sortierung und Auswahl in der Sudauswahl merken
 - url für meldungsabfrage auf https geändert.
 ### Version 1.4.4.4
+[Download](https://github.com/Gremmel/kleiner-brauhelfer/releases/tag/v1.4.4.4)
 - Fix: Datenbank update bei Erstinstallation
 - HTML Tags Glas-hell und Glas-dunkel
 - HTML Tags Malz-rest, Hopfen-rest, etc.
